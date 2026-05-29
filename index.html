@@ -23,8 +23,7 @@
     .klbl{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}.kval{font-size:2rem;font-weight:800;line-height:1}.ksub{font-size:.75rem;color:var(--muted);margin-top:4px}
     .crow{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:20px}@media(min-width:768px){.crow{grid-template-columns:1fr 1fr}}
     .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}.ctitle{font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
-    .ctitle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:8px}
-    .ctitle-row .ctitle{margin-bottom:0}
+    .ctitle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:8px}.ctitle-row .ctitle{margin-bottom:0}
     .rlist{display:flex;flex-direction:column;gap:12px}.rrow{display:flex;flex-direction:column;gap:4px}
     .rhdr{cursor:pointer;padding:6px 4px;border-radius:6px;transition:background .15s}.rhdr:hover{background:var(--bg)}
     .rinfo{display:flex;justify-content:space-between;align-items:center}.rnw{display:flex;align-items:center;gap:6px}.rname{font-size:.875rem;font-weight:600}.rchev{font-size:.65rem;color:var(--muted);display:inline-block;width:12px;text-align:center}.rcnt{font-size:.875rem;color:var(--muted)}
@@ -62,12 +61,9 @@
 <body>
 <div class="moverlay" id="cfgM"><div class="modal"><h2>Douglas Roofing Dashboard</h2><p>Paste the Google Sheets CSV export link for your CA_Tracker_v3 Data tab.</p><input type="text" id="cfgUrl"><button class="btn btnp" onclick="saveUrl()">Connect Sheet</button></div></div>
 <div class="modal-base" id="annualM"><div class="mbox"><h3>Set Annual Goals</h3><p>Enter each rep's annual target for accepted CAs.</p><div class="ginputs" id="annualInp"></div><div class="mact"><button class="bcanc" onclick="closeModal('annualM')">Cancel</button><button class="bprim" onclick="saveAnnual()">Save Goals</button></div></div></div>
-<div class="modal-base" id="monthlyM"><div class="mbox"><h3>Set Monthly Goals</h3><p>Enter each rep's monthly target for accepted CAs (team standard: 8).</p><div class="ginputs" id="monthlyInp"></div><div class="mact"><button class="bcanc" onclick="closeModal('monthlyM')">Cancel</button><button class="bprim" onclick="saveMonthly()">Save Goals</button></div></div></div>
+<div class="modal-base" id="monthlyM"><div class="mbox"><h3>Set Monthly Goals</h3><p>Enter each rep's monthly target (default: 8).</p><div class="ginputs" id="monthlyInp"></div><div class="mact"><button class="bcanc" onclick="closeModal('monthlyM')">Cancel</button><button class="bprim" onclick="saveMonthly()">Save Goals</button></div></div></div>
 <header>
-  <div class="logo">
-    <img src="logo.png" onerror="this.style.display='none'" alt="Douglas Roofing">
-    <div class="logo-text"><h1>Douglas Roofing</h1><p>CA Sales Dashboard</p></div>
-  </div>
+  <div class="logo"><img src="logo.png" onerror="this.style.display='none'" alt="Douglas Roofing"><div class="logo-text"><h1>Douglas Roofing</h1><p>CA Sales Dashboard</p></div></div>
   <div class="hdr-r"><strong id="hdate">-</strong><span>Updated daily</span></div>
 </header>
 <div class="nav-tabs"><div class="nav-tab active" onclick="switchTab('pipeline',this)">Pipeline</div><div class="nav-tab" onclick="switchTab('ytd',this)">Year to Date</div></div>
@@ -77,7 +73,7 @@
   <div id="dash" style="display:none">
     <div class="sbar"><div class="sdot"></div><span>Live data from Leap CRM - Last refreshed: <strong id="lref">-</strong></span><span style="margin-left:auto"><button class="btns" onclick="reload()">Refresh</button><button class="btns" onclick="openCfg()" style="margin-left:4px">Settings</button></span></div>
     <div class="pipe" id="pipeTab">
-      <div class="mtd-banner"><div><div class="mtd-title">Month to Date</div><div class="mtd-sub" id="mtdSub">Current month performance</div></div><div class="mtd-sub" id="mtdDays"></div></div>
+      <div class="mtd-banner"><div><div class="mtd-title">Month to Date</div><div class="mtd-sub" id="mtdSub">Current month</div></div><div class="mtd-sub" id="mtdDays"></div></div>
       <div class="kgrid">
         <div class="kcard t"><div class="klbl">Total CAs</div><div class="kval" id="kT">-</div><div class="ksub">This month</div></div>
         <div class="kcard a"><div class="klbl">Accepted</div><div class="kval" id="kA">-</div><div class="ksub" id="kAp">-% close rate</div></div>
@@ -86,13 +82,7 @@
       </div>
       <div class="crow">
         <div class="card"><div class="ctitle">Pipeline by Status</div><canvas id="cht" height="200"></canvas></div>
-        <div class="card">
-          <div class="ctitle-row">
-            <div class="ctitle">Rep Leaderboard <span style="font-size:.7rem;font-weight:400;text-transform:none;color:var(--muted)">(tap to expand)</span></div>
-            <button class="gedit" onclick="openMonthlyGoals()">Edit Monthly Goals</button>
-          </div>
-          <div class="rlist" id="repL"></div>
-        </div>
+        <div class="card"><div class="ctitle-row"><div class="ctitle">Rep Leaderboard <span style="font-size:.7rem;font-weight:400;text-transform:none;color:var(--muted)">(tap to expand)</span></div><button class="gedit" onclick="openMonthlyGoals()">Edit Monthly Goals</button></div><div class="rlist" id="repL"></div></div>
       </div>
       <div class="tcard"><div class="thdr"><span class="ttl">All CAs <span id="tcnt"></span></span><div class="swrap" style="min-width:220px"><svg class="sico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input class="sinp" id="srch" placeholder="Search customer, rep, address" oninput="renderT()"></div></div><div class="frow"><button class="pill active" onclick="filt('all',this)">All</button><button class="pill pa" onclick="filt('accepted',this)">Accepted</button><button class="pill ps" onclick="filt('sent',this)">Sent</button><button class="pill pd" onclick="filt('draft',this)">Draft</button></div><div class="twrap"><table><thead><tr><th onclick="srt('jobId')">Job ID</th><th onclick="srt('customer')">Customer</th><th class="hm" onclick="srt('address')">Address</th><th onclick="srt('rep')">Rep</th><th onclick="srt('status')">Status</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
     </div>
@@ -107,9 +97,7 @@
 <script>
 var SK='dr_sheet',GK='dr_goals',MK='dr_mgoals',DEF_MTH=8;
 var DU='https://docs.google.com/spreadsheets/d/1ex7edGkVAC_mHKbO4V4a3UBCyNBOxW3ApQF1-bCmS-M/export?format=csv&gid=1499400196';
-var su=localStorage.getItem(SK)||DU;
-var goals=JSON.parse(localStorage.getItem(GK)||'{}');
-var mgoals=JSON.parse(localStorage.getItem(MK)||'{}');
+var su=localStorage.getItem(SK)||DU,goals=JSON.parse(localStorage.getItem(GK)||'{}'),mgoals=JSON.parse(localStorage.getItem(MK)||'{}');
 var rows=[],af='all',sc='status',sd='asc',at='pipeline';
 window.onload=function(){
   var now=new Date();
@@ -125,63 +113,19 @@ function saveUrl(){var v=document.getElementById('cfgUrl').value.trim();if(!v)re
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 function getRL(){var o=[];rows.forEach(function(r){if(r.rep&&o.indexOf(r.rep)<0)o.push(r.rep);});return o.sort();}
 function eR(r){return r.replace(/[^A-Za-z0-9]/g,'_');}
-function openMonthlyGoals(){
-  var reps=getRL();
-  document.getElementById('monthlyInp').innerHTML=reps.map(function(r){
-    var cur=mgoals[r]!==undefined?mgoals[r]:DEF_MTH;
-    return '<div class="girow"><label>'+r+'</label><input type="number" min="0" id="mg'+eR(r)+'" value="'+cur+'" placeholder="Monthly goal (default '+DEF_MTH+')"></div>';
-  }).join('');
-  document.getElementById('monthlyM').classList.add('open');
-}
-function saveMonthly(){
-  getRL().forEach(function(r){
-    var el=document.getElementById('mg'+eR(r));
-    if(el)mgoals[r]=el.value===''?DEF_MTH:parseInt(el.value);
-  });
-  localStorage.setItem(MK,JSON.stringify(mgoals));
-  closeModal('monthlyM');
-  renderLeaderboard();
-}
-function openAnnualGoals(){
-  var reps=getRL();
-  document.getElementById('annualInp').innerHTML=reps.map(function(r){
-    return '<div class="girow"><label>'+r+'</label><input type="number" min="0" id="ag'+eR(r)+'" value="'+(goals[r]||'')+'" placeholder="Annual goal"></div>';
-  }).join('');
-  document.getElementById('annualM').classList.add('open');
-}
-function saveAnnual(){
-  getRL().forEach(function(r){
-    var el=document.getElementById('ag'+eR(r));
-    if(el&&el.value)goals[r]=parseInt(el.value);else delete goals[r];
-  });
-  localStorage.setItem(GK,JSON.stringify(goals));
-  closeModal('annualM');
-  if(at==='ytd')renderYTD();
-}
-function loadData(){document.getElementById('ldg').style.display='block';document.getElementById('dash').style.display='none';document.getElementById('errB').style.display='none';fetch('/api/leap?cb='+Date.now()).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(function(d){if(d.error)throw new Error(d.error);rows=d.rows||[];document.getElementById('lref').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});render();}).catch(function(e){document.getElementById('ldg').style.display='none';var b=document.getElementById('errB');b.textContent='Error: '+e.message+'. Check sheet is shared as Anyone with link can view.';b.style.display='block';});}
+function getMthGoal(rep){return mgoals[rep]!==undefined?mgoals[rep]:DEF_MTH;}
+function openMonthlyGoals(){var reps=getRL();document.getElementById('monthlyInp').innerHTML=reps.map(function(r){var cur=getMthGoal(r);return '<div class="girow"><label>'+r+'</label><input type="number" min="0" id="mg'+eR(r)+'" value="'+cur+'" placeholder="Monthly goal"></div>';}).join('');document.getElementById('monthlyM').classList.add('open');}
+function saveMonthly(){getRL().forEach(function(r){var el=document.getElementById('mg'+eR(r));if(el)mgoals[r]=el.value===''?DEF_MTH:parseInt(el.value);});localStorage.setItem(MK,JSON.stringify(mgoals));closeModal('monthlyM');renderLeaderboard();}
+function openAnnualGoals(){var reps=getRL();document.getElementById('annualInp').innerHTML=reps.map(function(r){return '<div class="girow"><label>'+r+'</label><input type="number" min="0" id="ag'+eR(r)+'" value="'+(goals[r]||'')+'" placeholder="Annual goal"></div>';}).join('');document.getElementById('annualM').classList.add('open');}
+function saveAnnual(){getRL().forEach(function(r){var el=document.getElementById('ag'+eR(r));if(el&&el.value)goals[r]=parseInt(el.value);else delete goals[r];});localStorage.setItem(GK,JSON.stringify(goals));closeModal('annualM');if(at==='ytd')renderYTD();}
+function loadData(){document.getElementById('ldg').style.display='block';document.getElementById('dash').style.display='none';document.getElementById('errB').style.display='none';fetch(su+(su.indexOf('?')>=0?'&':'?')+'cb='+Date.now()).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text();}).then(function(t){rows=parseCSV(t);document.getElementById('lref').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});render();}).catch(function(e){document.getElementById('ldg').style.display='none';var b=document.getElementById('errB');b.textContent='Error: '+e.message;b.style.display='block';});}
 function reload(){loadData();}
-function parseCSV(csv){var NL=String.fromCharCode(10),CR=String.fromCharCode(13);var lines=csv.trim().split(NL).slice(2);return lines.map(function(line){var c=line.split(',').map(function(x){return x.replace(/^\s*"|"\s*$/g,'').trim();});return{jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').split(CR).join('')};}).filter(function(r){return r.jobId;});}
+function parseCSVLine(line){var res=[],cur='',inQ=false;for(var i=0;i<line.length;i++){var ch=line[i];if(ch==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else{inQ=!inQ;}}else if(ch===','&&!inQ){res.push(cur.trim());cur='';}else{cur+=ch;}}res.push(cur.trim());return res;}
+function parseCSV(csv){var NL=String.fromCharCode(10),CR=String.fromCharCode(13);var lines=csv.trim().split(NL).slice(2);return lines.map(function(line){var c=parseCSVLine(line);return{jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').split(CR).join('')};}).filter(function(r){return r.jobId;});}
 function render(){document.getElementById('ldg').style.display='none';document.getElementById('dash').style.display='block';renderKPIs();renderChart();renderLeaderboard();renderTable();if(at==='ytd')renderYTD();}
 function renderKPIs(){var t=rows.length,a=0,s=0,d=0;rows.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')a++;else if(st==='sent')s++;else d++;});document.getElementById('kT').textContent=t;document.getElementById('kA').textContent=a;document.getElementById('kS').textContent=s;document.getElementById('kD').textContent=d;document.getElementById('kAp').textContent=(t?Math.round(a/t*100):0)+'% close rate';}
 var ci=null;function renderChart(){var c={Accepted:0,Sent:0,Draft:0};rows.forEach(function(r){var s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});var ctx=document.getElementById('cht').getContext('2d');if(ci)ci.destroy();ci=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:12}}}}}});}
-function getMthGoal(rep){return mgoals[rep]!==undefined?mgoals[rep]:DEF_MTH;}
-function renderLeaderboard(){
-  var m={};rows.forEach(function(r){if(!r.rep)return;if(!m[r.rep])m[r.rep]={a:0,s:0,d:0,t:0,deals:[]};m[r.rep].t++;var st=r.status.toLowerCase();if(st==='accepted')m[r.rep].a++;else if(st==='sent')m[r.rep].s++;else m[r.rep].d++;m[r.rep].deals.push(r);});
-  var reps=Object.keys(m).sort(function(a,b){return m[b].a-m[a].a||m[b].t-m[a].t;});
-  var chips={accepted:'ca',sent:'cs',draft:'cd'};var html='';
-  reps.forEach(function(name){
-    var x=m[name],goal=getMthGoal(name);
-    x.deals.sort(function(a,b){var o={accepted:0,sent:1,draft:2};return(o[a.status.toLowerCase()]||3)-(o[b.status.toLowerCase()]||3);});
-    var dl='';x.deals.forEach(function(d){dl+='<div class="drow"><span class="dcust">'+(d.customer||'-')+'</span><span class="daddr">'+(d.address||'-')+'</span><span class="djid">'+d.jobId+'</span><span class="chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span></div>';});
-    var pct=Math.min(Math.round(x.a/goal*100),100);
-    var barColor=x.a>=goal?'#059669':(x.a>=Math.ceil(goal*0.6)?'#1a3a6b':'#ef4444');
-    var statusLabel=x.a>=goal?'On target!':x.a+'/'+goal+' monthly goal';
-    html+='<div class="rrow"><div class="rhdr" onclick="toggleD(this)"><div class="rinfo"><span class="rnw"><span class="rchev">+</span><span class="rname">'+name+'</span></span><span class="rcnt">'+x.a+' accepted</span></div>';
-    html+='<div class="rgoal-wrap"><div class="rgoal-track"><div class="rgoal-fill" style="width:'+pct+'%;background:'+barColor+';">'+(pct>20?'<span class="rgoal-pct">'+pct+'%</span>':'')+'</div></div><div class="rgoal-lbl"><span>'+statusLabel+'</span><span>Goal: '+goal+'</span></div></div>';
-    html+='<div class="rbadges">'+(x.a?'<span class="badge ba">'+x.a+' accepted</span>':'')+(x.s?'<span class="badge bs">'+x.s+' sent</span>':'')+(x.d?'<span class="badge bd">'+x.d+' draft</span>':'')+'</div></div><div class="rdeals">'+dl+'</div></div>';
-  });
-  document.getElementById('repL').innerHTML=html;
-}
+function renderLeaderboard(){var m={};rows.forEach(function(r){if(!r.rep)return;if(!m[r.rep])m[r.rep]={a:0,s:0,d:0,t:0,deals:[]};m[r.rep].t++;var st=r.status.toLowerCase();if(st==='accepted')m[r.rep].a++;else if(st==='sent')m[r.rep].s++;else m[r.rep].d++;m[r.rep].deals.push(r);});var reps=Object.keys(m).sort(function(a,b){return m[b].a-m[a].a||m[b].t-m[a].t;});if(!reps.length){document.getElementById('repL').innerHTML='<div style="padding:20px;text-align:center;color:var(--muted);font-size:.8rem">No rep data found</div>';return;}var chips={accepted:'ca',sent:'cs',draft:'cd'};var html='';reps.forEach(function(name){var x=m[name],goal=getMthGoal(name);x.deals.sort(function(a,b){var o={accepted:0,sent:1,draft:2};return(o[a.status.toLowerCase()]||3)-(o[b.status.toLowerCase()]||3);});var dl='';x.deals.forEach(function(d){dl+='<div class="drow"><span class="dcust">'+(d.customer||'-')+'</span><span class="daddr">'+(d.address||'-')+'</span><span class="djid">'+d.jobId+'</span><span class="chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span></div>';});var pct=Math.min(Math.round(x.a/goal*100),100),barColor=x.a>=goal?'#059669':(x.a>=Math.ceil(goal*0.6)?'#1a3a6b':'#ef4444'),statusLabel=x.a>=goal?'On target!':x.a+'/'+goal+' monthly goal';html+='<div class="rrow"><div class="rhdr" onclick="toggleD(this)"><div class="rinfo"><span class="rnw"><span class="rchev">+</span><span class="rname">'+name+'</span></span><span class="rcnt">'+x.a+' accepted</span></div><div class="rgoal-wrap"><div class="rgoal-track"><div class="rgoal-fill" style="width:'+pct+'%;background:'+barColor+';">'+(pct>20?'<span class="rgoal-pct">'+pct+'%</span>':'')+'</div></div><div class="rgoal-lbl"><span>'+statusLabel+'</span><span>Goal: '+goal+'</span></div></div><div class="rbadges">'+(x.a?'<span class="badge ba">'+x.a+' accepted</span>':'')+(x.s?'<span class="badge bs">'+x.s+' sent</span>':'')+(x.d?'<span class="badge bd">'+x.d+' draft</span>':'')+'</div></div><div class="rdeals">'+dl+'</div></div>';});document.getElementById('repL').innerHTML=html;}
 function toggleD(hdr){var p=hdr.parentElement.querySelector('.rdeals'),c=hdr.querySelector('.rchev'),o=p.classList.contains('open');p.classList.toggle('open',!o);c.textContent=o?'+':'-';}
 function filt(f,el){af=f;document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('active');});el.classList.add('active');renderT();}
 function srt(col){if(sc===col)sd=sd==='asc'?'desc':'asc';else{sc=col;sd='asc';}document.querySelectorAll('th').forEach(function(t){t.classList.remove('sa','sd');});var idx={jobId:0,customer:1,address:2,rep:3,status:4},ths=document.querySelectorAll('th');if(ths[idx[col]])ths[idx[col]].classList.add(sd==='asc'?'sa':'sd');renderT();}
