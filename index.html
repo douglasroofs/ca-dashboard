@@ -34,7 +34,7 @@
     .rep-header{cursor:pointer;padding:6px 4px;border-radius:6px;transition:background .15s}.rep-header:hover{background:var(--bg)}
     .rep-info{display:flex;justify-content:space-between;align-items:center}
     .rep-name-wrap{display:flex;align-items:center;gap:6px}.rep-name{font-size:.875rem;font-weight:600}
-    .rep-chevron{font-size:.65rem;color:var(--text-muted);transition:transform .2s;display:inline-block}.rep-chevron.open{transform:rotate(90deg)}
+    .rep-chevron{font-size:.65rem;color:var(--text-muted);transition:transform .2s;display:inline-block;width:12px;text-align:center}
     .rep-count{font-size:.875rem;color:var(--text-muted)}
     .rep-bar-bg{background:var(--bg);border-radius:4px;height:8px;overflow:hidden}
     .rep-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--brand),#60a5fa);transition:width .6s ease}
@@ -58,10 +58,10 @@
     .pill{padding:4px 12px;border-radius:99px;font-size:.75rem;font-weight:600;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .15s;color:var(--text-muted)}
     .pill:hover{border-color:var(--brand);color:var(--brand)}.pill.active{background:var(--brand);border-color:var(--brand);color:#fff}
     .pill.accepted.active{background:var(--success);border-color:var(--success)}.pill.sent.active{background:var(--warning);border-color:var(--warning)}.pill.draft.active{background:var(--neutral);border-color:var(--neutral)}
-    .table-wrap{overflow-x:auto}.table-title-wrap{padding:16px 20px;border-bottom:1px solid var(--border)}
+    .table-wrap{overflow-x:auto}
     table{width:100%;border-collapse:collapse;font-size:.875rem}
     th{text-align:left;padding:10px 16px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);background:var(--bg);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
-    th:hover{color:var(--brand)}th.sort-asc::after{content:' ↑'}th.sort-desc::after{content:' ↓'}
+    th:hover{color:var(--brand)}th.sort-asc::after{content:' ^'}th.sort-desc::after{content:' v'}
     td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
     tr:last-child td{border-bottom:none}tr:hover td{background:#f9fafb}
     .status-chip{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.7rem;font-weight:700;text-transform:uppercase}
@@ -114,7 +114,7 @@
 </head>
 <body>
 <div class="modal-overlay" id="configModal"><div class="modal"><h2>Douglas Roofing Dashboard</h2><p>Paste the Google Sheets CSV export link for your CA_Tracker_v3 Data tab.</p><input type="text" id="sheetUrlInput" /><button class="btn btn-primary" onclick="saveSheetUrl()">Connect Sheet</button></div></div>
-<div class="goal-modal" id="goalModal"><div class="goal-modal-box"><h3>Set Annual Goals</h3><p>Enter the number of accepted CAs each rep should close this year.</p><div class="goal-inputs" id="goalInputs"></div><div class="goal-modal-actions"><button class="btn-sm-cancel" onclick="closeGoalModal()">Cancel</button><button class="btn-sm-primary" onclick="saveGoals()">Save Goals</button></div></div></div>
+<div class="goal-modal" id="goalModal"><div class="goal-modal-box"><h3>Set Annual Goals</h3><p>Enter each rep's annual target for accepted CAs.</p><div class="goal-inputs" id="goalInputs"></div><div class="goal-modal-actions"><button class="btn-sm-cancel" onclick="closeGoalModal()">Cancel</button><button class="btn-sm-primary" onclick="saveGoals()">Save Goals</button></div></div></div>
 <header>
   <div class="logo">
     <svg viewBox="0 0 40 40" fill="none"><path d="M4 22L20 6L36 22" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 18V34H32V18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 34V26H24V34" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -130,7 +130,7 @@
   <div class="error-banner" id="errorBanner"></div>
   <div class="loading" id="loadingState"><div class="spinner"></div><p>Loading CA data</p></div>
   <div id="dashboard" style="display:none">
-    <div class="status-bar"><div class="status-dot"></div><span>Live data from Leap CRM - Last refreshed: <strong id="lastRefreshed">-</strong></span><span style="margin-left:auto"><button class="btn-sm" onclick="refreshData()">Refresh</button><button class="btn-sm" onclick="openConfigModal()" style="margin-left:4px">Settings</button></span></div>
+    <div class="status-bar"><div class="status-dot"></div><span>Live data from Leap CRM &nbsp;Last refreshed: <strong id="lastRefreshed">-</strong></span><span style="margin-left:auto"><button class="btn-sm" onclick="refreshData()">Refresh</button><button class="btn-sm" onclick="openConfigModal()" style="margin-left:4px">Settings</button></span></div>
     <div class="pipeline-section" id="pipelineTab">
       <div class="kpi-grid">
         <div class="kpi-card total"><div class="kpi-label">Total CAs</div><div class="kpi-value" id="kpiTotal">-</div><div class="kpi-sub">All statuses</div></div>
@@ -151,51 +151,196 @@
     <div class="ytd-section" id="ytdTab">
       <div class="ytd-kpi-grid" id="ytdKpiGrid"></div>
       <div class="monthly-card"><div class="card-title">Monthly Accepted CAs - <span id="ytdYear">2026</span></div><canvas id="monthlyChart" height="120"></canvas></div>
-      <div class="goals-card">
-        <div class="goals-header"><div><div class="goals-title">Rep Annual Goals</div><div class="goals-subtitle" id="paceLabel"></div></div><button class="goal-edit-btn" onclick="openGoalModal()">Edit Goals</button></div>
-        <div id="goalRows"></div>
-      </div>
+      <div class="goals-card"><div class="goals-header"><div><div class="goals-title">Rep Annual Goals</div><div class="goals-subtitle" id="paceLabel"></div></div><button class="goal-edit-btn" onclick="openGoalModal()">Edit Goals</button></div><div id="goalRows"></div></div>
       <div class="table-card"><div style="padding:16px 20px;border-bottom:1px solid var(--border)"><span class="table-title">YTD by Rep</span></div><div class="table-wrap"><table><thead><tr><th>Rep</th><th>Accepted</th><th>Sent</th><th>Draft</th><th>Total</th><th>Close Rate</th></tr></thead><tbody id="ytdRepTable"></tbody></table></div></div>
     </div>
   </div>
 </main>
 <script>
-const SK='douglas_ca_sheet_url',GK='douglas_ca_goals',DU='https://docs.google.com/spreadsheets/d/1ex7edGkVAC_mHKbO4V4a3UBCyNBOxW3ApQF1-bCmS-M/export?format=csv&gid=1499400196';
-let su=localStorage.getItem(SK)||DU,goals=JSON.parse(localStorage.getItem(GK)||'{}'),ar=[],af='all',sc='status',sd='asc',at='pipeline';
-window.onload=()=>{document.getElementById('headerDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});loadData();};
-function switchTab(t,el){at=t;document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('pipelineTab').classList.toggle('hidden',t!=='pipeline');document.getElementById('ytdTab').classList.toggle('active',t==='ytd');if(t==='ytd'&&ar.length)renderYTD();}
+const SK='douglas_ca_sheet_url',GK='douglas_ca_goals';
+const DU='https://docs.google.com/spreadsheets/d/1ex7edGkVAC_mHKbO4V4a3UBCyNBOxW3ApQF1-bCmS-M/export?format=csv&gid=1499400196';
+let su=localStorage.getItem(SK)||DU, goals=JSON.parse(localStorage.getItem(GK)||'{}');
+let ar=[], af='all', sc='status', sd='asc', at='pipeline';
+
+window.onload=function(){
+  document.getElementById('headerDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  loadData();
+};
+
+function switchTab(t,el){
+  at=t;
+  document.querySelectorAll('.nav-tab').forEach(function(x){x.classList.remove('active');});
+  el.classList.add('active');
+  document.getElementById('pipelineTab').classList.toggle('hidden',t!=='pipeline');
+  document.getElementById('ytdTab').classList.toggle('active',t==='ytd');
+  if(t==='ytd'&&ar.length)renderYTD();
+}
 function openConfigModal(){document.getElementById('sheetUrlInput').value=su;document.getElementById('configModal').classList.add('open');}
-function saveSheetUrl(){const v=document.getElementById('sheetUrlInput').value.trim();if(!v)return;su=v;localStorage.setItem(SK,su);document.getElementById('configModal').classList.remove('open');loadData();}
-function openGoalModal(){const reps=[...new Set(ar.map(r=>r.rep).filter(Boolean))].sort();document.getElementById('goalInputs').innerHTML=reps.map(rep=>'<div class="goal-input-row"><label>'+rep+'</label><input type="number" min="0" id="g_'+rep.replace(/\s+/g,'_')+'" value="'+(goals[rep]||'')+'" placeholder="Annual goal"></div>').join('');document.getElementById('goalModal').classList.add('open');}
+function saveSheetUrl(){var v=document.getElementById('sheetUrlInput').value.trim();if(!v)return;su=v;localStorage.setItem(SK,su);document.getElementById('configModal').classList.remove('open');loadData();}
+function openGoalModal(){
+  var reps=[];ar.forEach(function(r){if(r.rep&&reps.indexOf(r.rep)<0)reps.push(r.rep);});reps.sort();
+  document.getElementById('goalInputs').innerHTML=reps.map(function(rep){
+    var id='g'+rep.replace(/[^a-z0-9]/gi,'_');
+    return '<div class="goal-input-row"><label>'+rep+'</label><input type="number" min="0" id="'+id+'" value="'+(goals[rep]||'')+'" placeholder="Annual goal"></div>';
+  }).join('');
+  document.getElementById('goalModal').classList.add('open');
+}
 function closeGoalModal(){document.getElementById('goalModal').classList.remove('open');}
-function saveGoals(){[...new Set(ar.map(r=>r.rep).filter(Boolean))].forEach(rep=>{const i=document.getElementById('g_'+rep.replace(/\s+/g,'_'));if(i&&i.value)goals[rep]=parseInt(i.value);else delete goals[rep];});localStorage.setItem(GK,JSON.stringify(goals));closeGoalModal();if(at==='ytd')renderYTD();}
-async function loadData(){document.getElementById('loadingState').style.display='block';document.getElementById('dashboard').style.display='none';document.getElementById('errorBanner').style.display='none';try{const res=await fetch(su+(su.includes('?')?'&':'?')+'cb='+Date.now());if(!res.ok)throw new Error('HTTP '+res.status);ar=parseCSV(await res.text());document.getElementById('lastRefreshed').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});render();}catch(e){showError('Could not load: '+e.message);}}
+function saveGoals(){
+  var reps=[];ar.forEach(function(r){if(r.rep&&reps.indexOf(r.rep)<0)reps.push(r.rep);});
+  reps.forEach(function(rep){
+    var id='g'+rep.replace(/[^a-z0-9]/gi,'_');
+    var inp=document.getElementById(id);
+    if(inp&&inp.value)goals[rep]=parseInt(inp.value);else delete goals[rep];
+  });
+  localStorage.setItem(GK,JSON.stringify(goals));closeGoalModal();if(at==='ytd')renderYTD();
+}
+
+function loadData(){
+  document.getElementById('loadingState').style.display='block';
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('errorBanner').style.display='none';
+  fetch(su+(su.indexOf('?')>=0?'&':'?')+'cb='+Date.now())
+    .then(function(res){if(!res.ok)throw new Error('HTTP '+res.status);return res.text();})
+    .then(function(txt){
+      ar=parseCSV(txt);
+      document.getElementById('lastRefreshed').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+      render();
+    })
+    .catch(function(e){showError('Could not load: '+e.message);});
+}
 function refreshData(){loadData();}
-function parseCSV(csv){return csv.trim().split('\n').slice(2).map(l=>{const c=l.split(',').map(x=>x.replace(/^"|"$/g,'').trim());return{jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').replace(/\r/g,'')};}).filter(r=>r.jobId);}
-function showError(m){document.getElementById('loadingState').style.display='none';const b=document.getElementById('errorBanner');b.textContent='Warning: '+m;b.style.display='block';}
-function render(){document.getElementById('loadingState').style.display='none';document.getElementById('dashboard').style.display='block';renderKPIs();renderChart();renderLeaderboard();renderTable();if(at==='ytd')renderYTD();}
-function renderKPIs(){const t=ar.length,a=ar.filter(r=>r.status.toLowerCase()==='accepted').length,s=ar.filter(r=>r.status.toLowerCase()==='sent').length,d=ar.filter(r=>r.status.toLowerCase()==='draft').length;['kpiTotal','kpiAccepted','kpiSent','kpiDraft'].forEach((id,i)=>document.getElementById(id).textContent=[t,a,s,d][i]);document.getElementById('kpiAcceptedPct').textContent=(t?Math.round(a/t*100):0)+'% close rate';}
-let ci=null;
-function renderChart(){const c={Accepted:0,Sent:0,Draft:0};ar.forEach(r=>{const s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});const ctx=document.getElementById('statusChart').getContext('2d');if(ci)ci.destroy();ci=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:12}}}}}});}
-function renderLeaderboard(){const m={};ar.forEach(r=>{if(!r.rep)return;if(!m[r.rep])m[r.rep]={a:0,s:0,d:0,t:0,deals:[]};m[r.rep].t++;const st=r.status.toLowerCase();if(st==='accepted')m[r.rep].a++;else if(st==='sent')m[r.rep].s++;else m[r.rep].d++;m[r.rep].deals.push(r);});
-const ord={accepted:0,sent:1,draft:2};Object.values(m).forEach(x=>x.deals.sort((a,b)=>(ord[a.status.toLowerCase()]??3)-(ord[b.status.toLowerCase()]??3)));
-const reps=Object.entries(m).sort((a,b)=>b[1].a-a[1].a||b[1].t-a[1].t),mx=reps.length?Math.max(...reps.map(r=>r[1].t)):1,chips={accepted:'chip-accepted',sent:'chip-sent',draft:'chip-draft'};
-document.getElementById('repList').innerHTML=reps.map(([n,x],i)=>{const dl=x.deals.map(d=>'<div class="deal-row"><span class="deal-customer">'+(d.customer||'-')+'</span><span class="deal-address">'+(d.address||'-')+'</span><span class="deal-jobid">'+d.jobId+'</span><span class="status-chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span></div>').join('');return'<div class="rep-row"><div class="rep-header" onclick="toggleDeals('rd'+i+'',this)"><div class="rep-info"><span class="rep-name-wrap"><span class="rep-chevron">+</span><span class="rep-name">'+n+'</span></span><span class="rep-count">'+x.t+' CA'+(x.t!==1?'s':'')+'</span></div><div class="rep-bar-bg" style="margin-top:6px"><div class="rep-bar-fill" style="width:'+Math.round(x.t/mx*100)+'%"></div></div><div class="rep-badges" style="margin-top:4px">'+(x.a?'<span class="badge badge-accepted">'+x.a+' accepted</span>':'')+(x.s?'<span class="badge badge-sent">'+x.s+' sent</span>':'')+(x.d?'<span class="badge badge-draft">'+x.d+' draft</span>':'')+'</div></div><div class="rep-deals" id="rd'+i+'">'+dl+'</div></div>';}).join('');}
-function toggleDeals(id,h){const p=document.getElementById(id),c=h.querySelector('.rep-chevron'),o=p.classList.contains('open');p.classList.toggle('open',!o);c.textContent=o?'+':'-';}
-function setFilter(f,el){af=f;document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderTable();}
-function sortBy(col){if(sc===col)sd=sd==='asc'?'desc':'asc';else{sc=col;sd='asc';}document.querySelectorAll('th').forEach(t=>t.classList.remove('sort-asc','sort-desc'));const ci={jobId:0,customer:1,address:2,rep:3,status:4},ths=document.querySelectorAll('th');if(ths[ci[col]])ths[ci[col]].classList.add('sort-'+sd);renderTable();}
-function renderTable(){const q=document.getElementById('searchInput').value.toLowerCase();let rows=ar.filter(r=>{if(af!=='all'&&r.status.toLowerCase()!==af.toLowerCase())return false;if(q&&!(r.customer+' '+r.rep+' '+r.address+' '+r.jobId).toLowerCase().includes(q))return false;return true;});rows.sort((a,b)=>{let va=a[sc]||'',vb=b[sc]||'';return sd==='asc'?va.localeCompare(vb):vb.localeCompare(va);});document.getElementById('tableCount').textContent='('+rows.length+')';const chips={accepted:'chip-accepted',sent:'chip-sent',draft:'chip-draft'};const tbody=document.getElementById('tableBody');if(!rows.length){tbody.innerHTML='<tr><td colspan="5" class="empty-state">No CAs match.</td></tr>';return;}tbody.innerHTML=rows.map(r=>'<tr><td><span class="job-id">'+r.jobId+'</span></td><td><span class="customer-name">'+r.customer+'</span></td><td class="hide-mobile">'+r.address+'</td><td>'+r.rep+'</td><td><span class="status-chip '+(chips[r.status.toLowerCase()]||'')+'">'+r.status+'</span></td></tr>').join('');}
-let mc=null;
-function renderYTD(){const now=new Date(),yr=now.getFullYear();document.getElementById('ytdYear').textContent=yr;
-const acc=ar.filter(r=>r.status.toLowerCase()==='accepted'),snt=ar.filter(r=>r.status.toLowerCase()==='sent'),drt=ar.filter(r=>r.status.toLowerCase()==='draft'),tot=ar.length,rate=tot?Math.round(acc.length/tot*100):0;
-document.getElementById('ytdKpiGrid').innerHTML='<div class="kpi-card total"><div class="kpi-label">Total CAs</div><div class="kpi-value">'+tot+'</div><div class="kpi-sub">Year to date</div></div><div class="kpi-card accepted"><div class="kpi-label">Accepted</div><div class="kpi-value">'+acc.length+'</div><div class="kpi-sub">'+rate+'% close rate</div></div><div class="kpi-card sent"><div class="kpi-label">Sent</div><div class="kpi-value">'+snt.length+'</div><div class="kpi-sub">In pipeline</div></div><div class="kpi-card draft"><div class="kpi-label">Draft</div><div class="kpi-value">'+drt.length+'</div><div class="kpi-sub">In progress</div></div>';
-const mo=Array(12).fill(0);acc.forEach(r=>{if(r.jobId){const m=parseInt(r.jobId.substring(2,4))-1;if(m>=0&&m<12)mo[m]++;}});
-const ctx=document.getElementById('monthlyChart').getContext('2d');if(mc)mc.destroy();mc=new Chart(ctx,{type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{label:'Accepted',data:mo,backgroundColor:'#1a56db',borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
-const doy=Math.floor((now-new Date(yr,0,1))/86400000)+1,pp=doy/365;document.getElementById('paceLabel').textContent='Through '+now.toLocaleDateString('en-US',{month:'long'})+' - pace line = on-track target';
-const rm={};ar.forEach(r=>{if(!r.rep)return;if(!rm[r.rep])rm[r.rep]={a:0,s:0,d:0,t:0};rm[r.rep].t++;const st=r.status.toLowerCase();if(st==='accepted')rm[r.rep].a++;else if(st==='sent')rm[r.rep].s++;else rm[r.rep].d++;});
-const reps=Object.entries(rm).sort((a,b)=>b[1].a-a[1].a),gc=['#1a56db','#059669','#d97706','#7c3aed','#db2777','#0891b2'];
-document.getElementById('goalRows').innerHTML=reps.map(([n,x],i)=>{const g=goals[n];if(!g)return'<div class="goal-row"><div class="goal-info"><span class="goal-rep">'+n+'</span><span class="goal-numbers"><strong>'+x.a+'</strong> accepted - No goal set, click Edit Goals</span></div><div class="goal-track" style="margin-top:4px"><div class="goal-fill" style="width:100%;background:#f3f4f6"><span class="goal-pct" style="color:var(--text-muted)">'+x.a+' accepted</span></div></div></div>';const p=Math.min(Math.round(x.a/g*100),100),pace=Math.round(pp*g),px=Math.min(Math.round(pp*100),98),col=gc[i%gc.length],ok=x.a>=pace;return'<div class="goal-row"><div class="goal-info"><span class="goal-rep">'+n+'</span><span class="goal-numbers"><strong>'+x.a+'</strong>/'+g+' goal ('+p+'%) - '+(ok?'<span style="color:#059669;font-weight:600">On pace</span>':'<span style="color:#ef4444;font-weight:600">Behind pace</span>')+'</span></div><div class="goal-track"><div class="goal-pace-line" style="left:'+px+'%"><span class="goal-pace-label">Pace ('+pace+')</span></div><div class="goal-fill" style="width:'+p+'%;background:'+(ok?col:'#ef4444')+'">'+(p>15?'<span class="goal-pct">'+p+'%</span>':'')+'</div></div></div>';}).join('');
-document.getElementById('ytdRepTable').innerHTML=reps.map(([n,x])=>'<tr><td><strong>'+n+'</strong></td><td><span class="status-chip chip-accepted">'+x.a+'</span></td><td><span class="status-chip chip-sent">'+x.s+'</span></td><td><span class="status-chip chip-draft">'+x.d+'</span></td><td>'+x.t+'</td><td>'+(x.t?Math.round(x.a/x.t*100):0)+'%</td></tr>').join('');}
+
+function parseCSV(csv){
+  var lines=csv.trim().split('
+');
+  var data=lines.slice(2);
+  return data.map(function(line){
+    var c=line.split(',').map(function(x){return x.replace(/^"|"$/g,'').trim();});
+    return{jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').replace(/
+/g,'')};
+  }).filter(function(r){return r.jobId;});
+}
+function showError(m){
+  document.getElementById('loadingState').style.display='none';
+  var b=document.getElementById('errorBanner');b.textContent='Error: '+m;b.style.display='block';
+}
+function render(){
+  document.getElementById('loadingState').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  renderKPIs();renderChart();renderLeaderboard();renderTable();
+  if(at==='ytd')renderYTD();
+}
+function renderKPIs(){
+  var t=ar.length,a=0,s=0,d=0;
+  ar.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')a++;else if(st==='sent')s++;else d++;});
+  document.getElementById('kpiTotal').textContent=t;
+  document.getElementById('kpiAccepted').textContent=a;
+  document.getElementById('kpiSent').textContent=s;
+  document.getElementById('kpiDraft').textContent=d;
+  document.getElementById('kpiAcceptedPct').textContent=(t?Math.round(a/t*100):0)+'% close rate';
+}
+var ci=null;
+function renderChart(){
+  var c={Accepted:0,Sent:0,Draft:0};
+  ar.forEach(function(r){var s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});
+  var ctx=document.getElementById('statusChart').getContext('2d');
+  if(ci)ci.destroy();
+  ci=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:12}}}}}});
+}
+function renderLeaderboard(){
+  var m={};
+  ar.forEach(function(r){
+    if(!r.rep)return;
+    if(!m[r.rep])m[r.rep]={a:0,s:0,d:0,t:0,deals:[]};
+    m[r.rep].t++;
+    var st=r.status.toLowerCase();
+    if(st==='accepted')m[r.rep].a++;else if(st==='sent')m[r.rep].s++;else m[r.rep].d++;
+    m[r.rep].deals.push(r);
+  });
+  var reps=Object.keys(m).sort(function(a,b){return m[b].a-m[a].a||m[b].t-m[a].t;});
+  var mx=0;reps.forEach(function(n){if(m[n].t>mx)mx=m[n].t;});
+  var chips={accepted:'chip-accepted',sent:'chip-sent',draft:'chip-draft'};
+  var html='';
+  reps.forEach(function(name){
+    var x=m[name];
+    var dl='';
+    x.deals.sort(function(a,b){var o={accepted:0,sent:1,draft:2};return(o[a.status.toLowerCase()]||3)-(o[b.status.toLowerCase()]||3);});
+    x.deals.forEach(function(d){
+      dl+='<div class="deal-row"><span class="deal-customer">'+(d.customer||'-')+'</span><span class="deal-address">'+(d.address||'-')+'</span><span class="deal-jobid">'+d.jobId+'</span><span class="status-chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span></div>';
+    });
+    html+='<div class="rep-row"><div class="rep-header" onclick="toggleDeals(this)"><div class="rep-info"><span class="rep-name-wrap"><span class="rep-chevron">+</span><span class="rep-name">'+name+'</span></span><span class="rep-count">'+x.t+' CA'+(x.t!==1?'s':'')+'</span></div><div class="rep-bar-bg" style="margin-top:6px"><div class="rep-bar-fill" style="width:'+Math.round(x.t/mx*100)+'%"></div></div><div class="rep-badges" style="margin-top:4px">'+(x.a?'<span class="badge badge-accepted">'+x.a+' accepted</span>':'')+(x.s?'<span class="badge badge-sent">'+x.s+' sent</span>':'')+(x.d?'<span class="badge badge-draft">'+x.d+' draft</span>':'')+'</div></div><div class="rep-deals">'+dl+'</div></div>';
+  });
+  document.getElementById('repList').innerHTML=html;
+}
+function toggleDeals(hdr){
+  var row=hdr.parentElement;
+  var panel=row.querySelector('.rep-deals');
+  var chev=hdr.querySelector('.rep-chevron');
+  var open=panel.classList.contains('open');
+  panel.classList.toggle('open',!open);
+  chev.textContent=open?'+':'-';
+}
+function setFilter(f,el){af=f;document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('active');});el.classList.add('active');renderTable();}
+function sortBy(col){
+  if(sc===col)sd=sd==='asc'?'desc':'asc';else{sc=col;sd='asc';}
+  document.querySelectorAll('th').forEach(function(t){t.classList.remove('sort-asc','sort-desc');});
+  var ci2={jobId:0,customer:1,address:2,rep:3,status:4},ths=document.querySelectorAll('th');
+  if(ths[ci2[col]])ths[ci2[col]].classList.add('sort-'+sd);
+  renderTable();
+}
+function renderTable(){
+  var q=document.getElementById('searchInput').value.toLowerCase();
+  var rows=ar.filter(function(r){
+    if(af!=='all'&&r.status.toLowerCase()!==af.toLowerCase())return false;
+    if(q&&(r.customer+' '+r.rep+' '+r.address+' '+r.jobId).toLowerCase().indexOf(q)<0)return false;
+    return true;
+  });
+  rows.sort(function(a,b){var va=a[sc]||'',vb=b[sc]||'';return sd==='asc'?va.localeCompare(vb):vb.localeCompare(va);});
+  document.getElementById('tableCount').textContent='('+rows.length+')';
+  var chips={accepted:'chip-accepted',sent:'chip-sent',draft:'chip-draft'};
+  var tbody=document.getElementById('tableBody');
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="5" class="empty-state">No CAs match.</td></tr>';return;}
+  var h='';
+  rows.forEach(function(r){h+='<tr><td><span class="job-id">'+r.jobId+'</span></td><td><span class="customer-name">'+r.customer+'</span></td><td class="hide-mobile">'+r.address+'</td><td>'+r.rep+'</td><td><span class="status-chip '+(chips[r.status.toLowerCase()]||'')+'">'+r.status+'</span></td></tr>';});
+  tbody.innerHTML=h;
+}
+var mc=null;
+function renderYTD(){
+  var now=new Date(),yr=now.getFullYear();
+  document.getElementById('ytdYear').textContent=yr;
+  var acc=[],snt=[],drt=[],tot=ar.length;
+  ar.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')acc.push(r);else if(st==='sent')snt.push(r);else drt.push(r);});
+  var rate=tot?Math.round(acc.length/tot*100):0;
+  document.getElementById('ytdKpiGrid').innerHTML='<div class="kpi-card total"><div class="kpi-label">Total CAs</div><div class="kpi-value">'+tot+'</div><div class="kpi-sub">Year to date</div></div><div class="kpi-card accepted"><div class="kpi-label">Accepted</div><div class="kpi-value">'+acc.length+'</div><div class="kpi-sub">'+rate+'% close rate</div></div><div class="kpi-card sent"><div class="kpi-label">Sent</div><div class="kpi-value">'+snt.length+'</div><div class="kpi-sub">In pipeline</div></div><div class="kpi-card draft"><div class="kpi-label">Draft</div><div class="kpi-value">'+drt.length+'</div><div class="kpi-sub">In progress</div></div>';
+  var mo=new Array(12).fill(0);
+  acc.forEach(function(r){if(r.jobId&&r.jobId.length>=4){var m=parseInt(r.jobId.substring(2,4),10)-1;if(m>=0&&m<12)mo[m]++;}});
+  var ctx=document.getElementById('monthlyChart').getContext('2d');
+  if(mc)mc.destroy();
+  mc=new Chart(ctx,{type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{label:'Accepted',data:mo,backgroundColor:'#1a56db',borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+  var doy=Math.floor((now-new Date(yr,0,1))/86400000)+1,pp=doy/365;
+  document.getElementById('paceLabel').textContent='Through '+now.toLocaleDateString('en-US',{month:'long'})+' - pace line shows on-track target';
+  var rm={};
+  ar.forEach(function(r){if(!r.rep)return;if(!rm[r.rep])rm[r.rep]={a:0,s:0,d:0,t:0};rm[r.rep].t++;var st=r.status.toLowerCase();if(st==='accepted')rm[r.rep].a++;else if(st==='sent')rm[r.rep].s++;else rm[r.rep].d++;});
+  var reps=Object.keys(rm).sort(function(a,b){return rm[b].a-rm[a].a;});
+  var gc=['#1a56db','#059669','#d97706','#7c3aed','#db2777','#0891b2'];
+  var gh='';
+  reps.forEach(function(name,i){
+    var x=rm[name],g=goals[name];
+    if(!g){
+      gh+='<div class="goal-row"><div class="goal-info"><span class="goal-rep">'+name+'</span><span class="goal-numbers"><strong>'+x.a+'</strong> accepted - <span style="color:var(--text-muted)">No goal set</span></span></div><div class="goal-track" style="margin-top:4px"><div class="goal-fill" style="width:100%;background:#f3f4f6"><span class="goal-pct" style="color:var(--text-muted)">'+x.a+' accepted</span></div></div></div>';
+      return;
+    }
+    var p=Math.min(Math.round(x.a/g*100),100),pace=Math.round(pp*g),px=Math.min(Math.round(pp*100),98);
+    var col=gc[i%gc.length],ok=x.a>=pace;
+    var fc=ok?col:'#ef4444';
+    gh+='<div class="goal-row"><div class="goal-info"><span class="goal-rep">'+name+'</span><span class="goal-numbers"><strong>'+x.a+'</strong>/'+g+' goal ('+p+'%) - '+(ok?'<span style="color:#059669;font-weight:600">On pace</span>':'<span style="color:#ef4444;font-weight:600">Behind pace</span>')+'</span></div><div class="goal-track"><div class="goal-pace-line" style="left:'+px+'%"><span class="goal-pace-label">Pace ('+pace+')</span></div><div class="goal-fill" style="width:'+p+'%;background:'+fc+'">'+(p>15?'<span class="goal-pct">'+p+'%</span>':'')+'</div></div></div>';
+  });
+  document.getElementById('goalRows').innerHTML=gh;
+  var th='';
+  reps.forEach(function(name){var x=rm[name],cr=x.t?Math.round(x.a/x.t*100):0;th+='<tr><td><strong>'+name+'</strong></td><td><span class="status-chip chip-accepted">'+x.a+'</span></td><td><span class="status-chip chip-sent">'+x.s+'</span></td><td><span class="status-chip chip-draft">'+x.d+'</span></td><td>'+x.t+'</td><td>'+cr+'%</td></tr>';});
+  document.getElementById('ytdRepTable').innerHTML=th;
+}
 </script>
 </body>
 </html>
