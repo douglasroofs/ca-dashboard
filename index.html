@@ -6,242 +6,196 @@
   <title>Douglas Roofing | CA Dashboard</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
-    :root {
-      --brand:       #1a56db;
-      --brand-dark:  #1e429f;
-      --success:     #057a55;
-      --warning:     #c27803;
-      --danger:      #9b1c1c;
-      --neutral:     #6b7280;
-      --bg:          #f3f4f6;
-      --surface:     #ffffff;
-      --border:      #e5e7eb;
-      --text:        #111827;
-      --text-muted:  #6b7280;
-      --radius:      12px;
-      --shadow:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-    header { background: var(--brand-dark); color: #fff; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
-    .logo { display: flex; align-items: center; gap: 10px; }
-    .logo svg { width: 32px; height: 32px; flex-shrink: 0; }
-    .logo-text h1 { font-size: 1rem; font-weight: 700; line-height: 1.2; }
-    .logo-text p  { font-size: .7rem; opacity: .75; }
-    .header-right { text-align: right; font-size: .75rem; opacity: .8; }
-    .header-right strong { display: block; font-size: .8rem; }
-    main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
-    .status-bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; display: flex; align-items: center; gap: 8px; margin-bottom: 20px; font-size: .8rem; color: var(--text-muted); }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; flex-shrink: 0; box-shadow: 0 0 6px #10b981; }
-    .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
-    @media (min-width: 640px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
-    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
-    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent, var(--brand)); border-radius: var(--radius) var(--radius) 0 0; }
-    .kpi-card.total { --accent: var(--brand); }
-    .kpi-card.accepted { --accent: var(--success); }
-    .kpi-card.sent { --accent: var(--warning); }
-    .kpi-card.draft { --accent: var(--neutral); }
-    .kpi-label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); margin-bottom: 6px; }
-    .kpi-value { font-size: 2rem; font-weight: 800; line-height: 1; color: var(--text); }
-    .kpi-sub { font-size: .75rem; color: var(--text-muted); margin-top: 4px; }
-    .charts-row { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 20px; }
-    @media (min-width: 768px) { .charts-row { grid-template-columns: 1fr 1fr; } }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
-    .card-title { font-size: .85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 16px; }
-    .rep-list { display: flex; flex-direction: column; gap: 10px; }
-    .rep-row { display: flex; flex-direction: column; gap: 4px; }
-    .rep-info { display: flex; justify-content: space-between; align-items: center; }
-    .rep-name { font-size: .875rem; font-weight: 600; }
-    .rep-count { font-size: .875rem; color: var(--text-muted); }
-    .rep-bar-bg { background: var(--bg); border-radius: 4px; height: 8px; overflow: hidden; }
-    .rep-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--brand), #60a5fa); transition: width .6s ease; }
-    .rep-badges { display: flex; gap: 4px; margin-top: 2px; flex-wrap: wrap; }
-    .badge { font-size: .65rem; font-weight: 700; padding: 2px 6px; border-radius: 99px; text-transform: uppercase; letter-spacing: .04em; }
-    .badge-accepted { background: #d1fae5; color: #065f46; }
-    .badge-sent { background: #fef3c7; color: #92400e; }
-    .badge-draft { background: #f3f4f6; color: #374151; }
-    .table-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-    .table-header { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--border); }
-    @media (min-width: 640px) { .table-header { flex-direction: row; align-items: center; justify-content: space-between; } }
-    .table-title { font-size: .85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
-    .search-wrap { position: relative; }
-    .search-input { width: 100%; padding: 8px 12px 8px 34px; border: 1px solid var(--border); border-radius: 8px; font-size: .875rem; outline: none; transition: border-color .15s; }
-    .search-input:focus { border-color: var(--brand); }
-    .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
-    .filter-row { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 20px; border-bottom: 1px solid var(--border); }
-    .pill { padding: 4px 12px; border-radius: 99px; font-size: .75rem; font-weight: 600; border: 1.5px solid var(--border); background: var(--surface); cursor: pointer; transition: all .15s; color: var(--text-muted); }
-    .pill:hover { border-color: var(--brand); color: var(--brand); }
-    .pill.active { background: var(--brand); border-color: var(--brand); color: #fff; }
-    .pill.accepted.active { background: var(--success); border-color: var(--success); }
-    .pill.sent.active { background: var(--warning); border-color: var(--warning); }
-    .pill.draft.active { background: var(--neutral); border-color: var(--neutral); }
-    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    table { width: 100%; border-collapse: collapse; font-size: .875rem; }
-    th { text-align: left; padding: 10px 16px; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); background: var(--bg); border-bottom: 1px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; }
-    th:hover { color: var(--brand); }
-    th.sort-asc::after { content: ' ↑'; }
-    th.sort-desc::after { content: ' ↓'; }
-    td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #f9fafb; }
-    .status-chip { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
-    .chip-accepted { background: #d1fae5; color: #065f46; }
-    .chip-sent { background: #fef3c7; color: #92400e; }
-    .chip-draft { background: #f3f4f6; color: #374151; }
-    .job-id { font-family: monospace; font-size: .8rem; color: var(--text-muted); }
-    .customer-name { font-weight: 600; }
-    .address { color: var(--text-muted); font-size: .8rem; }
-    .empty-state { text-align: center; padding: 40px; color: var(--text-muted); }
-    @media (max-width: 639px) { .hide-mobile { display: none; } }
-    .loading { text-align: center; padding: 60px 20px; color: var(--text-muted); }
-    .spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--brand); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 12px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .error-banner { background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); padding: 16px 20px; color: #991b1b; font-size: .875rem; margin-bottom: 20px; display: none; }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
-    .modal { background: var(--surface); border-radius: var(--radius); padding: 28px; max-width: 480px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
-    .modal h2 { font-size: 1.1rem; margin-bottom: 8px; }
-    .modal p { font-size: .875rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
-    .modal input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: .875rem; margin-bottom: 16px; outline: none; }
-    .modal input:focus { border-color: var(--brand); }
-    .btn { display: inline-block; padding: 10px 20px; border-radius: 8px; font-size: .875rem; font-weight: 600; cursor: pointer; border: none; transition: all .15s; }
-    .btn-primary { background: var(--brand); color: #fff; width: 100%; text-align: center; }
-    .btn-primary:hover { background: var(--brand-dark); }
-    .btn-sm { padding: 4px 10px; font-size: .75rem; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); cursor: pointer; color: var(--text-muted); }
-    .btn-sm:hover { border-color: var(--brand); color: var(--brand); }
+    :root{--brand:#1a56db;--brand-dark:#1e429f;--success:#057a55;--warning:#c27803;--neutral:#6b7280;--bg:#f3f4f6;--surface:#fff;--border:#e5e7eb;--text:#111827;--text-muted:#6b7280;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    header{background:var(--brand-dark);color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+    .logo{display:flex;align-items:center;gap:10px}.logo svg{width:32px;height:32px;flex-shrink:0}
+    .logo-text h1{font-size:1rem;font-weight:700}.logo-text p{font-size:.7rem;opacity:.75}
+    .header-right{text-align:right;font-size:.75rem;opacity:.8}.header-right strong{display:block;font-size:.8rem}
+    .nav-tabs{background:var(--brand-dark);border-top:1px solid rgba(255,255,255,.15);display:flex;padding:0 20px}
+    .nav-tab{padding:10px 18px;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.65);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+    .nav-tab:hover{color:#fff}.nav-tab.active{color:#fff;border-bottom-color:#fff}
+    main{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+    .status-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:.8rem;color:var(--text-muted)}
+    .status-dot{width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;box-shadow:0 0 6px #10b981}
+    .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+    @media(min-width:640px){.kpi-grid{grid-template-columns:repeat(4,1fr)}}
+    .kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--brand));border-radius:var(--radius) var(--radius) 0 0}
+    .kpi-card.total{--accent:var(--brand)}.kpi-card.accepted{--accent:var(--success)}.kpi-card.sent{--accent:var(--warning)}.kpi-card.draft{--accent:var(--neutral)}
+    .kpi-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:6px}
+    .kpi-value{font-size:2rem;font-weight:800;line-height:1}.kpi-sub{font-size:.75rem;color:var(--text-muted);margin-top:4px}
+    .charts-row{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:20px}
+    @media(min-width:768px){.charts-row{grid-template-columns:1fr 1fr}}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+    .card-title{font-size:.85rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
+    .rep-list{display:flex;flex-direction:column;gap:10px}.rep-row{display:flex;flex-direction:column;gap:4px}
+    .rep-header{cursor:pointer;padding:6px 4px;border-radius:6px;transition:background .15s}.rep-header:hover{background:var(--bg)}
+    .rep-info{display:flex;justify-content:space-between;align-items:center}
+    .rep-name-wrap{display:flex;align-items:center;gap:6px}.rep-name{font-size:.875rem;font-weight:600}
+    .rep-chevron{font-size:.65rem;color:var(--text-muted);transition:transform .2s;display:inline-block}.rep-chevron.open{transform:rotate(90deg)}
+    .rep-count{font-size:.875rem;color:var(--text-muted)}
+    .rep-bar-bg{background:var(--bg);border-radius:4px;height:8px;overflow:hidden}
+    .rep-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--brand),#60a5fa);transition:width .6s ease}
+    .rep-badges{display:flex;gap:4px;margin-top:2px;flex-wrap:wrap}
+    .badge{font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:99px;text-transform:uppercase}
+    .badge-accepted{background:#d1fae5;color:#065f46}.badge-sent{background:#fef3c7;color:#92400e}.badge-draft{background:#f3f4f6;color:#374151}
+    .rep-deals{display:none;flex-direction:column;gap:4px;margin-top:4px;padding:6px 8px;background:var(--bg);border-radius:8px;border-left:3px solid var(--brand)}
+    .rep-deals.open{display:flex}
+    .deal-row{display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--surface);border-radius:6px;border:1px solid var(--border)}
+    .deal-customer{font-size:.8rem;font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .deal-address{font-size:.7rem;color:var(--text-muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none}
+    .deal-jobid{font-family:monospace;font-size:.7rem;color:var(--text-muted);flex-shrink:0}
+    @media(min-width:640px){.deal-address{display:block}}
+    .table-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .table-header{padding:16px 20px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--border)}
+    @media(min-width:640px){.table-header{flex-direction:row;align-items:center;justify-content:space-between}}
+    .table-title{font-size:.85rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em}
+    .search-wrap{position:relative}.search-input{width:100%;padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:8px;font-size:.875rem;outline:none}
+    .search-input:focus{border-color:var(--brand)}.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none}
+    .filter-row{display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px;border-bottom:1px solid var(--border)}
+    .pill{padding:4px 12px;border-radius:99px;font-size:.75rem;font-weight:600;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .15s;color:var(--text-muted)}
+    .pill:hover{border-color:var(--brand);color:var(--brand)}.pill.active{background:var(--brand);border-color:var(--brand);color:#fff}
+    .pill.accepted.active{background:var(--success);border-color:var(--success)}.pill.sent.active{background:var(--warning);border-color:var(--warning)}.pill.draft.active{background:var(--neutral);border-color:var(--neutral)}
+    .table-wrap{overflow-x:auto}.table-title-wrap{padding:16px 20px;border-bottom:1px solid var(--border)}
+    table{width:100%;border-collapse:collapse;font-size:.875rem}
+    th{text-align:left;padding:10px 16px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);background:var(--bg);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+    th:hover{color:var(--brand)}th.sort-asc::after{content:' ↑'}th.sort-desc::after{content:' ↓'}
+    td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
+    tr:last-child td{border-bottom:none}tr:hover td{background:#f9fafb}
+    .status-chip{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.7rem;font-weight:700;text-transform:uppercase}
+    .chip-accepted{background:#d1fae5;color:#065f46}.chip-sent{background:#fef3c7;color:#92400e}.chip-draft{background:#f3f4f6;color:#374151}
+    .job-id{font-family:monospace;font-size:.8rem;color:var(--text-muted)}.customer-name{font-weight:600}.address{color:var(--text-muted);font-size:.8rem}
+    .empty-state{text-align:center;padding:40px;color:var(--text-muted)}
+    @media(max-width:639px){.hide-mobile{display:none}}
+    .ytd-section{display:none}.ytd-section.active{display:block}.pipeline-section{display:block}.pipeline-section.hidden{display:none}
+    .ytd-kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+    @media(min-width:640px){.ytd-kpi-grid{grid-template-columns:repeat(4,1fr)}}
+    .goals-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:20px}
+    .goals-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+    .goals-title{font-size:.85rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em}
+    .goals-subtitle{font-size:.75rem;color:var(--text-muted)}
+    .goal-row{margin-bottom:16px}.goal-row:last-child{margin-bottom:0}
+    .goal-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px}
+    .goal-rep{font-size:.875rem;font-weight:600}.goal-numbers{font-size:.75rem;color:var(--text-muted)}.goal-numbers strong{color:var(--text)}
+    .goal-track{position:relative;background:var(--bg);border-radius:6px;height:22px;overflow:hidden;margin-top:20px}
+    .goal-fill{height:100%;border-radius:6px;transition:width .8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+    .goal-pct{font-size:.65rem;font-weight:700;color:#fff}
+    .goal-pace-line{position:absolute;top:0;bottom:0;width:2px;background:rgba(0,0,0,.3);z-index:2}
+    .goal-pace-label{position:absolute;top:-18px;font-size:.6rem;color:var(--text-muted);transform:translateX(-50%);white-space:nowrap;font-weight:600}
+    .goal-edit-btn{font-size:.7rem;padding:3px 10px;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--text-muted)}
+    .goal-edit-btn:hover{border-color:var(--brand);color:var(--brand)}
+    .monthly-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:20px}
+    .goal-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:300;padding:20px}
+    .goal-modal.open{display:flex}
+    .goal-modal-box{background:var(--surface);border-radius:var(--radius);padding:24px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .goal-modal-box h3{font-size:1rem;font-weight:700;margin-bottom:4px}.goal-modal-box p{font-size:.8rem;color:var(--text-muted);margin-bottom:16px}
+    .goal-inputs{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+    .goal-input-row{display:flex;align-items:center;gap:10px}.goal-input-row label{font-size:.8rem;font-weight:600;min-width:140px;flex-shrink:0}
+    .goal-input-row input{flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:.875rem;outline:none}
+    .goal-input-row input:focus{border-color:var(--brand)}
+    .goal-modal-actions{display:flex;gap:8px;justify-content:flex-end}
+    .btn-sm-primary{padding:7px 16px;border-radius:6px;background:var(--brand);color:#fff;border:none;font-size:.8rem;font-weight:600;cursor:pointer}
+    .btn-sm-cancel{padding:7px 16px;border-radius:6px;background:var(--bg);color:var(--text-muted);border:1px solid var(--border);font-size:.8rem;cursor:pointer}
+    .loading{text-align:center;padding:60px 20px;color:var(--text-muted)}
+    .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .error-banner{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius);padding:16px 20px;color:#991b1b;font-size:.875rem;margin-bottom:20px;display:none}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+    .modal-overlay.open{display:flex}
+    .modal{background:var(--surface);border-radius:var(--radius);padding:28px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .modal h2{font-size:1.1rem;margin-bottom:8px}.modal p{font-size:.875rem;color:var(--text-muted);margin-bottom:20px;line-height:1.5}
+    .modal input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.875rem;margin-bottom:16px;outline:none}
+    .btn{display:inline-block;padding:10px 20px;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;border:none}
+    .btn-primary{background:var(--brand);color:#fff;width:100%;text-align:center}
+    .btn-sm{padding:4px 10px;font-size:.75rem;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--text-muted)}.btn-sm:hover{border-color:var(--brand);color:var(--brand)}
   </style>
 </head>
 <body>
-<div class="modal-overlay" id="configModal" style="display:none">
-  <div class="modal">
-    <h2>Douglas Roofing Dashboard</h2>
-    <p>Paste the Google Sheets CSV link for your CA_Tracker_v3 Data tab.</p>
-    <input type="text" id="sheetUrlInput" placeholder="https://docs.google.com/spreadsheets/d/..." />
-    <button class="btn btn-primary" onclick="saveSheetUrl()">Connect Sheet</button>
-  </div>
-</div>
+<div class="modal-overlay" id="configModal"><div class="modal"><h2>Douglas Roofing Dashboard</h2><p>Paste the Google Sheets CSV export link for your CA_Tracker_v3 Data tab.</p><input type="text" id="sheetUrlInput" /><button class="btn btn-primary" onclick="saveSheetUrl()">Connect Sheet</button></div></div>
+<div class="goal-modal" id="goalModal"><div class="goal-modal-box"><h3>Set Annual Goals</h3><p>Enter the number of accepted CAs each rep should close this year.</p><div class="goal-inputs" id="goalInputs"></div><div class="goal-modal-actions"><button class="btn-sm-cancel" onclick="closeGoalModal()">Cancel</button><button class="btn-sm-primary" onclick="saveGoals()">Save Goals</button></div></div></div>
 <header>
   <div class="logo">
-    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 22L20 6L36 22" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M8 18V34H32V18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M16 34V26H24V34" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+    <svg viewBox="0 0 40 40" fill="none"><path d="M4 22L20 6L36 22" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 18V34H32V18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 34V26H24V34" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <div class="logo-text"><h1>Douglas Roofing</h1><p>CA Sales Dashboard</p></div>
   </div>
-  <div class="header-right"><strong id="headerDate">—</strong><span>Updated daily</span></div>
+  <div class="header-right"><strong id="headerDate">-</strong><span>Updated daily</span></div>
 </header>
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="switchTab('pipeline',this)">Pipeline</div>
+  <div class="nav-tab" onclick="switchTab('ytd',this)">Year to Date</div>
+</div>
 <main>
   <div class="error-banner" id="errorBanner"></div>
-  <div class="loading" id="loadingState"><div class="spinner"></div><p>Loading CA data…</p></div>
+  <div class="loading" id="loadingState"><div class="spinner"></div><p>Loading CA data</p></div>
   <div id="dashboard" style="display:none">
-    <div class="status-bar">
-      <div class="status-dot"></div>
-      <span>Live data from Leap CRM &nbsp;·&nbsp; Last refreshed: <strong id="lastRefreshed">—</strong></span>
-      <span style="margin-left:auto">
-        <button class="btn-sm" onclick="refreshData()">↻ Refresh</button>
-        <button class="btn-sm" onclick="showConfig()" style="margin-left:4px">⚙ Settings</button>
-      </span>
-    </div>
-    <div class="kpi-grid">
-      <div class="kpi-card total"><div class="kpi-label">Total CAs</div><div class="kpi-value" id="kpiTotal">—</div><div class="kpi-sub">All statuses</div></div>
-      <div class="kpi-card accepted"><div class="kpi-label">Accepted</div><div class="kpi-value" id="kpiAccepted">—</div><div class="kpi-sub" id="kpiAcceptedPct">—% close rate</div></div>
-      <div class="kpi-card sent"><div class="kpi-label">Sent</div><div class="kpi-value" id="kpiSent">—</div><div class="kpi-sub">Awaiting signature</div></div>
-      <div class="kpi-card draft"><div class="kpi-label">Draft</div><div class="kpi-value" id="kpiDraft">—</div><div class="kpi-sub">In progress</div></div>
-    </div>
-    <div class="charts-row">
-      <div class="card"><div class="card-title">Pipeline by Status</div><canvas id="statusChart" height="200"></canvas></div>
-      <div class="card"><div class="card-title">Rep Leaderboard</div><div class="rep-list" id="repList"></div></div>
-    </div>
-    <div class="table-card">
-      <div class="table-header">
-        <span class="table-title">All CAs <span id="tableCount" style="font-weight:400;text-transform:none;font-size:.8rem;margin-left:4px"></span></span>
-        <div class="search-wrap" style="min-width:220px">
-          <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input class="search-input" id="searchInput" placeholder="Search customer, rep, address…" oninput="renderTable()" />
-        </div>
+    <div class="status-bar"><div class="status-dot"></div><span>Live data from Leap CRM - Last refreshed: <strong id="lastRefreshed">-</strong></span><span style="margin-left:auto"><button class="btn-sm" onclick="refreshData()">Refresh</button><button class="btn-sm" onclick="openConfigModal()" style="margin-left:4px">Settings</button></span></div>
+    <div class="pipeline-section" id="pipelineTab">
+      <div class="kpi-grid">
+        <div class="kpi-card total"><div class="kpi-label">Total CAs</div><div class="kpi-value" id="kpiTotal">-</div><div class="kpi-sub">All statuses</div></div>
+        <div class="kpi-card accepted"><div class="kpi-label">Accepted</div><div class="kpi-value" id="kpiAccepted">-</div><div class="kpi-sub" id="kpiAcceptedPct">-% close rate</div></div>
+        <div class="kpi-card sent"><div class="kpi-label">Sent</div><div class="kpi-value" id="kpiSent">-</div><div class="kpi-sub">Awaiting signature</div></div>
+        <div class="kpi-card draft"><div class="kpi-label">Draft</div><div class="kpi-value" id="kpiDraft">-</div><div class="kpi-sub">In progress</div></div>
       </div>
-      <div class="filter-row">
-        <button class="pill active" onclick="setFilter('all',this)">All</button>
-        <button class="pill accepted" onclick="setFilter('Accepted',this)">Accepted</button>
-        <button class="pill sent" onclick="setFilter('Sent',this)">Sent</button>
-        <button class="pill draft" onclick="setFilter('Draft',this)">Draft</button>
+      <div class="charts-row">
+        <div class="card"><div class="card-title">Pipeline by Status</div><canvas id="statusChart" height="200"></canvas></div>
+        <div class="card"><div class="card-title">Rep Leaderboard (tap to expand)</div><div class="rep-list" id="repList"></div></div>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th onclick="sortBy('jobId')">Job ID</th>
-            <th onclick="sortBy('customer')">Customer</th>
-            <th class="hide-mobile" onclick="sortBy('address')">Address</th>
-            <th onclick="sortBy('rep')">Rep</th>
-            <th onclick="sortBy('status')">Status</th>
-          </tr></thead>
-          <tbody id="tableBody"></tbody>
-        </table>
+      <div class="table-card">
+        <div class="table-header"><span class="table-title">All CAs <span id="tableCount"></span></span><div class="search-wrap" style="min-width:220px"><svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input class="search-input" id="searchInput" placeholder="Search customer, rep, address" oninput="renderTable()" /></div></div>
+        <div class="filter-row"><button class="pill active" onclick="setFilter('all',this)">All</button><button class="pill accepted" onclick="setFilter('Accepted',this)">Accepted</button><button class="pill sent" onclick="setFilter('Sent',this)">Sent</button><button class="pill draft" onclick="setFilter('Draft',this)">Draft</button></div>
+        <div class="table-wrap"><table><thead><tr><th onclick="sortBy('jobId')">Job ID</th><th onclick="sortBy('customer')">Customer</th><th class="hide-mobile" onclick="sortBy('address')">Address</th><th onclick="sortBy('rep')">Rep</th><th onclick="sortBy('status')">Status</th></tr></thead><tbody id="tableBody"></tbody></table></div>
       </div>
+    </div>
+    <div class="ytd-section" id="ytdTab">
+      <div class="ytd-kpi-grid" id="ytdKpiGrid"></div>
+      <div class="monthly-card"><div class="card-title">Monthly Accepted CAs - <span id="ytdYear">2026</span></div><canvas id="monthlyChart" height="120"></canvas></div>
+      <div class="goals-card">
+        <div class="goals-header"><div><div class="goals-title">Rep Annual Goals</div><div class="goals-subtitle" id="paceLabel"></div></div><button class="goal-edit-btn" onclick="openGoalModal()">Edit Goals</button></div>
+        <div id="goalRows"></div>
+      </div>
+      <div class="table-card"><div style="padding:16px 20px;border-bottom:1px solid var(--border)"><span class="table-title">YTD by Rep</span></div><div class="table-wrap"><table><thead><tr><th>Rep</th><th>Accepted</th><th>Sent</th><th>Draft</th><th>Total</th><th>Close Rate</th></tr></thead><tbody id="ytdRepTable"></tbody></table></div></div>
     </div>
   </div>
 </main>
 <script>
-  const STORAGE_KEY = 'douglas_ca_sheet_url';
-  const DEFAULT_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1ex7edGkVAC_mHKbO4V4a3UBCyNBOxW3ApQF1-bCmS-M/export?format=csv&gid=1499400196';
-  let sheetUrl = localStorage.getItem(STORAGE_KEY) || DEFAULT_SHEET_URL;
-  let allRows = [], activeFilter = 'all', sortCol = 'status', sortDir = 'asc';
-  window.onload = () => {
-    document.getElementById('headerDate').textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    loadData();
-  };
-  function showConfig() { document.getElementById('sheetUrlInput').value = sheetUrl; document.getElementById('configModal').style.display = 'flex'; }
-  function saveSheetUrl() { const v = document.getElementById('sheetUrlInput').value.trim(); if(!v)return; sheetUrl=v; localStorage.setItem(STORAGE_KEY,sheetUrl); document.getElementById('configModal').style.display='none'; loadData(); }
-  async function loadData() {
-    document.getElementById('loadingState').style.display='block';
-    document.getElementById('dashboard').style.display='none';
-    document.getElementById('errorBanner').style.display='none';
-    try {
-      const url = sheetUrl + (sheetUrl.includes('?')?'&':'?') + 'cb=' + Date.now();
-      const res = await fetch(url);
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      allRows = parseCSV(await res.text());
-      document.getElementById('lastRefreshed').textContent = new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-      render();
-    } catch(err) { showError('Could not load data: '+err.message+'. Make sure the sheet is shared as "Anyone with link can view".'); }
-  }
-  function refreshData() { loadData(); }
-  function parseCSV(csv) {
-    return csv.trim().split('\n').slice(2).map(line => {
-      const c = line.split(',').map(x => x.replace(/^"|"$/g,'').trim());
-      return { docName:c[0]||'', jobId:c[1]||'', customer:c[2]||'', address:c[3]||'', rep:c[4]||'', status:(c[5]||'').replace(/\r/g,'') };
-    }).filter(r => r.jobId);
-  }
-  function showError(msg) { document.getElementById('loadingState').style.display='none'; const b=document.getElementById('errorBanner'); b.textContent='⚠ '+msg; b.style.display='block'; }
-  function render() { document.getElementById('loadingState').style.display='none'; document.getElementById('dashboard').style.display='block'; renderKPIs(); renderStatusChart(); renderRepLeaderboard(); renderTable(); }
-  function renderKPIs() {
-    const total=allRows.length, accepted=allRows.filter(r=>r.status.toLowerCase()==='accepted').length, sent=allRows.filter(r=>r.status.toLowerCase()==='sent').length, draft=allRows.filter(r=>r.status.toLowerCase()==='draft').length;
-    document.getElementById('kpiTotal').textContent=total; document.getElementById('kpiAccepted').textContent=accepted; document.getElementById('kpiSent').textContent=sent; document.getElementById('kpiDraft').textContent=draft;
-    document.getElementById('kpiAcceptedPct').textContent=(total>0?Math.round(accepted/total*100):0)+'% close rate';
-  }
-  let chartInst=null;
-  function renderStatusChart() {
-    const c={Accepted:0,Sent:0,Draft:0}; allRows.forEach(r=>{const s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});
-    const ctx=document.getElementById('statusChart').getContext('2d'); if(chartInst)chartInst.destroy();
-    chartInst=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:12}}},tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw} (${Math.round(ctx.raw/allRows.length*100)}%)`}}}}});
-  }
-  function renderRepLeaderboard() {
-    const m={}; allRows.forEach(r=>{if(!r.rep)return;if(!m[r.rep])m[r.rep]={accepted:0,sent:0,draft:0,total:0};m[r.rep].total++;const s=r.status.toLowerCase();if(s==='accepted')m[r.rep].accepted++;else if(s==='sent')m[r.rep].sent++;else m[r.rep].draft++;});
-    const reps=Object.entries(m).sort((a,b)=>b[1].accepted-a[1].accepted||b[1].total-a[1].total), max=reps.length>0?Math.max(...reps.map(r=>r[1].total)):1;
-    document.getElementById('repList').innerHTML=reps.map(([n,s])=>`<div class="rep-row"><div class="rep-info"><span class="rep-name">${n}</span><span class="rep-count">${s.total} CA${s.total!==1?'s':''}</span></div><div class="rep-bar-bg"><div class="rep-bar-fill" style="width:${Math.round(s.total/max*100)}%"></div></div><div class="rep-badges">${s.accepted?`<span class="badge badge-accepted">✓ ${s.accepted} accepted</span>`:''} ${s.sent?`<span class="badge badge-sent">→ ${s.sent} sent</span>`:''} ${s.draft?`<span class="badge badge-draft">✎ ${s.draft} draft</span>`:''}</div></div>`).join('');
-  }
-  function setFilter(f,el){activeFilter=f;document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderTable();}
-  function sortBy(col){if(sortCol===col)sortDir=sortDir==='asc'?'desc':'asc';else{sortCol=col;sortDir='asc';}document.querySelectorAll('th').forEach(th=>th.classList.remove('sort-asc','sort-desc'));const ci={jobId:0,customer:1,address:2,rep:3,status:4};const ths=document.querySelectorAll('th');if(ths[ci[col]])ths[ci[col]].classList.add('sort-'+sortDir);renderTable();}
-  function renderTable(){
-    const q=document.getElementById('searchInput').value.toLowerCase();
-    let rows=allRows.filter(r=>{if(activeFilter!=='all'&&r.status.toLowerCase()!==activeFilter.toLowerCase())return false;if(q&&!`${r.customer} ${r.rep} ${r.address} ${r.jobId}`.toLowerCase().includes(q))return false;return true;});
-    rows.sort((a,b)=>{let va=a[sortCol]||'',vb=b[sortCol]||'';return sortDir==='asc'?va.localeCompare(vb):vb.localeCompare(va);});
-    document.getElementById('tableCount').textContent=`(${rows.length})`;
-    const sc={accepted:'chip-accepted',sent:'chip-sent',draft:'chip-draft'};
-    const tbody=document.getElementById('tableBody');
-    if(rows.length===0){tbody.innerHTML='<tr><td colspan="5" class="empty-state">No CAs match this filter.</td></tr>';return;}
-    tbody.innerHTML=rows.map(r=>{const s=r.status.toLowerCase();return`<tr><td><span class="job-id">${r.jobId}</span></td><td><span class="customer-name">${r.customer}</span></td><td class="hide-mobile"><span class="address">${r.address}</span></td><td>${r.rep}</td><td><span class="status-chip ${sc[s]||''}">${r.status}</span></td></tr>`;}).join('');
-  }
+const SK='douglas_ca_sheet_url',GK='douglas_ca_goals',DU='https://docs.google.com/spreadsheets/d/1ex7edGkVAC_mHKbO4V4a3UBCyNBOxW3ApQF1-bCmS-M/export?format=csv&gid=1499400196';
+let su=localStorage.getItem(SK)||DU,goals=JSON.parse(localStorage.getItem(GK)||'{}'),ar=[],af='all',sc='status',sd='asc',at='pipeline';
+window.onload=()=>{document.getElementById('headerDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});loadData();};
+function switchTab(t,el){at=t;document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('pipelineTab').classList.toggle('hidden',t!=='pipeline');document.getElementById('ytdTab').classList.toggle('active',t==='ytd');if(t==='ytd'&&ar.length)renderYTD();}
+function openConfigModal(){document.getElementById('sheetUrlInput').value=su;document.getElementById('configModal').classList.add('open');}
+function saveSheetUrl(){const v=document.getElementById('sheetUrlInput').value.trim();if(!v)return;su=v;localStorage.setItem(SK,su);document.getElementById('configModal').classList.remove('open');loadData();}
+function openGoalModal(){const reps=[...new Set(ar.map(r=>r.rep).filter(Boolean))].sort();document.getElementById('goalInputs').innerHTML=reps.map(rep=>'<div class="goal-input-row"><label>'+rep+'</label><input type="number" min="0" id="g_'+rep.replace(/\s+/g,'_')+'" value="'+(goals[rep]||'')+'" placeholder="Annual goal"></div>').join('');document.getElementById('goalModal').classList.add('open');}
+function closeGoalModal(){document.getElementById('goalModal').classList.remove('open');}
+function saveGoals(){[...new Set(ar.map(r=>r.rep).filter(Boolean))].forEach(rep=>{const i=document.getElementById('g_'+rep.replace(/\s+/g,'_'));if(i&&i.value)goals[rep]=parseInt(i.value);else delete goals[rep];});localStorage.setItem(GK,JSON.stringify(goals));closeGoalModal();if(at==='ytd')renderYTD();}
+async function loadData(){document.getElementById('loadingState').style.display='block';document.getElementById('dashboard').style.display='none';document.getElementById('errorBanner').style.display='none';try{const res=await fetch(su+(su.includes('?')?'&':'?')+'cb='+Date.now());if(!res.ok)throw new Error('HTTP '+res.status);ar=parseCSV(await res.text());document.getElementById('lastRefreshed').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});render();}catch(e){showError('Could not load: '+e.message);}}
+function refreshData(){loadData();}
+function parseCSV(csv){return csv.trim().split('\n').slice(2).map(l=>{const c=l.split(',').map(x=>x.replace(/^"|"$/g,'').trim());return{jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').replace(/\r/g,'')};}).filter(r=>r.jobId);}
+function showError(m){document.getElementById('loadingState').style.display='none';const b=document.getElementById('errorBanner');b.textContent='Warning: '+m;b.style.display='block';}
+function render(){document.getElementById('loadingState').style.display='none';document.getElementById('dashboard').style.display='block';renderKPIs();renderChart();renderLeaderboard();renderTable();if(at==='ytd')renderYTD();}
+function renderKPIs(){const t=ar.length,a=ar.filter(r=>r.status.toLowerCase()==='accepted').length,s=ar.filter(r=>r.status.toLowerCase()==='sent').length,d=ar.filter(r=>r.status.toLowerCase()==='draft').length;['kpiTotal','kpiAccepted','kpiSent','kpiDraft'].forEach((id,i)=>document.getElementById(id).textContent=[t,a,s,d][i]);document.getElementById('kpiAcceptedPct').textContent=(t?Math.round(a/t*100):0)+'% close rate';}
+let ci=null;
+function renderChart(){const c={Accepted:0,Sent:0,Draft:0};ar.forEach(r=>{const s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});const ctx=document.getElementById('statusChart').getContext('2d');if(ci)ci.destroy();ci=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:12}}}}}});}
+function renderLeaderboard(){const m={};ar.forEach(r=>{if(!r.rep)return;if(!m[r.rep])m[r.rep]={a:0,s:0,d:0,t:0,deals:[]};m[r.rep].t++;const st=r.status.toLowerCase();if(st==='accepted')m[r.rep].a++;else if(st==='sent')m[r.rep].s++;else m[r.rep].d++;m[r.rep].deals.push(r);});
+const ord={accepted:0,sent:1,draft:2};Object.values(m).forEach(x=>x.deals.sort((a,b)=>(ord[a.status.toLowerCase()]??3)-(ord[b.status.toLowerCase()]??3)));
+const reps=Object.entries(m).sort((a,b)=>b[1].a-a[1].a||b[1].t-a[1].t),mx=reps.length?Math.max(...reps.map(r=>r[1].t)):1,chips={accepted:'chip-accepted',sent:'chip-sent',draft:'chip-draft'};
+document.getElementById('repList').innerHTML=reps.map(([n,x],i)=>{const dl=x.deals.map(d=>'<div class="deal-row"><span class="deal-customer">'+(d.customer||'-')+'</span><span class="deal-address">'+(d.address||'-')+'</span><span class="deal-jobid">'+d.jobId+'</span><span class="status-chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span></div>').join('');return'<div class="rep-row"><div class="rep-header" onclick="toggleDeals('rd'+i+'',this)"><div class="rep-info"><span class="rep-name-wrap"><span class="rep-chevron">+</span><span class="rep-name">'+n+'</span></span><span class="rep-count">'+x.t+' CA'+(x.t!==1?'s':'')+'</span></div><div class="rep-bar-bg" style="margin-top:6px"><div class="rep-bar-fill" style="width:'+Math.round(x.t/mx*100)+'%"></div></div><div class="rep-badges" style="margin-top:4px">'+(x.a?'<span class="badge badge-accepted">'+x.a+' accepted</span>':'')+(x.s?'<span class="badge badge-sent">'+x.s+' sent</span>':'')+(x.d?'<span class="badge badge-draft">'+x.d+' draft</span>':'')+'</div></div><div class="rep-deals" id="rd'+i+'">'+dl+'</div></div>';}).join('');}
+function toggleDeals(id,h){const p=document.getElementById(id),c=h.querySelector('.rep-chevron'),o=p.classList.contains('open');p.classList.toggle('open',!o);c.textContent=o?'+':'-';}
+function setFilter(f,el){af=f;document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderTable();}
+function sortBy(col){if(sc===col)sd=sd==='asc'?'desc':'asc';else{sc=col;sd='asc';}document.querySelectorAll('th').forEach(t=>t.classList.remove('sort-asc','sort-desc'));const ci={jobId:0,customer:1,address:2,rep:3,status:4},ths=document.querySelectorAll('th');if(ths[ci[col]])ths[ci[col]].classList.add('sort-'+sd);renderTable();}
+function renderTable(){const q=document.getElementById('searchInput').value.toLowerCase();let rows=ar.filter(r=>{if(af!=='all'&&r.status.toLowerCase()!==af.toLowerCase())return false;if(q&&!(r.customer+' '+r.rep+' '+r.address+' '+r.jobId).toLowerCase().includes(q))return false;return true;});rows.sort((a,b)=>{let va=a[sc]||'',vb=b[sc]||'';return sd==='asc'?va.localeCompare(vb):vb.localeCompare(va);});document.getElementById('tableCount').textContent='('+rows.length+')';const chips={accepted:'chip-accepted',sent:'chip-sent',draft:'chip-draft'};const tbody=document.getElementById('tableBody');if(!rows.length){tbody.innerHTML='<tr><td colspan="5" class="empty-state">No CAs match.</td></tr>';return;}tbody.innerHTML=rows.map(r=>'<tr><td><span class="job-id">'+r.jobId+'</span></td><td><span class="customer-name">'+r.customer+'</span></td><td class="hide-mobile">'+r.address+'</td><td>'+r.rep+'</td><td><span class="status-chip '+(chips[r.status.toLowerCase()]||'')+'">'+r.status+'</span></td></tr>').join('');}
+let mc=null;
+function renderYTD(){const now=new Date(),yr=now.getFullYear();document.getElementById('ytdYear').textContent=yr;
+const acc=ar.filter(r=>r.status.toLowerCase()==='accepted'),snt=ar.filter(r=>r.status.toLowerCase()==='sent'),drt=ar.filter(r=>r.status.toLowerCase()==='draft'),tot=ar.length,rate=tot?Math.round(acc.length/tot*100):0;
+document.getElementById('ytdKpiGrid').innerHTML='<div class="kpi-card total"><div class="kpi-label">Total CAs</div><div class="kpi-value">'+tot+'</div><div class="kpi-sub">Year to date</div></div><div class="kpi-card accepted"><div class="kpi-label">Accepted</div><div class="kpi-value">'+acc.length+'</div><div class="kpi-sub">'+rate+'% close rate</div></div><div class="kpi-card sent"><div class="kpi-label">Sent</div><div class="kpi-value">'+snt.length+'</div><div class="kpi-sub">In pipeline</div></div><div class="kpi-card draft"><div class="kpi-label">Draft</div><div class="kpi-value">'+drt.length+'</div><div class="kpi-sub">In progress</div></div>';
+const mo=Array(12).fill(0);acc.forEach(r=>{if(r.jobId){const m=parseInt(r.jobId.substring(2,4))-1;if(m>=0&&m<12)mo[m]++;}});
+const ctx=document.getElementById('monthlyChart').getContext('2d');if(mc)mc.destroy();mc=new Chart(ctx,{type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{label:'Accepted',data:mo,backgroundColor:'#1a56db',borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+const doy=Math.floor((now-new Date(yr,0,1))/86400000)+1,pp=doy/365;document.getElementById('paceLabel').textContent='Through '+now.toLocaleDateString('en-US',{month:'long'})+' - pace line = on-track target';
+const rm={};ar.forEach(r=>{if(!r.rep)return;if(!rm[r.rep])rm[r.rep]={a:0,s:0,d:0,t:0};rm[r.rep].t++;const st=r.status.toLowerCase();if(st==='accepted')rm[r.rep].a++;else if(st==='sent')rm[r.rep].s++;else rm[r.rep].d++;});
+const reps=Object.entries(rm).sort((a,b)=>b[1].a-a[1].a),gc=['#1a56db','#059669','#d97706','#7c3aed','#db2777','#0891b2'];
+document.getElementById('goalRows').innerHTML=reps.map(([n,x],i)=>{const g=goals[n];if(!g)return'<div class="goal-row"><div class="goal-info"><span class="goal-rep">'+n+'</span><span class="goal-numbers"><strong>'+x.a+'</strong> accepted - No goal set, click Edit Goals</span></div><div class="goal-track" style="margin-top:4px"><div class="goal-fill" style="width:100%;background:#f3f4f6"><span class="goal-pct" style="color:var(--text-muted)">'+x.a+' accepted</span></div></div></div>';const p=Math.min(Math.round(x.a/g*100),100),pace=Math.round(pp*g),px=Math.min(Math.round(pp*100),98),col=gc[i%gc.length],ok=x.a>=pace;return'<div class="goal-row"><div class="goal-info"><span class="goal-rep">'+n+'</span><span class="goal-numbers"><strong>'+x.a+'</strong>/'+g+' goal ('+p+'%) - '+(ok?'<span style="color:#059669;font-weight:600">On pace</span>':'<span style="color:#ef4444;font-weight:600">Behind pace</span>')+'</span></div><div class="goal-track"><div class="goal-pace-line" style="left:'+px+'%"><span class="goal-pace-label">Pace ('+pace+')</span></div><div class="goal-fill" style="width:'+p+'%;background:'+(ok?col:'#ef4444')+'">'+(p>15?'<span class="goal-pct">'+p+'%</span>':'')+'</div></div></div>';}).join('');
+document.getElementById('ytdRepTable').innerHTML=reps.map(([n,x])=>'<tr><td><strong>'+n+'</strong></td><td><span class="status-chip chip-accepted">'+x.a+'</span></td><td><span class="status-chip chip-sent">'+x.s+'</span></td><td><span class="status-chip chip-draft">'+x.d+'</span></td><td>'+x.t+'</td><td>'+(x.t?Math.round(x.a/x.t*100):0)+'%</td></tr>').join('');}
 </script>
 </body>
 </html>
