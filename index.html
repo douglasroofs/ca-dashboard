@@ -352,61 +352,100 @@ function renderYTD(){
   var diy=yr%4===0?366:365;
   var yearPct=doy/diy;
 
+  // KPIs
   var csYtd=0,csYtdJ=0,aYtd=0,aYtdJ=0;
   if(revData&&revData.reps){revData.reps.forEach(function(r){csYtd+=r.contract_ytd_amount||0;csYtdJ+=r.contract_ytd_jobs||0;aYtd+=r.approved_ytd_amount||0;aYtdJ+=r.approved_ytd_jobs||0;});}
   document.getElementById('kCSYtd').textContent=fmtD(csYtd);
   document.getElementById('kCSYtdJ').textContent=csYtdJ+' contracts';
   document.getElementById('kAYtd').textContent=fmtD(aYtd);
   document.getElementById('kAYtdJ').textContent=aYtdJ+' jobs';
-
-  // CA YTD from rows (all data is current year in our case)
   var t=rows.length,a=rows.filter(function(r){return r.status.toLowerCase()==='accepted';}).length;
   document.getElementById('kCTotYtd').textContent=t;
   document.getElementById('kCAccYtd').textContent=a;
   document.getElementById('kCAccYtdR').textContent=(t?Math.round(a/t*100):0)+'% close rate';
 
-  // Monthly trend chart using revenue data month field
+  // Monthly CAs accepted chart (by job ID prefix YYMM)
   var mo=new Array(12).fill(0);
-  if(revData&&revData.reps){
-    revData.reps.forEach(function(rep){
-      // We only have MTD for current month - use ytd as approximation for bar
-      // This will be improved when we have monthly breakdown data
-    });
-  }
-  // Use CA job IDs to approximate monthly bar chart
-  rows.forEach(function(r){if(r.jobId&&r.jobId.length>=4){var mv=parseInt(r.jobId.substring(2,4),10)-1;if(mv>=0&&mv<12)mo[mv]++;}});
-
+  rows.forEach(function(r){
+    if(r.status.toLowerCase()==='accepted'&&r.jobId&&r.jobId.length>=4){
+      var y2=r.jobId.substring(0,2),m2=parseInt(r.jobId.substring(2,4),10)-1;
+      if(y2===String(yr).substring(2)&&m2>=0&&m2<12)mo[m2]++;
+    }
+  });
   var ctx=document.getElementById('ytdChart').getContext('2d');
   if(ytdChartInst)ytdChartInst.destroy();
   ytdChartInst=new Chart(ctx,{type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{label:'CAs Accepted',data:mo,backgroundColor:'#1a3a6b',borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
 
-  // Rep annual goal progress
+  // Build per-rep monthly CA breakdown
+  var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var curMonth=now.getMonth(); // 0-indexed, only show through current month
+
+  // Group rows by rep and month (accepted only)
+  var repMonthMap={};
+  rows.forEach(function(r){
+    if(!r.rep||r.status.toLowerCase()!=='accepted')return;
+    if(!r.jobId||r.jobId.length<4)return;
+    var y2=r.jobId.substring(0,2),m2=parseInt(r.jobId.substring(2,4),10)-1;
+    if(y2!==String(yr).substring(2)||m2<0||m2>11)return;
+    if(!repMonthMap[r.rep])repMonthMap[r.rep]={};
+    if(!repMonthMap[r.rep][m2])repMonthMap[r.rep][m2]=[];
+    repMonthMap[r.rep][m2].push(r);
+  });
+
   var repHtml='';
   ACTIVE_TEAM.forEach(function(name,i){
     var revRep=null;
     if(revData&&revData.reps){revData.reps.forEach(function(r){if(r.rep===name)revRep=r;});}
     var csYtdAmt=revRep?revRep.contract_ytd_amount:0;
-    var csYtdJ=revRep?revRep.contract_ytd_jobs:0;
     var aYtdAmt=revRep?revRep.approved_ytd_amount:0;
     var revGoal=getRevGoal(name);
-    var caGoal=getCAGoal(name)*12;
     var pct=Math.min(Math.round(csYtdAmt/revGoal*100),100);
     var pacePct=Math.min(Math.round(yearPct*100),98);
-    var col=['#1a3a6b','#059669','#d97706','#7c3aed','#db2777','#0891b2','#065f46','#92400e','#374151','#1e40af','#065f46','#0891b2','#7c3aed','#db2777','#d97706','#374151','#1a3a6b'][i%17];
     var ok=csYtdAmt>=(revGoal*yearPct);
-    var caYtd=rows.filter(function(r){return r.rep===name&&r.status.toLowerCase()==='accepted';}).length;
+    var gc=['#1a3a6b','#059669','#d97706','#7c3aed','#db2777','#0891b2','#065f46','#92400e','#374151','#1e40af','#065f46','#0891b2','#7c3aed','#db2777','#d97706','#374151','#1a3a6b'];
+    var col=gc[i%gc.length];
+    var totalAccepted=Object.values(repMonthMap[name]||{}).reduce(function(s,arr){return s+arr.length;},0);
+
     repHtml+='<div class="ytd-rep-row">';
-    repHtml+='<div class="ytd-rep-header"><span class="ytd-rep-name">'+name+'</span><span style="font-size:.75rem;font-weight:600;color:'+(ok?'#059669':'#ef4444')+'">'+(ok?'On pace':'Behind pace')+'</span></div>';
-    repHtml+='<div class="ytd-stats">';
-    repHtml+='<div class="ytd-stat"><div class="ytd-stat-lbl">Contract Signed</div><div class="ytd-stat-val">'+fmtD(csYtdAmt)+'</div></div>';
-    repHtml+='<div class="ytd-stat"><div class="ytd-stat-lbl">Approved</div><div class="ytd-stat-val">'+fmtD(aYtdAmt)+'</div></div>';
-    repHtml+='<div class="ytd-stat"><div class="ytd-stat-lbl">CAs Accepted</div><div class="ytd-stat-val">'+caYtd+'</div></div>';
+    repHtml+='<div class="ytd-rep-header">';
+    repHtml+='<span class="ytd-rep-name">'+name+'</span>';
+    repHtml+='<span style="font-size:.75rem;color:var(--muted)">'+totalAccepted+' CAs accepted YTD &nbsp;|&nbsp; </span>';
+    repHtml+='<span style="font-size:.75rem;font-weight:600;color:'+(ok?'#059669':'#ef4444')+'">'+(ok?'Rev on pace':'Rev behind pace')+'</span>';
     repHtml+='</div>';
-    repHtml+='<div class="goal-row"><div class="goal-label-row"><span>'+fmtD(csYtdAmt)+' of '+fmtD(revGoal)+' annual goal ('+pct+'%)</span></div>';
-    repHtml+='<div class="goal-track" style="height:14px"><div class="pace-line" style="left:'+pacePct+'%"></div><div class="goal-fill" style="width:'+pct+'%;background:'+(ok?col:'#ef4444')+'">'+(pct>15?'<span class="goal-fill-pct">'+pct+'%</span>':'')+'</div></div></div>';
+
+    // Revenue progress bar
+    repHtml+='<div class="goal-row" style="margin-bottom:10px"><div class="goal-label-row"><span>Contract Signed: '+fmtD(csYtdAmt)+' of '+fmtD(revGoal)+'</span><span>Approved: '+fmtD(aYtdAmt)+'</span></div>';
+    repHtml+='<div class="goal-track" style="height:12px"><div class="pace-line" style="left:'+pacePct+'%"></div><div class="goal-fill" style="width:'+pct+'%;background:'+(ok?col:'#ef4444')+'">'+(pct>15?'<span class="goal-fill-pct">'+pct+'%</span>':'')+'</div></div></div>';
+
+    // Monthly CA breakdown
+    repHtml+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">';
+    for(var m=0;m<=curMonth;m++){
+      var mCAs=repMonthMap[name]&&repMonthMap[name][m]?repMonthMap[name][m]:[];
+      var count=mCAs.length;
+      var mid='ytdm_'+eR(name)+'_'+m;
+      repHtml+='<div style="flex-shrink:0">';
+      repHtml+='<button onclick="toggleYtdMonth(''+mid+'')" style="padding:3px 8px;border-radius:6px;border:1px solid var(--border);background:'+(count>0?'#1a3a6b':'var(--bg)')+';color:'+(count>0?'#fff':'var(--muted)')+';font-size:.7rem;font-weight:600;cursor:'+(count>0?'pointer':'default')+'">';
+      repHtml+=MONTHS[m]+': '+count;
+      repHtml+='</button>';
+      if(count>0){
+        repHtml+='<div id="'+mid+'" style="display:none;margin-top:4px;padding:6px 8px;background:var(--bg);border-radius:6px;border-left:3px solid #1a3a6b;min-width:220px">';
+        mCAs.forEach(function(ca){
+          var dateStr=ca.date?(' <span style="color:var(--muted);font-size:.65rem">'+ca.date+'</span>'):'';
+          repHtml+='<div style="padding:3px 0;font-size:.75rem;border-bottom:1px solid var(--border)"><strong>'+ca.customer+'</strong>'+dateStr+'</div>';
+        });
+        repHtml+='</div>';
+      }
+      repHtml+='</div>';
+    }
+    repHtml+='</div>';
     repHtml+='</div>';
   });
   document.getElementById('ytdRepList').innerHTML=repHtml;
+}
+
+function toggleYtdMonth(id){
+  var el=document.getElementById(id);
+  if(el)el.style.display=el.style.display==='none'?'block':'none';
 }
 </script>
 </body>
