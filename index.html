@@ -16,175 +16,391 @@
     .nav-tab{padding:10px 18px;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.65);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}.nav-tab:hover{color:#fff}.nav-tab.active{color:#fff;border-bottom-color:#fff}
     main{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
     .sbar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:.8rem;color:var(--muted)}.sdot{width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;box-shadow:0 0 6px #10b981}
-    .mtd-banner{background:linear-gradient(135deg,var(--brand-dark),var(--brand));border-radius:var(--radius);padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}.mtd-title{color:#fff;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.mtd-sub{color:rgba(255,255,255,.75);font-size:.75rem}
+    .banner{border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+    .banner-title{color:#fff;font-size:.9rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+    .banner-sub{color:rgba(255,255,255,.8);font-size:.75rem}
     .kgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}@media(min-width:640px){.kgrid{grid-template-columns:repeat(4,1fr)}}
     .kcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}.kcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--ac,var(--brand));border-radius:var(--radius) var(--radius) 0 0}
-    .kcard.t{--ac:var(--brand)}.kcard.a{--ac:var(--success)}.kcard.s{--ac:var(--warning)}.kcard.d{--ac:var(--neutral)}
-    .klbl{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}.kval{font-size:2rem;font-weight:800;line-height:1}.ksub{font-size:.75rem;color:var(--muted);margin-top:4px}
-    .crow{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:20px}@media(min-width:768px){.crow{grid-template-columns:1fr 1fr}}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}.ctitle{font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
-    .ctitle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:8px}.ctitle-row .ctitle{margin-bottom:0}
-    .rlist{display:flex;flex-direction:column;gap:12px}.rrow{display:flex;flex-direction:column;gap:4px}
-    .rhdr{cursor:pointer;padding:6px 4px;border-radius:6px;transition:background .15s}.rhdr:hover{background:var(--bg)}
-    .rinfo{display:flex;justify-content:space-between;align-items:center}.rnw{display:flex;align-items:center;gap:6px}.rname{font-size:.875rem;font-weight:600}.rchev{font-size:.65rem;color:var(--muted);display:inline-block;width:12px;text-align:center}.rcnt{font-size:.875rem;color:var(--muted)}
-    .rgoal-wrap{margin:4px 0 2px}.rgoal-track{position:relative;background:#e5e7eb;border-radius:6px;height:14px;overflow:hidden}
-    .rgoal-fill{height:100%;border-radius:6px;transition:width .6s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:5px}.rgoal-pct{font-size:.6rem;font-weight:700;color:#fff;white-space:nowrap}
-    .rgoal-lbl{display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);margin-top:2px}
-    .rbadges{display:flex;gap:4px;margin-top:2px;flex-wrap:wrap}.badge{font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:99px;text-transform:uppercase}.ba{background:#d1fae5;color:#065f46}.bs{background:#fef3c7;color:#92400e}.bd{background:#f3f4f6;color:#374151}
-    .rdeals{display:none;flex-direction:column;gap:4px;margin-top:4px;padding:6px 8px;background:var(--bg);border-radius:8px;border-left:3px solid var(--brand)}.rdeals.open{display:flex}
-    .drow{display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--surface);border-radius:6px;border:1px solid var(--border)}.dcust{font-size:.8rem;font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.daddr{font-size:.7rem;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none}.djid{font-family:monospace;font-size:.7rem;color:var(--muted);flex-shrink:0}@media(min-width:640px){.daddr{display:block}}
-    .tcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-    .thdr{padding:16px 20px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--border)}@media(min-width:640px){.thdr{flex-direction:row;align-items:center;justify-content:space-between}}
-    .ttl{font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.swrap{position:relative}.sinp{width:100%;padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:8px;font-size:.875rem;outline:none}.sinp:focus{border-color:var(--brand)}.sico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
-    .frow{display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px;border-bottom:1px solid var(--border)}.pill{padding:4px 12px;border-radius:99px;font-size:.75rem;font-weight:600;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .15s;color:var(--muted)}.pill:hover{border-color:var(--brand);color:var(--brand)}.pill.active{background:var(--brand);border-color:var(--brand);color:#fff}.pill.pa.active{background:var(--success);border-color:var(--success)}.pill.ps.active{background:var(--warning);border-color:var(--warning)}.pill.pd.active{background:var(--neutral);border-color:var(--neutral)}
-    .twrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.875rem}th{text-align:left;padding:10px 16px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--bg);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}th:hover{color:var(--brand)}td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:middle}tr:last-child td{border-bottom:none}tr:hover td{background:#f9fafb}
-    .chip{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.7rem;font-weight:700;text-transform:uppercase}.ca{background:#d1fae5;color:#065f46}.cs{background:#fef3c7;color:#92400e}.cd{background:#f3f4f6;color:#374151}
-    .jid{font-family:monospace;font-size:.8rem;color:var(--muted)}.cnm{font-weight:600}.empty{text-align:center;padding:40px;color:var(--muted)}@media(max-width:639px){.hm{display:none}}
-    .ytd{display:none}.ytd.active{display:block}.pipe{display:block}.pipe.hidden{display:none}
-    .rev{display:none}.rev.active{display:block}
-    .ygrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}@media(min-width:640px){.ygrid{grid-template-columns:repeat(4,1fr)}}
-    .gcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:20px}.ghdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}.gtitle{font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.gsub{font-size:.75rem;color:var(--muted)}
-    .grow{margin-bottom:16px}.grow:last-child{margin-bottom:0}.ginfo{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px}.grep{font-size:.875rem;font-weight:600}.gnum{font-size:.75rem;color:var(--muted)}.gnum strong{color:var(--text)}
-    .gtrack{position:relative;background:var(--bg);border-radius:6px;height:22px;overflow:hidden;margin-top:20px}.gfill{height:100%;border-radius:6px;transition:width .8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}.gpct{font-size:.65rem;font-weight:700;color:#fff}
-    .gline{position:absolute;top:0;bottom:0;width:2px;background:rgba(0,0,0,.3);z-index:2}.glbl{position:absolute;top:-18px;font-size:.6rem;color:var(--muted);transform:translateX(-50%);white-space:nowrap;font-weight:600}
-    .gedit{font-size:.7rem;padding:3px 10px;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--muted)}.gedit:hover{border-color:var(--brand);color:var(--brand)}
+    .kcard.k1{--ac:#059669}.kcard.k2{--ac:#1a3a6b}.kcard.k3{--ac:#c27803}.kcard.k4{--ac:#6b7280}
+    .klbl{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px}
+    .kval{font-size:1.8rem;font-weight:800;line-height:1.1}.ksub{font-size:.72rem;color:var(--muted);margin-top:3px}
+    .section-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:20px}@media(min-width:900px){.section-grid{grid-template-columns:1fr 1fr}}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+    .card-title{font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+    .rep-list{display:flex;flex-direction:column;gap:14px}
+    .rep-item{border-bottom:1px solid var(--border);padding-bottom:12px}.rep-item:last-child{border-bottom:none;padding-bottom:0}
+    .rep-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .rep-name{font-size:.875rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
+    .rep-chev{font-size:.65rem;color:var(--muted);transition:transform .2s}
+    .rep-badges{display:flex;gap:4px;flex-wrap:wrap}
+    .rbadge{font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:99px;text-transform:uppercase}
+    .rb-green{background:#d1fae5;color:#065f46}.rb-yellow{background:#fef3c7;color:#92400e}.rb-gray{background:#f3f4f6;color:#374151}
+    .goal-bars{display:flex;flex-direction:column;gap:6px}
+    .goal-row{display:flex;flex-direction:column;gap:2px}
+    .goal-label-row{display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted)}
+    .goal-track{background:#e5e7eb;border-radius:6px;height:10px;overflow:hidden;position:relative}
+    .goal-fill{height:100%;border-radius:6px;transition:width .8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:4px}
+    .goal-fill-pct{font-size:.55rem;font-weight:700;color:#fff}
+    .pace-line{position:absolute;top:0;bottom:0;width:2px;background:rgba(0,0,0,.2);z-index:2}
+    .rep-deals{display:none;flex-direction:column;gap:4px;margin-top:8px;padding:8px;background:var(--bg);border-radius:8px;border-left:3px solid var(--brand)}
+    .rep-deals.open{display:flex}
+    .deal-row{display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--surface);border-radius:6px;border:1px solid var(--border);font-size:.78rem}
+    .deal-name{font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .deal-addr{color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none}@media(min-width:640px){.deal-addr{display:block}}
+    .deal-id{font-family:monospace;font-size:.7rem;color:var(--muted);flex-shrink:0}
+    .chip{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.65rem;font-weight:700;text-transform:uppercase}
+    .ca{background:#d1fae5;color:#065f46}.cs{background:#fef3c7;color:#92400e}.cd{background:#f3f4f6;color:#374151}
+    .tcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+    .thdr{padding:14px 20px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--border)}@media(min-width:640px){.thdr{flex-direction:row;align-items:center;justify-content:space-between}}
+    .ttl{font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+    .swrap{position:relative}.sinp{width:100%;padding:7px 12px 7px 32px;border:1px solid var(--border);border-radius:8px;font-size:.8rem;outline:none}.sinp:focus{border-color:var(--brand)}.sico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+    .frow{display:flex;gap:6px;flex-wrap:wrap;padding:8px 20px;border-bottom:1px solid var(--border)}
+    .pill{padding:3px 10px;border-radius:99px;font-size:.72rem;font-weight:600;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .15s;color:var(--muted)}.pill:hover{border-color:var(--brand);color:var(--brand)}.pill.active{background:var(--brand);border-color:var(--brand);color:#fff}.pill.pa.active{background:var(--success);border-color:var(--success)}.pill.ps.active{background:var(--warning);border-color:var(--warning)}.pill.pd.active{background:var(--neutral);border-color:var(--neutral)}
+    .twrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.85rem}
+    th{text-align:left;padding:9px 16px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--bg);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}th:hover{color:var(--brand)}
+    td{padding:11px 16px;border-bottom:1px solid var(--border);vertical-align:middle}tr:last-child td{border-bottom:none}tr:hover td{background:#f9fafb}
+    .jid{font-family:monospace;font-size:.78rem;color:var(--muted)}.cnm{font-weight:600}.empty{text-align:center;padding:40px;color:var(--muted)}@media(max-width:639px){.hm{display:none}}
+    .ytd-sec{display:none}.ytd-sec.active{display:block}.mtd-sec{display:block}.mtd-sec.hidden{display:none}
+    .ytd-rep-row{display:flex;flex-direction:column;gap:6px;padding:14px 0;border-bottom:1px solid var(--border)}.ytd-rep-row:last-child{border-bottom:none}
+    .ytd-rep-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .ytd-rep-name{font-size:.875rem;font-weight:700}
+    .ytd-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+    .ytd-stat{background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center}
+    .ytd-stat-lbl{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:2px}
+    .ytd-stat-val{font-size:1rem;font-weight:800;color:var(--text)}
     .mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:20px}
-    .rev-rep-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:20px}@media(min-width:640px){.rev-rep-grid{grid-template-columns:1fr 1fr}}@media(min-width:900px){.rev-rep-grid{grid-template-columns:1fr 1fr 1fr}}
-    .rev-rep-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
-    .rev-rep-name{font-size:.9rem;font-weight:700;margin-bottom:10px;color:var(--text)}
-    .rev-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-    .rev-stat{background:var(--bg);border-radius:8px;padding:8px 10px}
-    .rev-stat-lbl{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:2px}
-    .rev-stat-val{font-size:1.1rem;font-weight:800;color:var(--text);line-height:1.2}
-    .rev-stat-sub{font-size:.7rem;color:var(--muted);margin-top:1px}
-    .rev-bar-bg{background:var(--bg);border-radius:4px;height:5px;overflow:hidden;margin-top:8px}
-    .rev-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#059669,#34d399);transition:width .8s ease}
     .modal-base{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:300;padding:20px}.modal-base.open{display:flex}
-    .mbox{background:var(--surface);border-radius:var(--radius);padding:24px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}.mbox h3{font-size:1rem;font-weight:700;margin-bottom:4px}.mbox p{font-size:.8rem;color:var(--muted);margin-bottom:16px}
-    .ginputs{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}.girow{display:flex;align-items:center;gap:10px}.girow label{font-size:.8rem;font-weight:600;min-width:140px;flex-shrink:0}.girow input{flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:.875rem;outline:none}.girow input:focus{border-color:var(--brand)}
+    .mbox{background:var(--surface);border-radius:var(--radius);padding:24px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:80vh;overflow-y:auto}
+    .mbox h3{font-size:1rem;font-weight:700;margin-bottom:4px}.mbox p{font-size:.8rem;color:var(--muted);margin-bottom:16px}
+    .ginputs{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+    .girow{display:flex;align-items:center;gap:10px}.girow label{font-size:.8rem;font-weight:600;min-width:140px;flex-shrink:0}.girow input{flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:.875rem;outline:none}.girow input:focus{border-color:var(--brand)}
     .mact{display:flex;gap:8px;justify-content:flex-end}.bprim{padding:7px 16px;border-radius:6px;background:var(--brand);color:#fff;border:none;font-size:.8rem;font-weight:600;cursor:pointer}.bcanc{padding:7px 16px;border-radius:6px;background:var(--bg);color:var(--muted);border:1px solid var(--border);font-size:.8rem;cursor:pointer}
     .loading{text-align:center;padding:60px 20px;color:var(--muted)}.spin{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 12px}@keyframes sp{to{transform:rotate(360deg)}}
-    .err{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius);padding:16px 20px;color:#991b1b;font-size:.875rem;margin-bottom:20px;display:none}
+    .err{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius);padding:14px 20px;color:#991b1b;font-size:.875rem;margin-bottom:20px;display:none}
     .moverlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}.moverlay.open{display:flex}.modal{background:var(--surface);border-radius:var(--radius);padding:28px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}.modal h2{font-size:1.1rem;margin-bottom:8px}.modal p{font-size:.875rem;color:var(--muted);margin-bottom:20px;line-height:1.5}.modal input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.875rem;margin-bottom:16px;outline:none}
-    .btn{display:inline-block;padding:10px 20px;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;border:none}.btnp{background:var(--brand);color:#fff;width:100%;text-align:center}.btns{padding:4px 10px;font-size:.75rem;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--muted)}.btns:hover{border-color:var(--brand);color:var(--brand)}
+    .btn{display:inline-block;padding:10px 20px;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;border:none}.btnp{background:var(--brand);color:#fff;width:100%;text-align:center}.btns{padding:4px 10px;font-size:.72rem;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--muted)}.btns:hover{border-color:var(--brand);color:var(--brand)}
   </style>
 </head>
 <body>
 <div class="moverlay" id="cfgM"><div class="modal"><h2>Douglas Roofing Dashboard</h2><p>Paste the Google Sheets CSV export link for your CA_Tracker_v3 Data tab.</p><input type="text" id="cfgUrl"><button class="btn btnp" onclick="saveUrl()">Connect Sheet</button></div></div>
-<div class="modal-base" id="annualM"><div class="mbox"><h3>Set Annual Goals</h3><p>Enter each rep's annual target for accepted CAs.</p><div class="ginputs" id="annualInp"></div><div class="mact"><button class="bcanc" onclick="closeModal('annualM')">Cancel</button><button class="bprim" onclick="saveAnnual()">Save Goals</button></div></div></div>
-<div class="modal-base" id="monthlyM"><div class="mbox"><h3>Set Monthly Goals</h3><p>Enter each rep's monthly target (default: 8).</p><div class="ginputs" id="monthlyInp"></div><div class="mact"><button class="bcanc" onclick="closeModal('monthlyM')">Cancel</button><button class="bprim" onclick="saveMonthly()">Save Goals</button></div></div></div>
+<div class="modal-base" id="goalsM">
+  <div class="mbox">
+    <h3>Set Rep Goals</h3>
+    <p>Monthly CA goal and Annual Contract Signed revenue goal per rep.</p>
+    <div class="ginputs" id="goalsInp"></div>
+    <div class="mact"><button class="bcanc" onclick="closeModal('goalsM')">Cancel</button><button class="bprim" onclick="saveGoals()">Save Goals</button></div>
+  </div>
+</div>
 <header>
-  <div class="logo"><img src="logo.png" onerror="this.style.display='none'" alt="Douglas Roofing"><div class="logo-text"><h1>Douglas Roofing</h1><p>CA Sales Dashboard</p></div></div>
+  <div class="logo"><img src="logo.png" onerror="this.style.display='none'" alt="DR"><div class="logo-text"><h1>Douglas Roofing</h1><p>CA Sales Dashboard</p></div></div>
   <div class="hdr-r"><strong id="hdate">-</strong><span>Updated daily</span></div>
 </header>
 <div class="nav-tabs">
-  <div class="nav-tab active" onclick="switchTab('pipeline',this)">Pipeline</div>
-  <div class="nav-tab" onclick="switchTab('ytd',this)">Year to Date</div>
-  <div class="nav-tab" onclick="switchTab('revenue',this)">Revenue</div>
+  <div class="nav-tab active" onclick="switchTab('mtd',this)">MTD</div>
+  <div class="nav-tab" onclick="switchTab('ytd',this)">YTD</div>
 </div>
 <main>
   <div class="err" id="errB"></div>
-  <div class="loading" id="ldg"><div class="spin"></div><p>Loading CA data</p></div>
+  <div class="loading" id="ldg"><div class="spin"></div><p>Loading data</p></div>
   <div id="dash" style="display:none">
-    <div class="sbar"><div class="sdot"></div><span>Live data from Leap CRM - Last refreshed: <strong id="lref">-</strong></span><span style="margin-left:auto"><button class="btns" onclick="reload()">Refresh</button><button class="btns" onclick="openCfg()" style="margin-left:4px">Settings</button></span></div>
-    <div class="pipe" id="pipeTab">
-      <div class="mtd-banner"><div><div class="mtd-title">Month to Date</div><div class="mtd-sub" id="mtdSub">Current month</div></div><div class="mtd-sub" id="mtdDays"></div></div>
-      <div class="kgrid"><div class="kcard t"><div class="klbl">Total CAs</div><div class="kval" id="kT">-</div><div class="ksub">This month</div></div><div class="kcard a"><div class="klbl">Accepted</div><div class="kval" id="kA">-</div><div class="ksub" id="kAp">-% close rate</div></div><div class="kcard s"><div class="klbl">Sent</div><div class="kval" id="kS">-</div><div class="ksub">Awaiting signature</div></div><div class="kcard d"><div class="klbl">Draft</div><div class="kval" id="kD">-</div><div class="ksub">In progress</div></div></div>
-      <div class="crow"><div class="card"><div class="ctitle">Pipeline by Status</div><canvas id="cht" height="200"></canvas></div><div class="card"><div class="ctitle-row"><div class="ctitle">Rep Leaderboard <span style="font-size:.7rem;font-weight:400;text-transform:none;color:var(--muted)">(tap to expand)</span></div><button class="gedit" onclick="openMonthlyGoals()">Edit Monthly Goals</button></div><div class="rlist" id="repL"></div></div></div>
-      <div class="tcard"><div class="thdr"><span class="ttl">All CAs <span id="tcnt"></span></span><div class="swrap" style="min-width:220px"><svg class="sico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input class="sinp" id="srch" placeholder="Search customer, rep, address" oninput="renderT()"></div></div><div class="frow"><button class="pill active" onclick="filt('all',this)">All</button><button class="pill pa" onclick="filt('accepted',this)">Accepted</button><button class="pill ps" onclick="filt('sent',this)">Sent</button><button class="pill pd" onclick="filt('draft',this)">Draft</button></div><div class="twrap"><table><thead><tr><th onclick="srt('jobId')">Job ID</th><th onclick="srt('customer')">Customer</th><th class="hm" onclick="srt('address')">Address</th><th onclick="srt('rep')">Rep</th><th onclick="srt('status')">Status</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+    <div class="sbar"><div class="sdot"></div><span>Live data from Leap CRM - Last refreshed: <strong id="lref">-</strong></span><span style="margin-left:auto"><button class="btns" onclick="reload()">Refresh</button><button class="btns" onclick="openCfg()" style="margin-left:4px">Settings</button><button class="btns" onclick="openGoals()" style="margin-left:4px">Edit Goals</button></span></div>
+
+    <!-- MTD TAB -->
+    <div class="mtd-sec" id="mtdTab">
+      <div class="banner" style="background:linear-gradient(135deg,var(--brand-dark),var(--brand))">
+        <div><div class="banner-title">Month to Date</div><div class="banner-sub" id="mtdSub">-</div></div>
+        <div class="banner-sub" id="mtdDays">-</div>
+      </div>
+      <div class="kgrid">
+        <div class="kcard k1"><div class="klbl">Contract Signed MTD</div><div class="kval" id="kCSMtd">-</div><div class="ksub" id="kCSMtdJ">- contracts</div></div>
+        <div class="kcard k2"><div class="klbl">Approved MTD</div><div class="kval" id="kAMtd">-</div><div class="ksub" id="kAMtdJ">- jobs</div></div>
+        <div class="kcard k3"><div class="klbl">CAs Accepted</div><div class="kval" id="kCAcc">-</div><div class="ksub" id="kCAccR">-% close rate</div></div>
+        <div class="kcard k4"><div class="klbl">Total CAs</div><div class="kval" id="kCTot">-</div><div class="ksub">This month</div></div>
+      </div>
+      <div class="section-grid">
+        <div class="card">
+          <div class="card-title">
+            Rep Performance
+            <span style="font-size:.7rem;font-weight:400;text-transform:none;color:var(--muted)">(tap to expand)</span>
+          </div>
+          <div class="rep-list" id="repList"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Pipeline by Status</div>
+          <canvas id="cht" height="220"></canvas>
+        </div>
+      </div>
+      <div class="tcard">
+        <div class="thdr">
+          <span class="ttl">All CAs <span id="tcnt"></span></span>
+          <div class="swrap" style="min-width:200px"><svg class="sico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input class="sinp" id="srch" placeholder="Search customer, rep, address" oninput="renderT()"></div>
+        </div>
+        <div class="frow"><button class="pill active" onclick="filt('all',this)">All</button><button class="pill pa" onclick="filt('accepted',this)">Accepted</button><button class="pill ps" onclick="filt('sent',this)">Sent</button><button class="pill pd" onclick="filt('draft',this)">Draft</button></div>
+        <div class="twrap"><table><thead><tr><th onclick="srt('jobId')">Job ID</th><th onclick="srt('customer')">Customer</th><th class="hm" onclick="srt('address')">Address</th><th onclick="srt('rep')">Rep</th><th onclick="srt('status')">Status</th></tr></thead><tbody id="tbody"></tbody></table></div>
+      </div>
     </div>
-    <div class="ytd" id="ytdTab">
-      <div class="ygrid" id="ykpi"></div>
-      <div class="mcard"><div class="ctitle">Monthly Accepted CAs - <span id="yrN">2026</span></div><canvas id="mcht" height="120"></canvas></div>
-      <div class="gcard"><div class="ghdr"><div><div class="gtitle">Rep Annual Goals</div><div class="gsub" id="pace"></div></div><button class="gedit" onclick="openAnnualGoals()">Edit Annual Goals</button></div><div id="gRows"></div></div>
-      <div class="tcard"><div style="padding:16px 20px;border-bottom:1px solid var(--border)"><span class="ttl">YTD by Rep</span></div><div class="twrap"><table><thead><tr><th>Rep</th><th>Accepted</th><th>Sent</th><th>Draft</th><th>Total</th><th>Close Rate</th></tr></thead><tbody id="ytdT"></tbody></table></div></div>
-    </div>
-    <div class="rev" id="revTab">
-      <div class="mtd-banner" style="background:linear-gradient(135deg,#065f46,#059669);margin-bottom:16px"><div><div class="mtd-title">Revenue Dashboard</div><div class="mtd-sub" id="revSub">Loading...</div></div><div class="mtd-sub" id="revMonth"></div></div>
-      <div class="kgrid" id="revKpis"></div>
-      <div class="card" style="margin-bottom:20px"><div class="ctitle">MTD: Approved vs Contract Signed by Rep</div><canvas id="revChart" height="100"></canvas></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">  <div class="card"><div class="ctitle" style="color:#059669">Approved (Job Awarded)</div><div id="revApprovedList"></div></div><div class="card"><div class="ctitle" style="color:#1a3a6b">Contract Signed</div><div id="revContractList"></div></div></div>
+
+    <!-- YTD TAB -->
+    <div class="ytd-sec" id="ytdTab">
+      <div class="banner" style="background:linear-gradient(135deg,#065f46,#059669)">
+        <div><div class="banner-title">Year to Date</div><div class="banner-sub" id="ytdSub">-</div></div>
+        <div class="banner-sub" id="ytdDays">-</div>
+      </div>
+      <div class="kgrid">
+        <div class="kcard k1"><div class="klbl">Contract Signed YTD</div><div class="kval" id="kCSYtd">-</div><div class="ksub" id="kCSYtdJ">- contracts</div></div>
+        <div class="kcard k2"><div class="klbl">Approved YTD</div><div class="kval" id="kAYtd">-</div><div class="ksub" id="kAYtdJ">- jobs</div></div>
+        <div class="kcard k3"><div class="klbl">CAs Accepted YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">-% close rate</div></div>
+        <div class="kcard k4"><div class="klbl">Total CAs YTD</div><div class="kval" id="kCTotYtd">-</div><div class="ksub">Year to date</div></div>
+      </div>
+      <div class="mcard"><div class="card-title">Monthly Contract Signed - <span id="yrN">2026</span></div><canvas id="ytdChart" height="110"></canvas></div>
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title">Rep Annual Goal Progress (Contract Signed vs $1M goal)</div>
+        <div id="ytdRepList"></div>
+      </div>
     </div>
   </div>
 </main>
 <script>
-var SK='dr_sheet',GK='dr_goals',MK='dr_mgoals',DEF_MTH=8;
+var SK='dr_sheet',GK='dr_goals',DEF_CA=8,DEF_REV=1000000;
 var DU='https://docs.google.com/spreadsheets/d/1ex7edGkVAC_mHKbO4V4a3UBCyNBOxW3ApQF1-bCmS-M/export?format=csv&gid=1499400196';
-var su=localStorage.getItem(SK)||DU,goals=JSON.parse(localStorage.getItem(GK)||'{}'),mgoals=JSON.parse(localStorage.getItem(MK)||'{}');
-var rows=[],af='all',sc='status',sd='asc',at='pipeline';
+var su=localStorage.getItem(SK)||DU;
+var goals=JSON.parse(localStorage.getItem(GK)||'{}');
+var rows=[],revData=null,af='all',sc='status',sd='asc',at='mtd';
+var ACTIVE_TEAM=['Robert Wilson','Kevin Mahan','Jack Obert','Andrew Funk','Andrew Prickel','George Bechara','Michael McCarthy','Christian Brown','David Kerns','Kelly Alston','Harvey Shoemaker','Marc Mitchell','Alfred Duncan','Isabelle Price','Nick Seward','Mike Mendez','Steven Arevalo'];
+
 window.onload=function(){
   var now=new Date();
   document.getElementById('hdate').textContent=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  document.getElementById('mtdSub').textContent=now.toLocaleDateString('en-US',{month:'long',year:'numeric'})+' performance';
+  var mn=now.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+  document.getElementById('mtdSub').textContent=mn+' performance';
+  document.getElementById('ytdSub').textContent=now.getFullYear()+' performance';
   var day=now.getDate(),total=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
   document.getElementById('mtdDays').textContent='Day '+day+' of '+total;
-  loadData();
+  var doy=Math.floor((now-new Date(now.getFullYear(),0,1))/86400000)+1;
+  var diy=now.getFullYear()%4===0?366:365;
+  document.getElementById('ytdDays').textContent='Day '+doy+' of '+diy;
+  loadAll();
 };
-function switchTab(t,el){at=t;document.querySelectorAll('.nav-tab').forEach(function(x){x.classList.remove('active');});el.classList.add('active');document.getElementById('pipeTab').classList.toggle('hidden',t!=='pipeline');document.getElementById('ytdTab').classList.toggle('active',t==='ytd');document.getElementById('revTab').classList.toggle('active',t==='revenue');if(t==='ytd'&&rows.length)renderYTD();if(t==='revenue')loadRevenue();}
+
+function switchTab(t,el){at=t;document.querySelectorAll('.nav-tab').forEach(function(x){x.classList.remove('active');});el.classList.add('active');document.getElementById('mtdTab').classList.toggle('hidden',t!=='mtd');document.getElementById('ytdTab').classList.toggle('active',t==='ytd');}
 function openCfg(){document.getElementById('cfgUrl').value=su;document.getElementById('cfgM').classList.add('open');}
-function saveUrl(){var v=document.getElementById('cfgUrl').value.trim();if(!v)return;su=v;localStorage.setItem(SK,su);document.getElementById('cfgM').classList.remove('open');loadData();}
+function saveUrl(){var v=document.getElementById('cfgUrl').value.trim();if(!v)return;su=v;localStorage.setItem(SK,su);document.getElementById('cfgM').classList.remove('open');loadAll();}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
-function getRL(){var o=[];rows.forEach(function(r){if(r.rep&&o.indexOf(r.rep)<0)o.push(r.rep);});return o.sort();}
+
+function getRepList(){var o=[];rows.forEach(function(r){if(r.rep&&o.indexOf(r.rep)<0)o.push(r.rep);});return o.sort();}
 function eR(r){return r.replace(/[^A-Za-z0-9]/g,'_');}
-function getMthGoal(rep){return mgoals[rep]!==undefined?mgoals[rep]:DEF_MTH;}
-function openMonthlyGoals(){var reps=getRL();document.getElementById('monthlyInp').innerHTML=reps.map(function(r){var cur=getMthGoal(r);return '<div class="girow"><label>'+r+'</label><input type="number" min="0" id="mg'+eR(r)+'" value="'+cur+'" placeholder="Monthly goal"></div>';}).join('');document.getElementById('monthlyM').classList.add('open');}
-function saveMonthly(){getRL().forEach(function(r){var el=document.getElementById('mg'+eR(r));if(el)mgoals[r]=el.value===''?DEF_MTH:parseInt(el.value);});localStorage.setItem(MK,JSON.stringify(mgoals));closeModal('monthlyM');renderLeaderboard();}
-function openAnnualGoals(){var reps=getRL();document.getElementById('annualInp').innerHTML=reps.map(function(r){return '<div class="girow"><label>'+r+'</label><input type="number" min="0" id="ag'+eR(r)+'" value="'+(goals[r]||'')+'" placeholder="Annual goal"></div>';}).join('');document.getElementById('annualM').classList.add('open');}
-function saveAnnual(){getRL().forEach(function(r){var el=document.getElementById('ag'+eR(r));if(el&&el.value)goals[r]=parseInt(el.value);else delete goals[r];});localStorage.setItem(GK,JSON.stringify(goals));closeModal('annualM');if(at==='ytd')renderYTD();}
-function loadData(){document.getElementById('ldg').style.display='block';document.getElementById('dash').style.display='none';document.getElementById('errB').style.display='none';fetch(su+(su.indexOf('?')>=0?'&':'?')+'cb='+Date.now()).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text();}).then(function(t){rows=parseCSV(t);document.getElementById('lref').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});render();}).catch(function(e){document.getElementById('ldg').style.display='none';var b=document.getElementById('errB');b.textContent='Error: '+e.message;b.style.display='block';});}
-function reload(){loadData();}
+function getCAGoal(rep){return goals[rep]&&goals[rep].ca!==undefined?goals[rep].ca:DEF_CA;}
+function getRevGoal(rep){return goals[rep]&&goals[rep].rev!==undefined?goals[rep].rev:DEF_REV;}
+
+function openGoals(){
+  var reps=ACTIVE_TEAM;
+  document.getElementById('goalsInp').innerHTML=reps.map(function(r){
+    var cg=getCAGoal(r), rg=getRevGoal(r);
+    return '<div style="padding:8px 0;border-bottom:1px solid var(--border)"><div style="font-size:.82rem;font-weight:700;margin-bottom:6px">'+r+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:2px">Monthly CA Goal</label><input type="number" min="0" id="ca_'+eR(r)+'" value="'+cg+'"></div><div><label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:2px">Annual Rev Goal ($)</label><input type="number" min="0" id="rv_'+eR(r)+'" value="'+rg+'"></div></div></div>';
+  }).join('');
+  document.getElementById('goalsM').classList.add('open');
+}
+function saveGoals(){
+  ACTIVE_TEAM.forEach(function(r){
+    var ca=document.getElementById('ca_'+eR(r));
+    var rv=document.getElementById('rv_'+eR(r));
+    if(!goals[r])goals[r]={};
+    if(ca)goals[r].ca=parseInt(ca.value)||DEF_CA;
+    if(rv)goals[r].rev=parseInt(rv.value)||DEF_REV;
+  });
+  localStorage.setItem(GK,JSON.stringify(goals));
+  closeModal('goalsM');
+  if(rows.length)renderMTD();
+  if(revData)renderYTD();
+}
+
+function loadAll(){
+  document.getElementById('ldg').style.display='block';
+  document.getElementById('dash').style.display='none';
+  document.getElementById('errB').style.display='none';
+  Promise.all([
+    fetch(su+(su.indexOf('?')>=0?'&':'?')+'cb='+Date.now()).then(function(r){if(!r.ok)throw new Error('Sheet HTTP '+r.status);return r.text();}),
+    fetch('/data/revenue.json?cb='+Date.now()).then(function(r){return r.json();})
+  ]).then(function(results){
+    rows=parseCSV(results[0]);
+    revData=results[1];
+    document.getElementById('lref').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    document.getElementById('ldg').style.display='none';
+    document.getElementById('dash').style.display='block';
+    renderMTD();
+    renderYTD();
+  }).catch(function(e){
+    document.getElementById('ldg').style.display='none';
+    var b=document.getElementById('errB');b.textContent='Error: '+e.message;b.style.display='block';
+  });
+}
+function reload(){rows=[];revData=null;loadAll();}
+
 function parseCSVLine(line){var res=[],cur='',inQ=false;for(var i=0;i<line.length;i++){var ch=line[i];if(ch==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else{inQ=!inQ;}}else if(ch===','&&!inQ){res.push(cur.trim());cur='';}else{cur+=ch;}}res.push(cur.trim());return res;}
-function parseCSV(csv){var NL=String.fromCharCode(10),CR=String.fromCharCode(13);var lines=csv.trim().split(NL).slice(2);return lines.map(function(line){var c=parseCSVLine(line);return{jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').split(CR).join('')};}).filter(function(r){return r.jobId;});}
-function render(){document.getElementById('ldg').style.display='none';document.getElementById('dash').style.display='block';renderKPIs();renderChart();renderLeaderboard();renderTable();if(at==='ytd')renderYTD();if(at==='revenue')loadRevenue();}
-function renderKPIs(){var t=rows.length,a=0,s=0,d=0;rows.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')a++;else if(st==='sent')s++;else d++;});document.getElementById('kT').textContent=t;document.getElementById('kA').textContent=a;document.getElementById('kS').textContent=s;document.getElementById('kD').textContent=d;document.getElementById('kAp').textContent=(t?Math.round(a/t*100):0)+'% close rate';}
-var ci=null;function renderChart(){var c={Accepted:0,Sent:0,Draft:0};rows.forEach(function(r){var s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});var ctx=document.getElementById('cht').getContext('2d');if(ci)ci.destroy();ci=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:12}}}}}});}
-function renderLeaderboard(){var m={};rows.forEach(function(r){if(!r.rep)return;if(!m[r.rep])m[r.rep]={a:0,s:0,d:0,t:0,deals:[]};m[r.rep].t++;var st=r.status.toLowerCase();if(st==='accepted')m[r.rep].a++;else if(st==='sent')m[r.rep].s++;else m[r.rep].d++;m[r.rep].deals.push(r);});var reps=Object.keys(m).sort(function(a,b){return m[b].a-m[a].a||m[b].t-m[a].t;});if(!reps.length){document.getElementById('repL').innerHTML='<div style="padding:20px;text-align:center;color:var(--muted);font-size:.8rem">No rep data found</div>';return;}var chips={accepted:'ca',sent:'cs',draft:'cd'};var html='';reps.forEach(function(name){var x=m[name],goal=getMthGoal(name);x.deals.sort(function(a,b){var o={accepted:0,sent:1,draft:2};return(o[a.status.toLowerCase()]||3)-(o[b.status.toLowerCase()]||3);});var dl='';x.deals.forEach(function(d){dl+='<div class="drow"><span class="dcust">'+(d.customer||'-')+'</span><span class="daddr">'+(d.address||'-')+'</span><span class="djid">'+d.jobId+'</span><span class="chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span></div>';});var pct=Math.min(Math.round(x.a/goal*100),100),barColor=x.a>=goal?'#059669':(x.a>=Math.ceil(goal*0.6)?'#1a3a6b':'#ef4444'),statusLabel=x.a>=goal?'On target!':x.a+'/'+goal+' monthly goal';html+='<div class="rrow"><div class="rhdr" onclick="toggleD(this)"><div class="rinfo"><span class="rnw"><span class="rchev">+</span><span class="rname">'+name+'</span></span><span class="rcnt">'+x.a+' accepted</span></div><div class="rgoal-wrap"><div class="rgoal-track"><div class="rgoal-fill" style="width:'+pct+'%;background:'+barColor+';">'+(pct>20?'<span class="rgoal-pct">'+pct+'%</span>':'')+'</div></div><div class="rgoal-lbl"><span>'+statusLabel+'</span><span>Goal: '+goal+'</span></div></div><div class="rbadges">'+(x.a?'<span class="badge ba">'+x.a+' accepted</span>':'')+(x.s?'<span class="badge bs">'+x.s+' sent</span>':'')+(x.d?'<span class="badge bd">'+x.d+' draft</span>':'')+'</div></div><div class="rdeals">'+dl+'</div></div>';});document.getElementById('repL').innerHTML=html;}
-function toggleD(hdr){var p=hdr.parentElement.querySelector('.rdeals'),c=hdr.querySelector('.rchev'),o=p.classList.contains('open');p.classList.toggle('open',!o);c.textContent=o?'+':'-';}
+function parseCSV(csv){var NL=String.fromCharCode(10),CR=String.fromCharCode(13);return csv.trim().split(NL).slice(2).map(function(line){var c=parseCSVLine(line);return{jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').split(CR).join('')};}).filter(function(r){return r.jobId;});}
+function fmtD(n){return '$'+parseFloat(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
+
+function renderMTD(){
+  var t=rows.length,a=0,s=0,d=0;
+  rows.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')a++;else if(st==='sent')s++;else d++;});
+  document.getElementById('kCTot').textContent=t;
+  document.getElementById('kCAcc').textContent=a;
+  document.getElementById('kCAccR').textContent=(t?Math.round(a/t*100):0)+'% close rate';
+
+  var csMtd=0,csMtdJ=0,aMtd=0,aMtdJ=0;
+  if(revData&&revData.reps){revData.reps.forEach(function(r){csMtd+=r.contract_mtd_amount||0;csMtdJ+=r.contract_mtd_jobs||0;aMtd+=r.approved_mtd_amount||0;aMtdJ+=r.approved_mtd_jobs||0;});}
+  document.getElementById('kCSMtd').textContent=fmtD(csMtd);
+  document.getElementById('kCSMtdJ').textContent=csMtdJ+' contracts';
+  document.getElementById('kAMtd').textContent=fmtD(aMtd);
+  document.getElementById('kAMtdJ').textContent=aMtdJ+' jobs';
+
+  renderChart();
+  renderRepList();
+  renderTable();
+}
+
+var chartInst=null;
+function renderChart(){
+  var c={Accepted:0,Sent:0,Draft:0};
+  rows.forEach(function(r){var s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});
+  var ctx=document.getElementById('cht').getContext('2d');
+  if(chartInst)chartInst.destroy();
+  chartInst=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:14,font:{size:11}}}}}});
+}
+
+function renderRepList(){
+  var now=new Date();
+  var day=now.getDate(),total=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  var dayPct=day/total;
+
+  // Build CA map from rows
+  var caMap={};
+  rows.forEach(function(r){
+    if(!r.rep)return;
+    if(!caMap[r.rep])caMap[r.rep]={a:0,s:0,d:0,t:0,deals:[]};
+    caMap[r.rep].t++;
+    var st=r.status.toLowerCase();
+    if(st==='accepted')caMap[r.rep].a++;else if(st==='sent')caMap[r.rep].s++;else caMap[r.rep].d++;
+    caMap[r.rep].deals.push(r);
+  });
+
+  var chips={accepted:'ca',sent:'cs',draft:'cd'};
+  var html='';
+  ACTIVE_TEAM.forEach(function(name){
+    var ca=caMap[name]||{a:0,s:0,d:0,t:0,deals:[]};
+    var revRep=null;
+    if(revData&&revData.reps){revData.reps.forEach(function(r){if(r.rep===name)revRep=r;});}
+    var csMtd=revRep?revRep.contract_mtd_amount:0;
+    var caGoal=getCAGoal(name);
+    var revGoal=getRevGoal(name);
+    var monthlyRevPace=revGoal/12*dayPct;
+    var caPct=Math.min(Math.round(ca.a/caGoal*100),100);
+    var revPct=Math.min(Math.round(csMtd/revGoal*100*12),100);
+    var pacePct=Math.min(Math.round(dayPct*100),98);
+    var caColor=ca.a>=caGoal?'#059669':(ca.a>=Math.ceil(caGoal*0.6)?'#1a3a6b':'#ef4444');
+    var revColor=csMtd>=monthlyRevPace?'#059669':'#ef4444';
+    var caLabel=ca.a>=caGoal?'On target':ca.a+'/'+caGoal+' CA goal';
+    var revLabel=csMtd>=monthlyRevPace?'On pace':fmtD(csMtd)+' / pace '+fmtD(monthlyRevPace);
+
+    ca.deals.sort(function(a,b){var o={accepted:0,sent:1,draft:2};return(o[a.status.toLowerCase()]||3)-(o[b.status.toLowerCase()]||3);});
+    var dl='';
+    ca.deals.forEach(function(d){dl+='<div class="deal-row"><span class="deal-name">'+(d.customer||'-')+'</span><span class="deal-addr">'+(d.address||'-')+'</span><span class="deal-id">'+d.jobId+'</span><span class="chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span></div>';});
+
+    html+='<div class="rep-item">';
+    html+='<div class="rep-header"><div class="rep-name" onclick="toggleRep(this)"><span class="rep-chev">+</span>'+name+'</div>';
+    html+='<div class="rep-badges">';
+    if(ca.a>=caGoal)html+='<span class="rbadge rb-green">CAs</span>';
+    if(csMtd>=monthlyRevPace)html+='<span class="rbadge rb-green">Rev</span>';
+    html+='</div></div>';
+    html+='<div class="goal-bars">';
+    html+='<div class="goal-row"><div class="goal-label-row"><span>CAs: '+caLabel+'</span><span>Goal: '+caGoal+'</span></div>';
+    html+='<div class="goal-track"><div class="pace-line" style="left:'+pacePct+'%"></div><div class="goal-fill" style="width:'+caPct+'%;background:'+caColor+'">'+(caPct>25?'<span class="goal-fill-pct">'+caPct+'%</span>':'')+'</div></div></div>';
+    html+='<div class="goal-row"><div class="goal-label-row"><span>Rev: '+revLabel+'</span><span>Annual: '+fmtD(revGoal)+'</span></div>';
+    html+='<div class="goal-track"><div class="pace-line" style="left:'+pacePct+'%"></div><div class="goal-fill" style="width:'+revPct+'%;background:'+revColor+'">'+(revPct>20?'<span class="goal-fill-pct">'+revPct+'%</span>':'')+'</div></div></div>';
+    html+='</div>';
+    html+='<div class="rep-deals">'+dl+'</div>';
+    html+='</div>';
+  });
+  document.getElementById('repList').innerHTML=html;
+}
+
+function toggleRep(nameEl){
+  var item=nameEl.closest('.rep-item');
+  var panel=item.querySelector('.rep-deals');
+  var chev=item.querySelector('.rep-chev');
+  var open=panel.classList.contains('open');
+  panel.classList.toggle('open',!open);
+  chev.textContent=open?'+':'-';
+}
+
 function filt(f,el){af=f;document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('active');});el.classList.add('active');renderT();}
 function srt(col){if(sc===col)sd=sd==='asc'?'desc':'asc';else{sc=col;sd='asc';}document.querySelectorAll('th').forEach(function(t){t.classList.remove('sa','sd');});var idx={jobId:0,customer:1,address:2,rep:3,status:4},ths=document.querySelectorAll('th');if(ths[idx[col]])ths[idx[col]].classList.add(sd==='asc'?'sa':'sd');renderT();}
 function renderT(){var q=document.getElementById('srch').value.toLowerCase();var out=rows.filter(function(r){if(af!=='all'&&r.status.toLowerCase()!==af)return false;if(q&&(r.customer+' '+r.rep+' '+r.address+' '+r.jobId).toLowerCase().indexOf(q)<0)return false;return true;});out.sort(function(a,b){var va=a[sc]||'',vb=b[sc]||'';return sd==='asc'?va.localeCompare(vb):vb.localeCompare(va);});document.getElementById('tcnt').textContent='('+out.length+')';var chips={accepted:'ca',sent:'cs',draft:'cd'};var tbody=document.getElementById('tbody');if(!out.length){tbody.innerHTML='<tr><td colspan="5" class="empty">No CAs match.</td></tr>';return;}var h='';out.forEach(function(r){h+='<tr><td><span class="jid">'+r.jobId+'</span></td><td><span class="cnm">'+r.customer+'</span></td><td class="hm">'+r.address+'</td><td>'+r.rep+'</td><td><span class="chip '+(chips[r.status.toLowerCase()]||'')+'">'+r.status+'</span></td></tr>';});tbody.innerHTML=h;}
 function renderTable(){renderT();}
-var mc=null;function renderYTD(){var now=new Date(),yr=now.getFullYear();document.getElementById('yrN').textContent=yr;var acc=[],snt=[],drt=[];rows.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')acc.push(r);else if(st==='sent')snt.push(r);else drt.push(r);});var tot=rows.length,rate=tot?Math.round(acc.length/tot*100):0;var kh='<div class="kcard t"><div class="klbl">Total CAs</div><div class="kval">'+tot+'</div><div class="ksub">Year to date</div></div><div class="kcard a"><div class="klbl">Accepted</div><div class="kval">'+acc.length+'</div><div class="ksub">'+rate+'% close rate</div></div><div class="kcard s"><div class="klbl">Sent</div><div class="kval">'+snt.length+'</div><div class="ksub">In pipeline</div></div><div class="kcard d"><div class="klbl">Draft</div><div class="kval">'+drt.length+'</div><div class="ksub">In progress</div></div>';document.getElementById('ykpi').innerHTML=kh;var mo=new Array(12).fill(0);acc.forEach(function(r){if(r.jobId&&r.jobId.length>=4){var mv=parseInt(r.jobId.substring(2,4),10)-1;if(mv>=0&&mv<12)mo[mv]++;}});var ctx2=document.getElementById('mcht').getContext('2d');if(mc)mc.destroy();mc=new Chart(ctx2,{type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{label:'Accepted',data:mo,backgroundColor:'#1a3a6b',borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});var doy=Math.floor((now-new Date(yr,0,1))/86400000)+1,pp=doy/365;document.getElementById('pace').textContent='Through '+now.toLocaleDateString('en-US',{month:'long'})+' - pace line shows on-track target';var rm={};rows.forEach(function(r){if(!r.rep)return;if(!rm[r.rep])rm[r.rep]={a:0,s:0,d:0,t:0};rm[r.rep].t++;var st=r.status.toLowerCase();if(st==='accepted')rm[r.rep].a++;else if(st==='sent')rm[r.rep].s++;else rm[r.rep].d++;});var reps2=Object.keys(rm).sort(function(a,b){return rm[b].a-rm[a].a;});var gc=['#1a3a6b','#059669','#d97706','#7c3aed','#db2777','#0891b2'];var gh='';reps2.forEach(function(name,i){var x=rm[name],g=goals[name];if(!g){gh+='<div class="grow"><div class="ginfo"><span class="grep">'+name+'</span><span class="gnum"><strong>'+x.a+'</strong> accepted - No goal set</span></div><div class="gtrack" style="margin-top:4px"><div class="gfill" style="width:100%;background:#f3f4f6"><span class="gpct" style="color:var(--muted)">'+x.a+' accepted</span></div></div></div>';return;}var p=Math.min(Math.round(x.a/g*100),100),pace=Math.round(pp*g),px=Math.min(Math.round(pp*100),98),col=gc[i%gc.length],ok=x.a>=pace;gh+='<div class="grow"><div class="ginfo"><span class="grep">'+name+'</span><span class="gnum"><strong>'+x.a+'</strong>/'+g+' goal ('+p+'%) - '+(ok?'<span style="color:#059669;font-weight:600">On pace</span>':'<span style="color:#ef4444;font-weight:600">Behind pace</span>')+'</span></div><div class="gtrack"><div class="gline" style="left:'+px+'%"><span class="glbl">Pace ('+pace+')</span></div><div class="gfill" style="width:'+p+'%;background:'+(ok?col:'#ef4444')+'">'+(p>15?'<span class="gpct">'+p+'%</span>':'')+'</div></div></div>';});document.getElementById('gRows').innerHTML=gh;var th='';reps2.forEach(function(name){var x=rm[name],cr=x.t?Math.round(x.a/x.t*100):0;th+='<tr><td><strong>'+name+'</strong></td><td><span class="chip ca">'+x.a+'</span></td><td><span class="chip cs">'+x.s+'</span></td><td><span class="chip cd">'+x.d+'</span></td><td>'+x.t+'</td><td>'+cr+'%</td></tr>';});document.getElementById('ytdT').innerHTML=th;}
-var revData=null,revChartInst=null;
-function loadRevenue(){
-  if(revData){renderRevenue();return;}
-  document.getElementById('revSub').textContent='Loading...';
-  fetch('/data/revenue.json?cb='+Date.now()).then(function(r){return r.json();}).then(function(d){revData=d;renderRevenue();}).catch(function(e){document.getElementById('revSub').textContent='Error: '+e.message;});
-}
-function fmtDollar(n){return '$'+parseFloat(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
-function renderRevenue(){
-  if(!revData)return;
-  document.getElementById('revSub').textContent='Data as of '+revData.updated;
-  document.getElementById('revMonth').textContent=revData.month;
-  var reps=revData.reps.filter(function(r){return r.approved_ytd_amount>0||r.contract_ytd_amount>0;}).sort(function(a,b){return b.approved_mtd_amount-a.approved_mtd_amount;});
-  var tAMtd=0,tAYtd=0,tCMtd=0,tCYtd=0,tAMtdJ=0,tCMtdJ=0;
-  reps.forEach(function(r){tAMtd+=r.approved_mtd_amount;tAYtd+=r.approved_ytd_amount;tCMtd+=r.contract_mtd_amount;tCYtd+=r.contract_ytd_amount;tAMtdJ+=r.approved_mtd_jobs;tCMtdJ+=r.contract_mtd_jobs;});
-  var kh='';
-  kh+='<div class="kcard a"><div class="klbl">Approved MTD</div><div class="kval">'+fmtDollar(tAMtd)+'</div><div class="ksub">'+tAMtdJ+' jobs awarded this month</div></div>';
-  kh+='<div class="kcard t"><div class="klbl">Approved YTD</div><div class="kval">'+fmtDollar(tAYtd)+'</div><div class="ksub">Year to date</div></div>';
-  kh+='<div class="kcard s"><div class="klbl">Contract Signed MTD</div><div class="kval">'+fmtDollar(tCMtd)+'</div><div class="ksub">'+tCMtdJ+' contracts this month</div></div>';
-  kh+='<div class="kcard d"><div class="klbl">Contract Signed YTD</div><div class="kval">'+fmtDollar(tCYtd)+'</div><div class="ksub">Year to date</div></div>';
-  document.getElementById('revKpis').innerHTML=kh;
-  var ctx=document.getElementById('revChart').getContext('2d');
-  if(revChartInst)revChartInst.destroy();
-  revChartInst=new Chart(ctx,{type:'bar',data:{labels:reps.map(function(r){return r.rep.split(' ')[0];}),datasets:[{label:'Approved MTD',data:reps.map(function(r){return r.approved_mtd_amount;}),backgroundColor:'#059669',borderRadius:3},{label:'Contract Signed MTD',data:reps.map(function(r){return r.contract_mtd_amount;}),backgroundColor:'#1a3a6b',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return '$'+v.toLocaleString();}},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
-  var approvedH='',contractH='';
-  reps.forEach(function(r){
-    if(r.approved_ytd_amount>0||r.approved_mtd_amount>0){
-      approvedH+='<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">';
-      approvedH+='<span style="font-size:.8rem;font-weight:600">'+r.rep+'</span>';
-      approvedH+='<div style="text-align:right"><div style="font-size:.85rem;font-weight:700;color:var(--text)">'+fmtDollar(r.approved_mtd_amount)+'</div>';
-      approvedH+='<div style="font-size:.7rem;color:var(--muted)">YTD: '+fmtDollar(r.approved_ytd_amount)+' ('+r.approved_ytd_jobs+' jobs)</div></div></div>';
-    }
-    if(r.contract_ytd_amount>0||r.contract_mtd_amount>0){
-      contractH+='<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">';
-      contractH+='<span style="font-size:.8rem;font-weight:600">'+r.rep+'</span>';
-      contractH+='<div style="text-align:right"><div style="font-size:.85rem;font-weight:700;color:var(--text)">'+fmtDollar(r.contract_mtd_amount)+'</div>';
-      contractH+='<div style="font-size:.7rem;color:var(--muted)">YTD: '+fmtDollar(r.contract_ytd_amount)+' ('+r.contract_ytd_jobs+' contracts)</div></div></div>';
-    }
+
+var ytdChartInst=null;
+function renderYTD(){
+  var now=new Date(),yr=now.getFullYear();
+  document.getElementById('yrN').textContent=yr;
+  var doy=Math.floor((now-new Date(yr,0,1))/86400000)+1;
+  var diy=yr%4===0?366:365;
+  var yearPct=doy/diy;
+
+  var csYtd=0,csYtdJ=0,aYtd=0,aYtdJ=0;
+  if(revData&&revData.reps){revData.reps.forEach(function(r){csYtd+=r.contract_ytd_amount||0;csYtdJ+=r.contract_ytd_jobs||0;aYtd+=r.approved_ytd_amount||0;aYtdJ+=r.approved_ytd_jobs||0;});}
+  document.getElementById('kCSYtd').textContent=fmtD(csYtd);
+  document.getElementById('kCSYtdJ').textContent=csYtdJ+' contracts';
+  document.getElementById('kAYtd').textContent=fmtD(aYtd);
+  document.getElementById('kAYtdJ').textContent=aYtdJ+' jobs';
+
+  // CA YTD from rows (all data is current year in our case)
+  var t=rows.length,a=rows.filter(function(r){return r.status.toLowerCase()==='accepted';}).length;
+  document.getElementById('kCTotYtd').textContent=t;
+  document.getElementById('kCAccYtd').textContent=a;
+  document.getElementById('kCAccYtdR').textContent=(t?Math.round(a/t*100):0)+'% close rate';
+
+  // Monthly trend chart using revenue data month field
+  var mo=new Array(12).fill(0);
+  if(revData&&revData.reps){
+    revData.reps.forEach(function(rep){
+      // We only have MTD for current month - use ytd as approximation for bar
+      // This will be improved when we have monthly breakdown data
+    });
+  }
+  // Use CA job IDs to approximate monthly bar chart
+  rows.forEach(function(r){if(r.jobId&&r.jobId.length>=4){var mv=parseInt(r.jobId.substring(2,4),10)-1;if(mv>=0&&mv<12)mo[mv]++;}});
+
+  var ctx=document.getElementById('ytdChart').getContext('2d');
+  if(ytdChartInst)ytdChartInst.destroy();
+  ytdChartInst=new Chart(ctx,{type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{label:'CAs Accepted',data:mo,backgroundColor:'#1a3a6b',borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+
+  // Rep annual goal progress
+  var repHtml='';
+  ACTIVE_TEAM.forEach(function(name,i){
+    var revRep=null;
+    if(revData&&revData.reps){revData.reps.forEach(function(r){if(r.rep===name)revRep=r;});}
+    var csYtdAmt=revRep?revRep.contract_ytd_amount:0;
+    var csYtdJ=revRep?revRep.contract_ytd_jobs:0;
+    var aYtdAmt=revRep?revRep.approved_ytd_amount:0;
+    var revGoal=getRevGoal(name);
+    var caGoal=getCAGoal(name)*12;
+    var pct=Math.min(Math.round(csYtdAmt/revGoal*100),100);
+    var pacePct=Math.min(Math.round(yearPct*100),98);
+    var col=['#1a3a6b','#059669','#d97706','#7c3aed','#db2777','#0891b2','#065f46','#92400e','#374151','#1e40af','#065f46','#0891b2','#7c3aed','#db2777','#d97706','#374151','#1a3a6b'][i%17];
+    var ok=csYtdAmt>=(revGoal*yearPct);
+    var caYtd=rows.filter(function(r){return r.rep===name&&r.status.toLowerCase()==='accepted';}).length;
+    repHtml+='<div class="ytd-rep-row">';
+    repHtml+='<div class="ytd-rep-header"><span class="ytd-rep-name">'+name+'</span><span style="font-size:.75rem;font-weight:600;color:'+(ok?'#059669':'#ef4444')+'">'+(ok?'On pace':'Behind pace')+'</span></div>';
+    repHtml+='<div class="ytd-stats">';
+    repHtml+='<div class="ytd-stat"><div class="ytd-stat-lbl">Contract Signed</div><div class="ytd-stat-val">'+fmtD(csYtdAmt)+'</div></div>';
+    repHtml+='<div class="ytd-stat"><div class="ytd-stat-lbl">Approved</div><div class="ytd-stat-val">'+fmtD(aYtdAmt)+'</div></div>';
+    repHtml+='<div class="ytd-stat"><div class="ytd-stat-lbl">CAs Accepted</div><div class="ytd-stat-val">'+caYtd+'</div></div>';
+    repHtml+='</div>';
+    repHtml+='<div class="goal-row"><div class="goal-label-row"><span>'+fmtD(csYtdAmt)+' of '+fmtD(revGoal)+' annual goal ('+pct+'%)</span></div>';
+    repHtml+='<div class="goal-track" style="height:14px"><div class="pace-line" style="left:'+pacePct+'%"></div><div class="goal-fill" style="width:'+pct+'%;background:'+(ok?col:'#ef4444')+'">'+(pct>15?'<span class="goal-fill-pct">'+pct+'%</span>':'')+'</div></div></div>';
+    repHtml+='</div>';
   });
-  document.getElementById('revApprovedList').innerHTML=approvedH||'<div style="padding:20px;text-align:center;color:var(--muted);font-size:.8rem">No data this period</div>';
-  document.getElementById('revContractList').innerHTML=contractH||'<div style="padding:20px;text-align:center;color:var(--muted);font-size:.8rem">No data this period</div>';
+  document.getElementById('ytdRepList').innerHTML=repHtml;
 }
 </script>
 </body>
