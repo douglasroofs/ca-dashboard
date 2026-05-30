@@ -237,7 +237,7 @@ function loadAll(){
 function reload(){rows=[];revData=null;loadAll();}
 
 function parseCSVLine(line){var res=[],cur='',inQ=false;for(var i=0;i<line.length;i++){var ch=line[i];if(ch==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else{inQ=!inQ;}}else if(ch===','&&!inQ){res.push(cur.trim());cur='';}else{cur+=ch;}}res.push(cur.trim());return res;}
-function parseCSV(csv){var NL=String.fromCharCode(10),CR=String.fromCharCode(13);return csv.trim().split(NL).slice(2).map(function(line){var c=parseCSVLine(line);return{jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').split(CR).join('')};}).filter(function(r){return r.jobId;});}
+function parseCSV(csv){var NL=String.fromCharCode(10),CR=String.fromCharCode(13);return csv.trim().split(NL).slice(2).map(function(line){var c=parseCSVLine(line);var dn=(c[0]||'').trim();return{docName:dn,jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').split(CR).join('')};}).filter(function(r){return r.jobId&&r.docName.toLowerCase().startsWith('ca');});}
 function fmtD(n){return '$'+parseFloat(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
 
 function renderMTD(){
