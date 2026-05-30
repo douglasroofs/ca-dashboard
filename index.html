@@ -129,7 +129,7 @@
   <div class="err" id="errB"></div>
   <div class="loading" id="ldg"><div class="spin"></div><p>Loading data</p></div>
   <div id="dash" style="display:none">
-    <div class="sbar"><div class="sdot"></div><span>Live data from Leap CRM - Last refreshed: <strong id="lref">-</strong></span><span style="margin-left:auto"><button class="btns" onclick="reload()">Refresh</button><button class="btns" onclick="openGoals()" style="margin-left:4px">Edit Goals</button></span></div>
+    <div class="sbar"><div class="sdot"></div><span>Live data from Leap CRM - Last refreshed: <strong id="lref">-</strong></span><span style="margin-left:auto"><button class="btns" onclick="reload()">Refresh</button><button class="btns" onclick="openGoals()" style="margin-left:4px">Edit Goals</button><button class="btns" onclick="syncNow()" style="margin-left:4px;background:#1a3a6b;color:#fff;border-color:#1a3a6b">Sync Now</button></span></div>
 
     <!-- MTD -->
     <div class="mtd-sec" id="mtdTab">
@@ -395,6 +395,7 @@ function renderYTD(){
 
 function toggleMoPanel(id,btn){var el=document.getElementById(id);if(!el)return;var open=el.classList.contains('open');el.classList.toggle('open',!open);btn.innerHTML=(open?'&#9654;':'&#9660;')+' Monthly CAs';}
 function toggleMoDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');}
+function syncNow(){if(confirm('This will open Cowork to run the Leap sync now. Your data will refresh in about 2 minutes. Continue?'))window.open('cowork://scheduled/leap-ca-count-daily-update','_blank');}
 </script>
 </body>
 </html>
