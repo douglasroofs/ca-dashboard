@@ -219,10 +219,11 @@ function loadAll(){
   document.getElementById('dash').style.display='none';
   document.getElementById('errB').style.display='none';
   Promise.all([
-    fetch(su+(su.indexOf('?')>=0?'&':'?')+'cb='+Date.now()).then(function(r){if(!r.ok)throw new Error('Sheet HTTP '+r.status);return r.text();}),
+    fetch('/data/ca-data.json?cb='+Date.now()).then(function(r){if(!r.ok)throw new Error('CA data HTTP '+r.status);return r.json();}),
     fetch('/data/revenue.json?cb='+Date.now()).then(function(r){return r.json();})
   ]).then(function(results){
-    rows=parseCSV(results[0]);
+    var caData=results[0];
+    rows=(caData.cas||[]).filter(function(r){return r.docName&&r.docName.toLowerCase().startsWith('ca');});
     revData=results[1];
     document.getElementById('lref').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
     document.getElementById('ldg').style.display='none';
