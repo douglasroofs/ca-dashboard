@@ -1,0 +1,153 @@
+{
+  "updated": "2026-05-29",
+  "month": "May 2026",
+  "reps": [
+    {
+      "rep": "Adam Mulvaney",
+      "mtd_revenue": 55066,
+      "mtd_jobs": 1,
+      "ytd_revenue": 165600.07,
+      "ytd_jobs": 5
+    },
+    {
+      "rep": "Alfred Duncan",
+      "mtd_revenue": 31598.61,
+      "mtd_jobs": 2,
+      "ytd_revenue": 259227.61,
+      "ytd_jobs": 14
+    },
+    {
+      "rep": "Andrew Prickel",
+      "mtd_revenue": 158859.39,
+      "mtd_jobs": 7,
+      "ytd_revenue": 1001480.19,
+      "ytd_jobs": 37
+    },
+    {
+      "rep": "Babayel Dia",
+      "mtd_revenue": 0,
+      "mtd_jobs": 0,
+      "ytd_revenue": 48273.31,
+      "ytd_jobs": 2
+    },
+    {
+      "rep": "Christian Brown",
+      "mtd_revenue": 97473.95,
+      "mtd_jobs": 3,
+      "ytd_revenue": 114588.95,
+      "ytd_jobs": 5
+    },
+    {
+      "rep": "Darien Boatwright",
+      "mtd_revenue": 0,
+      "mtd_jobs": 0,
+      "ytd_revenue": 19188.97,
+      "ytd_jobs": 1
+    },
+    {
+      "rep": "David Kerns",
+      "mtd_revenue": 114721.48,
+      "mtd_jobs": 6,
+      "ytd_revenue": 114721.48,
+      "ytd_jobs": 6
+    },
+    {
+      "rep": "George Bechara",
+      "mtd_revenue": 600,
+      "mtd_jobs": 1,
+      "ytd_revenue": 99913.2,
+      "ytd_jobs": 5
+    },
+    {
+      "rep": "Harvey Shoemaker",
+      "mtd_revenue": 108743.46,
+      "mtd_jobs": 6,
+      "ytd_revenue": 302355.56,
+      "ytd_jobs": 16
+    },
+    {
+      "rep": "Isabelle Price",
+      "mtd_revenue": 16045.23,
+      "mtd_jobs": 1,
+      "ytd_revenue": 112533.58,
+      "ytd_jobs": 5
+    },
+    {
+      "rep": "Jack Obert",
+      "mtd_revenue": 159376.56,
+      "mtd_jobs": 7,
+      "ytd_revenue": 91546.2,
+      "ytd_jobs": 4
+    },
+    {
+      "rep": "Kelly Alston",
+      "mtd_revenue": 18141.54,
+      "mtd_jobs": 2,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    },
+    {
+      "rep": "Kevin Mahan",
+      "mtd_revenue": 64477.11,
+      "mtd_jobs": 4,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    },
+    {
+      "rep": "Kyle Higginbotham",
+      "mtd_revenue": 20275.6,
+      "mtd_jobs": 1,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    },
+    {
+      "rep": "Marc Mitchell",
+      "mtd_revenue": 19932,
+      "mtd_jobs": 1,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    },
+    {
+      "rep": "Michael McCarthy",
+      "mtd_revenue": 13500,
+      "mtd_jobs": 1,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    },
+    {
+      "rep": "Mike Mendez",
+      "mtd_revenue": 6868.82,
+      "mtd_jobs": 1,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    },
+    {
+      "rep": "Mike Schoultz",
+      "mtd_revenue": 25955,
+      "mtd_jobs": 1,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    },
+    {
+      "rep": "Nick Seward",
+      "mtd_revenue": 42889.76,
+      "mtd_jobs": 6,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    },
+    {
+      "rep": "Robert Wilson",
+      "mtd_revenue": 37658.57,
+      "mtd_jobs": 1,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    },
+    {
+      "rep": "Steven Arevalo",
+      "mtd_revenue": 29459.8,
+      "mtd_jobs": 2,
+      "ytd_revenue": 0,
+      "ytd_jobs": 0
+    }
+  ]
+}
