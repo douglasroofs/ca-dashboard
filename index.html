@@ -165,7 +165,7 @@ var SK='dr_sheet',GK='dr_goals',DEF_CA=8,DEF_REV=1000000;
 var DU='https://docs.google.com/spreadsheets/d/1ex7edGkVAC_mHKbO4V4a3UBCyNBOxW3ApQF1-bCmS-M/export?format=csv&gid=1499400196';
 var su=localStorage.getItem(SK)||DU;
 var goals=JSON.parse(localStorage.getItem(GK)||'{}');
-var rows=[],revData=null,af='all',sc='status',sd='asc',at='mtd';
+var rows=[],mtdRows=[],revData=null,af='all',sc='status',sd='asc',at='mtd';
 var ACTIVE_TEAM=['Robert Wilson','Kevin Mahan','Jack Obert','Andrew Funk','Andrew Prickel','George Bechara','Michael McCarthy','Christian Brown','David Kerns','Kelly Alston','Harvey Shoemaker','Marc Mitchell','Alfred Duncan','Isabelle Price','Nick Seward','Mike Mendez','Steven Arevalo'];
 
 window.onload=function(){
@@ -241,8 +241,11 @@ function parseCSV(csv){var NL=String.fromCharCode(10),CR=String.fromCharCode(13)
 function fmtD(n){return '$'+parseFloat(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
 
 function renderMTD(){
-  var t=rows.length,a=0,s=0,d=0;
-  rows.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')a++;else if(st==='sent')s++;else d++;});
+  var now2=new Date(),yy=String(now2.getFullYear()).substring(2),mm=String(now2.getMonth()+1).padStart(2,'0'),pfx=yy+mm;
+  mtdRows=rows.filter(function(r){return r.jobId&&r.jobId.substring(0,4)===pfx;});
+  var mrows=mtdRows;
+  var t=mrows.length,a=0,s=0,d=0;
+  mrows.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')a++;else if(st==='sent')s++;else d++;});
   document.getElementById('kCTot').textContent=t;
   document.getElementById('kCAcc').textContent=a;
   document.getElementById('kCAccR').textContent=(t?Math.round(a/t*100):0)+'% close rate';
@@ -262,7 +265,7 @@ function renderMTD(){
 var chartInst=null;
 function renderChart(){
   var c={Accepted:0,Sent:0,Draft:0};
-  rows.forEach(function(r){var s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});
+  mtdRows.forEach(function(r){var s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});
   var ctx=document.getElementById('cht').getContext('2d');
   if(chartInst)chartInst.destroy();
   chartInst=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:14,font:{size:11}}}}}});
@@ -290,17 +293,19 @@ function renderRepList(){
     var ca=caMap[name]||{a:0,s:0,d:0,t:0,deals:[]};
     var revRep=null;
     if(revData&&revData.reps){revData.reps.forEach(function(r){if(r.rep===name)revRep=r;});}
-    var csMtd=revRep?revRep.contract_mtd_amount:0;
+    var csYtdAmt=revRep?revRep.contract_ytd_amount:0;
     var caGoal=getCAGoal(name);
     var revGoal=getRevGoal(name);
-    var monthlyRevPace=revGoal/12*dayPct;
+    var now3=new Date(),doy3=Math.floor((now3-new Date(now3.getFullYear(),0,1))/86400000)+1;
+    var diy3=now3.getFullYear()%4===0?366:365;
+    var yearPace=revGoal*(doy3/diy3);
     var caPct=Math.min(Math.round(ca.a/caGoal*100),100);
-    var revPct=Math.min(Math.round(csMtd/revGoal*100*12),100);
-    var pacePct=Math.min(Math.round(dayPct*100),98);
+    var revPct=Math.min(Math.round(csYtdAmt/revGoal*100),100);
+    var pacePct=Math.min(Math.round(doy3/diy3*100),98);
     var caColor=ca.a>=caGoal?'#059669':(ca.a>=Math.ceil(caGoal*0.6)?'#1a3a6b':'#ef4444');
-    var revColor=csMtd>=monthlyRevPace?'#059669':'#ef4444';
+    var revColor=csYtdAmt>=yearPace?'#059669':'#ef4444';
     var caLabel=ca.a>=caGoal?'On target':ca.a+'/'+caGoal+' CA goal';
-    var revLabel=csMtd>=monthlyRevPace?'On pace':fmtD(csMtd)+' / pace '+fmtD(monthlyRevPace);
+    var revLabel=csYtdAmt>=yearPace?'YTD on pace':'YTD '+fmtD(csYtdAmt)+' / pace '+fmtD(yearPace);
 
     ca.deals.sort(function(a,b){var o={accepted:0,sent:1,draft:2};return(o[a.status.toLowerCase()]||3)-(o[b.status.toLowerCase()]||3);});
     var dl='';
