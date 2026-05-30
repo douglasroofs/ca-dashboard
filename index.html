@@ -237,7 +237,7 @@ function loadAll(){
 function reload(){rows=[];revData=null;loadAll();}
 
 function parseCSVLine(line){var res=[],cur='',inQ=false;for(var i=0;i<line.length;i++){var ch=line[i];if(ch==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else{inQ=!inQ;}}else if(ch===','&&!inQ){res.push(cur.trim());cur='';}else{cur+=ch;}}res.push(cur.trim());return res;}
-function parseCSV(csv){var NL=String.fromCharCode(10),CR=String.fromCharCode(13);return csv.trim().split(NL).slice(2).map(function(line){var c=parseCSVLine(line);var dn=(c[0]||'').trim();return{docName:dn,jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').split(CR).join('')};}).filter(function(r){return r.jobId&&r.docName.toLowerCase().startsWith('ca');});}
+function parseCSV(csv){var NL=String.fromCharCode(10),CR=String.fromCharCode(13);return csv.trim().split(NL).slice(2).map(function(line){var c=parseCSVLine(line);var dn=(c[0]||'').trim();var rawDate=(c[6]||'').split(CR).join('').trim();var fmtDate='';if(rawDate){try{var dp=new Date(rawDate);if(!isNaN(dp))fmtDate=dp.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}catch(e){}}return{docName:dn,jobId:c[1]||'',customer:c[2]||'',address:c[3]||'',rep:c[4]||'',status:(c[5]||'').split(CR).join(''),date:fmtDate};}).filter(function(r){return r.jobId&&r.docName.toLowerCase().startsWith('ca');});}
 function fmtD(n){return '$'+parseFloat(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
 
 function renderMTD(){
@@ -278,7 +278,8 @@ function renderRepList(){
 
   // Build CA map from rows
   var caMap={};
-  rows.forEach(function(r){
+  var caSource=mtdRows.length>0?mtdRows:rows.filter(function(r){var now2=new Date(),yy=String(now2.getFullYear()).substring(2),mm=String(now2.getMonth()+1).padStart(2,'0');return r.jobId&&r.jobId.substring(0,4)===yy+mm;});
+  caSource.forEach(function(r){
     if(!r.rep)return;
     if(!caMap[r.rep])caMap[r.rep]={a:0,s:0,d:0,t:0,deals:[]};
     caMap[r.rep].t++;
@@ -309,7 +310,7 @@ function renderRepList(){
 
     ca.deals.sort(function(a,b){var o={accepted:0,sent:1,draft:2};return(o[a.status.toLowerCase()]||3)-(o[b.status.toLowerCase()]||3);});
     var dl='';
-    ca.deals.forEach(function(d){dl+='<div class="deal-row"><span class="deal-name">'+(d.customer||'-')+'</span><span class="deal-addr">'+(d.address||'-')+'</span><span class="deal-id">'+d.jobId+'</span><span class="chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span></div>';});
+    ca.deals.forEach(function(d){var dateStr=d.date?'<span style="font-size:.68rem;color:var(--muted);flex-shrink:0;margin-left:4px">'+d.date+'</span>':'';dl+='<div class="deal-row"><span class="deal-name">'+(d.customer||'-')+'</span><span class="deal-addr">'+(d.address||'-')+'</span><span class="deal-id">'+d.jobId+'</span><span class="chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span>'+dateStr+'</div>';});
 
     html+='<div class="rep-item">';
     html+='<div class="rep-header"><div class="rep-name" onclick="toggleRep(this)"><span class="rep-chev">+</span>'+name+'</div>';
