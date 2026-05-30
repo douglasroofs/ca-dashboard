@@ -250,10 +250,10 @@ function renderMTD(){
   document.getElementById('kCAcc').textContent=a;
   document.getElementById('kCAccR').textContent=(t?Math.round(a/t*100):0)+'% close rate';
 
-  var csMtd=0,csMtdJ=0,aMtd=0,aMtdJ=0;
-  if(revData&&revData.reps){revData.reps.forEach(function(r){csMtd+=r.contract_mtd_amount||0;csMtdJ+=r.contract_mtd_jobs||0;aMtd+=r.approved_mtd_amount||0;aMtdJ+=r.approved_mtd_jobs||0;});}
-  document.getElementById('kCSMtd').textContent=fmtD(csMtd);
-  document.getElementById('kCSMtdJ').textContent=csMtdJ+' contracts';
+  var csYtdAmt=0,csYtdAmtJ=0,aMtd=0,aMtdJ=0;
+  if(revData&&revData.reps){revData.reps.forEach(function(r){csYtdAmt+=r.contract_mtd_amount||0;csYtdAmtJ+=r.contract_mtd_jobs||0;aMtd+=r.approved_mtd_amount||0;aMtdJ+=r.approved_mtd_jobs||0;});}
+  document.getElementById('kCSMtd').textContent=fmtD(csYtdAmt);
+  document.getElementById('kCSMtdJ').textContent=csYtdAmtJ+' contracts';
   document.getElementById('kAMtd').textContent=fmtD(aMtd);
   document.getElementById('kAMtdJ').textContent=aMtdJ+' jobs';
 
@@ -315,7 +315,7 @@ function renderRepList(){
     html+='<div class="rep-header"><div class="rep-name" onclick="toggleRep(this)"><span class="rep-chev">+</span>'+name+'</div>';
     html+='<div class="rep-badges">';
     if(ca.a>=caGoal)html+='<span class="rbadge rb-green">CAs</span>';
-    if(csMtd>=monthlyRevPace)html+='<span class="rbadge rb-green">Rev</span>';
+    if(csYtdAmt>=yearPace)html+='<span class="rbadge rb-green">Rev</span>';
     html+='</div></div>';
     html+='<div class="goal-bars">';
     html+='<div class="goal-row"><div class="goal-label-row"><span>CAs: '+caLabel+'</span><span>Goal: '+caGoal+'</span></div>';
