@@ -102,8 +102,8 @@
     <div class="rev" id="revTab">
       <div class="mtd-banner" style="background:linear-gradient(135deg,#065f46,#059669);margin-bottom:16px"><div><div class="mtd-title">Revenue Dashboard</div><div class="mtd-sub" id="revSub">Loading...</div></div><div class="mtd-sub" id="revMonth"></div></div>
       <div class="kgrid" id="revKpis"></div>
-      <div class="card" style="margin-bottom:20px"><div class="ctitle">MTD Revenue by Rep</div><canvas id="revChart" height="100"></canvas></div>
-      <div class="rev-rep-grid" id="revReps"></div>
+      <div class="card" style="margin-bottom:20px"><div class="ctitle">MTD: Approved vs Contract Signed by Rep</div><canvas id="revChart" height="100"></canvas></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">  <div class="card"><div class="ctitle" style="color:#059669">Approved (Job Awarded)</div><div id="revApprovedList"></div></div><div class="card"><div class="ctitle" style="color:#1a3a6b">Contract Signed</div><div id="revContractList"></div></div></div>
     </div>
   </div>
 </main>
@@ -151,37 +151,40 @@ function loadRevenue(){
   document.getElementById('revSub').textContent='Loading...';
   fetch('/data/revenue.json?cb='+Date.now()).then(function(r){return r.json();}).then(function(d){revData=d;renderRevenue();}).catch(function(e){document.getElementById('revSub').textContent='Error: '+e.message;});
 }
-function fmtDollar(n){return '$'+parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
+function fmtDollar(n){return '$'+parseFloat(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
 function renderRevenue(){
   if(!revData)return;
   document.getElementById('revSub').textContent='Data as of '+revData.updated;
   document.getElementById('revMonth').textContent=revData.month;
-  var reps=revData.reps.filter(function(r){return r.mtd_revenue>0||r.ytd_revenue>0;}).sort(function(a,b){return b.mtd_revenue-a.mtd_revenue;});
-  var tMtd=0,tYtd=0,tMtdJ=0,tYtdJ=0;
-  reps.forEach(function(r){tMtd+=r.mtd_revenue;tYtd+=r.ytd_revenue;tMtdJ+=r.mtd_jobs;tYtdJ+=r.ytd_jobs;});
+  var reps=revData.reps.filter(function(r){return r.approved_ytd_amount>0||r.contract_ytd_amount>0;}).sort(function(a,b){return b.approved_mtd_amount-a.approved_mtd_amount;});
+  var tAMtd=0,tAYtd=0,tCMtd=0,tCYtd=0,tAMtdJ=0,tCMtdJ=0;
+  reps.forEach(function(r){tAMtd+=r.approved_mtd_amount;tAYtd+=r.approved_ytd_amount;tCMtd+=r.contract_mtd_amount;tCYtd+=r.contract_ytd_amount;tAMtdJ+=r.approved_mtd_jobs;tCMtdJ+=r.contract_mtd_jobs;});
   var kh='';
-  kh+='<div class="kcard a"><div class="klbl">MTD Revenue</div><div class="kval">'+fmtDollar(tMtd)+'</div><div class="ksub">Invoice amount this month</div></div>';
-  kh+='<div class="kcard t"><div class="klbl">MTD Jobs</div><div class="kval">'+tMtdJ+'</div><div class="ksub">Jobs invoiced this month</div></div>';
-  kh+='<div class="kcard s"><div class="klbl">YTD Revenue</div><div class="kval">'+fmtDollar(tYtd)+'</div><div class="ksub">Invoice amount this year</div></div>';
-  kh+='<div class="kcard d"><div class="klbl">YTD Jobs</div><div class="kval">'+tYtdJ+'</div><div class="ksub">Jobs invoiced this year</div></div>';
+  kh+='<div class="kcard a"><div class="klbl">Approved MTD</div><div class="kval">'+fmtDollar(tAMtd)+'</div><div class="ksub">'+tAMtdJ+' jobs awarded this month</div></div>';
+  kh+='<div class="kcard t"><div class="klbl">Approved YTD</div><div class="kval">'+fmtDollar(tAYtd)+'</div><div class="ksub">Year to date</div></div>';
+  kh+='<div class="kcard s"><div class="klbl">Contract Signed MTD</div><div class="kval">'+fmtDollar(tCMtd)+'</div><div class="ksub">'+tCMtdJ+' contracts this month</div></div>';
+  kh+='<div class="kcard d"><div class="klbl">Contract Signed YTD</div><div class="kval">'+fmtDollar(tCYtd)+'</div><div class="ksub">Year to date</div></div>';
   document.getElementById('revKpis').innerHTML=kh;
   var ctx=document.getElementById('revChart').getContext('2d');
   if(revChartInst)revChartInst.destroy();
-  revChartInst=new Chart(ctx,{type:'bar',data:{labels:reps.map(function(r){return r.rep.split(' ')[0];}),datasets:[{label:'MTD',data:reps.map(function(r){return r.mtd_revenue;}),backgroundColor:'#059669',borderRadius:3},{label:'YTD',data:reps.map(function(r){return r.ytd_revenue;}),backgroundColor:'#bfdbfe',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return '$'+v.toLocaleString();}},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
-  var maxMtd=Math.max.apply(null,reps.map(function(r){return r.mtd_revenue;}));
-  var cards='';
+  revChartInst=new Chart(ctx,{type:'bar',data:{labels:reps.map(function(r){return r.rep.split(' ')[0];}),datasets:[{label:'Approved MTD',data:reps.map(function(r){return r.approved_mtd_amount;}),backgroundColor:'#059669',borderRadius:3},{label:'Contract Signed MTD',data:reps.map(function(r){return r.contract_mtd_amount;}),backgroundColor:'#1a3a6b',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return '$'+v.toLocaleString();}},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+  var approvedH='',contractH='';
   reps.forEach(function(r){
-    var pct=maxMtd>0?Math.round(r.mtd_revenue/maxMtd*100):0;
-    cards+='<div class="rev-rep-card">';
-    cards+='<div class="rev-rep-name">'+r.rep+'</div>';
-    cards+='<div class="rev-stats">';
-    cards+='<div class="rev-stat"><div class="rev-stat-lbl">MTD Revenue</div><div class="rev-stat-val">'+fmtDollar(r.mtd_revenue)+'</div><div class="rev-stat-sub">'+r.mtd_jobs+' job'+(r.mtd_jobs!==1?'s':'')+'</div></div>';
-    cards+='<div class="rev-stat"><div class="rev-stat-lbl">YTD Revenue</div><div class="rev-stat-val">'+fmtDollar(r.ytd_revenue)+'</div><div class="rev-stat-sub">'+r.ytd_jobs+' job'+(r.ytd_jobs!==1?'s':'')+'</div></div>';
-    cards+='</div>';
-    cards+='<div class="rev-bar-bg"><div class="rev-bar-fill" style="width:'+pct+'%"></div></div>';
-    cards+='</div>';
+    if(r.approved_ytd_amount>0||r.approved_mtd_amount>0){
+      approvedH+='<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">';
+      approvedH+='<span style="font-size:.8rem;font-weight:600">'+r.rep+'</span>';
+      approvedH+='<div style="text-align:right"><div style="font-size:.85rem;font-weight:700;color:var(--text)">'+fmtDollar(r.approved_mtd_amount)+'</div>';
+      approvedH+='<div style="font-size:.7rem;color:var(--muted)">YTD: '+fmtDollar(r.approved_ytd_amount)+' ('+r.approved_ytd_jobs+' jobs)</div></div></div>';
+    }
+    if(r.contract_ytd_amount>0||r.contract_mtd_amount>0){
+      contractH+='<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">';
+      contractH+='<span style="font-size:.8rem;font-weight:600">'+r.rep+'</span>';
+      contractH+='<div style="text-align:right"><div style="font-size:.85rem;font-weight:700;color:var(--text)">'+fmtDollar(r.contract_mtd_amount)+'</div>';
+      contractH+='<div style="font-size:.7rem;color:var(--muted)">YTD: '+fmtDollar(r.contract_ytd_amount)+' ('+r.contract_ytd_jobs+' contracts)</div></div></div>';
+    }
   });
-  document.getElementById('revReps').innerHTML=cards;
+  document.getElementById('revApprovedList').innerHTML=approvedH||'<div style="padding:20px;text-align:center;color:var(--muted);font-size:.8rem">No data this period</div>';
+  document.getElementById('revContractList').innerHTML=contractH||'<div style="padding:20px;text-align:center;color:var(--muted);font-size:.8rem">No data this period</div>';
 }
 </script>
 </body>
