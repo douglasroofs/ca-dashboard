@@ -421,6 +421,27 @@ function renderYTD(){
 function toggleMoPanel(id,btn){var el=document.getElementById(id);if(!el)return;var open=el.classList.contains('open');el.classList.toggle('open',!open);btn.innerHTML=(open?'&#9654;':'&#9660;')+' Monthly CAs';}
 function toggleMoDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');}
 function syncNow(){var btn=event.target;btn.textContent='Syncing...';btn.disabled=true;fetch('/api/refresh').then(function(r){return r.json();}).then(function(d){if(d.success){btn.textContent='Sync Now';btn.disabled=false;reload();alert('Updated! '+d.ca_count+' CAs and revenue data refreshed.');}else{btn.textContent='Sync Now';btn.disabled=false;alert('Sync failed: '+(d.error||'unknown error'));}}).catch(function(e){btn.textContent='Sync Now';btn.disabled=false;alert('Sync error: '+e.message);});}
+
+function addApprovedRevToYTD(){
+  if(!revData||!revData.reps)return;
+  var list=document.getElementById('ytdRepList');
+  if(!list)return;
+  var rows=list.querySelectorAll('.ytd-rep');
+  rows.forEach(function(row){
+    var nameEl=row.querySelector('.ytd-rep-name');
+    if(!nameEl)return;
+    var name=nameEl.textContent.trim();
+    var rep=null;revData.reps.forEach(function(r){if(r.rep===name)rep=r;});
+    if(!rep||!rep.approved_ytd_amount)return;
+    var bar=row.querySelector('.ytd-bar-bg');
+    if(!bar||row.querySelector('.appr-text'))return;
+    var div=document.createElement('div');
+    div.className='appr-text';
+    div.style.cssText='font-size:.72rem;color:var(--muted);margin-top:3px';
+    div.innerHTML='Approved pipeline: <strong style="color:var(--text)">'+fmtD(rep.approved_ytd_amount)+'</strong>';
+    bar.parentNode.insertAdjacentElement('afterend',div);
+  });
+}
 </script>
 </body>
 </html>
