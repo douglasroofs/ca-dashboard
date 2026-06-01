@@ -106,6 +106,7 @@
     .loading{text-align:center;padding:60px 20px;color:var(--muted)}.spin{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 12px}@keyframes sp{to{transform:rotate(360deg)}}
     .err{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius);padding:14px 20px;color:#991b1b;font-size:.875rem;margin-bottom:20px;display:none}
     .btns{padding:4px 10px;font-size:.72rem;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--muted)}.btns:hover{border-color:var(--brand);color:var(--brand)}
+    #monthPicker option{background:#1a3a6b;color:#fff}
   </style>
 </head>
 <body>
@@ -135,7 +136,7 @@
     <div class="mtd-sec" id="mtdTab">
       <div class="banner" style="background:linear-gradient(135deg,var(--brand-dark),var(--brand))">
         <div><div class="banner-title">Month to Date</div><div class="banner-sub" id="mtdSub">-</div></div>
-        <div class="banner-sub" id="mtdDays">-</div>
+        <div style="display:flex;align-items:center;gap:10px"><div class="banner-sub" id="mtdDays">-</div><select id="monthPicker" onchange="changeMTDMonth(this.value)" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 8px;font-size:.72rem;font-weight:600;cursor:pointer;outline:none" title="View a different month"></select></div>
       </div>
       <div class="kgrid">
         <div class="kcard k1"><div class="klbl">Contract Signed MTD</div><div class="kval" id="kCSMtd">-</div><div class="ksub" id="kCSMtdJ">-</div></div>
@@ -169,8 +170,8 @@
       <div class="kgrid">
         <div class="kcard k1"><div class="klbl">Contract Signed YTD</div><div class="kval" id="kCSYtd">-</div><div class="ksub" id="kCSYtdJ">-</div></div>
         <div class="kcard k2"><div class="klbl">Approved YTD</div><div class="kval" id="kAYtd">-</div><div class="ksub" id="kAYtdJ">-</div></div>
-        <div class="kcard k3"><div class="klbl">CAs Accepted YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">-</div></div>
-        <div class="kcard k4"><div class="klbl">Total CAs YTD</div><div class="kval" id="kCTotYtd">-</div><div class="ksub">Year to date</div></div>
+        <div class="kcard k2"><div class="klbl">Approved Revenue YTD</div><div class="kval" id="kARevYtd">-</div><div class="ksub" id="kARevYtdJ">- jobs</div></div>
+        <div class="kcard k4"><div class="klbl">CA Close Rate YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">- of - total</div></div>
       </div>
       <div class="mcard"><div class="card-title">Monthly CAs Accepted — <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
       <div class="card" style="margin-bottom:20px">
@@ -183,7 +184,7 @@
 <script>
 var GK='dr_goals',DEF_CA=8,DEF_REV=1000000;
 var goals=JSON.parse(localStorage.getItem(GK)||'{}');
-var rows=[],revData=null,af='all',sc='status',sd='asc',at='mtd';
+var rows=[],revData=null,af='all',sc='status',sd='asc',at='mtd',selectedMonth=null;
 var TEAM=['Robert Wilson','Kevin Mahan','Jack Obert','Andrew Funk','Andrew Prickel','George Bechara','Michael McCarthy','Christian Brown','David Kerns','Kelly Alston','Harvey Shoemaker','Marc Mitchell','Alfred Duncan','Isabelle Price','Nick Seward','Mike Mendez','Steven Arevalo'];
 var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
@@ -196,6 +197,17 @@ window.onload=function(){
   document.getElementById('mtdDays').textContent='Day '+day+' of '+tot;
   var doy=Math.floor((now-new Date(now.getFullYear(),0,1))/86400000)+1,diy=now.getFullYear()%4===0?366:365;
   document.getElementById('ytdDays').textContent='Day '+doy+' of '+diy;
+  // Populate month picker with Jan through current month
+  var picker=document.getElementById('monthPicker');
+  var MOS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  for(var mi=0;mi<=now.getMonth();mi++){
+    var opt=document.createElement('option');
+    var yr2=now.getFullYear(),mo2=String(mi+1).padStart(2,'0');
+    opt.value=yr2+'-'+mo2;
+    opt.textContent=MOS[mi]+' '+yr2;
+    if(mi===now.getMonth())opt.selected=true;
+    picker.appendChild(opt);
+  }
   loadAll();
 };
 
@@ -225,6 +237,14 @@ function saveGoals(){
   if(revData)renderYTD();
 }
 
+function changeMTDMonth(val){
+  selectedMonth=val;
+  var now=new Date();
+  var curMo=String(now.getFullYear())+'-'+String(now.getMonth()+1).padStart(2,'0');
+  var isPast=val!==curMo;
+  document.getElementById('mtdSub').textContent=isPast?(val.replace('-',' → ').substring(0,7)+' performance (historical)'):(new Date(now.getFullYear(),now.getMonth(),1).toLocaleDateString('en-US',{month:'long',year:'numeric'})+' performance');
+  if(rows.length)renderMTD();
+}
 function loadAll(){
   document.getElementById('ldg').style.display='block';
   document.getElementById('dash').style.display='none';
@@ -248,7 +268,11 @@ function reload(){rows=[];revData=null;loadAll();}
 
 function renderMTD(){
   var now=new Date(),yr=now.getFullYear(),y2=String(yr).substring(2),mm=String(now.getMonth()+1).padStart(2,'0');
-  var mrows=rows.filter(function(r){var rd=r.date?r.date.substring(0,7):'';var jobPfx=r.jobId?r.jobId.substring(0,4):'';var mtdYYMM=y2+mm;return rd===(yr+'-'+mm)||jobPfx===mtdYYMM;});
+  var activeMonth=selectedMonth||(yr+'-'+mm);
+  var aParts=activeMonth.split('-'),aYr=parseInt(aParts[0]),aMo=aParts[1];
+  var mrows=rows.filter(function(r){var rd=r.date?r.date.substring(0,7):'';var jobPfx=r.jobId?r.jobId.substring(0,4):'';return rd===activeMonth||jobPfx===(String(aYr).substring(2)+aMo);});
+  var isPastMonth=activeMonth!==(yr+'-'+mm);
+  document.getElementById('mtdDays').textContent=isPastMonth?(new Date(aYr,parseInt(aMo)-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'})):('Day '+now.getDate()+' of '+new Date(yr,now.getMonth()+1,0).getDate());
   var t=mrows.length,a=0,s=0,d=0;
   mrows.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')a++;else if(st==='sent')s++;else d++;});
   document.getElementById('kCTot').textContent=t;
@@ -347,10 +371,10 @@ function renderYTD(){
   if(revData&&revData.reps){revData.reps.forEach(function(r){csYtd+=r.contract_ytd_amount||0;csYtdJ+=r.contract_ytd_jobs||0;aYtd+=r.approved_ytd_amount||0;aYtdJ+=r.approved_ytd_jobs||0;});}
   document.getElementById('kCSYtd').textContent=fmtD(csYtd);document.getElementById('kCSYtdJ').textContent=csYtdJ+' contracts';
   document.getElementById('kAYtd').textContent=fmtD(aYtd);document.getElementById('kAYtdJ').textContent=aYtdJ+' jobs';
+  if(document.getElementById('kARevYtd')){document.getElementById('kARevYtd').textContent=fmtD(aYtd);document.getElementById('kARevYtdJ').textContent=aYtdJ+' jobs approved';}
   var t=rows.length,a=rows.filter(function(r){return r.status.toLowerCase()==='accepted';}).length;
-  document.getElementById('kCTotYtd').textContent=t;
-  document.getElementById('kCAccYtd').textContent=a;
-  document.getElementById('kCAccYtdR').textContent=(t?Math.round(a/t*100):0)+'% close rate';
+  document.getElementById('kCAccYtd').textContent=(t?Math.round(a/t*100):0)+'%';
+  document.getElementById('kCAccYtdR').textContent=a+' accepted of '+t+' total';
   var mo=new Array(12).fill(0);
   rows.forEach(function(r){if(r.status.toLowerCase()==='accepted'&&r.jobId&&r.jobId.length>=4&&r.jobId.substring(0,2)===y2){var mv=parseInt(r.jobId.substring(2,4),10)-1;if(mv>=0&&mv<12)mo[mv]++;}});
   var ctx=document.getElementById('ytdChart').getContext('2d');
