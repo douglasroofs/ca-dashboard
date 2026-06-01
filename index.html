@@ -170,7 +170,7 @@
       <div class="kgrid">
         <div class="kcard k1"><div class="klbl">Contract Signed YTD</div><div class="kval" id="kCSYtd">-</div><div class="ksub" id="kCSYtdJ">-</div></div>
         <div class="kcard k2"><div class="klbl">Approved YTD</div><div class="kval" id="kAYtd">-</div><div class="ksub" id="kAYtdJ">-</div></div>
-        <div class="kcard k2"><div class="klbl">Approved Revenue YTD</div><div class="kval" id="kARevYtd">-</div><div class="ksub" id="kARevYtdJ">- jobs</div></div>
+        <div class="kcard k4"><div class="klbl">Total CAs YTD</div><div class="kval" id="kCTotYtd">-</div><div class="ksub">Year to date</div></div>
         <div class="kcard k4"><div class="klbl">CA Close Rate YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">- of - total</div></div>
       </div>
       <div class="mcard"><div class="card-title">Monthly CAs Accepted — <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
@@ -242,7 +242,7 @@ function changeMTDMonth(val){
   var now=new Date();
   var curMo=String(now.getFullYear())+'-'+String(now.getMonth()+1).padStart(2,'0');
   var isPast=val!==curMo;
-  document.getElementById('mtdSub').textContent=isPast?(val.replace('-',' → ').substring(0,7)+' performance (historical)'):(new Date(now.getFullYear(),now.getMonth(),1).toLocaleDateString('en-US',{month:'long',year:'numeric'})+' performance');
+  document.getElementById('mtdSub').textContent=isPast?(new Date(aYr,parseInt(aMo)-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'})+' — historical view'):(new Date(now.getFullYear(),now.getMonth(),1).toLocaleDateString('en-US',{month:'long',year:'numeric'})+' performance');
   if(rows.length)renderMTD();
 }
 function loadAll(){
@@ -371,7 +371,7 @@ function renderYTD(){
   if(revData&&revData.reps){revData.reps.forEach(function(r){csYtd+=r.contract_ytd_amount||0;csYtdJ+=r.contract_ytd_jobs||0;aYtd+=r.approved_ytd_amount||0;aYtdJ+=r.approved_ytd_jobs||0;});}
   document.getElementById('kCSYtd').textContent=fmtD(csYtd);document.getElementById('kCSYtdJ').textContent=csYtdJ+' contracts';
   document.getElementById('kAYtd').textContent=fmtD(aYtd);document.getElementById('kAYtdJ').textContent=aYtdJ+' jobs';
-  if(document.getElementById('kARevYtd')){document.getElementById('kARevYtd').textContent=fmtD(aYtd);document.getElementById('kARevYtdJ').textContent=aYtdJ+' jobs approved';}
+  if(document.getElementById('kCTotYtd')){document.getElementById('kCTotYtd').textContent=rows.length;}
   var t=rows.length,a=rows.filter(function(r){return r.status.toLowerCase()==='accepted';}).length;
   document.getElementById('kCAccYtd').textContent=(t?Math.round(a/t*100):0)+'%';
   document.getElementById('kCAccYtdR').textContent=a+' accepted of '+t+' total';
