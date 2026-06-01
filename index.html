@@ -388,7 +388,7 @@ function renderYTD(){
   TEAM.forEach(function(name,i){
     var revRep=null;
     if(revData&&revData.reps){revData.reps.forEach(function(r){if(r.rep===name)revRep=r;});}
-    var csAmt=revRep?revRep.contract_ytd_amount:0;
+    var csAmt=revRep?revRep.contract_ytd_amount:0;var aYtdAmt=revRep?revRep.approved_ytd_amount:0;
     var revGoal=getRevGoal(name);
     var pct=Math.min(Math.round(csAmt/revGoal*100),100);
     var pacePct=Math.min(Math.round(yearPct*100),98);
