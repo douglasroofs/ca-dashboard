@@ -1,105 +1,105 @@
 {
-  "updated": "2026-05-30",
-  "month": "May 2026",
+  "updated": "2026-06-01",
+  "month": "June 2026",
   "reps": [
     {
       "rep": "Robert Wilson",
       "approved_ytd_jobs": 7,
       "approved_ytd_amount": 283758.84,
-      "approved_mtd_jobs": 3,
-      "approved_mtd_amount": 126790.74,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
       "contract_ytd_jobs": 9,
       "contract_ytd_amount": 156968.1,
-      "contract_mtd_jobs": 2,
-      "contract_mtd_amount": 37658.57
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Kevin Mahan",
-      "approved_ytd_jobs": 13,
-      "approved_ytd_amount": 177869.21,
-      "approved_mtd_jobs": 2,
-      "approved_mtd_amount": 31554.08,
-      "contract_ytd_jobs": 14,
-      "contract_ytd_amount": 198707.82,
-      "contract_mtd_jobs": 4,
-      "contract_mtd_amount": 64477.11
+      "approved_ytd_jobs": 14,
+      "approved_ytd_amount": 205369.21,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
+      "contract_ytd_jobs": 15,
+      "contract_ytd_amount": 226207.82,
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Jack Obert",
       "approved_ytd_jobs": 15,
       "approved_ytd_amount": 335604.49,
-      "approved_mtd_jobs": 2,
-      "approved_mtd_amount": 48010.14,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
       "contract_ytd_jobs": 15,
       "contract_ytd_amount": 330322.61,
-      "contract_mtd_jobs": 7,
-      "contract_mtd_amount": 153440.64
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Andrew Funk",
       "approved_ytd_jobs": 6,
       "approved_ytd_amount": 80252.99,
-      "approved_mtd_jobs": 4,
-      "approved_mtd_amount": 49745.09,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
       "contract_ytd_jobs": 1,
       "contract_ytd_amount": 0,
-      "contract_mtd_jobs": 1,
+      "contract_mtd_jobs": 0,
       "contract_mtd_amount": 0
     },
     {
       "rep": "Andrew Prickel",
       "approved_ytd_jobs": 35,
-      "approved_ytd_amount": 1031286.65,
-      "approved_mtd_jobs": 6,
-      "approved_mtd_amount": 143419.31,
-      "contract_ytd_jobs": 36,
-      "contract_ytd_amount": 914908.49,
-      "contract_mtd_jobs": 8,
-      "contract_mtd_amount": 108478.82
+      "approved_ytd_amount": 1035498.78,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
+      "contract_ytd_jobs": 37,
+      "contract_ytd_amount": 919120.62,
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "George Bechara",
       "approved_ytd_jobs": 10,
-      "approved_ytd_amount": 226176.12,
-      "approved_mtd_jobs": 3,
-      "approved_mtd_amount": 23010.55,
+      "approved_ytd_amount": 225161.27,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
       "contract_ytd_jobs": 7,
-      "contract_ytd_amount": 108709.89,
-      "contract_mtd_jobs": 3,
-      "contract_mtd_amount": 9396.69
+      "contract_ytd_amount": 107695.04,
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Michael McCarthy",
-      "approved_ytd_jobs": 13,
-      "approved_ytd_amount": 248116.71,
-      "approved_mtd_jobs": 7,
-      "approved_mtd_amount": 114446.86,
+      "approved_ytd_jobs": 14,
+      "approved_ytd_amount": 273021.69,
+      "approved_mtd_jobs": 1,
+      "approved_mtd_amount": 15188.69,
       "contract_ytd_jobs": 11,
       "contract_ytd_amount": 271998.7,
-      "contract_mtd_jobs": 1,
-      "contract_mtd_amount": 13500
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Christian Brown",
       "approved_ytd_jobs": 9,
-      "approved_ytd_amount": 170434.46,
-      "approved_mtd_jobs": 3,
-      "approved_mtd_amount": 52739.69,
+      "approved_ytd_amount": 173184.46,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
       "contract_ytd_jobs": 4,
-      "contract_ytd_amount": 114588.95,
-      "contract_mtd_jobs": 3,
-      "contract_mtd_amount": 97473.95
+      "contract_ytd_amount": 117338.95,
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "David Kerns",
       "approved_ytd_jobs": 13,
       "approved_ytd_amount": 219102.24,
-      "approved_mtd_jobs": 5,
-      "approved_mtd_amount": 73987.23,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
       "contract_ytd_jobs": 7,
       "contract_ytd_amount": 138161.25,
-      "contract_mtd_jobs": 7,
-      "contract_mtd_amount": 138161.25
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Kelly Alston",
@@ -109,63 +109,63 @@
       "approved_mtd_amount": 0,
       "contract_ytd_jobs": 3,
       "contract_ytd_amount": 25032.86,
-      "contract_mtd_jobs": 2,
-      "contract_mtd_amount": 18266.54
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Harvey Shoemaker",
       "approved_ytd_jobs": 20,
-      "approved_ytd_amount": 307255.63,
-      "approved_mtd_jobs": 6,
-      "approved_mtd_amount": 55959.47,
-      "contract_ytd_jobs": 16,
-      "contract_ytd_amount": 287667.2,
-      "contract_mtd_jobs": 5,
-      "contract_mtd_amount": 82975.05
+      "approved_ytd_amount": 333774.69,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
+      "contract_ytd_jobs": 17,
+      "contract_ytd_amount": 296714.85,
+      "contract_mtd_jobs": 1,
+      "contract_mtd_amount": 9047.65
     },
     {
       "rep": "Marc Mitchell",
-      "approved_ytd_jobs": 8,
-      "approved_ytd_amount": 116858.77,
-      "approved_mtd_jobs": 2,
-      "approved_mtd_amount": 23940.33,
-      "contract_ytd_jobs": 8,
-      "contract_ytd_amount": 117686.99,
-      "contract_mtd_jobs": 1,
-      "contract_mtd_amount": 13003.47
+      "approved_ytd_jobs": 9,
+      "approved_ytd_amount": 125309.77,
+      "approved_mtd_jobs": 1,
+      "approved_mtd_amount": 8451,
+      "contract_ytd_jobs": 10,
+      "contract_ytd_amount": 126137.99,
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Alfred Duncan",
       "approved_ytd_jobs": 24,
       "approved_ytd_amount": 347052.56,
-      "approved_mtd_jobs": 9,
-      "approved_mtd_amount": 132487.68,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
       "contract_ytd_jobs": 27,
       "contract_ytd_amount": 356725.16,
-      "contract_mtd_jobs": 5,
-      "contract_mtd_amount": 31598.61
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Isabelle Price",
       "approved_ytd_jobs": 7,
       "approved_ytd_amount": 124695.28,
-      "approved_mtd_jobs": 4,
-      "approved_mtd_amount": 59232.2,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
       "contract_ytd_jobs": 5,
       "contract_ytd_amount": 112533.58,
-      "contract_mtd_jobs": 1,
-      "contract_mtd_amount": 16045.23
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Nick Seward",
       "approved_ytd_jobs": 16,
       "approved_ytd_amount": 126677.45,
-      "approved_mtd_jobs": 6,
-      "approved_mtd_amount": 38462.45,
+      "approved_mtd_jobs": 0,
+      "approved_mtd_amount": 0,
       "contract_ytd_jobs": 15,
       "contract_ytd_amount": 164638.38,
-      "contract_mtd_jobs": 7,
-      "contract_mtd_amount": 42889.76
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Mike Mendez",
@@ -175,19 +175,19 @@
       "approved_mtd_amount": 0,
       "contract_ytd_jobs": 1,
       "contract_ytd_amount": 6868.82,
-      "contract_mtd_jobs": 1,
-      "contract_mtd_amount": 6868.82
+      "contract_mtd_jobs": 0,
+      "contract_mtd_amount": 0
     },
     {
       "rep": "Steven Arevalo",
-      "approved_ytd_jobs": 15,
-      "approved_ytd_amount": 193942.56,
-      "approved_mtd_jobs": 5,
-      "approved_mtd_amount": 67486.13,
-      "contract_ytd_jobs": 11,
-      "contract_ytd_amount": 132371.67,
-      "contract_mtd_jobs": 2,
-      "contract_mtd_amount": 29459.8
+      "approved_ytd_jobs": 16,
+      "approved_ytd_amount": 194714.55,
+      "approved_mtd_jobs": 1,
+      "approved_mtd_amount": 0,
+      "contract_ytd_jobs": 12,
+      "contract_ytd_amount": 146574.7,
+      "contract_mtd_jobs": 1,
+      "contract_mtd_amount": 14203.03
     }
   ]
 }
