@@ -395,7 +395,7 @@ function renderYTD(){
 
 function toggleMoPanel(id,btn){var el=document.getElementById(id);if(!el)return;var open=el.classList.contains('open');el.classList.toggle('open',!open);btn.innerHTML=(open?'&#9654;':'&#9660;')+' Monthly CAs';}
 function toggleMoDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');}
-function syncNow(){if(confirm('This will open Cowork to run the Leap sync now. Your data will refresh in about 2 minutes. Continue?'))window.open('cowork://scheduled/leap-ca-count-daily-update','_blank');}
+function syncNow(){var btn=event.target;btn.textContent='Syncing...';btn.disabled=true;fetch('/api/refresh').then(function(r){return r.json();}).then(function(d){if(d.success){btn.textContent='Sync Now';btn.disabled=false;reload();alert('Updated! '+d.ca_count+' CAs and revenue data refreshed.');}else{btn.textContent='Sync Now';btn.disabled=false;alert('Sync failed: '+(d.error||'unknown error'));}}).catch(function(e){btn.textContent='Sync Now';btn.disabled=false;alert('Sync error: '+e.message);});}
 </script>
 </body>
 </html>
