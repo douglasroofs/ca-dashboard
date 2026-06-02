@@ -718,6 +718,15 @@
       "date": "2026-06-02",
       "address": "11105 Richland Valley Dr, Great Falls, VA",
       "ts": "2026-06-02T15:08:40.273Z"
+    },
+    {
+      "leadId": "47178",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "4594 Clearwater Ct, Dumfries, VA",
+      "ts": "2026-06-02T15:27:00.922Z"
     }
   ]
 }
