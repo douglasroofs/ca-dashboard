@@ -712,6 +712,68 @@ function sortYTDReps(){
   });
   sorted.forEach(function(c){container.appendChild(c);});
 }
+
+// ── Sales Rabbit Integration ──────────────────────────────────────────
+var srData = { events: [] };
+
+// Load SR data on startup
+(function loadSRData(){
+  fetch('https://raw.githubusercontent.com/douglasroofs/ca-dashboard/main/data/sr-data.json?cb='+Date.now())
+    .then(function(r){return r.json();})
+    .then(function(d){ srData = d; addDoorsToRepCards(); })
+    .catch(function(){});
+})();
+
+function getSRDoorsForRep(repName, startDate, endDate){
+  if(!srData||!srData.events) return 0;
+  var start=new Date(startDate), end=new Date(endDate+' 23:59:59');
+  return srData.events.filter(function(e){
+    if(!e.repName||!e.date) return false;
+    var rn=e.repName.trim().replace(/\s+/g,' ');
+    if(rn!==repName) return false;
+    var d=new Date(e.date);
+    return d>=start&&d<=end;
+  }).length;
+}
+
+function getSRCAsForRep(repName, startDate, endDate){
+  if(!srData||!srData.events) return 0;
+  var start=new Date(startDate), end=new Date(endDate+' 23:59:59');
+  return srData.events.filter(function(e){
+    if(!e.repName||!e.date||!e.isCA) return false;
+    var rn=e.repName.trim().replace(/\s+/g,' ');
+    if(rn!==repName) return false;
+    var d=new Date(e.date);
+    return d>=start&&d<=end;
+  }).length;
+}
+
+function addDoorsToRepCards(){
+  var now=new Date();
+  var mo=String(now.getMonth()+1).padStart(2,'0');
+  var startDate=now.getFullYear()+'-'+mo+'-01';
+  var endDate=now.getFullYear()+'-'+mo+'-31';
+  document.querySelectorAll('.rep-card').forEach(function(card){
+    var old=card.querySelector('.sr-doors-row');
+    if(old) old.parentNode.removeChild(old);
+    var nameEl=card.querySelector('.rep-name-btn');
+    if(!nameEl) return;
+    var repName=Array.from(nameEl.childNodes).filter(function(n){return n.nodeType===3;})
+      .map(function(n){return n.textContent.trim();}).join('').replace(/\s+/g,' ').trim();
+    var doors=getSRDoorsForRep(repName,startDate,endDate);
+    if(doors===0) return; // only show if there are doors
+    var row=document.createElement('div');
+    row.className='sr-doors-row';
+    row.style.cssText='display:flex;align-items:center;gap:6px;padding:2px 10px 6px;font-size:12px;';
+    row.innerHTML='<span style="color:#6b7280;font-weight:600;font-size:11px;">Doors</span>'+
+      '<span style="color:#7c3aed;font-weight:700;">'+doors+'</span>';
+    card.appendChild(row);
+  });
+}
+
+// Patch renderMTD to also refresh doors
+var _origRenderMTDSR=renderMTD;
+renderMTD=function(){_origRenderMTDSR.apply(this,arguments);setTimeout(addDoorsToRepCards,100);};
 </script>
 </body>
 </html>
