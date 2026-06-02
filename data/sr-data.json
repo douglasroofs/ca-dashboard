@@ -4594,6 +4594,15 @@
       "date": "2026-06-02",
       "address": "7055 Chesley Search Way, Alexandria, VA",
       "ts": "2026-06-02T21:18:28.672Z"
+    },
+    {
+      "leadId": "47530",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7047 Chesley Search Way, Alexandria, VA",
+      "ts": "2026-06-02T21:18:42.675Z"
     }
   ]
 }
