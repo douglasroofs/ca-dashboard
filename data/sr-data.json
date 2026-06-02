@@ -4018,6 +4018,15 @@
       "date": "2026-06-02",
       "address": "6984 Cromarty Drive, Alexandria, VA",
       "ts": "2026-06-02T20:11:10.407Z"
+    },
+    {
+      "leadId": "47395",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7041 Kings Manor Dr, Alexandria, VA",
+      "ts": "2026-06-02T20:12:09.198Z"
     }
   ]
 }
