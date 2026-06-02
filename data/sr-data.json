@@ -4486,6 +4486,15 @@
       "date": "2026-06-02",
       "address": "23367 Kerrisdale Way, Sterling, VA",
       "ts": "2026-06-02T20:45:02.700Z"
+    },
+    {
+      "leadId": "47512",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7025 Kings Manor Dr, Alexandria, VA",
+      "ts": "2026-06-02T20:46:31.268Z"
     }
   ]
 }
