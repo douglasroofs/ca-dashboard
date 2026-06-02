@@ -4540,6 +4540,15 @@
       "date": "2026-06-02",
       "address": "23425 Summerstown Pl, Sterling, VA",
       "ts": "2026-06-02T20:59:10.775Z"
+    },
+    {
+      "leadId": "47523",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "23424 Summerstown Pl, Sterling, VA",
+      "ts": "2026-06-02T21:01:11.167Z"
     }
   ]
 }
