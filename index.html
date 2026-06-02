@@ -271,7 +271,16 @@ window.onload=function(){
   loadAll();
 };
 
-function switchTab(t,el){at=t;document.querySelectorAll('.nav-tab').forEach(function(x){x.classList.remove('active');});el.classList.add('active');document.getElementById('mtdTab').classList.toggle('hidden',t!=='mtd');document.getElementById('ytdTab').classList.toggle('active',t==='ytd');}
+function switchTab(tab,el){
+  document.getElementById('mtdTab').style.display=tab==='mtd'?'':'none';
+  document.getElementById('ytdTab').style.display=tab==='ytd'?'':'none';
+  var ct=document.getElementById('compTab');
+  if(ct)ct.style.display=tab==='comp'?'':'none';
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
+  if(el)el.classList.add('active');
+  if(tab==='ytd'&&typeof renderYTD==='function'){renderYTD();setTimeout(sortYTDReps,100);}
+  if(tab==='comp'&&typeof renderComp==='function')setTimeout(renderComp,50);
+}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 function eR(r){return r.replace(/[^A-Za-z0-9]/g,'_');}
 function getCAGoal(r){return goals[r]&&goals[r].ca!==undefined?goals[r].ca:DEF_CA;}
@@ -669,6 +678,23 @@ function renderComp(){
       '</div>';
   });
   document.getElementById('compRepList').innerHTML=html;
+}
+
+function sortYTDReps(){
+  var ytdTab=document.getElementById('ytdTab');
+  if(!ytdTab||!revData||!revData.reps) return;
+  var cards=ytdTab.querySelectorAll('.ytd-rep');
+  if(!cards.length) return;
+  var container=cards[0].parentNode;
+  var sorted=Array.from(cards).sort(function(a,b){
+    var na=(a.querySelector('.ytd-rep-name')||{}).textContent||'';
+    var nb=(b.querySelector('.ytd-rep-name')||{}).textContent||'';
+    na=na.trim().replace(/\s+/g,' ');nb=nb.trim().replace(/\s+/g,' ');
+    var ra=revData.reps.find(function(r){return r.rep===na;})||{};
+    var rb=revData.reps.find(function(r){return r.rep===nb;})||{};
+    return (rb.contract_ytd_amount||0)-(ra.contract_ytd_amount||0);
+  });
+  sorted.forEach(function(c){container.appendChild(c);});
 }
 </script>
 </body>
