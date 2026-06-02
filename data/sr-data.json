@@ -4513,6 +4513,15 @@
       "date": "2026-06-02",
       "address": "43487 Ogden Pl, Sterling, VA",
       "ts": "2026-06-02T20:53:44.354Z"
+    },
+    {
+      "leadId": "47520",
+      "repName": "Christian Brown",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "5807 Clapham Road, Alexandria, VA",
+      "ts": "2026-06-02T20:55:33.466Z"
     }
   ]
 }
