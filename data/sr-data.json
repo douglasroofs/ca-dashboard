@@ -53,6 +53,47 @@
         "leadStatusId": 53678,
         "type": "leadStatusUpdate"
       }
+    },
+    {
+      "ts": "2026-06-02T15:03:12.166Z",
+      "payload": {
+        "actionUserId": 1,
+        "leadData": {
+          "actualStatusId": 10,
+          "appointment": null,
+          "businessName": "",
+          "campaignId": null,
+          "city": "Reston",
+          "country": "USA",
+          "customFields": {},
+          "dateCreated": "2026-06-02T15:03:03+00:00",
+          "dateModified": "2026-06-02T15:03:03+00:00",
+          "dateOfBirth": null,
+          "email": null,
+          "firstName": null,
+          "lastName": null,
+          "latitude": 38.9291754720528,
+          "leadId": 47171,
+          "longitude": -77.3743660056242,
+          "notes": null,
+          "ownerId": 1,
+          "ownerModified": "2026-06-02T15:03:03+00:00",
+          "phoneAlternate": null,
+          "phonePrimary": null,
+          "postalCode": "20191",
+          "ssn": null,
+          "state": "VA",
+          "status": "SGCA",
+          "statusId": 53679,
+          "statusModified": "2026-06-02T15:03:03+00:00",
+          "street1": "2481 Freetown Dr",
+          "street2": null,
+          "userId": 1
+        },
+        "leadId": 47171,
+        "leadStatusId": 53679,
+        "type": "leadStatusUpdate"
+      }
     }
   ]
 }
