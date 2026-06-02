@@ -4450,6 +4450,15 @@
       "date": "2026-06-02",
       "address": "7028 Kings Manor Dr, Alexandria, VA",
       "ts": "2026-06-02T20:39:12.336Z"
+    },
+    {
+      "leadId": "47504",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "43479 Rockforest Ct, Sterling, VA",
+      "ts": "2026-06-02T20:40:55.152Z"
     }
   ]
 }
