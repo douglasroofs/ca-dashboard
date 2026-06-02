@@ -3559,6 +3559,15 @@
       "date": "2026-05-26",
       "address": "6825 Spring Beauty Ct, Springfield, VA",
       "ts": "2026-06-02T19:05:57.981Z"
+    },
+    {
+      "leadId": "46021",
+      "repName": "Andrew Funk",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-05-26",
+      "address": "6825 Spring Beauty Ct, Springfield, VA",
+      "ts": "2026-06-02T19:06:10.939Z"
     }
   ]
 }
