@@ -37,7 +37,10 @@ module.exports = async function handler(req, res) {
     const status = (leadData.status || '').toUpperCase();
     const userId = String(payload.actionUserId || leadData.userId || leadData.ownerId || '');
     const repName = SR_USER_MAP[userId] || '';
-    const dateStr = (leadData.statusModified || leadData.dateModified || new Date().toISOString()).split('T')[0];
+    // Use dateCreated for doors (when pin dropped), statusModified for CAs
+    const caStatusDate = (leadData.statusModified || leadData.dateModified || new Date().toISOString()).split('T')[0];
+    const doorDate = (leadData.dateCreated || leadData.statusModified || new Date().toISOString()).split('T')[0];
+    const dateStr = (CA_STATUSES.includes(status)) ? caStatusDate : doorDate;
     const address = [leadData.street1, leadData.city, leadData.state].filter(Boolean).join(', ');
     const leadId = String(payload.leadId || leadData.leadId || '');
 
