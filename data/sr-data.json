@@ -3739,6 +3739,15 @@
       "date": "2026-06-02",
       "address": "43498 Freeport Pl, Sterling, VA",
       "ts": "2026-06-02T19:52:50.675Z"
+    },
+    {
+      "leadId": "47338",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7074 Elton Way, Alexandria, VA",
+      "ts": "2026-06-02T19:56:02.450Z"
     }
   ]
 }
