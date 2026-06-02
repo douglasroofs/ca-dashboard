@@ -244,6 +244,18 @@ function changeMTDMonth(val){
   var isPast=val!==curMo;
   document.getElementById('mtdSub').textContent=isPast?(new Date(aYr,parseInt(aMo)-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'})+' — historical view'):(new Date(now.getFullYear(),now.getMonth(),1).toLocaleDateString('en-US',{month:'long',year:'numeric'})+' performance');
   if(rows.length)renderMTD();
+  if(isPast){
+    document.getElementById('kCSMtd').textContent='...';
+    document.getElementById('kAMtd').textContent='...';
+    fetch('/api/revenue-history?month='+val).then(function(r){return r.json();}).then(function(d){
+      if(d.success&&d.reps){
+        var cs=0,csJ=0,ap=0,apJ=0;
+        d.reps.forEach(function(r){cs+=r.contract_amount||0;csJ+=r.contract_jobs||0;ap+=r.approved_amount||0;apJ+=r.approved_jobs||0;});
+        document.getElementById('kCSMtd').textContent=fmtD(cs);document.getElementById('kCSMtdJ').textContent=csJ+' contracts';
+        document.getElementById('kAMtd').textContent=fmtD(ap);document.getElementById('kAMtdJ').textContent=apJ+' jobs';
+      }
+    }).catch(function(){document.getElementById('kCSMtd').textContent='N/A';document.getElementById('kAMtd').textContent='N/A';});
+  }
 }
 function loadAll(){
   document.getElementById('ldg').style.display='block';
