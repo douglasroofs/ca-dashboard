@@ -4243,6 +4243,15 @@
       "date": "2026-06-02",
       "address": "7055 Kings Manor Dr, Alexandria, VA",
       "ts": "2026-06-02T20:26:15.064Z"
+    },
+    {
+      "leadId": "47466",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7009 Chesley Search Way, Alexandria, VA",
+      "ts": "2026-06-02T20:26:24.992Z"
     }
   ]
 }
