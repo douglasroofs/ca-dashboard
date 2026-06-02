@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-01",
+  "updated": "2026-06-02",
   "events": [
     {
       "leadId": "hist-0",
@@ -763,6 +763,1286 @@
       "date": "2026-06-01",
       "address": "5325 Kipp Ct, Fairfax, VA",
       "ts": "2026-06-02T15:33:53.265Z"
+    },
+    {
+      "leadId": "june-door-0",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-1",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-2",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-3",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-4",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-5",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-6",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-9",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-10",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-11",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-12",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-13",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-14",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-15",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-16",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-19",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-20",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-21",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-22",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-23",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-24",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-25",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-26",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-29",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-30",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-31",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-32",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-33",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-34",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-35",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-36",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-39",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-40",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-41",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-42",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-43",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-44",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-45",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-46",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-49",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-50",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-51",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-52",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-53",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-54",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-55",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-56",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-59",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-60",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-61",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-62",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-63",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-64",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-65",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-66",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-69",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-70",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-71",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-72",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-73",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-74",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-75",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-76",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-79",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-80",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-81",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-82",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-83",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-84",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-85",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-86",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-89",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-90",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-91",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-92",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-93",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-94",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-95",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-96",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-99",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-100",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-101",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-102",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-103",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-104",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-105",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-106",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-109",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-110",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-111",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-112",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-113",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-114",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-115",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-116",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-119",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-120",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-121",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-122",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-123",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-124",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-125",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-126",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-129",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-130",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-131",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-132",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-133",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-134",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-135",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-136",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-139",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-140",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-141",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-142",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-143",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-144",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-145",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-146",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-149",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-150",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-151",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-152",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-153",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-154",
+      "repName": "Kyle Higginbotham",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-155",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-156",
+      "repName": "Kyle Higginbotham",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-159",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
     }
   ]
 }
