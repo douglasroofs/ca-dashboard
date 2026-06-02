@@ -4612,6 +4612,15 @@
       "date": "2026-06-02",
       "address": "6404 Willowood Ln, Alexandria, VA",
       "ts": "2026-06-02T21:19:50.317Z"
+    },
+    {
+      "leadId": "47536",
+      "repName": "Harvey Shoemaker",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "5304 Ridley Ct, Alexandria, VA",
+      "ts": "2026-06-02T21:41:36.754Z"
     }
   ]
 }
