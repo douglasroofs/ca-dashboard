@@ -4027,6 +4027,15 @@
       "date": "2026-06-02",
       "address": "7041 Kings Manor Dr, Alexandria, VA",
       "ts": "2026-06-02T20:12:09.198Z"
+    },
+    {
+      "leadId": "47403",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "5716 Clapham Rd, Alexandria, VA",
+      "ts": "2026-06-02T20:12:22.044Z"
     }
   ]
 }
