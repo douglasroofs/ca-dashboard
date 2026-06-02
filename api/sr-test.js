@@ -1,29 +1,27 @@
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   const srToken = req.query.t;
-  const BASE = 'https://app.prod2.salesrabbit.com/v2';
   const auth = 'Bearer '+srToken;
   
-  const tests = [
-    {url:BASE+'/leads?limit=1', accept:'application/json'},
-    {url:BASE+'/leads?limit=1', accept:'text/json'},
-    {url:BASE+'/leads?limit=1', accept:'text/html'},
-    {url:BASE+'/leads?limit=1', accept:'application/xml'},
-    {url:BASE+'/leads?limit=1', accept:'*/*'},
-    {url:BASE+'/leads?limit=1&format=json', accept:'application/json'},
-    {url:BASE+'/leads.json?limit=1', accept:'application/json'},
-    {url:BASE+'/leads?limit=1', accept:null}
+  // Try every reasonable path variant
+  const urls = [
+    'https://app.prod2.salesrabbit.com/v2/accounts/301977/leads?limit=1',
+    'https://app.prod2.salesrabbit.com/v2/account/leads?limit=1',
+    'https://app.prod2.salesrabbit.com/api/v2/leads?limit=1',
+    'https://app.prod2.salesrabbit.com/api/leads?limit=1',
+    'https://app.prod2.salesrabbit.com/v3/leads?limit=1',
+    'https://app.prod2.salesrabbit.com/v2/leads?per_page=1',
+    'https://app.prod2.salesrabbit.com/v2/leads/list?limit=1',
+    'https://app.prod2.salesrabbit.com/v2/leads?count=1'
   ];
   
   const results = [];
-  for(const {url,accept} of tests) {
+  for(const url of urls) {
     try {
-      const hdrs = {'Authorization':auth};
-      if(accept) hdrs['Accept'] = accept;
-      const r = await fetch(url, {headers:hdrs});
+      const r = await fetch(url, {headers:{'Authorization':auth,'Accept':'application/json','Content-Type':'application/json'}});
       const t = await r.text();
-      results.push((accept||'no-accept')+' -> '+r.status+' '+t.substring(0,60));
-    } catch(e) { results.push('ERR '+e.message.substring(0,30)); }
+      results.push(url.replace('https://app.prod2.salesrabbit.com','').substring(0,35)+' -> '+r.status+' '+t.substring(0,50));
+    } catch(e) { results.push('CORS '+url.split('/').slice(-1)[0]); }
   }
   return res.status(200).json(results);
 };
