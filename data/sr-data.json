@@ -4063,6 +4063,15 @@
       "date": "2026-06-02",
       "address": "5911 Ians Way, Alexandria, VA",
       "ts": "2026-06-02T20:14:05.332Z"
+    },
+    {
+      "leadId": "47414",
+      "repName": "Harvey Shoemaker",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7047 Kings Manor Dr, Alexandria, VA",
+      "ts": "2026-06-02T20:14:11.167Z"
     }
   ]
 }
