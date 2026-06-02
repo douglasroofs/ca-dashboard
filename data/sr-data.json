@@ -3433,6 +3433,15 @@
       "date": "2026-06-02",
       "address": "7842 Vervain Ct, Springfield, VA",
       "ts": "2026-06-02T18:33:38.406Z"
+    },
+    {
+      "leadId": "47277",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7838 Vervain Ct, Springfield, VA",
+      "ts": "2026-06-02T18:34:22.030Z"
     }
   ]
 }
