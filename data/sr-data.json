@@ -3586,6 +3586,15 @@
       "date": "2026-06-02",
       "address": "10713 Autumn Leaf Pl, Germantown, MD",
       "ts": "2026-06-02T19:09:46.052Z"
+    },
+    {
+      "leadId": "47313",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "20329 Sandsfield Terr, Germantown, MD",
+      "ts": "2026-06-02T19:27:33.547Z"
     }
   ]
 }
