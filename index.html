@@ -1,126 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Douglas Roofing | CA Dashboard</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <style>
-    :root{--brand:#1a3a6b;--brand-dark:#122a50;--success:#057a55;--bg:#f3f4f6;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08)}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-    header{background:var(--brand-dark);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-    .logo{display:flex;align-items:center;gap:12px}.logo img{width:48px;height:48px;object-fit:contain;flex-shrink:0}.logo-text h1{font-size:1.1rem;font-weight:800}.logo-text p{font-size:.7rem;opacity:.75;text-transform:uppercase;letter-spacing:.03em}
-    .hdr-r{text-align:right;font-size:.75rem;opacity:.8}.hdr-r strong{display:block;font-size:.85rem}
-    .nav-tabs{background:var(--brand-dark);border-top:1px solid rgba(255,255,255,.15);display:flex;padding:0 20px}
-    .nav-tab{padding:10px 18px;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.65);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}.nav-tab:hover{color:#fff}.nav-tab.active{color:#fff;border-bottom-color:#fff}
-    main{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
-    .sbar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:.8rem;color:var(--muted)}.sdot{width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;box-shadow:0 0 6px #10b981}
-    .banner{border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
-    .banner-title{color:#fff;font-size:.9rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
-    .banner-sub{color:rgba(255,255,255,.8);font-size:.75rem}
-    .kgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}@media(min-width:640px){.kgrid{grid-template-columns:repeat(4,1fr)}}
-    .kcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}.kcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--ac,var(--brand));border-radius:var(--radius) var(--radius) 0 0}
-    .kcard.k1{--ac:#059669}.kcard.k2{--ac:#1a3a6b}.kcard.k3{--ac:#c27803}.kcard.k4{--ac:#6b7280}
-    .klbl{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px}
-    .kval{font-size:1.8rem;font-weight:800;line-height:1.1}.ksub{font-size:.72rem;color:var(--muted);margin-top:3px}
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}@media(max-width:860px){.two-col{grid-template-columns:1fr}}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
-    .card-title{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
-
-    /* ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ MTD REP CARD ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ */
-    .rep-card{border-bottom:1px solid var(--border);padding:14px 0}.rep-card:last-child{border-bottom:none;padding-bottom:0}
-    .rep-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-    .rep-name-btn{font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text)}
-    .rep-chev{font-size:.65rem;color:var(--muted)}
-    .rep-status{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:99px}
-    .st-green{background:#d1fae5;color:#065f46}.st-empty{color:var(--muted);font-size:.7rem}
-    /* CA tracker - the hero */
-    .ca-track-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-    .ca-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);flex-shrink:0;width:20px}
-    .ca-fraction{font-size:1.5rem;font-weight:900;color:var(--text);flex-shrink:0;min-width:60px}
-    .ca-goal-lbl{font-size:.68rem;color:var(--muted);flex-shrink:0}
-    .ca-bar-wrap{flex:1;background:#e5e7eb;border-radius:6px;height:12px;overflow:hidden;position:relative}
-    .ca-bar-fill{height:100%;border-radius:6px;transition:width .8s ease}
-    .pace-tick{position:absolute;top:0;bottom:0;width:2px;background:rgba(0,0,0,.2);z-index:2}
-    /* Revenue sub-row */
-    .rev-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
-    .rev-item{font-size:.78rem}.rev-item strong{font-weight:800;font-size:.85rem}
-    .rev-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);display:block;margin-bottom:1px}
-    /* Deal dropdown */
-    .deal-list{display:none;flex-direction:column;gap:4px;margin-top:8px;padding:8px;background:var(--bg);border-radius:8px;border-left:3px solid var(--brand)}
-    .deal-list.open{display:flex}
-    .deal-item{display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--surface);border-radius:6px;border:1px solid var(--border);font-size:.78rem}
-    .di-name{font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .di-addr{color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none}@media(min-width:640px){.di-addr{display:block}}
-    .di-date{font-size:.68rem;color:var(--muted);flex-shrink:0}
-    .chip{display:inline-block;padding:2px 7px;border-radius:99px;font-size:.65rem;font-weight:700;text-transform:uppercase;flex-shrink:0}
-    .ca{background:#d1fae5;color:#065f46}.cs{background:#fef3c7;color:#92400e}.cd{background:#f3f4f6;color:#374151}
-
-    /* ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ YTD REP CARD ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ */
-    .ytd-rep{border-bottom:1px solid var(--border);padding:14px 0}.ytd-rep:last-child{border-bottom:none;padding-bottom:0}
-    .ytd-row1{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
-    .ytd-rep-name{font-size:.95rem;font-weight:800}
-    .ytd-ca-count{font-size:.78rem;color:var(--muted)}
-    .ytd-rev-bar-row{margin-bottom:6px}
-    .ytd-rev-label{display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:3px}
-    .ytd-rev-amt{font-weight:800;font-size:.82rem;color:var(--text)}
-    .ytd-pace-lbl{font-weight:700}
-    .ytd-bar-bg{background:#e5e7eb;border-radius:6px;height:14px;overflow:hidden;position:relative}
-    .ytd-bar-fill{height:100%;border-radius:6px;transition:width .8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:5px}
-    .ytd-bar-pct{font-size:.6rem;font-weight:700;color:#fff}
-    .ytd-pace-tick{position:absolute;top:0;bottom:0;width:2px;background:rgba(0,0,0,.2);z-index:2}
-    /* Monthly CA dropdown */
-    .mo-toggle-btn{font-size:.7rem;font-weight:600;color:var(--brand);background:none;border:none;cursor:pointer;padding:4px 0;display:flex;align-items:center;gap:4px;margin-top:4px}
-    .mo-panel{display:none;margin-top:6px;flex-wrap:wrap;gap:5px}
-    .mo-panel.open{display:flex}
-    .mo-chip{padding:3px 8px;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg);transition:all .15s}
-    .mo-chip.has-data{background:var(--brand);color:#fff;border-color:var(--brand)}
-    .mo-detail{display:none;width:100%;padding:6px 8px;background:var(--bg);border-radius:6px;border-left:3px solid var(--brand);margin-top:2px}
-    .mo-detail.open{display:block}
-    .mo-ca-item{font-size:.75rem;padding:2px 0;border-bottom:1px solid var(--border)}.mo-ca-item:last-child{border-bottom:none}
-
-    /* Table */
-    .tcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
-    .thdr{padding:12px 20px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--border)}@media(min-width:640px){.thdr{flex-direction:row;align-items:center;justify-content:space-between}}
-    .ttl{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-    .swrap{position:relative}.sinp{width:100%;padding:7px 12px 7px 32px;border:1px solid var(--border);border-radius:8px;font-size:.8rem;outline:none}.sinp:focus{border-color:var(--brand)}.sico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
-    .frow{display:flex;gap:6px;flex-wrap:wrap;padding:8px 20px;border-bottom:1px solid var(--border)}
-    .pill{padding:3px 10px;border-radius:99px;font-size:.72rem;font-weight:600;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .15s;color:var(--muted)}.pill:hover{border-color:var(--brand);color:var(--brand)}.pill.active{background:var(--brand);border-color:var(--brand);color:#fff}.pill.pa.active{background:#057a55;border-color:#057a55}.pill.ps.active{background:#c27803;border-color:#c27803}.pill.pd.active{background:#6b7280;border-color:#6b7280}
-    .twrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.85rem}
-    th{text-align:left;padding:9px 16px;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--bg);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}th:hover{color:var(--brand)}
-    td{padding:10px 16px;border-bottom:1px solid var(--border);vertical-align:middle}tr:last-child td{border-bottom:none}tr:hover td{background:#f9fafb}
-    .jid{font-family:monospace;font-size:.78rem;color:var(--muted)}.cnm{font-weight:600}.empty{text-align:center;padding:40px;color:var(--muted)}@media(max-width:639px){.hm{display:none}}
-
-    /* Tabs */
-    .ytd-sec{display:none}.ytd-sec.active{display:block}.mtd-sec{display:block}.mtd-sec.hidden{display:none}
-    .mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:20px}
-
-    /* Modals */
-    .modal-base{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:300;padding:20px}.modal-base.open{display:flex}
-    .mbox{background:var(--surface);border-radius:var(--radius);padding:24px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:80vh;overflow-y:auto}
-    .mbox h3{font-size:1rem;font-weight:700;margin-bottom:4px}.mbox p{font-size:.8rem;color:var(--muted);margin-bottom:16px}
-    .ginputs{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-    .girow{display:flex;align-items:center;gap:10px}.girow label{font-size:.8rem;font-weight:600;min-width:140px;flex-shrink:0}.girow input{flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:.875rem;outline:none}.girow input:focus{border-color:var(--brand)}
-    .mact{display:flex;gap:8px;justify-content:flex-end}.bprim{padding:7px 16px;border-radius:6px;background:var(--brand);color:#fff;border:none;font-size:.8rem;font-weight:600;cursor:pointer}.bcanc{padding:7px 16px;border-radius:6px;background:var(--bg);color:var(--muted);border:1px solid var(--border);font-size:.8rem;cursor:pointer}
-    .loading{text-align:center;padding:60px 20px;color:var(--muted)}.spin{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 12px}@keyframes sp{to{transform:rotate(360deg)}}
-    .err{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius);padding:14px 20px;color:#991b1b;font-size:.875rem;margin-bottom:20px;display:none}
-    .btns{padding:4px 10px;font-size:.72rem;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--muted)}.btns:hover{border-color:var(--brand);color:var(--brand)}
-    #monthPicker option{background:#1a3a6b;color:#fff}
-  </style>
-
-<style>
-.rep-rev-row{display:flex;align-items:center;gap:6px;padding:3px 10px 6px;font-size:12px;flex-wrap:wrap;}
-.rev-lbl{color:#6b7280;font-weight:600;font-size:11px;}
-.rev-val{color:#1a56db;font-weight:700;}
-</style>
-</head>
-<body>
-<div class="modal-base" id="goalsM">
-  <div class="mbox">
-    <h3>Set Rep Goals</h3>
-    <p>Monthly CA goal and Annual Contract Signed revenue goal per rep.</p>
-    <div class="ginputs" id="goalsInp"></div>
+<div class="card-title">Monthly Revenue <span id="yrN"></span></div>
     <div class="mact"><button class="bcanc" onclick="closeModal('goalsM')">Cancel</button><button class="bprim" onclick="saveGoals()">Save Goals</button></div>
   </div>
 </div>
@@ -179,7 +57,7 @@
         <div class="kcard k4"><div class="klbl">Total CAs YTD</div><div class="kval" id="kCTotYtd">-</div><div class="ksub">Year to date</div></div>
         <div class="kcard k4"><div class="klbl">CA Close Rate YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">- of - total</div></div>
       </div>
-      <div class="mcard"><div class="card-title">Monthly CAs Accepted ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
+      <div class="mcard"><div class="card-title">Monthly CAs Accepted ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ <span id="yrN">2026</span></div><canvas id="ytdChart" style="height:320px;width:100%"></canvas></div>
       <div class="card" style="margin-bottom:20px">
         <div class="card-title">Rep Annual Goal Tracker</div>
         <div id="ytdRepList"></div>
@@ -315,11 +193,49 @@ function renderMTD(){
 
 var chartInst=null;
 function renderChart(mrows){
-  var c={Accepted:0,Sent:0,Draft:0};
-  mrows.forEach(function(r){var s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});
-  var ctx=document.getElementById('cht').getContext('2d');
-  if(chartInst)chartInst.destroy();
-  chartInst=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:14,font:{size:11}}}}}});
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var curMo=new Date().getMonth();
+  var approvedData=new Array(12).fill(null);
+  var contractData=new Array(12).fill(null);
+  var fetches=[];
+  for(var m=0;m<=curMo;m++){
+    (function(mo){
+      var moStr='2026-'+String(mo+1).padStart(2,'0');
+      fetches.push(fetch('/api/revenue-history?month='+moStr)
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(d.success&&d.reps){
+            var ap=0,cs=0;
+            d.reps.forEach(function(r){ap+=r.approved_amount||0;cs+=r.contract_amount||0;});
+            approvedData[mo]=Math.round(ap);
+            contractData[mo]=Math.round(cs);
+          }
+        }));
+    })(m);
+  }
+  Promise.all(fetches).then(function(){
+    var canvas=document.getElementById('ytdChart');
+    if(!canvas) return;
+    if(window.ytdChartInst) window.ytdChartInst.destroy();
+    window.ytdChartInst=new Chart(canvas.getContext('2d'),{
+      type:'bar',
+      data:{labels:months,datasets:[
+        {label:'Approved',data:approvedData,backgroundColor:'rgba(59,130,246,0.75)',borderColor:'rgb(37,99,235)',borderWidth:1,borderRadius:3},
+        {label:'Contract Signed',data:contractData,backgroundColor:'rgba(16,185,129,0.75)',borderColor:'rgb(5,150,105)',borderWidth:1,borderRadius:3}
+      ]},
+      options:{
+        responsive:true,
+        plugins:{
+          legend:{position:'top',labels:{font:{size:13}}},
+          tooltip:{callbacks:{label:function(ctx){return ' '+ctx.dataset.label+': $'+Math.round(ctx.raw||0).toLocaleString();}}}
+        },
+        scales:{
+          y:{ticks:{callback:function(v){if(v>=1000000)return '$'+(v/1000000).toFixed(1).replace(/[.]0$/,'')+'M';return '$'+Math.round(v/1000)+'k';}},beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'}},
+          x:{grid:{display:false}}
+        }
+      }
+    });
+  });
 }
 
 function renderRepList(mrows){
