@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-26",
+  "updated": "2026-06-02",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -3568,6 +3568,15 @@
       "date": "2026-05-26",
       "address": "6825 Spring Beauty Ct, Springfield, VA",
       "ts": "2026-06-02T19:06:10.939Z"
+    },
+    {
+      "leadId": "47218",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "7913 Lobelia Ln, Springfield, VA",
+      "ts": "2026-06-02T19:06:58.593Z"
     }
   ]
 }
