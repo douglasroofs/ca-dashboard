@@ -1,27 +1,26 @@
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  const srToken = req.query.t;
-  const auth = 'Bearer '+srToken;
+  const jwt = req.query.j;
+  if(!jwt) return res.status(400).json({error:'no jwt'});
+  const headers = {'Authorization':'Bearer '+jwt,'Accept':'application/json'};
   
-  // Try every reasonable path variant
-  const urls = [
-    'https://app.prod2.salesrabbit.com/v2/accounts/301977/leads?limit=1',
-    'https://app.prod2.salesrabbit.com/v2/account/leads?limit=1',
-    'https://app.prod2.salesrabbit.com/api/v2/leads?limit=1',
-    'https://app.prod2.salesrabbit.com/api/leads?limit=1',
-    'https://app.prod2.salesrabbit.com/v3/leads?limit=1',
-    'https://app.prod2.salesrabbit.com/v2/leads?per_page=1',
-    'https://app.prod2.salesrabbit.com/v2/leads/list?limit=1',
-    'https://app.prod2.salesrabbit.com/v2/leads?count=1'
+  // Try various lead query approaches
+  const tests = [
+    'https://capi.prod2.salesrabbit.com/v1/leads',
+    'https://capi.prod2.salesrabbit.com/v1/leads?page[limit]=5',
+    'https://capi.prod2.salesrabbit.com/v1/accounts/301977/leads?page[limit]=5',
+    'https://app.prod2.salesrabbit.com/api/v2/leads?accountId=301977',
+    'https://app.prod2.salesrabbit.com/v2/leads?accountId=301977',
+    'https://capi.prod2.salesrabbit.com/v2/leads?accountId=301977',
   ];
   
   const results = [];
-  for(const url of urls) {
+  for(const url of tests){
     try {
-      const r = await fetch(url, {headers:{'Authorization':auth,'Accept':'application/json','Content-Type':'application/json'}});
+      const r = await fetch(url,{headers});
       const t = await r.text();
-      results.push(url.replace('https://app.prod2.salesrabbit.com','').substring(0,35)+' -> '+r.status+' '+t.substring(0,50));
-    } catch(e) { results.push('CORS '+url.split('/').slice(-1)[0]); }
+      results.push({url:url.replace('https://','').split('/').slice(0,2).join('/'), status:r.status, preview:t.substring(0,100)});
+    } catch(e){ results.push({url:url.split('/')[2], error:e.message.substring(0,40)}); }
   }
   return res.status(200).json(results);
 };
