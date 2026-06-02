@@ -28,7 +28,7 @@
     .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
     .card-title{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
 
-    /* Ã¢ÂÂÃ¢ÂÂ MTD REP CARD Ã¢ÂÂÃ¢ÂÂ */
+    /* ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ MTD REP CARD ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ */
     .rep-card{border-bottom:1px solid var(--border);padding:14px 0}.rep-card:last-child{border-bottom:none;padding-bottom:0}
     .rep-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .rep-name-btn{font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text)}
@@ -57,7 +57,7 @@
     .chip{display:inline-block;padding:2px 7px;border-radius:99px;font-size:.65rem;font-weight:700;text-transform:uppercase;flex-shrink:0}
     .ca{background:#d1fae5;color:#065f46}.cs{background:#fef3c7;color:#92400e}.cd{background:#f3f4f6;color:#374151}
 
-    /* Ã¢ÂÂÃ¢ÂÂ YTD REP CARD Ã¢ÂÂÃ¢ÂÂ */
+    /* ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ YTD REP CARD ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ */
     .ytd-rep{border-bottom:1px solid var(--border);padding:14px 0}.ytd-rep:last-child{border-bottom:none;padding-bottom:0}
     .ytd-row1{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
     .ytd-rep-name{font-size:.95rem;font-weight:800}
@@ -152,7 +152,7 @@
       </div>
       <div class="two-col">
         <div class="card">
-          <div class="card-title">Rep Performance Ã¢ÂÂ tap name to see CAs</div>
+          <div class="card-title">Rep Performance ÃÂ¢ÃÂÃÂ tap name to see CAs</div>
           <div id="repList"></div>
         </div>
         <div class="card"><div class="card-title">Pipeline by Status</div><canvas id="cht" height="240"></canvas></div>
@@ -179,7 +179,7 @@
         <div class="kcard k4"><div class="klbl">Total CAs YTD</div><div class="kval" id="kCTotYtd">-</div><div class="ksub">Year to date</div></div>
         <div class="kcard k4"><div class="klbl">CA Close Rate YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">- of - total</div></div>
       </div>
-      <div class="mcard"><div class="card-title">Monthly CAs Accepted Ã¢ÂÂ <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
+      <div class="mcard"><div class="card-title">Monthly CAs Accepted ÃÂ¢ÃÂÃÂ <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
       <div class="card" style="margin-bottom:20px">
         <div class="card-title">Rep Annual Goal Tracker</div>
         <div id="ytdRepList"></div>
@@ -448,9 +448,10 @@ function toggleMoPanel(id,btn){var el=document.getElementById(id);if(!el)return;
 function toggleMoDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');}
 function syncNow(){var btn=event.target;btn.textContent='Syncing...';btn.disabled=true;fetch('/api/refresh').then(function(r){return r.json();}).then(function(d){if(d.success){btn.textContent='Sync Now';btn.disabled=false;reload();alert('Updated! '+d.ca_count+' CAs and revenue data refreshed.');}else{btn.textContent='Sync Now';btn.disabled=false;alert('Sync failed: '+(d.error||'unknown error'));}}).catch(function(e){btn.textContent='Sync Now';btn.disabled=false;alert('Sync error: '+e.message);});}
 
-// ââ Revenue on MTD rep cards ââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Revenue on MTD rep cards Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function addRevToCards(){
-  if(!revData||!revData.reps) return;
+  var reps=window._mtdRevReps||(revData&&revData.reps)||[];
+  if(!reps.length) return;
   document.querySelectorAll('.rep-card').forEach(function(card){
     var old=card.querySelector('.rep-rev-row');
     if(old) old.parentNode.removeChild(old);
@@ -460,18 +461,32 @@ function addRevToCards(){
       .filter(function(n){return n.nodeType===3;})
       .map(function(n){return n.textContent.trim();})
       .join('').replace(/\s+/g,' ').trim();
-    var rev=(revData.reps||[]).find(function(r){return r.rep===repName;});
+    var rev=reps.find(function(r){return r.rep===repName;});
     if(!rev) return;
+    var cs=rev.contract_mtd_amount!==undefined?rev.contract_mtd_amount:(rev.contract_amount||0);
+    var ap=rev.approved_mtd_amount!==undefined?rev.approved_mtd_amount:(rev.approved_amount||0);
     var row=document.createElement('div');
     row.className='rep-rev-row';
-    row.innerHTML='<span class="rev-lbl">CS</span><span class="rev-val">'+fmtD(rev.contract_mtd_amount||0)+'</span>'
-      +'<span class="rev-lbl">Appr</span><span class="rev-val">'+fmtD(rev.approved_mtd_amount||0)+'</span>';
+    row.innerHTML='<span class="rev-lbl">CS</span><span class="rev-val">'+fmtD(cs)+'</span>'
+      +'<span class="rev-lbl" style="margin-left:6px">Appr</span><span class="rev-val">'+fmtD(ap)+'</span>';
     card.appendChild(row);
   });
 }
+window._mtdRevReps=null;
 var _omtd=renderMTD;
 renderMTD=function(){_omtd.apply(this,arguments);setTimeout(addRevToCards,50);};
-setTimeout(addRevToCards,800);
+var _oChg=changeMTDMonth;
+changeMTDMonth=function(val){
+  var now=new Date(),curMo=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  window._mtdRevReps=null;
+  _oChg.apply(this,arguments);
+  if(val!==curMo){
+    fetch('/api/revenue-history?month='+val)
+      .then(function(r){return r.json();})
+      .then(function(d){if(d.success&&d.reps){window._mtdRevReps=d.reps;addRevToCards();}});
+  } else {setTimeout(addRevToCards,200);}
+};
+setTimeout(addRevToCards,1200);
 </script>
 </body>
 </html>
