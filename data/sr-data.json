@@ -4567,6 +4567,15 @@
       "date": "2026-06-02",
       "address": "10718 Wynkoop Dr, Great Falls, VA",
       "ts": "2026-06-02T21:09:31.790Z"
+    },
+    {
+      "leadId": "47526",
+      "repName": "George Bechara",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "10896 Treeview Ct, Great Falls, VA",
+      "ts": "2026-06-02T21:10:15.607Z"
     }
   ]
 }
