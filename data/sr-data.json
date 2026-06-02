@@ -3946,6 +3946,15 @@
       "date": "2026-06-02",
       "address": "6959 Banchory Court, Alexandria, VA",
       "ts": "2026-06-02T20:10:36.334Z"
+    },
+    {
+      "leadId": "47382",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6951 Banchory Court, Alexandria, VA",
+      "ts": "2026-06-02T20:10:39.136Z"
     }
   ]
 }
