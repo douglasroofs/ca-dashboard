@@ -4441,6 +4441,15 @@
       "date": "2026-06-02",
       "address": "7032 Kings Manor Dr, Alexandria, VA",
       "ts": "2026-06-02T20:37:12.474Z"
+    },
+    {
+      "leadId": "47501",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7028 Kings Manor Dr, Alexandria, VA",
+      "ts": "2026-06-02T20:39:12.336Z"
     }
   ]
 }
