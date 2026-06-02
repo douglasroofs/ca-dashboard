@@ -2052,6 +2052,15 @@
       "date": "2026-06-02",
       "address": "11529 Seneca Farm Way, Great Falls, VA",
       "ts": "2026-06-02T15:38:47.828Z"
+    },
+    {
+      "leadId": "47189",
+      "repName": "George Bechara",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "11303 Seneca Cir, Great Falls, VA",
+      "ts": "2026-06-02T15:40:53.127Z"
     }
   ]
 }
