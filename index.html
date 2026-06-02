@@ -1,5 +1,4 @@
-if(aYtdAmt>0)repHtml+='<div style="font-size:.72rem;color:var(--muted);margin-top:3px">Approved: <strong style="color:var(--text)">'+fmtD(aYtdAmt)+'</strong></div>';
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -243,24 +242,9 @@ function changeMTDMonth(val){
   var now=new Date();
   var curMo=String(now.getFullYear())+'-'+String(now.getMonth()+1).padStart(2,'0');
   var isPast=val!==curMo;
-  var parts=val.split('-'),aYr=parseInt(parts[0]),aMo=parts[1];
-  var monthLabel=new Date(aYr,parseInt(aMo)-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'});
-  document.getElementById('mtdSub').textContent=isPast?(monthLabel+' — historical view'):(monthLabel+' performance');
+  document.getElementById('mtdSub').textContent=isPast?(new Date(aYr,parseInt(aMo)-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'})+' — historical view'):(new Date(now.getFullYear(),now.getMonth(),1).toLocaleDateString('en-US',{month:'long',year:'numeric'})+' performance');
   if(rows.length)renderMTD();
-  if(isPast){
-    document.getElementById('kCSMtd').textContent='Loading...';
-    document.getElementById('kAMtd').textContent='Loading...';
-    fetch('/api/revenue-history?month='+val).then(function(r){return r.json();}).then(function(d){
-      if(d.success&&d.reps){
-        var csMtd=0,csMtdJ=0,aMtd=0,aMtdJ=0;
-        d.reps.forEach(function(r){csMtd+=r.contract_amount||0;csMtdJ+=r.contract_jobs||0;aMtd+=r.approved_amount||0;aMtdJ+=r.approved_jobs||0;});
-        document.getElementById('kCSMtd').textContent=fmtD(csMtd);document.getElementById('kCSMtdJ').textContent=csMtdJ+' contracts';
-        document.getElementById('kAMtd').textContent=fmtD(aMtd);document.getElementById('kAMtdJ').textContent=aMtdJ+' jobs';
-      }
-    }).catch(function(){document.getElementById('kCSMtd').textContent='N/A';document.getElementById('kAMtd').textContent='N/A';});
-  }
 }
-
 function loadAll(){
   document.getElementById('ldg').style.display='block';
   document.getElementById('dash').style.display='none';
@@ -404,7 +388,7 @@ function renderYTD(){
   TEAM.forEach(function(name,i){
     var revRep=null;
     if(revData&&revData.reps){revData.reps.forEach(function(r){if(r.rep===name)revRep=r;});}
-    var csAmt=revRep?revRep.contract_ytd_amount:0;var aYtdAmt=revRep?revRep.approved_ytd_amount:0;
+    var csAmt=revRep?revRep.contract_ytd_amount:0;
     var revGoal=getRevGoal(name);
     var pct=Math.min(Math.round(csAmt/revGoal*100),100);
     var pacePct=Math.min(Math.round(yearPct*100),98);
@@ -436,27 +420,6 @@ function renderYTD(){
 function toggleMoPanel(id,btn){var el=document.getElementById(id);if(!el)return;var open=el.classList.contains('open');el.classList.toggle('open',!open);btn.innerHTML=(open?'&#9654;':'&#9660;')+' Monthly CAs';}
 function toggleMoDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');}
 function syncNow(){var btn=event.target;btn.textContent='Syncing...';btn.disabled=true;fetch('/api/refresh').then(function(r){return r.json();}).then(function(d){if(d.success){btn.textContent='Sync Now';btn.disabled=false;reload();alert('Updated! '+d.ca_count+' CAs and revenue data refreshed.');}else{btn.textContent='Sync Now';btn.disabled=false;alert('Sync failed: '+(d.error||'unknown error'));}}).catch(function(e){btn.textContent='Sync Now';btn.disabled=false;alert('Sync error: '+e.message);});}
-
-function addApprovedRevToYTD(){
-  if(!revData||!revData.reps)return;
-  var list=document.getElementById('ytdRepList');
-  if(!list)return;
-  var rows=list.querySelectorAll('.ytd-rep');
-  rows.forEach(function(row){
-    var nameEl=row.querySelector('.ytd-rep-name');
-    if(!nameEl)return;
-    var name=nameEl.textContent.trim();
-    var rep=null;revData.reps.forEach(function(r){if(r.rep===name)rep=r;});
-    if(!rep||!rep.approved_ytd_amount)return;
-    var bar=row.querySelector('.ytd-bar-bg');
-    if(!bar||row.querySelector('.appr-text'))return;
-    var div=document.createElement('div');
-    div.className='appr-text';
-    div.style.cssText='font-size:.72rem;color:var(--muted);margin-top:3px';
-    div.innerHTML='Approved pipeline: <strong style="color:var(--text)">'+fmtD(rep.approved_ytd_amount)+'</strong>';
-    bar.parentNode.insertAdjacentElement('afterend',div);
-  });
-}
 </script>
 </body>
 </html>
