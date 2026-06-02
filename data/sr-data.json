@@ -3397,6 +3397,15 @@
       "date": "2026-06-02",
       "address": "6333 Brocketts Crossing, Alexandria, VA",
       "ts": "2026-06-02T18:22:14.240Z"
+    },
+    {
+      "leadId": "47268",
+      "repName": "Kevin Mahan",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "ts": "2026-06-02T18:23:23.100Z"
     }
   ]
 }
