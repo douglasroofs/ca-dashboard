@@ -3343,6 +3343,15 @@
       "date": "2026-06-02",
       "address": "7934 Lobelia Ln, Springfield, VA",
       "ts": "2026-06-02T17:51:02.522Z"
+    },
+    {
+      "leadId": "47257",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7932 Lobelia Ln, Springfield, VA",
+      "ts": "2026-06-02T17:51:37.200Z"
     }
   ]
 }
