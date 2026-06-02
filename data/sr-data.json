@@ -4801,6 +4801,15 @@
       "date": "2026-06-02",
       "address": "7527 Candytuft Ct, Springfield, VA",
       "ts": "2026-06-02T23:06:14.399Z"
+    },
+    {
+      "leadId": "47600",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6154 Lucas Pond Ct, Burke, VA",
+      "ts": "2026-06-02T23:08:29.580Z"
     }
   ]
 }
