@@ -10,6 +10,15 @@
       "address": "123 Test St",
       "eventType": "Lead Status Update",
       "ts": "2026-06-02T14:58:08.695Z"
+    },
+    {
+      "leadId": "47173",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "11105 Richland Valley Dr, Great Falls, VA",
+      "ts": "2026-06-02T15:06:30.373Z"
     }
   ],
   "raw_payloads": [
