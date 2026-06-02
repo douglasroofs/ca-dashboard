@@ -19,6 +19,15 @@
       "date": "2026-06-02",
       "address": "11105 Richland Valley Dr, Great Falls, VA",
       "ts": "2026-06-02T15:06:30.373Z"
+    },
+    {
+      "leadId": "88888",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "456 Oak Ave, Herndon, VA",
+      "ts": "2026-06-02T15:07:37.039Z"
     }
   ],
   "raw_payloads": [
