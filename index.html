@@ -28,7 +28,7 @@
     .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
     .card-title{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
 
-    /* ── MTD REP CARD ── */
+    /* ââ MTD REP CARD ââ */
     .rep-card{border-bottom:1px solid var(--border);padding:14px 0}.rep-card:last-child{border-bottom:none;padding-bottom:0}
     .rep-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .rep-name-btn{font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text)}
@@ -57,7 +57,7 @@
     .chip{display:inline-block;padding:2px 7px;border-radius:99px;font-size:.65rem;font-weight:700;text-transform:uppercase;flex-shrink:0}
     .ca{background:#d1fae5;color:#065f46}.cs{background:#fef3c7;color:#92400e}.cd{background:#f3f4f6;color:#374151}
 
-    /* ── YTD REP CARD ── */
+    /* ââ YTD REP CARD ââ */
     .ytd-rep{border-bottom:1px solid var(--border);padding:14px 0}.ytd-rep:last-child{border-bottom:none;padding-bottom:0}
     .ytd-row1{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
     .ytd-rep-name{font-size:.95rem;font-weight:800}
@@ -108,6 +108,12 @@
     .btns{padding:4px 10px;font-size:.72rem;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--muted)}.btns:hover{border-color:var(--brand);color:var(--brand)}
     #monthPicker option{background:#1a3a6b;color:#fff}
   </style>
+
+<style>
+.rep-rev-row{display:flex;align-items:center;gap:6px;padding:3px 10px 6px;font-size:12px;flex-wrap:wrap;}
+.rev-lbl{color:#6b7280;font-weight:600;font-size:11px;}
+.rev-val{color:#1a56db;font-weight:700;}
+</style>
 </head>
 <body>
 <div class="modal-base" id="goalsM">
@@ -146,7 +152,7 @@
       </div>
       <div class="two-col">
         <div class="card">
-          <div class="card-title">Rep Performance — tap name to see CAs</div>
+          <div class="card-title">Rep Performance â tap name to see CAs</div>
           <div id="repList"></div>
         </div>
         <div class="card"><div class="card-title">Pipeline by Status</div><canvas id="cht" height="240"></canvas></div>
@@ -173,7 +179,7 @@
         <div class="kcard k4"><div class="klbl">Total CAs YTD</div><div class="kval" id="kCTotYtd">-</div><div class="ksub">Year to date</div></div>
         <div class="kcard k4"><div class="klbl">CA Close Rate YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">- of - total</div></div>
       </div>
-      <div class="mcard"><div class="card-title">Monthly CAs Accepted — <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
+      <div class="mcard"><div class="card-title">Monthly CAs Accepted â <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
       <div class="card" style="margin-bottom:20px">
         <div class="card-title">Rep Annual Goal Tracker</div>
         <div id="ytdRepList"></div>
@@ -441,6 +447,28 @@ function renderYTD(){
 function toggleMoPanel(id,btn){var el=document.getElementById(id);if(!el)return;var open=el.classList.contains('open');el.classList.toggle('open',!open);btn.innerHTML=(open?'&#9654;':'&#9660;')+' Monthly CAs';}
 function toggleMoDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');}
 function syncNow(){var btn=event.target;btn.textContent='Syncing...';btn.disabled=true;fetch('/api/refresh').then(function(r){return r.json();}).then(function(d){if(d.success){btn.textContent='Sync Now';btn.disabled=false;reload();alert('Updated! '+d.ca_count+' CAs and revenue data refreshed.');}else{btn.textContent='Sync Now';btn.disabled=false;alert('Sync failed: '+(d.error||'unknown error'));}}).catch(function(e){btn.textContent='Sync Now';btn.disabled=false;alert('Sync error: '+e.message);});}
+
+// ── Revenue on MTD rep cards ──────────────────────────────────────────
+function addRevToCards(){
+  if(!revData||!revData.reps) return;
+  document.querySelectorAll('.rep-card').forEach(function(card){
+    var old=card.querySelector('.rep-rev-row');
+    if(old) old.parentNode.removeChild(old);
+    var nameEl=card.querySelector('.rep-name-btn');
+    if(!nameEl) return;
+    var repName=(nameEl.textContent||'').trim().replace(/\s+/g,' ');
+    var rev=(revData.reps||[]).find(function(r){return r.rep===repName;});
+    if(!rev) return;
+    var row=document.createElement('div');
+    row.className='rep-rev-row';
+    row.innerHTML='<span class="rev-lbl">CS</span><span class="rev-val">'+fmtD(rev.contract_mtd_amount||0)+'</span>'
+      +'<span class="rev-lbl">Appr</span><span class="rev-val">'+fmtD(rev.approved_mtd_amount||0)+'</span>';
+    card.appendChild(row);
+  });
+}
+var _omtd=renderMTD;
+renderMTD=function(){_omtd.apply(this,arguments);setTimeout(addRevToCards,50);};
+setTimeout(addRevToCards,800);
 </script>
 </body>
 </html>
