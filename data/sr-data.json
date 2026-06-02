@@ -4891,6 +4891,15 @@
       "date": "2026-06-02",
       "address": "6005 Wheaton Dr, Burke, VA",
       "ts": "2026-06-02T23:42:42.760Z"
+    },
+    {
+      "leadId": "47639",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6105 Eagle Landing Rd, Burke, VA",
+      "ts": "2026-06-02T23:49:56.017Z"
     }
   ]
 }
