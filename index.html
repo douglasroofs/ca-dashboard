@@ -603,14 +603,15 @@ var ADV_R2 = {cas:8,doors:500,label:'8 CAs + 500 Doors by end of Week 4'};
 var ADV_R3 = {doors:1100,label:'1,100 Total Doors by end of Week 8'};
 
 function getCompWeek(){
-  var now = new Date();
+  var now=new Date(); var ds=now.toISOString().split('T')[0];
+  // Bye week May 27 - Jun 2
+  if(ds>='2026-05-27'&&ds<='2026-06-02'){
+    return {week:4,round:1,caTarget:2,doorsTarget:200,start:'2026-05-20',end:'2026-05-26',isBye:true,byeLabel:'BYE WEEK'};
+  }
   for(var i=0;i<COMP_WEEKS.length;i++){
     var w=COMP_WEEKS[i];
-    if(now>=new Date(w.start) && now<=new Date(w.end+' 23:59:59')) return w;
+    if(now>=new Date(w.start)&&now<=new Date(w.end+' 23:59:59')) return w;
   }
-  // Handle bye week May 27 - Jun 2
-  var d=new Date(); var ds=d.toISOString().split('T')[0];
-  if(ds>='2026-05-27'&&ds<='2026-06-02') return {week:'BYE',round:1,caTarget:2,doorsTarget:200,start:'2026-05-27',end:'2026-06-02',isBye:true};
   return COMP_WEEKS[COMP_WEEKS.length-1];
 }
 
@@ -633,12 +634,13 @@ function getCompCAsForRep(repName,startDate,endDate){
 
 function renderComp(){
   var w=getCompWeek();
-  document.getElementById('compWeekBadge').textContent='Week '+w.week+' / 12';
-  document.getElementById('compRoundBadge').textContent=ROUND_NAMES[w.round];
-  document.getElementById('compWeekTarget').textContent=w.caTarget+' CAs + 200 Doors';
-  document.getElementById('compWeekSub').textContent='Required this week for weekly prize eligibility';
+  var displayWeek=w.byeLabel?'BYE WEEK':'Week '+w.week+' / 12';
+  document.getElementById('compWeekBadge').textContent=displayWeek;
+  document.getElementById('compRoundBadge').textContent=(w.byeLabel?'Rest week - no targets':ROUND_NAMES[w.round]);
+  document.getElementById('compWeekTarget').textContent=w.byeLabel?'BYE WEEK':w.caTarget+' CAs + 200 Doors';
+  document.getElementById('compWeekSub').textContent=w.byeLabel?'No weekly prize this week - use it to recover and prepare for Round 2':'Required this week for weekly prize eligibility';
   document.getElementById('compAdvTarget').textContent=w.round===1?'8 CAs Total':(w.round===2?'1,100 Doors Total':'4 CAs/week');
-  document.getElementById('compAdvSub').textContent=w.round===1?'8 min CAs + 500 doors by end of Week 4 to advance':(w.round===2?'1,100 total doors by end of Week 8 to advance':'Separation happens here — stay on pace!');
+  document.getElementById('compAdvSub').textContent=w.round===1?'8 min CAs + 500 doors by end of Week 4 to advance to Round 2':(w.round===2?'1,100 total doors by end of Week 8':'Stay on pace through Week 12!');
   if(w.revTarget){
     document.getElementById('compRevCard').style.display='block';
     document.getElementById('compRevTarget').textContent=fmtD(w.revTarget);
@@ -648,40 +650,27 @@ function renderComp(){
     'George Bechara','Michael McCarthy','Christian Brown','David Kerns','Kelly Alston',
     'Harvey Shoemaker','Marc Mitchell','Alfred Duncan','Isabelle Price','Nick Seward',
     'Mike Mendez','Steven Arevalo'];
-
-  // Build week-by-week data for all reps
-  var completedWeeks=[];
-  for(var wi=0;wi<COMP_WEEKS.length;wi++){
-    if(COMP_WEEKS[wi].week<=w.week) completedWeeks.push(COMP_WEEKS[wi]);
-  }
+  // Show all 4 completed competition weeks (use week 4 end as cutoff during bye)
+  var showWeeks=COMP_WEEKS.slice(0,4);
   var repStats=ACTIVE_REPS.map(function(rep){
-    var weeklyCA=completedWeeks.map(function(cw){
-      return getCompCAsForRep(rep,cw.start,cw.end);
-    });
+    var weeklyCA=showWeeks.map(function(cw){return getCompCAsForRep(rep,cw.start,cw.end);});
     var totalCAs=weeklyCA.reduce(function(a,b){return a+b;},0);
-    var thisWeekCAs=weeklyCA[weeklyCA.length-1]||0;
     var advCAs=8;
     var pct=Math.min(100,Math.round(totalCAs/advCAs*100));
-    var status=totalCAs>=advCAs?'qualified':(thisWeekCAs>=w.caTarget?'onpace':(thisWeekCAs>=1?'atrisk':'behind'));
-    return {rep:rep,weeklyCA:weeklyCA,totalCAs:totalCAs,thisWeekCAs:thisWeekCAs,advCAs:advCAs,pct:pct,status:status};
+    var status=totalCAs>=advCAs?'qualified':(weeklyCA[weeklyCA.length-1]>=(w.caTarget||2)?'onpace':(weeklyCA[weeklyCA.length-1]>=1?'atrisk':'behind'));
+    return {rep:rep,weeklyCA:weeklyCA,totalCAs:totalCAs,advCAs:advCAs,pct:pct,status:status};
   });
-  repStats.sort(function(a,b){return b.totalCAs-a.totalCAs||b.thisWeekCAs-a.thisWeekCAs;});
-
-  // Build week headers
-  var weekHeaders=completedWeeks.map(function(cw){return 'Wk '+cw.week;});
-
-  // Build HTML — weekly grid table
+  repStats.sort(function(a,b){return b.totalCAs-a.totalCAs||b.weeklyCA[b.weeklyCA.length-1]-a.weeklyCA[a.weeklyCA.length-1];});
+  var weekHeaders=showWeeks.map(function(cw){return 'Wk '+cw.week;});
   var tbl='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">';
   tbl+='<thead><tr style="background:#f8fafc">';
   tbl+='<th style="text-align:left;padding:8px 14px;font-weight:700;color:#374151;border-bottom:2px solid #e5e7eb;min-width:140px">Rep</th>';
-  weekHeaders.forEach(function(wh,idx){
-    var isLast=(idx===weekHeaders.length-1);
-    tbl+='<th style="text-align:center;padding:8px 10px;font-weight:700;color:'+(isLast?'#1e3a5f':'#6b7280')+';border-bottom:2px solid #e5e7eb;min-width:55px">'+(isLast?'<span style="background:#dbeafe;color:#1e3a5f;padding:2px 6px;border-radius:8px">'+wh+'</span>':wh)+'</th>';
+  weekHeaders.forEach(function(wh){
+    tbl+='<th style="text-align:center;padding:8px 10px;font-weight:700;color:#6b7280;border-bottom:2px solid #e5e7eb;min-width:55px">'+wh+'</th>';
   });
   tbl+='<th style="text-align:center;padding:8px 10px;font-weight:800;color:#1e3a5f;border-bottom:2px solid #e5e7eb;min-width:60px">Total</th>';
-  tbl+='<th style="text-align:center;padding:8px 10px;font-weight:700;color:#374151;border-bottom:2px solid #e5e7eb;min-width:80px">Status</th>';
+  tbl+='<th style="text-align:center;padding:8px 10px;font-weight:700;color:#374151;border-bottom:2px solid #e5e7eb;min-width:90px">Status</th>';
   tbl+='</tr></thead><tbody>';
-
   repStats.forEach(function(s,idx){
     var rowBg=idx%2===0?'#fff':'#f9fafb';
     var badgeCls='comp-badge badge-'+s.status;
@@ -689,11 +678,11 @@ function renderComp(){
     tbl+='<tr style="background:'+rowBg+'">';
     tbl+='<td style="padding:9px 14px;font-weight:700;color:#111827;border-bottom:1px solid #f3f4f6">'+(idx+1)+'. '+s.rep+'</td>';
     s.weeklyCA.forEach(function(ca,wi){
-      var isLast=(wi===s.weeklyCA.length-1);
-      var metTarget=ca>=(completedWeeks[wi].caTarget||2);
-      var bg=isLast?(metTarget?'#dcfce7':'#fee2e2'):'transparent';
-      var clr=isLast?(metTarget?'#15803d':'#dc2626'):'#374151';
-      tbl+='<td style="text-align:center;padding:9px 10px;font-weight:'+(isLast?'800':'600')+';color:'+clr+';background:'+bg+';border-bottom:1px solid #f3f4f6">'+ca+'</td>';
+      var tgt=showWeeks[wi].caTarget||2;
+      var met=ca>=tgt;
+      var bg=met?'#dcfce7':'transparent';
+      var clr=met?'#15803d':'#374151';
+      tbl+='<td style="text-align:center;padding:9px 10px;font-weight:600;color:'+clr+';background:'+bg+';border-bottom:1px solid #f3f4f6">'+ca+'</td>';
     });
     var totalClr=s.totalCAs>=s.advCAs?'#15803d':'#1e3a5f';
     tbl+='<td style="text-align:center;padding:9px 10px;font-weight:800;color:'+totalClr+';border-bottom:1px solid #f3f4f6">'+s.totalCAs+'/'+s.advCAs+'</td>';
