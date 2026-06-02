@@ -3235,6 +3235,15 @@
       "date": "2026-06-02",
       "address": "6253 Miller Dr, Alexandria, VA",
       "ts": "2026-06-02T17:27:26.691Z"
+    },
+    {
+      "leadId": "47228",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6312 Miller Dr, Alexandria, VA",
+      "ts": "2026-06-02T17:31:08.527Z"
     }
   ]
 }
