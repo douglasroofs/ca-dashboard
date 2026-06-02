@@ -1,456 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Douglas Roofing | CA Dashboard</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <style>
-    :root{--brand:#1a3a6b;--brand-dark:#122a50;--success:#057a55;--bg:#f3f4f6;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08)}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-    header{background:var(--brand-dark);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-    .logo{display:flex;align-items:center;gap:12px}.logo img{width:48px;height:48px;object-fit:contain;flex-shrink:0}.logo-text h1{font-size:1.1rem;font-weight:800}.logo-text p{font-size:.7rem;opacity:.75;text-transform:uppercase;letter-spacing:.03em}
-    .hdr-r{text-align:right;font-size:.75rem;opacity:.8}.hdr-r strong{display:block;font-size:.85rem}
-    .nav-tabs{background:var(--brand-dark);border-top:1px solid rgba(255,255,255,.15);display:flex;padding:0 20px}
-    .nav-tab{padding:10px 18px;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.65);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}.nav-tab:hover{color:#fff}.nav-tab.active{color:#fff;border-bottom-color:#fff}
-    main{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
-    .sbar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:.8rem;color:var(--muted)}.sdot{width:8px;height:8px;border-radius:50%;background:#10b981;flex-shrink:0;box-shadow:0 0 6px #10b981}
-    .banner{border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
-    .banner-title{color:#fff;font-size:.9rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
-    .banner-sub{color:rgba(255,255,255,.8);font-size:.75rem}
-    .kgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}@media(min-width:640px){.kgrid{grid-template-columns:repeat(4,1fr)}}
-    .kcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}.kcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--ac,var(--brand));border-radius:var(--radius) var(--radius) 0 0}
-    .kcard.k1{--ac:#059669}.kcard.k2{--ac:#1a3a6b}.kcard.k3{--ac:#c27803}.kcard.k4{--ac:#6b7280}
-    .klbl{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px}
-    .kval{font-size:1.8rem;font-weight:800;line-height:1.1}.ksub{font-size:.72rem;color:var(--muted);margin-top:3px}
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}@media(max-width:860px){.two-col{grid-template-columns:1fr}}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
-    .card-title{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
 
-    /* Ã¢ÂÂÃ¢ÂÂ MTD REP CARD Ã¢ÂÂÃ¢ÂÂ */
-    .rep-card{border-bottom:1px solid var(--border);padding:14px 0}.rep-card:last-child{border-bottom:none;padding-bottom:0}
-    .rep-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-    .rep-name-btn{font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text)}
-    .rep-chev{font-size:.65rem;color:var(--muted)}
-    .rep-status{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:99px}
-    .st-green{background:#d1fae5;color:#065f46}.st-empty{color:var(--muted);font-size:.7rem}
-    /* CA tracker - the hero */
-    .ca-track-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-    .ca-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);flex-shrink:0;width:20px}
-    .ca-fraction{font-size:1.5rem;font-weight:900;color:var(--text);flex-shrink:0;min-width:60px}
-    .ca-goal-lbl{font-size:.68rem;color:var(--muted);flex-shrink:0}
-    .ca-bar-wrap{flex:1;background:#e5e7eb;border-radius:6px;height:12px;overflow:hidden;position:relative}
-    .ca-bar-fill{height:100%;border-radius:6px;transition:width .8s ease}
-    .pace-tick{position:absolute;top:0;bottom:0;width:2px;background:rgba(0,0,0,.2);z-index:2}
-    /* Revenue sub-row */
-    .rev-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
-    .rev-item{font-size:.78rem}.rev-item strong{font-weight:800;font-size:.85rem}
-    .rev-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);display:block;margin-bottom:1px}
-    /* Deal dropdown */
-    .deal-list{display:none;flex-direction:column;gap:4px;margin-top:8px;padding:8px;background:var(--bg);border-radius:8px;border-left:3px solid var(--brand)}
-    .deal-list.open{display:flex}
-    .deal-item{display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--surface);border-radius:6px;border:1px solid var(--border);font-size:.78rem}
-    .di-name{font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .di-addr{color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none}@media(min-width:640px){.di-addr{display:block}}
-    .di-date{font-size:.68rem;color:var(--muted);flex-shrink:0}
-    .chip{display:inline-block;padding:2px 7px;border-radius:99px;font-size:.65rem;font-weight:700;text-transform:uppercase;flex-shrink:0}
-    .ca{background:#d1fae5;color:#065f46}.cs{background:#fef3c7;color:#92400e}.cd{background:#f3f4f6;color:#374151}
+// ── Revenue on MTD rep cards ──────────────────────────────────────────
+window._mtdRevReps = null; // holds current-month OR historical rep revenue
 
-    /* Ã¢ÂÂÃ¢ÂÂ YTD REP CARD Ã¢ÂÂÃ¢ÂÂ */
-    .ytd-rep{border-bottom:1px solid var(--border);padding:14px 0}.ytd-rep:last-child{border-bottom:none;padding-bottom:0}
-    .ytd-row1{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
-    .ytd-rep-name{font-size:.95rem;font-weight:800}
-    .ytd-ca-count{font-size:.78rem;color:var(--muted)}
-    .ytd-rev-bar-row{margin-bottom:6px}
-    .ytd-rev-label{display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:3px}
-    .ytd-rev-amt{font-weight:800;font-size:.82rem;color:var(--text)}
-    .ytd-pace-lbl{font-weight:700}
-    .ytd-bar-bg{background:#e5e7eb;border-radius:6px;height:14px;overflow:hidden;position:relative}
-    .ytd-bar-fill{height:100%;border-radius:6px;transition:width .8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:5px}
-    .ytd-bar-pct{font-size:.6rem;font-weight:700;color:#fff}
-    .ytd-pace-tick{position:absolute;top:0;bottom:0;width:2px;background:rgba(0,0,0,.2);z-index:2}
-    /* Monthly CA dropdown */
-    .mo-toggle-btn{font-size:.7rem;font-weight:600;color:var(--brand);background:none;border:none;cursor:pointer;padding:4px 0;display:flex;align-items:center;gap:4px;margin-top:4px}
-    .mo-panel{display:none;margin-top:6px;flex-wrap:wrap;gap:5px}
-    .mo-panel.open{display:flex}
-    .mo-chip{padding:3px 8px;border-radius:6px;font-size:.7rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg);transition:all .15s}
-    .mo-chip.has-data{background:var(--brand);color:#fff;border-color:var(--brand)}
-    .mo-detail{display:none;width:100%;padding:6px 8px;background:var(--bg);border-radius:6px;border-left:3px solid var(--brand);margin-top:2px}
-    .mo-detail.open{display:block}
-    .mo-ca-item{font-size:.75rem;padding:2px 0;border-bottom:1px solid var(--border)}.mo-ca-item:last-child{border-bottom:none}
-
-    /* Table */
-    .tcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
-    .thdr{padding:12px 20px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--border)}@media(min-width:640px){.thdr{flex-direction:row;align-items:center;justify-content:space-between}}
-    .ttl{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-    .swrap{position:relative}.sinp{width:100%;padding:7px 12px 7px 32px;border:1px solid var(--border);border-radius:8px;font-size:.8rem;outline:none}.sinp:focus{border-color:var(--brand)}.sico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
-    .frow{display:flex;gap:6px;flex-wrap:wrap;padding:8px 20px;border-bottom:1px solid var(--border)}
-    .pill{padding:3px 10px;border-radius:99px;font-size:.72rem;font-weight:600;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .15s;color:var(--muted)}.pill:hover{border-color:var(--brand);color:var(--brand)}.pill.active{background:var(--brand);border-color:var(--brand);color:#fff}.pill.pa.active{background:#057a55;border-color:#057a55}.pill.ps.active{background:#c27803;border-color:#c27803}.pill.pd.active{background:#6b7280;border-color:#6b7280}
-    .twrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.85rem}
-    th{text-align:left;padding:9px 16px;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--bg);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}th:hover{color:var(--brand)}
-    td{padding:10px 16px;border-bottom:1px solid var(--border);vertical-align:middle}tr:last-child td{border-bottom:none}tr:hover td{background:#f9fafb}
-    .jid{font-family:monospace;font-size:.78rem;color:var(--muted)}.cnm{font-weight:600}.empty{text-align:center;padding:40px;color:var(--muted)}@media(max-width:639px){.hm{display:none}}
-
-    /* Tabs */
-    .ytd-sec{display:none}.ytd-sec.active{display:block}.mtd-sec{display:block}.mtd-sec.hidden{display:none}
-    .mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:20px}
-
-    /* Modals */
-    .modal-base{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:300;padding:20px}.modal-base.open{display:flex}
-    .mbox{background:var(--surface);border-radius:var(--radius);padding:24px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:80vh;overflow-y:auto}
-    .mbox h3{font-size:1rem;font-weight:700;margin-bottom:4px}.mbox p{font-size:.8rem;color:var(--muted);margin-bottom:16px}
-    .ginputs{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-    .girow{display:flex;align-items:center;gap:10px}.girow label{font-size:.8rem;font-weight:600;min-width:140px;flex-shrink:0}.girow input{flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:.875rem;outline:none}.girow input:focus{border-color:var(--brand)}
-    .mact{display:flex;gap:8px;justify-content:flex-end}.bprim{padding:7px 16px;border-radius:6px;background:var(--brand);color:#fff;border:none;font-size:.8rem;font-weight:600;cursor:pointer}.bcanc{padding:7px 16px;border-radius:6px;background:var(--bg);color:var(--muted);border:1px solid var(--border);font-size:.8rem;cursor:pointer}
-    .loading{text-align:center;padding:60px 20px;color:var(--muted)}.spin{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 12px}@keyframes sp{to{transform:rotate(360deg)}}
-    .err{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius);padding:14px 20px;color:#991b1b;font-size:.875rem;margin-bottom:20px;display:none}
-    .btns{padding:4px 10px;font-size:.72rem;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--muted)}.btns:hover{border-color:var(--brand);color:var(--brand)}
-    #monthPicker option{background:#1a3a6b;color:#fff}
-  </style>
-
-<style>
-.rep-rev-row{display:flex;align-items:center;gap:6px;padding:3px 10px 6px;font-size:12px;flex-wrap:wrap;}
-.rev-lbl{color:#6b7280;font-weight:600;font-size:11px;}
-.rev-val{color:#1a56db;font-weight:700;}
-</style>
-</head>
-<body>
-<div class="modal-base" id="goalsM">
-  <div class="mbox">
-    <h3>Set Rep Goals</h3>
-    <p>Monthly CA goal and Annual Contract Signed revenue goal per rep.</p>
-    <div class="ginputs" id="goalsInp"></div>
-    <div class="mact"><button class="bcanc" onclick="closeModal('goalsM')">Cancel</button><button class="bprim" onclick="saveGoals()">Save Goals</button></div>
-  </div>
-</div>
-<header>
-  <div class="logo"><img src="logo.png" onerror="this.style.display='none'" alt="DR"><div class="logo-text"><h1>Douglas Roofing</h1><p>CA Sales Dashboard</p></div></div>
-  <div class="hdr-r"><strong id="hdate">-</strong><span>Updated daily</span></div>
-</header>
-<div class="nav-tabs">
-  <div class="nav-tab active" onclick="switchTab('mtd',this)">MTD</div>
-  <div class="nav-tab" onclick="switchTab('ytd',this)">YTD</div>
-</div>
-<main>
-  <div class="err" id="errB"></div>
-  <div class="loading" id="ldg"><div class="spin"></div><p>Loading data</p></div>
-  <div id="dash" style="display:none">
-    <div class="sbar"><div class="sdot"></div><span>Live data from Leap CRM - Last refreshed: <strong id="lref">-</strong></span><span style="margin-left:auto"><button class="btns" onclick="reload()">Refresh</button><button class="btns" onclick="openGoals()" style="margin-left:4px">Edit Goals</button><button class="btns" onclick="syncNow()" style="margin-left:4px;background:#1a3a6b;color:#fff;border-color:#1a3a6b">Sync Now</button></span></div>
-
-    <!-- MTD -->
-    <div class="mtd-sec" id="mtdTab">
-      <div class="banner" style="background:linear-gradient(135deg,var(--brand-dark),var(--brand))">
-        <div><div class="banner-title">Month to Date</div><div class="banner-sub" id="mtdSub">-</div></div>
-        <div style="display:flex;align-items:center;gap:10px"><div class="banner-sub" id="mtdDays">-</div><select id="monthPicker" onchange="changeMTDMonth(this.value)" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 8px;font-size:.72rem;font-weight:600;cursor:pointer;outline:none" title="View a different month"></select></div>
-      </div>
-      <div class="kgrid">
-        <div class="kcard k1"><div class="klbl">Contract Signed MTD</div><div class="kval" id="kCSMtd">-</div><div class="ksub" id="kCSMtdJ">-</div></div>
-        <div class="kcard k2"><div class="klbl">Approved MTD</div><div class="kval" id="kAMtd">-</div><div class="ksub" id="kAMtdJ">-</div></div>
-        <div class="kcard k3"><div class="klbl">CAs Accepted</div><div class="kval" id="kCAcc">-</div><div class="ksub" id="kCAccR">-</div></div>
-        <div class="kcard k4"><div class="klbl">Total CAs</div><div class="kval" id="kCTot">-</div><div class="ksub">This month</div></div>
-      </div>
-      <div class="two-col">
-        <div class="card">
-          <div class="card-title">Rep Performance Ã¢ÂÂ tap name to see CAs</div>
-          <div id="repList"></div>
-        </div>
-        <div class="card"><div class="card-title">Pipeline by Status</div><canvas id="cht" height="240"></canvas></div>
-      </div>
-      <div class="tcard">
-        <div class="thdr">
-          <span class="ttl">All CAs This Month <span id="tcnt"></span></span>
-          <div class="swrap" style="min-width:200px"><svg class="sico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input class="sinp" id="srch" placeholder="Search customer, rep, address" oninput="renderT()"></div>
-        </div>
-        <div class="frow"><button class="pill active" onclick="filt('all',this)">All</button><button class="pill pa" onclick="filt('accepted',this)">Accepted</button><button class="pill ps" onclick="filt('sent',this)">Sent</button><button class="pill pd" onclick="filt('draft',this)">Draft</button></div>
-        <div class="twrap"><table><thead><tr><th onclick="srt('jobId')">Job ID</th><th onclick="srt('customer')">Customer</th><th class="hm" onclick="srt('address')">Address</th><th onclick="srt('rep')">Rep</th><th onclick="srt('status')">Status</th></tr></thead><tbody id="tbody"></tbody></table></div>
-      </div>
-    </div>
-
-    <!-- YTD -->
-    <div class="ytd-sec" id="ytdTab">
-      <div class="banner" style="background:linear-gradient(135deg,#065f46,#059669)">
-        <div><div class="banner-title">Year to Date</div><div class="banner-sub" id="ytdSub">-</div></div>
-        <div class="banner-sub" id="ytdDays">-</div>
-      </div>
-      <div class="kgrid">
-        <div class="kcard k1"><div class="klbl">Contract Signed YTD</div><div class="kval" id="kCSYtd">-</div><div class="ksub" id="kCSYtdJ">-</div></div>
-        <div class="kcard k2"><div class="klbl">Approved YTD</div><div class="kval" id="kAYtd">-</div><div class="ksub" id="kAYtdJ">-</div></div>
-        <div class="kcard k4"><div class="klbl">Total CAs YTD</div><div class="kval" id="kCTotYtd">-</div><div class="ksub">Year to date</div></div>
-        <div class="kcard k4"><div class="klbl">CA Close Rate YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">- of - total</div></div>
-      </div>
-      <div class="mcard"><div class="card-title">Monthly CAs Accepted Ã¢ÂÂ <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
-      <div class="card" style="margin-bottom:20px">
-        <div class="card-title">Rep Annual Goal Tracker</div>
-        <div id="ytdRepList"></div>
-      </div>
-    </div>
-  </div>
-</main>
-<script>
-var GK='dr_goals',DEF_CA=8,DEF_REV=1000000;
-var goals=JSON.parse(localStorage.getItem(GK)||'{}');
-var rows=[],revData=null,af='all',sc='status',sd='asc',at='mtd',selectedMonth=null;
-var TEAM=['Robert Wilson','Kevin Mahan','Jack Obert','Andrew Funk','Andrew Prickel','George Bechara','Michael McCarthy','Christian Brown','David Kerns','Kelly Alston','Harvey Shoemaker','Marc Mitchell','Alfred Duncan','Isabelle Price','Nick Seward','Mike Mendez','Steven Arevalo'];
-var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-window.onload=function(){
-  var now=new Date();
-  document.getElementById('hdate').textContent=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  document.getElementById('mtdSub').textContent=now.toLocaleDateString('en-US',{month:'long',year:'numeric'})+' performance';
-  document.getElementById('ytdSub').textContent=now.getFullYear()+' performance';
-  var day=now.getDate(),tot=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
-  document.getElementById('mtdDays').textContent='Day '+day+' of '+tot;
-  var doy=Math.floor((now-new Date(now.getFullYear(),0,1))/86400000)+1,diy=now.getFullYear()%4===0?366:365;
-  document.getElementById('ytdDays').textContent='Day '+doy+' of '+diy;
-  // Populate month picker with Jan through current month
-  var picker=document.getElementById('monthPicker');
-  var MOS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  for(var mi=0;mi<=now.getMonth();mi++){
-    var opt=document.createElement('option');
-    var yr2=now.getFullYear(),mo2=String(mi+1).padStart(2,'0');
-    opt.value=yr2+'-'+mo2;
-    opt.textContent=MOS[mi]+' '+yr2;
-    if(mi===now.getMonth())opt.selected=true;
-    picker.appendChild(opt);
-  }
-  loadAll();
-};
-
-function switchTab(t,el){at=t;document.querySelectorAll('.nav-tab').forEach(function(x){x.classList.remove('active');});el.classList.add('active');document.getElementById('mtdTab').classList.toggle('hidden',t!=='mtd');document.getElementById('ytdTab').classList.toggle('active',t==='ytd');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-function eR(r){return r.replace(/[^A-Za-z0-9]/g,'_');}
-function getCAGoal(r){return goals[r]&&goals[r].ca!==undefined?goals[r].ca:DEF_CA;}
-function getRevGoal(r){return goals[r]&&goals[r].rev!==undefined?goals[r].rev:DEF_REV;}
-function fmtD(n){return '$'+parseFloat(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
-
-function openGoals(){
-  document.getElementById('goalsInp').innerHTML=TEAM.map(function(r){
-    return '<div style="padding:8px 0;border-bottom:1px solid var(--border)"><div style="font-size:.82rem;font-weight:700;margin-bottom:6px">'+r+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:2px">Monthly CA Goal</label><input type="number" min="0" id="ca_'+eR(r)+'" value="'+getCAGoal(r)+'"></div><div><label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:2px">Annual Rev Goal ($)</label><input type="number" min="0" id="rv_'+eR(r)+'" value="'+getRevGoal(r)+'"></div></div></div>';
-  }).join('');
-  document.getElementById('goalsM').classList.add('open');
-}
-function saveGoals(){
-  TEAM.forEach(function(r){
-    var ca=document.getElementById('ca_'+eR(r)),rv=document.getElementById('rv_'+eR(r));
-    if(!goals[r])goals[r]={};
-    if(ca)goals[r].ca=parseInt(ca.value)||DEF_CA;
-    if(rv)goals[r].rev=parseInt(rv.value)||DEF_REV;
-  });
-  localStorage.setItem(GK,JSON.stringify(goals));
-  closeModal('goalsM');
-  if(rows.length)renderMTD();
-  if(revData)renderYTD();
-}
-
-function changeMTDMonth(val){
-  selectedMonth=val;
-  var now=new Date();
-  var yr=now.getFullYear(),mm=String(now.getMonth()+1).padStart(2,'0');
-  var curMo=yr+'-'+mm;
-  var isPast=val!==curMo;
-  var parts=val.split('-'),aYr=parseInt(parts[0]),aMo=parts[1];
-  var monthLabel=new Date(aYr,parseInt(aMo)-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'});
-  document.getElementById('mtdSub').textContent=isPast?(monthLabel+' - historical view'):(monthLabel+' performance');
-  if(rows.length)renderMTD();
-  if(isPast){
-    document.getElementById('kCSMtd').textContent='Loading...';
-    document.getElementById('kAMtd').textContent='Loading...';
-    fetch('/api/revenue-history?month='+val).then(function(r){return r.json();}).then(function(d){
-      if(d.success&&d.reps){
-        var cs=0,csJ=0,ap=0,apJ=0;
-        d.reps.forEach(function(r){cs+=r.contract_amount||0;csJ+=r.contract_jobs||0;ap+=r.approved_amount||0;apJ+=r.approved_jobs||0;});
-        document.getElementById('kCSMtd').textContent=fmtD(cs);
-        document.getElementById('kCSMtdJ').textContent=csJ+' contracts';
-        document.getElementById('kAMtd').textContent=fmtD(ap);
-        document.getElementById('kAMtdJ').textContent=apJ+' jobs';
-      }
-    }).catch(function(){
-      document.getElementById('kCSMtd').textContent='N/A';
-      document.getElementById('kAMtd').textContent='N/A';
-    });
-  }
-}
-function loadAll(){
-  document.getElementById('ldg').style.display='block';
-  document.getElementById('dash').style.display='none';
-  document.getElementById('errB').style.display='none';
-  Promise.all([
-    fetch('/data/ca-data.json?cb='+Date.now()).then(function(r){if(!r.ok)throw new Error('CA data '+r.status);return r.json();}),
-    fetch('/data/revenue.json?cb='+Date.now()).then(function(r){return r.json();})
-  ]).then(function(res){
-    rows=(res[0].cas||[]).filter(function(r){return r.docName&&r.docName.toLowerCase().startsWith('ca');});
-    revData=res[1];
-    document.getElementById('lref').textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-    document.getElementById('ldg').style.display='none';
-    document.getElementById('dash').style.display='block';
-    renderMTD();renderYTD();
-  }).catch(function(e){
-    document.getElementById('ldg').style.display='none';
-    var b=document.getElementById('errB');b.textContent='Error: '+e.message;b.style.display='block';
-  });
-}
-function reload(){rows=[];revData=null;loadAll();}
-
-function renderMTD(){
-  var now=new Date(),yr=now.getFullYear(),y2=String(yr).substring(2),mm=String(now.getMonth()+1).padStart(2,'0');
-  var activeMonth=selectedMonth||(yr+'-'+mm);
-  var aParts=activeMonth.split('-'),aYr=parseInt(aParts[0]),aMo=aParts[1];
-  var mrows=rows.filter(function(r){var rd=r.date?r.date.substring(0,7):'';var jobPfx=r.jobId?r.jobId.substring(0,4):'';return rd===activeMonth||jobPfx===(String(aYr).substring(2)+aMo);});
-  var isPastMonth=activeMonth!==(yr+'-'+mm);
-  document.getElementById('mtdDays').textContent=isPastMonth?(new Date(aYr,parseInt(aMo)-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'})):('Day '+now.getDate()+' of '+new Date(yr,now.getMonth()+1,0).getDate());
-  var t=mrows.length,a=0,s=0,d=0;
-  mrows.forEach(function(r){var st=r.status.toLowerCase();if(st==='accepted')a++;else if(st==='sent')s++;else d++;});
-  document.getElementById('kCTot').textContent=t;
-  document.getElementById('kCAcc').textContent=a;
-  document.getElementById('kCAccR').textContent=(t?Math.round(a/t*100):0)+'% close rate';
-  var csMtd=0,csMtdJ=0,aMtd=0,aMtdJ=0;
-  if(revData&&revData.reps){revData.reps.forEach(function(r){csMtd+=r.contract_mtd_amount||0;csMtdJ+=r.contract_mtd_jobs||0;aMtd+=r.approved_mtd_amount||0;aMtdJ+=r.approved_mtd_jobs||0;});}
-  document.getElementById('kCSMtd').textContent=fmtD(csMtd);document.getElementById('kCSMtdJ').textContent=csMtdJ+' contracts';
-  document.getElementById('kAMtd').textContent=fmtD(aMtd);document.getElementById('kAMtdJ').textContent=aMtdJ+' jobs';
-  renderChart(mrows);
-  renderRepList(mrows);
-  renderT();
-}
-
-var chartInst=null;
-function renderChart(mrows){
-  var c={Accepted:0,Sent:0,Draft:0};
-  mrows.forEach(function(r){var s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});
-  var ctx=document.getElementById('cht').getContext('2d');
-  if(chartInst)chartInst.destroy();
-  chartInst=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:14,font:{size:11}}}}}});
-}
-
-function renderRepList(mrows){
-  var now=new Date();
-  var doy=Math.floor((now-new Date(now.getFullYear(),0,1))/86400000)+1;
-  var diy=now.getFullYear()%4===0?366:365;
-  var pacePct=Math.min(Math.round(doy/diy*100),98);
-  var caMap={};
-  mrows.forEach(function(r){
-    if(!r.rep)return;
-    if(!caMap[r.rep])caMap[r.rep]={a:0,s:0,d:0,deals:[]};
-    var st=r.status.toLowerCase();
-    if(st==='accepted')caMap[r.rep].a++;else if(st==='sent')caMap[r.rep].s++;else caMap[r.rep].d++;
-    caMap[r.rep].deals.push(r);
-  });
-  var chips={accepted:'ca',sent:'cs',draft:'cd'};
-  var html='';
-  TEAM.forEach(function(name){
-    var ca=caMap[name]||{a:0,s:0,d:0,deals:[]};
-    var revRep=null;
-    if(revData&&revData.reps){revData.reps.forEach(function(r){if(r.rep===name)revRep=r;});}
-    var csMtd=revRep?revRep.contract_mtd_amount:0;
-    var aMtd=revRep?revRep.approved_mtd_amount:0;
-    var caGoal=getCAGoal(name);
-    var pct=Math.min(Math.round(ca.a/caGoal*100),100);
-    var barCol=ca.a>=caGoal?'#059669':(ca.a>=Math.ceil(caGoal*0.5)?'#1a3a6b':'#e5e7eb');
-    var barTextCol=ca.a>=Math.ceil(caGoal*0.5)?'#fff':'var(--muted)';
-    ca.deals.sort(function(a,b){var o={accepted:0,sent:1,draft:2};return(o[a.status.toLowerCase()]||3)-(o[b.status.toLowerCase()]||3);});
-    var dl='';
-    ca.deals.forEach(function(d){
-      var ds=d.date?'<span class="di-date">'+d.date.split(' ')[0]+'</span>':'';
-      dl+='<div class="deal-item"><span class="di-name">'+(d.customer||'-')+'</span><span class="di-addr">'+(d.address||'-')+'</span>'+ds+'<span class="chip '+(chips[d.status.toLowerCase()]||'')+'">'+d.status+'</span></div>';
-    });
-    var statusHtml=ca.a>=caGoal?'<span class="rep-status st-green">Goal hit!</span>':'<span class="st-empty">'+ca.a+'/'+caGoal+' goal</span>';
-    html+='<div class="rep-card">';
-    html+='<div class="rep-row1"><div class="rep-name-btn" onclick="toggleDeals(\'dl_'+eR(name)+'\',this)"><span class="rep-chev">+</span>'+name+'</div>'+statusHtml+'</div>';
-    html+='<div class="ca-track-row">';
-    html+='<span class="ca-label">CA</span>';
-    html+='<span class="ca-fraction">'+ca.a+'<span style="font-size:.9rem;font-weight:600;color:var(--muted)">/'+caGoal+'</span></span>';
-    html+='<div class="ca-bar-wrap"><div class="pace-tick" style="left:'+pacePct+'%"></div><div class="ca-bar-fill" style="width:'+pct+'%;background:'+barCol+';">'+(pct>30?'<span style="font-size:.6rem;font-weight:700;color:'+barTextCol+';padding-right:4px">'+pct+'%</span>':'')+'</div></div>';
-    html+='</div>';
-    if(csMtd>0||aMtd>0||ca.s>0){
-      html+='<div class="rev-row">';
-      if(csMtd>0)html+='<div class="rev-item"><span class="rev-lbl">Contract Signed</span><strong>'+fmtD(csMtd)+'</strong></div>';
-      if(aMtd>0)html+='<div class="rev-item"><span class="rev-lbl">Approved</span><strong>'+fmtD(aMtd)+'</strong></div>';
-      if(ca.s>0)html+='<div class="rev-item"><span class="rev-lbl">Sent</span><strong>'+ca.s+' CA'+(ca.s!==1?'s':'')+'</strong></div>';
-      html+='</div>';
-    }
-    if(dl)html+='<div class="deal-list" id="dl_'+eR(name)+'">'+dl+'</div>';
-    html+='</div>';
-  });
-  document.getElementById('repList').innerHTML=html;
-}
-
-function toggleDeals(id,btn){
-  var panel=document.getElementById(id);
-  if(!panel)return;
-  var chev=btn.querySelector('.rep-chev');
-  var open=panel.classList.contains('open');
-  panel.classList.toggle('open',!open);
-  chev.textContent=open?'+':'-';
-}
-
-function filt(f,el){af=f;document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('active');});el.classList.add('active');renderT();}
-function srt(col){if(sc===col)sd=sd==='asc'?'desc':'asc';else{sc=col;sd='asc';}document.querySelectorAll('th').forEach(function(t){t.classList.remove('sa','sd');});var idx={jobId:0,customer:1,address:2,rep:3,status:4},ths=document.querySelectorAll('th');if(ths[idx[col]])ths[idx[col]].classList.add(sd==='asc'?'sa':'sd');renderT();}
-function renderT(){var now=new Date(),yr=now.getFullYear(),y2=String(now.getFullYear()).substring(2),mm=String(now.getMonth()+1).padStart(2,'0'),pfx=y2+mm;var mrows=rows.filter(function(r){var rd=r.date?r.date.substring(0,7):'';var jobPfx=r.jobId?r.jobId.substring(0,4):'';var mtdYYMM=y2+mm;return rd===(yr+'-'+mm)||jobPfx===mtdYYMM;});var q=document.getElementById('srch').value.toLowerCase();var out=mrows.filter(function(r){if(af!=='all'&&r.status.toLowerCase()!==af)return false;if(q&&(r.customer+' '+r.rep+' '+r.address+' '+r.jobId).toLowerCase().indexOf(q)<0)return false;return true;});out.sort(function(a,b){var va=a[sc]||'',vb=b[sc]||'';return sd==='asc'?va.localeCompare(vb):vb.localeCompare(va);});document.getElementById('tcnt').textContent='('+out.length+')';var chips={accepted:'ca',sent:'cs',draft:'cd'};var tbody=document.getElementById('tbody');if(!out.length){tbody.innerHTML='<tr><td colspan="5" class="empty">No CAs match.</td></tr>';return;}var h='';out.forEach(function(r){h+='<tr><td><span class="jid">'+r.jobId+'</span></td><td><span class="cnm">'+r.customer+'</span></td><td class="hm">'+r.address+'</td><td>'+r.rep+'</td><td><span class="chip '+(chips[r.status.toLowerCase()]||'')+'">'+r.status+'</span></td></tr>';});tbody.innerHTML=h;}
-function renderTable(){renderT();}
-
-var ytdChartInst=null;
-function renderYTD(){
-  var now=new Date(),yr=now.getFullYear(),y2=String(yr).substring(2);
-  document.getElementById('yrN').textContent=yr;
-  var doy=Math.floor((now-new Date(yr,0,1))/86400000)+1,diy=yr%4===0?366:365,yearPct=doy/diy;
-  var csYtd=0,csYtdJ=0,aYtd=0,aYtdJ=0;
-  if(revData&&revData.reps){revData.reps.forEach(function(r){csYtd+=r.contract_ytd_amount||0;csYtdJ+=r.contract_ytd_jobs||0;aYtd+=r.approved_ytd_amount||0;aYtdJ+=r.approved_ytd_jobs||0;});}
-  document.getElementById('kCSYtd').textContent=fmtD(csYtd);document.getElementById('kCSYtdJ').textContent=csYtdJ+' contracts';
-  document.getElementById('kAYtd').textContent=fmtD(aYtd);document.getElementById('kAYtdJ').textContent=aYtdJ+' jobs';
-  if(document.getElementById('kCTotYtd')){document.getElementById('kCTotYtd').textContent=rows.length;}
-  var t=rows.length,a=rows.filter(function(r){return r.status.toLowerCase()==='accepted';}).length;
-  document.getElementById('kCAccYtd').textContent=(t?Math.round(a/t*100):0)+'%';
-  document.getElementById('kCAccYtdR').textContent=a+' accepted of '+t+' total';
-  var mo=new Array(12).fill(0);
-  rows.forEach(function(r){if(r.status.toLowerCase()==='accepted'&&r.jobId&&r.jobId.length>=4&&r.jobId.substring(0,2)===y2){var mv=parseInt(r.jobId.substring(2,4),10)-1;if(mv>=0&&mv<12)mo[mv]++;}});
-  var ctx=document.getElementById('ytdChart').getContext('2d');
-  if(ytdChartInst)ytdChartInst.destroy();
-  ytdChartInst=new Chart(ctx,{type:'bar',data:{labels:MO,datasets:[{label:'CAs Accepted',data:mo,backgroundColor:'#1a3a6b',borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
-  var repMonthMap={};
-  rows.forEach(function(r){if(!r.rep||r.status.toLowerCase()!=='accepted'||!r.jobId||r.jobId.length<4||r.jobId.substring(0,2)!==y2)return;var mv=parseInt(r.jobId.substring(2,4),10)-1;if(mv<0||mv>11)return;if(!repMonthMap[r.rep])repMonthMap[r.rep]={};if(!repMonthMap[r.rep][mv])repMonthMap[r.rep][mv]=[];repMonthMap[r.rep][mv].push(r);});
-  var curMo=now.getMonth();
-  var gc=['#1a3a6b','#059669','#d97706','#7c3aed','#db2777','#0891b2','#065f46','#92400e','#374151','#1e40af','#065f46','#0891b2','#7c3aed','#db2777','#d97706','#374151','#1a3a6b'];
-  var html='';
-  TEAM.forEach(function(name,i){
-    var revRep=null;
-    if(revData&&revData.reps){revData.reps.forEach(function(r){if(r.rep===name)revRep=r;});}
-    var csAmt=revRep?revRep.contract_ytd_amount:0;var aYtdAmt=revRep?revRep.approved_ytd_amount:0;
-    var revGoal=getRevGoal(name);
-    var pct=Math.min(Math.round(csAmt/revGoal*100),100);
-    var pacePct=Math.min(Math.round(yearPct*100),98);
-    var ok=csAmt>=(revGoal*yearPct);
-    var col=gc[i%gc.length];
-    var totalAcc=Object.values(repMonthMap[name]||{}).reduce(function(s,arr){return s+arr.length;},0);
-    html+='<div class="ytd-rep">';
-    html+='<div class="ytd-row1"><span class="ytd-rep-name">'+name+'</span><span class="ytd-ca-count">'+totalAcc+' CAs accepted YTD</span></div>';
-    html+='<div class="ytd-rev-bar-row">';
-    html+='<div class="ytd-rev-label"><span class="ytd-rev-amt">'+fmtD(csAmt)+'<span style="font-size:.72rem;font-weight:400;color:var(--muted)"> / '+fmtD(revGoal)+'</span></span><span class="ytd-pace-lbl" style="color:'+(ok?'#059669':'#ef4444')+'">'+(ok?'On pace':'Behind pace')+'</span></div>';
-    html+='<div class="ytd-bar-bg"><div class="ytd-pace-tick" style="left:'+pacePct+'%"></div><div class="ytd-bar-fill" style="width:'+pct+'%;background:'+(ok?col:'#ef4444')+'">'+(pct>12?'<span class="ytd-bar-pct">'+pct+'%</span>':'')+'</div></div>';
-    html+='</div>';
-    if(aYtdAmt>0)html+='<div style="font-size:.72rem;color:var(--muted);margin-top:3px">Approved: <strong style="color:var(--text)">'+fmtD(aYtdAmt)+'</strong></div>';
-    html+='<button class="mo-toggle-btn" onclick="toggleMoPanel(\'mp_'+eR(name)+'\',this)">&#9654; Monthly CAs</button>';
-    html+='<div class="mo-panel" id="mp_'+eR(name)+'">';
-    for(var mo2=0;mo2<=curMo;mo2++){
-      var mCAs=repMonthMap[name]&&repMonthMap[name][mo2]?repMonthMap[name][mo2]:[];
-      var cnt=mCAs.length,hasCAs=cnt>0,mid='md_'+eR(name)+'_'+mo2;
-      html+='<div>';
-      html+='<span class="mo-chip'+(hasCAs?' has-data':'')+'" onclick="'+(hasCAs?'toggleMoDetail(\''+mid+'\')':'void 0')+'">'+MO[mo2]+': '+cnt+'</span>';
-      if(hasCAs){html+='<div class="mo-detail" id="'+mid+'">';mCAs.forEach(function(ca){var ds=ca.date?'<span style="color:var(--muted);margin-left:6px;font-size:.68rem">'+ca.date.split(' ')[0]+'</span>':'';html+='<div class="mo-ca-item"><strong>'+ca.customer+'</strong>'+ds+'</div>';});html+='</div>';}
-      html+='</div>';
-    }
-    html+='</div>';
-    html+='</div>';
-  });
-  document.getElementById('ytdRepList').innerHTML=html;
-}
-
-function toggleMoPanel(id,btn){var el=document.getElementById(id);if(!el)return;var open=el.classList.contains('open');el.classList.toggle('open',!open);btn.innerHTML=(open?'&#9654;':'&#9660;')+' Monthly CAs';}
-function toggleMoDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');}
-function syncNow(){var btn=event.target;btn.textContent='Syncing...';btn.disabled=true;fetch('/api/refresh').then(function(r){return r.json();}).then(function(d){if(d.success){btn.textContent='Sync Now';btn.disabled=false;reload();alert('Updated! '+d.ca_count+' CAs and revenue data refreshed.');}else{btn.textContent='Sync Now';btn.disabled=false;alert('Sync failed: '+(d.error||'unknown error'));}}).catch(function(e){btn.textContent='Sync Now';btn.disabled=false;alert('Sync error: '+e.message);});}
-
-// ââ Revenue on MTD rep cards ââââââââââââââââââââââââââââââââââââââââââ
 function addRevToCards(){
-  if(!revData||!revData.reps) return;
+  var reps = window._mtdRevReps || (revData && revData.reps) || [];
+  if(!reps.length) return;
   document.querySelectorAll('.rep-card').forEach(function(card){
     var old=card.querySelector('.rep-rev-row');
     if(old) old.parentNode.removeChild(old);
@@ -460,18 +14,52 @@ function addRevToCards(){
       .filter(function(n){return n.nodeType===3;})
       .map(function(n){return n.textContent.trim();})
       .join('').replace(/\s+/g,' ').trim();
-    var rev=(revData.reps||[]).find(function(r){return r.rep===repName;});
+    var rev=reps.find(function(r){return r.rep===repName;});
     if(!rev) return;
+    // Support both revData field names and revenue-history field names
+    var cs = rev.contract_mtd_amount !== undefined ? rev.contract_mtd_amount : (rev.contract_amount||0);
+    var ap = rev.approved_mtd_amount !== undefined ? rev.approved_mtd_amount : (rev.approved_amount||0);
     var row=document.createElement('div');
     row.className='rep-rev-row';
-    row.innerHTML='<span class="rev-lbl">CS</span><span class="rev-val">'+fmtD(rev.contract_mtd_amount||0)+'</span>'
-      +'<span class="rev-lbl">Appr</span><span class="rev-val">'+fmtD(rev.approved_mtd_amount||0)+'</span>';
+    row.innerHTML='<span class="rev-lbl">CS</span><span class="rev-val">'+fmtD(cs)+'</span>'
+      +'<span class="rev-lbl" style="margin-left:6px">Appr</span><span class="rev-val">'+fmtD(ap)+'</span>';
     card.appendChild(row);
   });
 }
+
+// Wrap renderMTD so revenue re-renders after every CA update
 var _omtd=renderMTD;
-renderMTD=function(){_omtd.apply(this,arguments);setTimeout(addRevToCards,50);};
-setTimeout(addRevToCards,800);
+renderMTD=function(){
+  _omtd.apply(this,arguments);
+  setTimeout(addRevToCards,50);
+};
+
+// Wrap changeMTDMonth to update rep cards when historical month is picked
+var _oChgMo=changeMTDMonth;
+changeMTDMonth=function(val){
+  window._mtdRevReps=null; // reset
+  _oChgMo.apply(this,arguments);
+  // Intercept the revenue-history fetch result for rep cards
+  var now=new Date(),yr=now.getFullYear(),mm=String(now.getMonth()+1).padStart(2,'0');
+  var curMo=yr+'-'+mm;
+  if(val!==curMo){
+    fetch('/api/revenue-history?month='+val)
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d.success&&d.reps){
+          window._mtdRevReps=d.reps;
+          addRevToCards();
+        }
+      });
+  } else {
+    window._mtdRevReps=null;
+    setTimeout(addRevToCards,100);
+  }
+};
+
+// Run once after data loads
+setTimeout(addRevToCards,1200);
+
 </script>
 </body>
 </html>
