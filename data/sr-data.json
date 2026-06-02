@@ -3622,6 +3622,15 @@
       "date": "2026-06-02",
       "address": "10740 Wayfarer Rd, Germantown, MD",
       "ts": "2026-06-02T19:38:18.907Z"
+    },
+    {
+      "leadId": "47320",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "23276 Meadowvale Glen Ct, Sterling, VA",
+      "ts": "2026-06-02T19:39:41.521Z"
     }
   ]
 }
