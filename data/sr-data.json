@@ -4909,6 +4909,15 @@
       "date": "2026-06-02",
       "address": "10221 Steamboat Landing Ln, Burke, VA",
       "ts": "2026-06-02T23:53:15.229Z"
+    },
+    {
+      "leadId": "47641",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6039 Burnside Landing Dr, Burke, VA",
+      "ts": "2026-06-02T23:54:00.185Z"
     }
   ]
 }
