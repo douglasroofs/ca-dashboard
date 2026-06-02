@@ -3163,6 +3163,15 @@
       "date": "2026-06-02",
       "address": "12669 Victory Lakes Loop, Bristow, VA",
       "ts": "2026-06-02T16:56:26.924Z"
+    },
+    {
+      "leadId": "47214",
+      "repName": "Kelly Alston",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "9909 Portsmouth Rd, Manassas, VA",
+      "ts": "2026-06-02T16:56:30.809Z"
     }
   ]
 }
