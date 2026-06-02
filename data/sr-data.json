@@ -3793,6 +3793,15 @@
       "date": "2026-06-02",
       "address": "7062 Elton Way, Alexandria, VA",
       "ts": "2026-06-02T20:03:18.800Z"
+    },
+    {
+      "leadId": "47347",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7039 Kings Manor Dr, Alexandria, VA",
+      "ts": "2026-06-02T20:05:18.874Z"
     }
   ]
 }
