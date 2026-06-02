@@ -4342,6 +4342,15 @@
       "date": "2026-06-02",
       "address": "7061 Kings Manor Dr, Alexandria, VA",
       "ts": "2026-06-02T20:29:57.755Z"
+    },
+    {
+      "leadId": "47487",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "5924 Ians Way, Alexandria, VA",
+      "ts": "2026-06-02T20:30:14.875Z"
     }
   ]
 }
