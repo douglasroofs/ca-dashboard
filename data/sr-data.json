@@ -3298,6 +3298,15 @@
       "date": "2026-06-02",
       "address": "7918 Lobelia Ln, Springfield, VA",
       "ts": "2026-06-02T17:35:41.429Z"
+    },
+    {
+      "leadId": "47243",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6334 Miller Dr, Alexandria, VA",
+      "ts": "2026-06-02T17:38:30.121Z"
     }
   ]
 }
