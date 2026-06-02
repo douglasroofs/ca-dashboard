@@ -3802,6 +3802,15 @@
       "date": "2026-06-02",
       "address": "7039 Kings Manor Dr, Alexandria, VA",
       "ts": "2026-06-02T20:05:18.874Z"
+    },
+    {
+      "leadId": "47349",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7046 Fieldhurst Court, Alexandria, VA",
+      "ts": "2026-06-02T20:07:35.493Z"
     }
   ]
 }
