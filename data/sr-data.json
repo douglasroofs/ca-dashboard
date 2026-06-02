@@ -4900,6 +4900,15 @@
       "date": "2026-06-02",
       "address": "6105 Eagle Landing Rd, Burke, VA",
       "ts": "2026-06-02T23:49:56.017Z"
+    },
+    {
+      "leadId": "47640",
+      "repName": "Harvey Shoemaker",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "10221 Steamboat Landing Ln, Burke, VA",
+      "ts": "2026-06-02T23:53:15.229Z"
     }
   ]
 }
