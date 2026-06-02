@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-26",
+  "updated": "2026-06-02",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -3532,6 +3532,15 @@
       "date": "2026-05-26",
       "address": "6825 Spring Beauty Ct, Springfield, VA",
       "ts": "2026-06-02T19:02:49.949Z"
+    },
+    {
+      "leadId": "47308",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "20436 Watkins Meadow Dr, Germantown, MD",
+      "ts": "2026-06-02T19:03:58.593Z"
     }
   ]
 }
