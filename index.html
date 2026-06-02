@@ -611,16 +611,21 @@ function getCompWeek(){
   return COMP_WEEKS[COMP_WEEKS.length-1];
 }
 
-function getCompCAsForRep(repName, startDate, endDate){
-  if(!rows||!rows.length) return 0;
-  var start=new Date(startDate), end=new Date(endDate+' 23:59:59');
-  var srCnt=(srData&&srData.events||[]).filter(function(e){if(!e.repName||!e.date||!e.isCA)return false;var rn=e.repName.trim().replace(/\s+/g,' ');if(rn!==repName)return false;var d=new Date(e.date);return d>=start&&d<=end;}).length;return rows.filter(function(r){
-    if(!r.rep || !r.date) return false;
+function getCompCAsForRep(repName,startDate,endDate){
+  var start=new Date(startDate),end=new Date(endDate+' 23:59:59');
+  var leapCount=(rows||[]).filter(function(r){
+    if(!r.rep||!r.date)return false;
     var rn=r.rep.trim().replace(/\s+/g,' ');
-    if(rn!==repName) return false;
-    var d=new Date(r.date);
-    return d>=start && d<=end;
+    if(rn!==repName)return false;
+    var d=new Date(r.date);return d>=start&&d<=end;
   }).length;
+  var srCount=(srData&&srData.events||[]).filter(function(e){
+    if(!e.repName||!e.date||!e.isCA)return false;
+    var rn=e.repName.trim().replace(/\s+/g,' ');
+    if(rn!==repName)return false;
+    var d=new Date(e.date);return d>=start&&d<=end;
+  }).length;
+  return leapCount+srCount;
 }
 
 function renderComp(){
