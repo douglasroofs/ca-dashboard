@@ -278,7 +278,7 @@ function switchTab(tab,el){
   if(ct)ct.style.display=tab==='comp'?'':'none';
   document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
   if(el)el.classList.add('active');
-  if(tab==='ytd'&&typeof renderYTD==='function'){renderYTD();setTimeout(sortYTDReps,100);}
+  if(tab==='ytd')setTimeout(sortYTDReps,200);
   if(tab==='comp'&&typeof renderComp==='function')setTimeout(renderComp,50);
 }
 function closeModal(id){document.getElementById(id).classList.remove('open');}
