@@ -4630,6 +4630,15 @@
       "date": "2026-06-02",
       "address": "5318 Ridley Ct, Alexandria, VA",
       "ts": "2026-06-02T21:43:36.767Z"
+    },
+    {
+      "leadId": "47547",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "5312 Ridley Ct, Alexandria, VA",
+      "ts": "2026-06-02T21:49:11.450Z"
     }
   ]
 }
