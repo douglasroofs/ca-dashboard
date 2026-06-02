@@ -4477,6 +4477,15 @@
       "date": "2026-06-02",
       "address": "7026 Fieldhurst Ct, Alexandria, VA",
       "ts": "2026-06-02T20:43:03.391Z"
+    },
+    {
+      "leadId": "47511",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "23367 Kerrisdale Way, Sterling, VA",
+      "ts": "2026-06-02T20:45:02.700Z"
     }
   ]
 }
