@@ -3505,6 +3505,15 @@
       "date": "2026-06-02",
       "address": "20345 Watkins Meadow Dr, Germantown, MD",
       "ts": "2026-06-02T18:55:48.546Z"
+    },
+    {
+      "leadId": "47300",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "20349 Watkins Meadow Dr, Germantown, MD",
+      "ts": "2026-06-02T18:57:50.364Z"
     }
   ]
 }
