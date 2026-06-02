@@ -4045,6 +4045,15 @@
       "date": "2026-06-02",
       "address": "7035 Fieldhurst Ct, Alexandria, VA",
       "ts": "2026-06-02T20:13:29.659Z"
+    },
+    {
+      "leadId": "47410",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6980 Cromarty Drive, Alexandria, VA",
+      "ts": "2026-06-02T20:13:42.578Z"
     }
   ]
 }
