@@ -4468,6 +4468,15 @@
       "date": "2026-06-02",
       "address": "7033 Kings Manor Dr, Alexandria, VA",
       "ts": "2026-06-02T20:41:16.466Z"
+    },
+    {
+      "leadId": "47510",
+      "repName": "Michael McCarthy",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7026 Fieldhurst Ct, Alexandria, VA",
+      "ts": "2026-06-02T20:43:03.391Z"
     }
   ]
 }
