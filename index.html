@@ -28,7 +28,7 @@
     .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
     .card-title{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
 
-    /* ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ MTD REP CARD ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ */
+    /* ÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂ MTD REP CARD ÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂ */
     .rep-card{border-bottom:1px solid var(--border);padding:14px 0}.rep-card:last-child{border-bottom:none;padding-bottom:0}
     .rep-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .rep-name-btn{font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text)}
@@ -57,7 +57,7 @@
     .chip{display:inline-block;padding:2px 7px;border-radius:99px;font-size:.65rem;font-weight:700;text-transform:uppercase;flex-shrink:0}
     .ca{background:#d1fae5;color:#065f46}.cs{background:#fef3c7;color:#92400e}.cd{background:#f3f4f6;color:#374151}
 
-    /* ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ YTD REP CARD ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ */
+    /* ÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂ YTD REP CARD ÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂ */
     .ytd-rep{border-bottom:1px solid var(--border);padding:14px 0}.ytd-rep:last-child{border-bottom:none;padding-bottom:0}
     .ytd-row1{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
     .ytd-rep-name{font-size:.95rem;font-weight:800}
@@ -152,7 +152,7 @@
       </div>
       <div class="two-col">
         <div class="card">
-          <div class="card-title">Rep Performance ÃÂ¢ÃÂÃÂ tap name to see CAs</div>
+          <div class="card-title">Rep Performance ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ tap name to see CAs</div>
           <div id="repList"></div>
         </div>
         <div class="card"><div class="card-title">Pipeline by Status</div><canvas id="cht" height="240"></canvas></div>
@@ -179,7 +179,7 @@
         <div class="kcard k4"><div class="klbl">Total CAs YTD</div><div class="kval" id="kCTotYtd">-</div><div class="ksub">Year to date</div></div>
         <div class="kcard k4"><div class="klbl">CA Close Rate YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">- of - total</div></div>
       </div>
-      <div class="mcard"><div class="card-title">Monthly CAs Accepted ÃÂ¢ÃÂÃÂ <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
+      <div class="mcard"><div class="card-title">Monthly CAs Accepted ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
       <div class="card" style="margin-bottom:20px">
         <div class="card-title">Rep Annual Goal Tracker</div>
         <div id="ytdRepList"></div>
@@ -263,7 +263,7 @@ function changeMTDMonth(val){
         document.getElementById('kCSMtd').textContent=fmtD(cs);
         document.getElementById('kCSMtdJ').textContent=csJ+' contracts';
         document.getElementById('kAMtd').textContent=fmtD(ap);
-        document.getElementById('kAMtdJ').textContent=apJ+' jobs';
+        document.getElementById('kAMtdJ').textContent=apJ+' jobs';window._mtdRevReps=d.reps;addRevToCards();
       }
     }).catch(function(){
       document.getElementById('kCSMtd').textContent='N/A';
@@ -448,7 +448,7 @@ function toggleMoPanel(id,btn){var el=document.getElementById(id);if(!el)return;
 function toggleMoDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');}
 function syncNow(){var btn=event.target;btn.textContent='Syncing...';btn.disabled=true;fetch('/api/refresh').then(function(r){return r.json();}).then(function(d){if(d.success){btn.textContent='Sync Now';btn.disabled=false;reload();alert('Updated! '+d.ca_count+' CAs and revenue data refreshed.');}else{btn.textContent='Sync Now';btn.disabled=false;alert('Sync failed: '+(d.error||'unknown error'));}}).catch(function(e){btn.textContent='Sync Now';btn.disabled=false;alert('Sync error: '+e.message);});}
 
-// Ã¢ÂÂÃ¢ÂÂ Revenue on MTD rep cards Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ Revenue on MTD rep cards ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
 function addRevToCards(){
   var reps=window._mtdRevReps||(revData&&revData.reps)||[];
   if(!reps.length) return;
