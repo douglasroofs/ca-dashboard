@@ -3730,6 +3730,15 @@
       "date": "2026-06-02",
       "address": "23297 Meadowvale Glen Ct, Sterling, VA",
       "ts": "2026-06-02T19:50:46.397Z"
+    },
+    {
+      "leadId": "47337",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "43498 Freeport Pl, Sterling, VA",
+      "ts": "2026-06-02T19:52:50.675Z"
     }
   ]
 }
