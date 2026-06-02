@@ -1,6 +1,7 @@
 const GITHUB_REPO = 'douglasroofs/ca-dashboard';
 const CA_STATUSES = ['ICA','SGCA'];
 const SKIP_STATUSES = ['DNK'];
+const ADMIN_USERS = ['Kyle Higginbotham'];
 const SR_USER_MAP = {
   "6": "Steven Arevalo",
   "7": "Marc Mitchell",
