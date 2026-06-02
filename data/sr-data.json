@@ -4864,6 +4864,15 @@
       "date": "2026-06-02",
       "address": "9911 Natick Rd, Burke, VA",
       "ts": "2026-06-02T23:35:57.385Z"
+    },
+    {
+      "leadId": "47631",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6000 Natick Ct, Burke, VA",
+      "ts": "2026-06-02T23:36:33.747Z"
     }
   ]
 }
