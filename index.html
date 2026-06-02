@@ -245,7 +245,7 @@
 var GK='dr_goals',DEF_CA=8,DEF_REV=1000000;
 var goals=JSON.parse(localStorage.getItem(GK)||'{}');
 var rows=[],revData=null,af='all',sc='status',sd='asc',at='mtd',selectedMonth=null;
-var TEAM=['Robert Wilson','Kevin Mahan','Jack Obert','Andrew Funk','Andrew Prickel','George Bechara','Michael McCarthy','Christian Brown','David Kerns','Kelly Alston','Harvey Shoemaker','Marc Mitchell','Alfred Duncan','Isabelle Price','Nick Seward','Mike Mendez','Steven Arevalo'];
+var TEAM=['Robert Wilson','Kevin Mahan','Jack Obert','Andrew Funk','Andrew Prickel','George Bechara','Michael McCarthy','Christian Brown','David Kerns','Kelly Alston','Harvey Shoemaker','Marc Mitchell','Alfred Duncan','Isabelle Price','Nick Seward','Mike Mendez','Steven Arevalo','Aiden Glonek'];
 var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 window.onload=function(){
@@ -649,7 +649,7 @@ function renderComp(){
   var ACTIVE_REPS=['Robert Wilson','Kevin Mahan','Jack Obert','Andrew Funk','Andrew Prickel',
     'George Bechara','Michael McCarthy','Christian Brown','David Kerns','Kelly Alston',
     'Harvey Shoemaker','Marc Mitchell','Alfred Duncan','Isabelle Price','Nick Seward',
-    'Mike Mendez','Steven Arevalo'];
+    'Mike Mendez','Steven Arevalo','Aiden Glonek'];
   // Show all 4 completed competition weeks (use week 4 end as cutoff during bye)
   var showWeeks=COMP_WEEKS.slice(0,4);
   var repStats=ACTIVE_REPS.map(function(rep){
