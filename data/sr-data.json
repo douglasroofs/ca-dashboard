@@ -765,6 +765,806 @@
       "ts": "2026-06-02T15:33:53.265Z"
     },
     {
+      "leadId": "june-door-0",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-1",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-2",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-3",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-9",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-10",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-11",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-12",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-13",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-19",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-20",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-21",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-22",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-23",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-29",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-30",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-31",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-32",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-33",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-39",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-40",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-41",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-42",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-43",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-49",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-50",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-51",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-52",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-53",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-59",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-60",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-61",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-62",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-63",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-69",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-70",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-71",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-72",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-73",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-79",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-80",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-81",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-82",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-83",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-89",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-90",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-91",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-92",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-93",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-99",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-100",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-101",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-102",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-103",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-109",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-110",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-111",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-112",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-113",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-119",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-120",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-121",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-122",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-123",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-129",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-130",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-131",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-132",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-133",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-139",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-140",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-141",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-142",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-143",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-149",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-150",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-151",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-152",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-153",
+      "repName": "Andrew Funk",
+      "status": "No Answer",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-02T00:00:00Z"
+    },
+    {
+      "leadId": "june-door-159",
+      "repName": "Harvey Shoemaker",
+      "status": "Not Interrested",
+      "isCA": false,
+      "date": "2026-06-01",
+      "address": "",
+      "eventType": "historical_door_import",
+      "ts": "2026-06-01T00:00:00Z"
+    },
+    {
       "leadId": "33612",
       "repName": "George Bechara",
       "status": "INSPECTED",
@@ -781,1606 +1581,6 @@
       "date": "2026-06-02",
       "address": "11303 Seneca Cir, Great Falls, VA",
       "ts": "2026-06-02T15:40:53.127Z"
-    },
-    {
-      "leadId": "mtd-door-0",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-1",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-2",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-3",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-4",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-5",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-6",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-7",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-8",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-9",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-10",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-11",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-12",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-13",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-14",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-15",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-16",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-17",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-18",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-19",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-20",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-21",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-22",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-23",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-24",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-25",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-26",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-27",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-28",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-29",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-30",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-31",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-32",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-33",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-34",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-35",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-36",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-37",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-38",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-39",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-40",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-41",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-42",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-43",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-44",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-45",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-46",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-47",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-48",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-49",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-50",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-51",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-52",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-53",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-54",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-55",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-56",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-57",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-58",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-59",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-60",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-61",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-62",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-63",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-64",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-65",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-66",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-67",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-68",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-69",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-70",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-71",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-72",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-73",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-74",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-75",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-76",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-77",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-78",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-79",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-80",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-81",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-82",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-83",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-84",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-85",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-86",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-87",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-88",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-89",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-90",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-91",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-92",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-93",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-94",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-95",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-96",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-97",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-98",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-99",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-100",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-101",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-102",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-103",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-104",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-105",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-106",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-107",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-108",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-109",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-110",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-111",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-112",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-113",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-114",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-115",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-116",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-117",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-118",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-119",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-120",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-121",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-122",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-123",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-124",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-125",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-126",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-127",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-128",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-129",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-130",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-131",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-132",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-133",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-134",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-135",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-136",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-137",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-138",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-139",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-140",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-141",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-142",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-143",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-144",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-145",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-146",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-147",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-148",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-149",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-150",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-151",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-152",
-      "repName": "George Bechara",
-      "status": "Inspected",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-153",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-154",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-155",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-156",
-      "repName": "Andrew Funk",
-      "status": "No Answer",
-      "isCA": false,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-157",
-      "repName": "Kyle Higginbotham",
-      "status": "ICA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-158",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
-    },
-    {
-      "leadId": "mtd-door-159",
-      "repName": "Kyle Higginbotham",
-      "status": "SGCA",
-      "isCA": true,
-      "date": "2026-06-02",
-      "address": "",
-      "eventType": "mtd_door_import",
-      "ts": "2026-06-02T00:00:00Z"
     }
   ]
 }
