@@ -388,7 +388,7 @@ function renderYTD(){
   TEAM.forEach(function(name,i){
     var revRep=null;
     if(revData&&revData.reps){revData.reps.forEach(function(r){if(r.rep===name)revRep=r;});}
-    var csAmt=revRep?revRep.contract_ytd_amount:0;
+    var csAmt=revRep?revRep.contract_ytd_amount:0;var aYtdAmt=revRep?revRep.approved_ytd_amount:0;
     var revGoal=getRevGoal(name);
     var pct=Math.min(Math.round(csAmt/revGoal*100),100);
     var pacePct=Math.min(Math.round(yearPct*100),98);
@@ -401,6 +401,7 @@ function renderYTD(){
     html+='<div class="ytd-rev-label"><span class="ytd-rev-amt">'+fmtD(csAmt)+'<span style="font-size:.72rem;font-weight:400;color:var(--muted)"> / '+fmtD(revGoal)+'</span></span><span class="ytd-pace-lbl" style="color:'+(ok?'#059669':'#ef4444')+'">'+(ok?'On pace':'Behind pace')+'</span></div>';
     html+='<div class="ytd-bar-bg"><div class="ytd-pace-tick" style="left:'+pacePct+'%"></div><div class="ytd-bar-fill" style="width:'+pct+'%;background:'+(ok?col:'#ef4444')+'">'+(pct>12?'<span class="ytd-bar-pct">'+pct+'%</span>':'')+'</div></div>';
     html+='</div>';
+    if(aYtdAmt>0)html+='<div style="font-size:.72rem;color:var(--muted);margin-top:3px">Approved: <strong style="color:var(--text)">'+fmtD(aYtdAmt)+'</strong></div>';
     html+='<button class="mo-toggle-btn" onclick="toggleMoPanel(\'mp_'+eR(name)+'\',this)">&#9654; Monthly CAs</button>';
     html+='<div class="mo-panel" id="mp_'+eR(name)+'">';
     for(var mo2=0;mo2<=curMo;mo2++){
