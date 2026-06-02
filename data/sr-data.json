@@ -3327,6 +3327,15 @@
       "date": "2026-06-02",
       "address": "7901 Lobelia Ln, Springfield, VA",
       "ts": "2026-06-02T16:48:56.221Z"
+    },
+    {
+      "leadId": "47211",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6913 Trillium Ln, Springfield, VA",
+      "ts": "2026-06-02T16:49:07.666Z"
     }
   ]
 }
