@@ -588,7 +588,7 @@ var COMP_WEEKS = [
   {week:1,start:'2026-04-29',end:'2026-05-05',round:1,caTarget:2,doorsTarget:200},
   {week:2,start:'2026-05-06',end:'2026-05-12',round:1,caTarget:2,doorsTarget:200},
   {week:3,start:'2026-05-13',end:'2026-05-19',round:1,caTarget:2,doorsTarget:200},
-  {week:4,start:'2026-05-20',end:'2026-05-26',round:1,caTarget:2,doorsTarget:200},
+  {week:4,start:'2026-05-20',end:'2026-06-02',round:1,caTarget:2,doorsTarget:200},
   {week:5,start:'2026-06-03',end:'2026-06-09',round:2,caTarget:3,doorsTarget:200,revTarget:50000},
   {week:6,start:'2026-06-10',end:'2026-06-16',round:2,caTarget:3,doorsTarget:200,revTarget:75000},
   {week:7,start:'2026-06-17',end:'2026-06-23',round:2,caTarget:3,doorsTarget:200,revTarget:125000},
@@ -634,11 +634,11 @@ function getCompCAsForRep(repName,startDate,endDate){
 
 function renderComp(){
   var w=getCompWeek();
-  var displayWeek=w.byeLabel?'BYE WEEK':'Week '+w.week+' / 12';
+  var displayWeek='Week '+w.week+' / 12';
   document.getElementById('compWeekBadge').textContent=displayWeek;
-  document.getElementById('compRoundBadge').textContent=(w.byeLabel?'Rest week - no targets':ROUND_NAMES[w.round]);
-  document.getElementById('compWeekTarget').textContent=w.byeLabel?'BYE WEEK':w.caTarget+' CAs + 200 Doors';
-  document.getElementById('compWeekSub').textContent=w.byeLabel?'No weekly prize this week - use it to recover and prepare for Round 2':'Required this week for weekly prize eligibility';
+  document.getElementById('compRoundBadge').textContent=ROUND_NAMES[w.round];
+  document.getElementById('compWeekTarget').textContent=w.caTarget+' CAs + 200 Doors';
+  document.getElementById('compWeekSub').textContent='Required this week for weekly prize eligibility';
   document.getElementById('compAdvTarget').textContent=w.round===1?'8 CAs Total':(w.round===2?'1,100 Doors Total':'4 CAs/week');
   document.getElementById('compAdvSub').textContent=w.round===1?'8 min CAs + 500 doors by end of Week 4 to advance to Round 2':(w.round===2?'1,100 total doors by end of Week 8':'Stay on pace through Week 12!');
   if(w.revTarget){
