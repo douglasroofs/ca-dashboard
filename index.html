@@ -583,12 +583,12 @@ setTimeout(addRevToCards,1200);
 // ============================================================
 // 12-WEEK LADDER COMPETITION
 // ============================================================
-var COMP_START = new Date('2026-05-06');
+var COMP_START = new Date('2026-04-29');
 var COMP_WEEKS = [
-  {week:1,start:'2026-05-06',end:'2026-05-12',round:1,caTarget:2,doorsTarget:200},
-  {week:2,start:'2026-05-13',end:'2026-05-19',round:1,caTarget:2,doorsTarget:200},
-  {week:3,start:'2026-05-20',end:'2026-05-26',round:1,caTarget:2,doorsTarget:200},
-  {week:4,start:'2026-05-27',end:'2026-06-02',round:1,caTarget:2,doorsTarget:200},
+  {week:1,start:'2026-04-29',end:'2026-05-05',round:1,caTarget:2,doorsTarget:200},
+  {week:2,start:'2026-05-06',end:'2026-05-12',round:1,caTarget:2,doorsTarget:200},
+  {week:3,start:'2026-05-13',end:'2026-05-19',round:1,caTarget:2,doorsTarget:200},
+  {week:4,start:'2026-05-20',end:'2026-05-26',round:1,caTarget:2,doorsTarget:200},
   {week:5,start:'2026-06-03',end:'2026-06-09',round:2,caTarget:3,doorsTarget:200,revTarget:50000},
   {week:6,start:'2026-06-10',end:'2026-06-16',round:2,caTarget:3,doorsTarget:200,revTarget:75000},
   {week:7,start:'2026-06-17',end:'2026-06-23',round:2,caTarget:3,doorsTarget:200,revTarget:125000},
@@ -608,6 +608,9 @@ function getCompWeek(){
     var w=COMP_WEEKS[i];
     if(now>=new Date(w.start) && now<=new Date(w.end+' 23:59:59')) return w;
   }
+  // Handle bye week May 27 - Jun 2
+  var d=new Date(); var ds=d.toISOString().split('T')[0];
+  if(ds>='2026-05-27'&&ds<='2026-06-02') return {week:'BYE',round:1,caTarget:2,doorsTarget:200,start:'2026-05-27',end:'2026-06-02',isBye:true};
   return COMP_WEEKS[COMP_WEEKS.length-1];
 }
 
