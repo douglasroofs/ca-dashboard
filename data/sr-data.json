@@ -4675,6 +4675,15 @@
       "date": "2026-06-02",
       "address": "7024 Fieldhurst Court, Alexandria, VA",
       "ts": "2026-06-02T21:50:50.324Z"
+    },
+    {
+      "leadId": "47553",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7020 Fieldhurst Court, Alexandria, VA",
+      "ts": "2026-06-02T21:50:55.333Z"
     }
   ]
 }
