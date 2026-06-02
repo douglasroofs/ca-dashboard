@@ -3613,6 +3613,15 @@
       "date": "2026-06-02",
       "address": "6960 Birch St, Falls Church, VA",
       "ts": "2026-06-02T19:38:12.496Z"
+    },
+    {
+      "leadId": "47319",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "10740 Wayfarer Rd, Germantown, MD",
+      "ts": "2026-06-02T19:38:18.907Z"
     }
   ]
 }
