@@ -3199,6 +3199,15 @@
       "date": "2026-06-02",
       "address": "12698 Victory Lakes Loop, Bristow, VA",
       "ts": "2026-06-02T17:01:41.071Z"
+    },
+    {
+      "leadId": "47218",
+      "repName": "Andrew Funk",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7913 Lobelia Ln, Springfield, VA",
+      "ts": "2026-06-02T17:05:01.252Z"
     }
   ]
 }
