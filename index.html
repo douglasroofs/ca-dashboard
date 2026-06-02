@@ -28,7 +28,7 @@
     .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
     .card-title{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
 
-    /* ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ MTD REP CARD ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ */
+    /* ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ MTD REP CARD ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ */
     .rep-card{border-bottom:1px solid var(--border);padding:14px 0}.rep-card:last-child{border-bottom:none;padding-bottom:0}
     .rep-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .rep-name-btn{font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text)}
@@ -57,7 +57,7 @@
     .chip{display:inline-block;padding:2px 7px;border-radius:99px;font-size:.65rem;font-weight:700;text-transform:uppercase;flex-shrink:0}
     .ca{background:#d1fae5;color:#065f46}.cs{background:#fef3c7;color:#92400e}.cd{background:#f3f4f6;color:#374151}
 
-    /* ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ YTD REP CARD ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ */
+    /* ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ YTD REP CARD ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ */
     .ytd-rep{border-bottom:1px solid var(--border);padding:14px 0}.ytd-rep:last-child{border-bottom:none;padding-bottom:0}
     .ytd-row1{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
     .ytd-rep-name{font-size:.95rem;font-weight:800}
@@ -152,7 +152,7 @@
       </div>
       <div class="two-col">
         <div class="card">
-          <div class="card-title">Rep Performance ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ tap name to see CAs</div>
+          <div class="card-title">Rep Performance ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ tap name to see CAs</div>
           <div id="repList"></div>
         </div>
         <div class="card"><div class="card-title">Pipeline by Status</div><canvas id="cht" height="240"></canvas></div>
@@ -179,7 +179,7 @@
         <div class="kcard k4"><div class="klbl">Total CAs YTD</div><div class="kval" id="kCTotYtd">-</div><div class="ksub">Year to date</div></div>
         <div class="kcard k4"><div class="klbl">CA Close Rate YTD</div><div class="kval" id="kCAccYtd">-</div><div class="ksub" id="kCAccYtdR">- of - total</div></div>
       </div>
-      <div class="mcard"><div class="card-title">Monthly CAs Accepted ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
+      <div class="mcard"><div class="card-title">Monthly CAs Accepted ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ <span id="yrN">2026</span></div><canvas id="ytdChart" height="100"></canvas></div>
       <div class="card" style="margin-bottom:20px">
         <div class="card-title">Rep Annual Goal Tracker</div>
         <div id="ytdRepList"></div>
@@ -268,7 +268,7 @@ function changeMTDMonth(val){
         window._mtdRevReps=d.reps;
         addRevToCards();
       }
-    }).catch(function(){document.getElementById('kCSMtd').textContent='—';});
+    }).catch(function(){document.getElementById('kCSMtd').textContent='â';});
   }
 }
 function loadAll(){
@@ -315,11 +315,54 @@ function renderMTD(){
 
 var chartInst=null;
 function renderChart(mrows){
-  var c={Accepted:0,Sent:0,Draft:0};
-  mrows.forEach(function(r){var s=r.status.charAt(0).toUpperCase()+r.status.slice(1).toLowerCase();if(c[s]!==undefined)c[s]++;});
-  var ctx=document.getElementById('cht').getContext('2d');
-  if(chartInst)chartInst.destroy();
-  chartInst=new Chart(ctx,{type:'doughnut',data:{labels:['Accepted','Sent','Draft'],datasets:[{data:[c.Accepted,c.Sent,c.Draft],backgroundColor:['#059669','#d97706','#9ca3af'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{padding:14,font:{size:11}}}}}});
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var curMo=new Date().getMonth();
+  var approvedData=new Array(12).fill(null);
+  var contractData=new Array(12).fill(null);
+  var fetches=[];
+  for(var m=0;m<=curMo;m++){
+    (function(mo){
+      var moStr='2026-'+String(mo+1).padStart(2,'0');
+      fetches.push(
+        fetch('/api/revenue-history?month='+moStr)
+          .then(function(r){return r.json();})
+          .then(function(d){
+            if(d.success&&d.reps){
+              var ap=0,cs=0;
+              d.reps.forEach(function(r){ap+=r.approved_amount||0;cs+=r.contract_amount||0;});
+              approvedData[mo]=Math.round(ap);
+              contractData[mo]=Math.round(cs);
+            }
+          })
+      );
+    })(m);
+  }
+  Promise.all(fetches).then(function(){
+    var canvas=document.getElementById('ytdChart');
+    if(!canvas) return;
+    if(window.ytdChartInst) window.ytdChartInst.destroy();
+    window.ytdChartInst=new Chart(canvas.getContext('2d'),{
+      type:'bar',
+      data:{
+        labels:months,
+        datasets:[
+          {label:'Approved',data:approvedData,backgroundColor:'rgba(59,130,246,0.75)',borderColor:'rgb(37,99,235)',borderWidth:1,borderRadius:3},
+          {label:'Contract Signed',data:contractData,backgroundColor:'rgba(16,185,129,0.75)',borderColor:'rgb(5,150,105)',borderWidth:1,borderRadius:3}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{
+          legend:{position:'top',labels:{font:{size:13}}},
+          tooltip:{callbacks:{label:function(ctx){return ' '+ctx.dataset.label+': $'+Math.round(ctx.raw||0).toLocaleString();}}}
+        },
+        scales:{
+          y:{ticks:{callback:function(v){return '$'+Math.round(v/1000)+'k';}},beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'}},
+          x:{grid:{display:false}}
+        }
+      }
+    });
+  });
 }
 
 function renderRepList(mrows){
@@ -448,7 +491,7 @@ function toggleMoPanel(id,btn){var el=document.getElementById(id);if(!el)return;
 function toggleMoDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open');}
 function syncNow(){var btn=event.target;btn.textContent='Syncing...';btn.disabled=true;fetch('/api/refresh').then(function(r){return r.json();}).then(function(d){if(d.success){btn.textContent='Sync Now';btn.disabled=false;reload();alert('Updated! '+d.ca_count+' CAs and revenue data refreshed.');}else{btn.textContent='Sync Now';btn.disabled=false;alert('Sync failed: '+(d.error||'unknown error'));}}).catch(function(e){btn.textContent='Sync Now';btn.disabled=false;alert('Sync error: '+e.message);});}
 
-// ÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂ Revenue on MTD rep cards ÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂ
+// ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Revenue on MTD rep cards ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
 function addRevToCards(){
   var reps=window._mtdRevReps||(revData&&revData.reps)||[];
   if(!reps.length) return;
