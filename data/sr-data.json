@@ -3874,6 +3874,15 @@
       "date": "2026-06-02",
       "address": "5715 Clapham Rd, Alexandria, VA",
       "ts": "2026-06-02T20:09:00.513Z"
+    },
+    {
+      "leadId": "47347",
+      "repName": "Harvey Shoemaker",
+      "status": "APPT. SCHEDULED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7039 Kings Manor Dr, Alexandria, VA",
+      "ts": "2026-06-02T20:09:20.448Z"
     }
   ]
 }
