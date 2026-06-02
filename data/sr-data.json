@@ -28,6 +28,15 @@
       "date": "2026-06-02",
       "address": "456 Oak Ave, Herndon, VA",
       "ts": "2026-06-02T15:07:37.039Z"
+    },
+    {
+      "leadId": "47173",
+      "repName": "David Kerns",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "11105 Richland Valley Dr, Great Falls, VA",
+      "ts": "2026-06-02T15:08:40.273Z"
     }
   ],
   "raw_payloads": [
