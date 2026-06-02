@@ -4270,6 +4270,15 @@
       "date": "2026-06-02",
       "address": "6974 Cromarty Drive, Alexandria, VA",
       "ts": "2026-06-02T20:26:40.777Z"
+    },
+    {
+      "leadId": "47468",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6974 Cromarty Drive, Alexandria, VA",
+      "ts": "2026-06-02T20:26:44.091Z"
     }
   ]
 }
