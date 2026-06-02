@@ -3901,6 +3901,15 @@
       "date": "2026-06-02",
       "address": "7041 Kings Manor Dr, Alexandria, VA",
       "ts": "2026-06-02T20:09:57.661Z"
+    },
+    {
+      "leadId": "47372",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6960 Banchory Court, Alexandria, VA",
+      "ts": "2026-06-02T20:10:15.303Z"
     }
   ]
 }
