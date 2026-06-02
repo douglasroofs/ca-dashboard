@@ -4828,6 +4828,15 @@
       "date": "2026-06-02",
       "address": "9829 Wolcott Dr, Burke, VA",
       "ts": "2026-06-02T23:12:23.120Z"
+    },
+    {
+      "leadId": "47620",
+      "repName": "Harvey Shoemaker",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6013 Wilmington Dr, Burke, VA",
+      "ts": "2026-06-02T23:22:34.361Z"
     }
   ]
 }
