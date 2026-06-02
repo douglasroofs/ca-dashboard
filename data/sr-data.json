@@ -4189,6 +4189,15 @@
       "date": "2026-06-02",
       "address": "7053 Kings Manor Dr, Alexandria, VA",
       "ts": "2026-06-02T20:24:10.457Z"
+    },
+    {
+      "leadId": "47445",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "6965 Cromarty Drive, Alexandria, VA",
+      "ts": "2026-06-02T20:24:59.748Z"
     }
   ]
 }
