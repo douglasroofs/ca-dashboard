@@ -3595,6 +3595,15 @@
       "date": "2026-06-02",
       "address": "20329 Sandsfield Terr, Germantown, MD",
       "ts": "2026-06-02T19:27:33.547Z"
+    },
+    {
+      "leadId": "47315",
+      "repName": "Isabelle Price",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "20309 Sandsfield Terr, Germantown, MD",
+      "ts": "2026-06-02T19:29:34.583Z"
     }
   ]
 }
