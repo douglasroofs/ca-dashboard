@@ -3244,6 +3244,15 @@
       "date": "2026-06-02",
       "address": "6312 Miller Dr, Alexandria, VA",
       "ts": "2026-06-02T17:31:08.527Z"
+    },
+    {
+      "leadId": "47230",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7904 Lobelia Ln, Springfield, VA",
+      "ts": "2026-06-02T17:32:09.172Z"
     }
   ]
 }
