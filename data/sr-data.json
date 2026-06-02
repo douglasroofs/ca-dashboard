@@ -1,0 +1,15 @@
+{
+  "updated": "2026-06-02",
+  "events": [
+    {
+      "leadId": "test-123",
+      "repName": "Andrew Funk",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-02",
+      "address": "123 Test St",
+      "eventType": "Lead Status Update",
+      "ts": "2026-06-02T14:58:08.695Z"
+    }
+  ]
+}
