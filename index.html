@@ -272,10 +272,10 @@ window.onload=function(){
 };
 
 function switchTab(tab,el){
-  document.getElementById('mtdTab').style.display=tab==='mtd'?'':'none';
-  document.getElementById('ytdTab').style.display=tab==='ytd'?'':'none';
+  document.getElementById('mtdTab').style.display=tab==='mtd'?'block':'none';
+  document.getElementById('ytdTab').style.display=tab==='ytd'?'block':'none';
   var ct=document.getElementById('compTab');
-  if(ct)ct.style.display=tab==='comp'?'':'none';
+  if(ct)ct.style.display=tab==='comp'?'block':'none';
   document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
   if(el)el.classList.add('active');
   if(tab==='ytd')setTimeout(sortYTDReps,200);
