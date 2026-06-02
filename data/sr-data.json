@@ -2,7 +2,7 @@
   "updated": "2026-06-02",
   "events": [
     {
-      "leadId": "",
+      "leadId": "hist-0",
       "repName": "Andrew Funk",
       "status": "SGCA",
       "isCA": true,
@@ -12,7 +12,7 @@
       "ts": "2026-05-29T00:00:00Z"
     },
     {
-      "leadId": "",
+      "leadId": "hist-1",
       "repName": "Michael McCarthy",
       "status": "SGCA",
       "isCA": true,
@@ -22,7 +22,7 @@
       "ts": "2026-05-28T00:00:00Z"
     },
     {
-      "leadId": "",
+      "leadId": "hist-2",
       "repName": "Andrew Funk",
       "status": "SGCA",
       "isCA": true,
@@ -32,7 +32,7 @@
       "ts": "2026-05-28T00:00:00Z"
     },
     {
-      "leadId": "",
+      "leadId": "hist-3",
       "repName": "Michael McCarthy",
       "status": "ICA",
       "isCA": true,
@@ -42,7 +42,7 @@
       "ts": "2026-05-28T00:00:00Z"
     },
     {
-      "leadId": "",
+      "leadId": "hist-4",
       "repName": "Marc Mitchell",
       "status": "ICA",
       "isCA": true,
@@ -52,7 +52,7 @@
       "ts": "2026-05-26T00:00:00Z"
     },
     {
-      "leadId": "",
+      "leadId": "hist-5",
       "repName": "Andrew Funk",
       "status": "SGCA",
       "isCA": true,
@@ -62,7 +62,7 @@
       "ts": "2026-05-26T00:00:00Z"
     },
     {
-      "leadId": "",
+      "leadId": "hist-6",
       "repName": "Harvey Shoemaker",
       "status": "SGCA",
       "isCA": true,
@@ -72,7 +72,17 @@
       "ts": "2026-05-26T00:00:00Z"
     },
     {
-      "leadId": "",
+      "leadId": "hist-7",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-8",
       "repName": "Andrew Prickel",
       "status": "ICA",
       "isCA": true,
@@ -82,7 +92,607 @@
       "ts": "2026-05-26T00:00:00Z"
     },
     {
-      "leadId": "",
+      "leadId": "hist-9",
+      "repName": "Harvey Shoemaker",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-10",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-29",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-29T00:00:00Z"
+    },
+    {
+      "leadId": "hist-11",
+      "repName": "Michael McCarthy",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-12",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-13",
+      "repName": "Michael McCarthy",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-14",
+      "repName": "Marc Mitchell",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-15",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-16",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-17",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-18",
+      "repName": "Andrew Prickel",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-19",
+      "repName": "Harvey Shoemaker",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-20",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-29",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-29T00:00:00Z"
+    },
+    {
+      "leadId": "hist-21",
+      "repName": "Michael McCarthy",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-22",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-23",
+      "repName": "Michael McCarthy",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-24",
+      "repName": "Marc Mitchell",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-25",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-26",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-27",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-28",
+      "repName": "Andrew Prickel",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-29",
+      "repName": "Harvey Shoemaker",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-30",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-29",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-29T00:00:00Z"
+    },
+    {
+      "leadId": "hist-31",
+      "repName": "Michael McCarthy",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-32",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-33",
+      "repName": "Michael McCarthy",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-34",
+      "repName": "Marc Mitchell",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-35",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-36",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-37",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-38",
+      "repName": "Andrew Prickel",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-39",
+      "repName": "Harvey Shoemaker",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-40",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-29",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-29T00:00:00Z"
+    },
+    {
+      "leadId": "hist-41",
+      "repName": "Michael McCarthy",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-42",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-43",
+      "repName": "Michael McCarthy",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-44",
+      "repName": "Marc Mitchell",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-45",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-46",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-47",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-48",
+      "repName": "Andrew Prickel",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-49",
+      "repName": "Harvey Shoemaker",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-50",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-29",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-29T00:00:00Z"
+    },
+    {
+      "leadId": "hist-51",
+      "repName": "Michael McCarthy",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-52",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-53",
+      "repName": "Michael McCarthy",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-54",
+      "repName": "Marc Mitchell",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-55",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-56",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-57",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-58",
+      "repName": "Andrew Prickel",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-59",
+      "repName": "Harvey Shoemaker",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-60",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-29",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-29T00:00:00Z"
+    },
+    {
+      "leadId": "hist-61",
+      "repName": "Michael McCarthy",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-62",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-63",
+      "repName": "Michael McCarthy",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-28",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-28T00:00:00Z"
+    },
+    {
+      "leadId": "hist-64",
+      "repName": "Marc Mitchell",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-65",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-66",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-67",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-68",
+      "repName": "Andrew Prickel",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-05-26",
+      "address": "",
+      "eventType": "historical_import",
+      "ts": "2026-05-26T00:00:00Z"
+    },
+    {
+      "leadId": "hist-69",
       "repName": "Harvey Shoemaker",
       "status": "ICA",
       "isCA": true,
