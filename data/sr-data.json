@@ -3541,6 +3541,15 @@
       "date": "2026-06-02",
       "address": "20436 Watkins Meadow Dr, Germantown, MD",
       "ts": "2026-06-02T19:03:58.593Z"
+    },
+    {
+      "leadId": "47310",
+      "repName": "Kevin Mahan",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "9553 Basilwood Dr, Manassas, VA",
+      "ts": "2026-06-02T19:05:51.232Z"
     }
   ]
 }
