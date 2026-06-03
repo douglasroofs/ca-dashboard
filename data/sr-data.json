@@ -2918,6 +2918,15 @@
       "date": "2026-06-03",
       "address": "220 N Wakefield St, Arlington, VA",
       "ts": "2026-06-03T18:11:29.759Z"
+    },
+    {
+      "leadId": "47689",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "208 N Wakefield St, Arlington, VA",
+      "ts": "2026-06-03T18:12:54.014Z"
     }
   ]
 }
