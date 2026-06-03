@@ -1,0 +1,46 @@
+{
+  "updated": "2026-06-02",
+  "weeks": {
+    "1": {
+      "Andrew Funk": 2,
+      "Andrew Prickel": 0,
+      "George Bechara": 2,
+      "Harvey Shoemaker": 2,
+      "Jack Obert": 2,
+      "Michael McCarthy": 2,
+      "Isabelle Price": 2,
+      "Christian Brown": 2,
+      "David Kerns": 2,
+      "Robert Wilson": 0,
+      "Aiden Glonek": 0,
+      "Kevin Mahan": 0,
+      "Marc Mitchell": 0,
+      "Alfred Duncan": 0,
+      "Nick Seward": 0,
+      "Kelly Alston": 0,
+      "Mike Mendez": 0,
+      "Steven Arevalo": 0
+    },
+    "2": {
+      "Andrew Funk": 5,
+      "Andrew Prickel": 3,
+      "David Kerns": 2,
+      "Michael McCarthy": 2,
+      "Isabelle Price": 2,
+      "Christian Brown": 2,
+      "Jack Obert": 2,
+      "George Bechara": 2,
+      "Robert Wilson": 1,
+      "Harvey Shoemaker": 1,
+      "Kevin Mahan": 1,
+      "Alfred Duncan": 0,
+      "Aiden Glonek": 0,
+      "Marc Mitchell": 0,
+      "Nick Seward": 0,
+      "Kelly Alston": 0,
+      "Mike Mendez": 0,
+      "Steven Arevalo": 0
+    }
+  },
+  "note": "Weeks 1-2 manually entered from official leaderboard. Week 3-4 from SR export. Week 5+ from webhook."
+}
