@@ -3017,6 +3017,15 @@
       "date": "2026-06-03",
       "address": "231 N Wakefield St, Arlington, VA",
       "ts": "2026-06-03T18:48:33.596Z"
+    },
+    {
+      "leadId": "47709",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "4609 Second Rd N, Arlington, VA",
+      "ts": "2026-06-03T18:50:44.158Z"
     }
   ]
 }
