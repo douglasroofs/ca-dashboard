@@ -717,7 +717,7 @@ var srData = { events: [] };
 (function loadSRData(){
   fetch('/api/sr-data')
     .then(function(r){return r.json();})
-    .then(function(d){ srData = d; addDoorsToRepCards(); })
+    .then(function(d){ srData=d; setTimeout(addDoorsToRepCards,300); setTimeout(addDoorsToRepCards,1500); })
     .catch(function(){});
 })();
 
