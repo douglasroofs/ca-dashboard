@@ -2990,6 +2990,15 @@
       "date": "2026-06-03",
       "address": "4002 Latham Dr, Haymarket, VA",
       "ts": "2026-06-03T18:37:31.780Z"
+    },
+    {
+      "leadId": "47704",
+      "repName": "Andrew Funk",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "227 N Wakefield St, Arlington, VA",
+      "ts": "2026-06-03T18:37:38.555Z"
     }
   ]
 }
