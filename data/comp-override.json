@@ -1,3 +1,23 @@
 {
-  "weeks": {}
+  "weeks": {
+    "1": {
+      "Robert Wilson": 0,
+      "Kevin Mahan": 1,
+      "Jack Obert": 2,
+      "Andrew Funk": 2,
+      "Andrew Prickel": 3,
+      "George Bechara": 2,
+      "Michael McCarthy": 2,
+      "Christian Brown": 2,
+      "David Kerns": 2,
+      "Kelly Alston": 0,
+      "Harvey Shoemaker": 2,
+      "Marc Mitchell": 0,
+      "Isabelle Price": 2,
+      "Aiden Glonek": 0
+    },
+    "2": {},
+    "3": {},
+    "4": {}
+  }
 }
