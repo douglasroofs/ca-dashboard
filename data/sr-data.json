@@ -2963,6 +2963,15 @@
       "date": "2026-06-03",
       "address": "215 N Wakefield St, Arlington, VA",
       "ts": "2026-06-03T18:16:08.677Z"
+    },
+    {
+      "leadId": "47697",
+      "repName": "Harvey Shoemaker",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "230 N Wakefield St, Arlington, VA",
+      "ts": "2026-06-03T18:24:32.551Z"
     }
   ]
 }
