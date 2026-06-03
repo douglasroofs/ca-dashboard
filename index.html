@@ -238,7 +238,7 @@
       <div style="padding:14px 18px 8px;font-size:13px;font-weight:700;color:#374151;border-bottom:1px solid #e5e7eb">
         Rep Standings
       </div>
-      <div style="display:flex;justify-content:flex-end;padding:8px 18px 4px"><button onclick="editCAScores()" style="font-size:12px;padding:4px 14px;border:1px solid #2563eb;border-radius:6px;background:#2563eb;cursor:pointer;color:#fff;font-weight:700">&#9998; Edit CA Scores</button></div><div id="compRepList" style="padding:8px 0"></div>
+      <div style="display:flex;justify-content:flex-end;padding:8px 18px 4px"><button onclick="editCAScores()" style="font-size:12px;padding:4px 14px;border:1px solid #2563eb;border-radius:6px;background:#2563eb;cursor:pointer;color:#fff;font-weight:700">&#9998; Edit CA Scores</button><button onclick="editDoors()" style="font-size:12px;padding:4px 14px;border:1px solid #7c3aed;border-radius:6px;background:#7c3aed;cursor:pointer;color:#fff;font-weight:700;margin-left:6px">&#9998; Edit Doors</button></div><div id="compRepList" style="padding:8px 0"></div>
     </div>
   </div></main>
 <script>
@@ -797,7 +797,7 @@ window.renderComp=function(){
   if(!sw.length)sw=COMP_WEEKS.slice(0,4);
   var dm={},rm={};
   COMP_REPS.forEach(function(r){dm[r]=0;rm[r]=0;});
-  (srData&&srData.events||[]).forEach(function(e){if(!e.isCA&&e.date>='2026-04-29'&&dm[e.repName]!==undefined)dm[e.repName]++;});
+  (srData&&srData.events||[]).forEach(function(e){if(!e.isCA&&e.date>='2026-04-29'&&dm[e.repName]!==undefined)dm[e.repName]++;});if(window._compOv&&window._compOv.doors){Object.keys(window._compOv.doors).forEach(function(rep){if(dm[rep]!==undefined)dm[rep]=window._compOv.doors[rep];});}
   var now=new Date(),months=[],d=new Date('2026-05-01');
   while(d<=now){months.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'));d.setMonth(d.getMonth()+1);}
   Promise.all(months.map(function(mo){return fetch('/api/revenue-history?month='+mo).then(function(r){return r.json();}).then(function(data){if(data.success&&data.reps){data.reps.forEach(function(r){var rn=(r.rep||'').trim().replace(/s+/g,' ');if(rm[rn]!==undefined)rm[rn]+=(r.approved_amount||0);});}}).catch(function(){});})).then(function(){window._drawComp(sw,w,rm,dm);});
@@ -878,6 +878,35 @@ window.editCAScores=function(){
       .then(function(r){return r.json();})
       .then(function(d){if(d.success){m.remove();window.renderComp&&window.renderComp();}else{alert('Save failed: '+d.error);btn.textContent='Save Scores';btn.disabled=false;}})
       .catch(function(e){alert('Error: '+e.message);btn.textContent='Save Scores';btn.disabled=false;});
+  };
+};
+
+window.editDoors=function(){
+  var ov=window._compOv||{doors:{}};
+  var reps=["Robert Wilson","Kevin Mahan","Jack Obert","Andrew Funk","Andrew Prickel","George Bechara","Michael McCarthy","Christian Brown","David Kerns","Kelly Alston","Harvey Shoemaker","Marc Mitchell","Isabelle Price","Aiden Glonek"];
+  var m=document.createElement('div');
+  m.id='drs-modal';
+  m.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
+  var rows='';
+  reps.forEach(function(rep,ri){
+    var bg=ri%2===0?'#f9fafb':'#fff';
+    var v=(ov.doors&&ov.doors[rep]!==undefined)?ov.doors[rep]:'';
+    rows+='<tr style="background:'+bg+'"><td style="padding:8px 12px;font-weight:600;border-bottom:1px solid #e5e7eb;font-size:13px">'+rep+'</td><td style="border-bottom:1px solid #e5e7eb;padding:4px 8px;text-align:center"><input type="number" min="0" id="drs_'+ri+'" value="'+v+'" style="width:70px;text-align:center;padding:6px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;font-weight:700;color:#7c3aed"></td></tr>';
+  });
+  m.innerHTML='<div style="background:#fff;border-radius:12px;width:380px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)"><div style="padding:16px 20px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0;font-size:16px;font-weight:800;color:#7c3aed">Edit Door Counts</h3><button id="drsX" style="border:none;background:none;cursor:pointer;color:#6b7280;font-size:18px">&#10005;</button></div><div style="padding:12px 16px"><p style="margin:0 0 10px;font-size:12px;color:#6b7280">Enter total competition doors knocked per rep. Leave blank to use SR webhook data.</p><table style="width:100%;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:8px 12px;background:#7c3aed;color:#fff;font-size:13px">Rep</th><th style="text-align:center;padding:8px 12px;background:#7c3aed;color:#fff;min-width:80px;font-size:13px">Doors</th></tr></thead><tbody>'+rows+'</tbody></table></div><div style="padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end"><button id="drsCl" style="padding:7px 12px;border:1px solid #ef4444;color:#ef4444;background:#fff;border-radius:6px;cursor:pointer">Clear All</button><button id="drsCa" style="padding:7px 12px;border:1px solid #d1d5db;border-radius:6px;cursor:pointer">Cancel</button><button id="drsSv" style="padding:7px 16px;background:#7c3aed;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700">Save Doors</button></div></div>';
+  document.body.appendChild(m);
+  document.getElementById('drsX').onclick=document.getElementById('drsCa').onclick=function(){m.remove();};
+  document.getElementById('drsCl').onclick=function(){reps.forEach(function(rep,ri){var el=document.getElementById('drs_'+ri);if(el)el.value='';});};
+  document.getElementById('drsSv').onclick=function(){
+    var btn=document.getElementById('drsSv');btn.textContent='Saving...';btn.disabled=true;
+    var nOv=Object.assign({},window._compOv||{});
+    nOv.doors={};
+    reps.forEach(function(rep,ri){var el=document.getElementById('drs_'+ri);var v=el&&el.value.trim();if(v!=='')nOv.doors[rep]=parseInt(v)||0;});
+    window._compOv=nOv;
+    fetch('/api/save-override',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(nOv)})
+      .then(function(r){return r.json();})
+      .then(function(d){if(d.success){m.remove();window.renderComp&&window.renderComp();}else{alert('Save failed: '+d.error);btn.textContent='Save Doors';btn.disabled=false;}})
+      .catch(function(e){alert('Error: '+e.message);btn.textContent='Save Doors';btn.disabled=false;});
   };
 };
 </script>
