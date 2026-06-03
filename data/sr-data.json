@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-03",
+  "updated": "2026-06-02",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -2846,6 +2846,15 @@
       "date": "2026-06-03",
       "address": "4860 Sideburn Rd, Fairfax, VA",
       "ts": "2026-06-03T01:44:45.862Z"
+    },
+    {
+      "leadId": "47659",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "1435 Trap Rd, Vienna, VA",
+      "ts": "2026-06-03T16:33:51.235Z"
     }
   ]
 }
