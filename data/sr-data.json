@@ -3764,6 +3764,15 @@
       "date": "2026-06-03",
       "address": "",
       "ts": "2026-06-03T22:20:21.476Z"
+    },
+    {
+      "leadId": "47825",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9302 Brandon St, Manassas Park, VA",
+      "ts": "2026-06-03T22:25:24.252Z"
     }
   ]
 }
