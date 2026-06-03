@@ -2900,6 +2900,15 @@
       "date": "2026-06-03",
       "address": "1723 East Ave, McLean, VA",
       "ts": "2026-06-03T17:38:26.037Z"
+    },
+    {
+      "leadId": "47678",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "6310 Old Chesterbrook Rd, McLean, VA",
+      "ts": "2026-06-03T17:42:32.305Z"
     }
   ]
 }
