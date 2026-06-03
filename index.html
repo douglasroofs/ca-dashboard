@@ -1,13 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Douglas Roofing | CA Dashboard</title>
-  </script>
-  <style>
-    :root{--brand:#1a3a6b;--brand-dark:#122a50;--success:#057a55;--bg:#f3f4f6;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.08)}
+function _renderCompTable(showWeeks,COMP_REPS,w,revMap,doorMap){
+  doorMap=doorMap||{};
+  var repStats=COMP_REPS.map(function(rep){
+    var weeklyCA=showWeeks.map(function(cw){return getCompCAsForRep(rep,cw.start,cw.end);});
+    var totalCAs=weeklyCA.reduce(function(a,b){return a+b;},0);
+    var advCAs=8;
+    var status=totalCAs>=advCAs?'qualified':(weeklyCA[weeklyCA.length-1]>=(w.caTarget||2)?'onpace':(weeklyCA[weeklyCA.length-1]>=1?'atrisk':'behind'));
+    return {rep:rep,weeklyCA:weeklyCA,totalCAs:totalCAs,advCAs:advCAs,status:status,rev:revMap[rep]||0,doors:doorMap[rep]||0};
+  });
+  repStats.sort(function(a,b){return b.totalCAs-a.totalCAs||b.rev-a.rev;});
+
+  var weekHeaders=showWeeks.map(function(cw){return 'Wk '+cw.week;});
+  var tbl='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">';
+  tbl+='<thead><tr style="background:#f8fafc">';
+  tbl+='<th style="text-align:left;padding:8px 14px;font-weight:700;color:#374151;border-bottom:2px solid #e5e7eb;min-width:130px">Rep</th>';
+  weekHeaders.forEach(function(wh){
+    tbl+='<th style="text-align:center;padding:8px 8px;font-weight:700;color:#6b7280;border-bottom:2px solid #e5e7eb;min-width:45px">'+wh+'</th>';
+  });
+  tbl+='<th style="text-align:center;padding:8px 8px;font-weight:800;color:#1e3a5f;border-bottom:2px solid #e5e7eb;min-width:50px">CAs</th>';
+  tbl+='<th style="text-align:center;padding:8px 8px;font-weight:700;color:#7c3aed;border-bottom:2px solid #e5e7eb;min-width:55px">Doors</th>';
+  tbl+='<th style="text-align:right;padding:8px 8px;font-weight:700;color:#059669;border-bottom:2px solid #e5e7eb;min-width:90px">Appr Rev</th>';
+  tbl+='<th style="text-align:center;padding:8px 8px;font-weight:700;color:#374151;border-bottom:2px solid #e5e7eb;min-width:80px">Status</th>';
+  tbl+='</tr></thead><tbody>';
+
+  repStats.forEach(function(s,idx){
+    var rowBg=idx%2===0?'#fff':'#f9fafb';
+    var badgeCls='comp-badge badge-'+s.status;
+    var badgeTxt=s.status==='qualified'?'Qualified':s.status==='onpace'?'On Pace':s.status==='atrisk'?'At Risk':'Behind';
+    tbl+='<tr style="background:'+rowBg+'">';
+    tbl+='<td style="padding:9px 14px;font-weight:700;color:#111827;border-bottom:1px solid #f3f4f6">'+(idx+1)+'. '+s.rep+'</td>';
+    s.weeklyCA.forEach(function(ca,wi){
+      var tgt=showWeeks[wi].caTarget||2;
+      var met=ca>=tgt;
+      tbl+='<td style="text-align:center;padding:9px 8px;font-weight:600;color:'+(met?'#15803d':'#374151')+';background:'+(met?'#dcfce7':'transparent')+';border-bottom:1px solid #f3f4f6">'+ca+'</td>';
+    });
+    tbl+='<td style="text-align:center;padding:9px 8px;font-weight:800;color:'+(s.totalCAs>=s.advCAs?'#15803d':'#1e3a5f')+';border-bottom:1px solid #f3f4f6">'+s.totalCAs+'/'+s.advCAs+'</td>';
+    tbl+='<td style="text-align:center;padding:9px 8px;font-weight:700;color:#7c3aed;border-bottom:1px solid #f3f4f6">'+(s.doors||'-')+'</td>';
+    tbl+='<td style="text-align:right;padding:9px 8px;font-weight:700;color:#059669;border-bottom:1px solid #f3f4f6">'+(s.rev>0?'$'+Math.round(s.rev).toLocaleString():'-')+'</td>';
+    tbl+='<td style="text-align:center;padding:9px 8px;border-bottom:1px solid #f3f4f6"><span class="'+badgeCls+'">'+badgeTxt+'</span></td>';
+    tbl+='</tr>';
+  });
+  tbl+='</tbody></table></div>';
+  document.getElementById('compRepList').innerHTML=tbl;
+}
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
     header{background:var(--brand-dark);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
@@ -515,7 +549,7 @@ function renderYTD(){
     html+='<div class="ytd-rep">';
     html+='<div class="ytd-row1"><span class="ytd-rep-name">'+name+'</span><span class="ytd-ca-count">'+totalAcc+' Doors YTD</span></div>';
     html+='<div class="ytd-rev-bar-row">';
-    html+='<div class="ytd-rev-label"><span class="ytd-rev-amt">'+fmtD(csAmt)+'<span style="font-size:.72rem;font-weight:400;color:var(--muted)"> / '+fmtD(revGoal)+'</span></span><span class="ytd-pace-lbl" style="color:'+(ok?'#059669':'#ef4444')+'">'+(ok?'On pace':'')+'</span></div>';
+    html+='<div class="ytd-rev-label"><span class="ytd-rev-amt">'+fmtD(csAmt)+'<span style="font-size:.72rem;font-weight:400;color:var(--muted)"> / '+fmtD(revGoal)+'</span></span><span class="ytd-pace-lbl" style="color:'+(ok?'#059669':'#ef4444')+'">'+''+'</span></div>';
     html+='<div class="ytd-bar-bg"><div class="ytd-pace-tick" style="left:'+pacePct+'%"></div><div class="ytd-bar-fill" style="width:'+pct+'%;background:'+(ok?col:'#ef4444')+'">'+(pct>12?'<span class="ytd-bar-pct">'+pct+'%</span>':'')+'</div></div>';
     html+='</div>';
     if(aYtdAmt>0)html+='<div style="font-size:.72rem;color:var(--muted);margin-top:3px">Approved: <strong style="color:var(--text)">'+fmtD(aYtdAmt)+'</strong></div>';
@@ -632,7 +666,7 @@ function getCompCAsForRep(repName,startDate,endDate){
   return leapCount+srCount;
 }
 
-function renderComp(){
+function renderfunction renderComp(){
   var w=getCompWeek();
   document.getElementById('compWeekBadge').textContent='Week '+w.week+' / 12';
   document.getElementById('compRoundBadge').textContent=ROUND_NAMES[w.round];
@@ -641,49 +675,38 @@ function renderComp(){
   document.getElementById('compAdvTarget').textContent=w.round===1?'8 CAs Total':(w.round===2?'1,100 Doors Total':'4 CAs/week');
   document.getElementById('compAdvSub').textContent=w.round===1?'8 min CAs + 500 doors by end of Week 4 to advance':(w.round===2?'1,100 total doors by end of Week 8':'Stay on pace through Week 12!');
 
-  var ACTIVE_REPS=['Robert Wilson','Kevin Mahan','Jack Obert','Andrew Funk','Andrew Prickel',
-    'George Bechara','Michael McCarthy','Christian Brown','David Kerns','Kelly Alston',
-    'Harvey Shoemaker','Marc Mitchell','Alfred Duncan','Isabelle Price','Nick Seward',
-    'Mike Mendez','Steven Arevalo','Aiden Glonek'];
-
-  // Show all completed competition weeks
+  var COMP_REPS=["Robert Wilson","Kevin Mahan","Jack Obert","Andrew Funk","Andrew Prickel","George Bechara","Michael McCarthy","Christian Brown","David Kerns","Kelly Alston","Harvey Shoemaker","Marc Mitchell","Isabelle Price","Aiden Glonek"];
   var showWeeks=COMP_WEEKS.filter(function(cw){return cw.week<=w.week;});
   if(showWeeks.length===0) showWeeks=COMP_WEEKS.slice(0,4);
 
-  // Fetch competition period revenue (Apr 29 onwards) from revenue-history for each month
-  var now=new Date();
-  var compStart='2026-04-29';
-  var monthsToFetch=[];
-  var d=new Date(compStart);
-  while(d<=now){
-    monthsToFetch.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'));
-    d.setMonth(d.getMonth()+1);
-  }
-
-  // Fetch all months in parallel
-  var revMap={};
-  ACTIVE_REPS.forEach(function(rep){ revMap[rep]=0; });
-
-  Promise.all(monthsToFetch.map(function(mo){
-    return fetch('/api/revenue-history?month='+mo)
-      .then(function(r){return r.json();})
-      .then(function(d){
-        if(d.success&&d.reps){
-          d.reps.forEach(function(r){
-            var rn=(r.rep||'').trim().replace(/\s+/g,' ');
-            if(revMap[rn]!==undefined) revMap[rn]+=(r.approved_amount||0);
-          });
-        }
-      }).catch(function(){});
-  })).then(function(){
-    _renderCompTable(showWeeks, ACTIVE_REPS, w, revMap);
+  // SR doors since competition start (Apr 29)
+  var doorMap={};
+  COMP_REPS.forEach(function(rep){ doorMap[rep]=0; });
+  (srData&&srData.events||[]).forEach(function(e){
+    if(!e.isCA&&e.date>='2026-04-29'&&doorMap[e.repName]!==undefined)
+      doorMap[e.repName]++;
   });
 
-  // Render immediately with whatever we have, refresh when revenue loads
-  _renderCompTable(showWeeks, ACTIVE_REPS, w, revMap);
-}
+  // Revenue from competition start
+  var revMap={};
+  COMP_REPS.forEach(function(rep){ revMap[rep]=0; });
+  var now=new Date();
+  var monthsToFetch=[];
+  var d=new Date('2026-05-01');
+  while(d<=now){ monthsToFetch.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')); d.setMonth(d.getMonth()+1); }
 
-function _renderCompTable(showWeeks, ACTIVE_REPS, w, revMap){
+  Promise.all(monthsToFetch.map(function(mo){
+    return fetch('/api/revenue-history?month='+mo).then(function(r){return r.json();})
+      .then(function(d){
+        if(d.success&&d.reps){d.reps.forEach(function(r){
+          var rn=(r.rep||'').trim().replace(/\s+/g,' ');
+          if(revMap[rn]!==undefined) revMap[rn]+=(r.approved_amount||0);
+        });}
+      }).catch(function(){});
+  })).then(function(){ _renderCompTable(showWeeks,COMP_REPS,w,revMap,doorMap); });
+
+  _renderCompTable(showWeeks,COMP_REPS,w,revMap,doorMap);
+}derCompTable(showWeeks, ACTIVE_REPS, w, revMap){
   var repStats=ACTIVE_REPS.map(function(rep){
     var weeklyCA=showWeeks.map(function(cw){return getCompCAsForRep(rep,cw.start,cw.end);});
     var totalCAs=weeklyCA.reduce(function(a,b){return a+b;},0);
