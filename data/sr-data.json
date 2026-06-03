@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-03",
+  "updated": "2026-06-02",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -3449,6 +3449,15 @@
       "date": "2026-06-03",
       "address": "9301 Jan St, Manassas Park, VA",
       "ts": "2026-06-03T20:52:13.963Z"
+    },
+    {
+      "leadId": "47771",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-02",
+      "address": "7395 Kindler Rd, Columbia, MD",
+      "ts": "2026-06-03T20:53:37.956Z"
     }
   ]
 }
