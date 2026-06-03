@@ -12,7 +12,6 @@
       "David Kerns": 2,
       "Kelly Alston": 0,
       "Harvey Shoemaker": 2,
-      "Marc Mitchell": 0,
       "Isabelle Price": 2,
       "Aiden Glonek": 0
     },
@@ -27,24 +26,22 @@
       "Christian Brown": 2,
       "David Kerns": 2,
       "Kelly Alston": 0,
-      "Harvey Shoemaker": 1,
-      "Marc Mitchell": 0,
+      "Harvey Shoemaker": 0,
       "Isabelle Price": 2,
       "Aiden Glonek": 0
     },
     "3": {
       "Robert Wilson": 0,
       "Kevin Mahan": 1,
-      "Jack Obert": 1,
+      "Jack Obert": 2,
       "Andrew Funk": 3,
-      "Andrew Prickel": 2,
-      "George Bechara": 0,
+      "Andrew Prickel": 0,
+      "George Bechara": 1,
       "Michael McCarthy": 2,
       "Christian Brown": 2,
       "David Kerns": 1,
       "Kelly Alston": 0,
       "Harvey Shoemaker": 1,
-      "Marc Mitchell": 0,
       "Isabelle Price": 2,
       "Aiden Glonek": 0
     },
@@ -60,25 +57,8 @@
       "David Kerns": 0,
       "Kelly Alston": 0,
       "Harvey Shoemaker": 2,
-      "Marc Mitchell": 0,
       "Isabelle Price": 3,
       "Aiden Glonek": 0
     }
-  },
-  "doors": {
-    "Robert Wilson": 3,
-    "Kevin Mahan": 18,
-    "Jack Obert": 139,
-    "Andrew Funk": 782,
-    "Andrew Prickel": 31,
-    "George Bechara": 89,
-    "Michael McCarthy": 511,
-    "Christian Brown": 508,
-    "David Kerns": 566,
-    "Kelly Alston": 27,
-    "Harvey Shoemaker": 517,
-    "Isabelle Price": 325,
-    "Aiden Glonek": 172
-  },
-  "revenue": {}
+  }
 }
