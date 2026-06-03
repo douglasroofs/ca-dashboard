@@ -3251,6 +3251,15 @@
       "date": "2026-06-03",
       "address": "9310 E Carondelet Dr, Manassas Park, VA",
       "ts": "2026-06-03T19:43:05.390Z"
+    },
+    {
+      "leadId": "47740",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "231 N Abingdon St, Arlington, VA",
+      "ts": "2026-06-03T19:49:05.391Z"
     }
   ]
 }
