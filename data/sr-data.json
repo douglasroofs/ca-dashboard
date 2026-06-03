@@ -3062,6 +3062,15 @@
       "date": "2026-06-03",
       "address": "",
       "ts": "2026-06-03T19:02:04.950Z"
+    },
+    {
+      "leadId": "47717",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "3093 McGrane Court, Herndon, VA",
+      "ts": "2026-06-03T19:03:18.805Z"
     }
   ]
 }
