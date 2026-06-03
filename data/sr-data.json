@@ -3800,6 +3800,15 @@
       "date": "2026-06-03",
       "address": "326 Manassas Dr, Manassas Park, VA",
       "ts": "2026-06-03T22:49:54.829Z"
+    },
+    {
+      "leadId": "47831",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "369 Manassas Dr, Manassas Park, VA",
+      "ts": "2026-06-03T22:52:03.925Z"
     }
   ]
 }
