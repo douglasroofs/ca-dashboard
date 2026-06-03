@@ -3053,6 +3053,15 @@
       "date": "2026-06-03",
       "address": "",
       "ts": "2026-06-03T19:01:44.846Z"
+    },
+    {
+      "leadId": "47714",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "",
+      "ts": "2026-06-03T19:02:04.950Z"
     }
   ]
 }
