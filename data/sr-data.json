@@ -3539,6 +3539,15 @@
       "date": "2026-06-03",
       "address": "7241 Single Wheel Path, Columbia, MD",
       "ts": "2026-06-03T21:11:40.433Z"
+    },
+    {
+      "leadId": "47783",
+      "repName": "Isabelle Price",
+      "status": "PITCH MISS",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "7246 Single Wheel Path, Columbia, MD",
+      "ts": "2026-06-03T21:15:11.906Z"
     }
   ]
 }
