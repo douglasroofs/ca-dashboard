@@ -3512,6 +3512,15 @@
       "date": "2026-06-03",
       "address": "7229 Single Wheel Path, Columbia, MD",
       "ts": "2026-06-03T21:08:10.504Z"
+    },
+    {
+      "leadId": "47780",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9211 Matthew Dr, Manassas Park, VA",
+      "ts": "2026-06-03T21:08:54.204Z"
     }
   ]
 }
