@@ -1,28 +1,3 @@
 {
-  "note": "Official weekly CA counts - edit these to match internal leaderboard data",
-  "weeks": {
-    "1": {
-      "Andrew Funk": 5,
-      "Andrew Prickel": 3,
-      "David Kerns": 2,
-      "Michael McCarthy": 2,
-      "Isabelle Price": 2,
-      "Christian Brown": 2,
-      "Jack Obert": 2,
-      "George Bechara": 2,
-      "Robert Wilson": 1,
-      "Harvey Shoemaker": 1,
-      "Kevin Mahan": 1,
-      "Alfred Duncan": 0,
-      "Aiden Glonek": 0,
-      "Nick Seward": 0,
-      "Marc Mitchell": 0,
-      "Kelly Alston": 0,
-      "Mike Mendez": 0,
-      "Steven Arevalo": 0
-    },
-    "2": {},
-    "3": {},
-    "4": {}
-  }
+  "weeks": {}
 }
