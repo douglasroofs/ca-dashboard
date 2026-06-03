@@ -3035,6 +3035,15 @@
       "date": "2026-06-03",
       "address": "13558 Highland Mews Court, Herndon, VA",
       "ts": "2026-06-03T19:00:30.851Z"
+    },
+    {
+      "leadId": "47712",
+      "repName": "Christian Brown",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "13564 Highland Mews Court, Herndon, VA",
+      "ts": "2026-06-03T19:00:32.172Z"
     }
   ]
 }
