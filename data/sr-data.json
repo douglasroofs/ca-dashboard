@@ -3791,6 +3791,15 @@
       "date": "2026-06-03",
       "address": "1548 Great Falls Street, McLean, VA",
       "ts": "2026-06-03T22:36:57.720Z"
+    },
+    {
+      "leadId": "47829",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "326 Manassas Dr, Manassas Park, VA",
+      "ts": "2026-06-03T22:49:54.829Z"
     }
   ]
 }
