@@ -3836,6 +3836,15 @@
       "date": "2026-06-03",
       "address": "738 Ellsworth Avenue, Great Falls, VA",
       "ts": "2026-06-03T22:59:37.714Z"
+    },
+    {
+      "leadId": "47838",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "746 Ellsworth Avenue, Great Falls, VA",
+      "ts": "2026-06-03T23:01:23.102Z"
     }
   ]
 }
