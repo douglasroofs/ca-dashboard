@@ -2999,6 +2999,15 @@
       "date": "2026-06-03",
       "address": "227 N Wakefield St, Arlington, VA",
       "ts": "2026-06-03T18:37:38.555Z"
+    },
+    {
+      "leadId": "47706",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "4022 Gypsum Hill Rd, Haymarket, VA",
+      "ts": "2026-06-03T18:42:13.528Z"
     }
   ]
 }
