@@ -3467,6 +3467,15 @@
       "date": "2026-06-03",
       "address": "7220 Kindler Rd, Columbia, MD",
       "ts": "2026-06-03T20:57:59.374Z"
+    },
+    {
+      "leadId": "47773",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9207 Matthew Dr, Manassas Park, VA",
+      "ts": "2026-06-03T21:00:00.828Z"
     }
   ]
 }
