@@ -3314,6 +3314,15 @@
       "date": "2026-06-03",
       "address": "9324 Brandon St, Manassas Park, VA",
       "ts": "2026-06-03T20:02:23.465Z"
+    },
+    {
+      "leadId": "47746",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9303 Elizabeth Ct, Manassas Park, VA",
+      "ts": "2026-06-03T20:04:04.401Z"
     }
   ]
 }
