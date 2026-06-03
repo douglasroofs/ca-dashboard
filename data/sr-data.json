@@ -2909,6 +2909,15 @@
       "date": "2026-06-03",
       "address": "6310 Old Chesterbrook Rd, McLean, VA",
       "ts": "2026-06-03T17:42:32.305Z"
+    },
+    {
+      "leadId": "47688",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "220 N Wakefield St, Arlington, VA",
+      "ts": "2026-06-03T18:11:29.759Z"
     }
   ]
 }
