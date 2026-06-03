@@ -3260,6 +3260,15 @@
       "date": "2026-06-03",
       "address": "231 N Abingdon St, Arlington, VA",
       "ts": "2026-06-03T19:49:05.391Z"
+    },
+    {
+      "leadId": "47739",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9316 E Carondelet Dr, Manassas Park, VA",
+      "ts": "2026-06-03T19:49:06.779Z"
     }
   ]
 }
