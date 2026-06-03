@@ -3233,6 +3233,15 @@
       "date": "2026-06-03",
       "address": "9306 E Carondelet Dr, Manassas Park, VA",
       "ts": "2026-06-03T19:40:54.277Z"
+    },
+    {
+      "leadId": "47737",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9300 E Carondelet Dr, Manassas Park, VA",
+      "ts": "2026-06-03T19:41:06.125Z"
     }
   ]
 }
