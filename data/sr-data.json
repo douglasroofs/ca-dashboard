@@ -3863,6 +3863,15 @@
       "date": "2026-06-03",
       "address": "9308 Arabian Ave, Vienna, VA",
       "ts": "2026-06-03T23:22:41.818Z"
+    },
+    {
+      "leadId": "47846",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9834 Fairmont Ave, Manassas, VA",
+      "ts": "2026-06-03T23:26:56.667Z"
     }
   ]
 }
