@@ -3701,6 +3701,15 @@
       "date": "2026-06-03",
       "address": "7454 First League, Columbia, MD",
       "ts": "2026-06-03T21:59:58.613Z"
+    },
+    {
+      "leadId": "47809",
+      "repName": "David Kerns",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9304 Jan St, Manassas Park, VA",
+      "ts": "2026-06-03T22:03:47.163Z"
     }
   ]
 }
