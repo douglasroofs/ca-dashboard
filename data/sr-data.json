@@ -2972,6 +2972,15 @@
       "date": "2026-06-03",
       "address": "230 N Wakefield St, Arlington, VA",
       "ts": "2026-06-03T18:24:32.551Z"
+    },
+    {
+      "leadId": "47699",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "14904 Simmons Grove Dr, Haymarket, VA",
+      "ts": "2026-06-03T18:31:46.126Z"
     }
   ]
 }
