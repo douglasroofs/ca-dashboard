@@ -3746,6 +3746,15 @@
       "date": "2026-06-03",
       "address": "7432 Sandalfoot Way, Columbia, MD",
       "ts": "2026-06-03T22:14:07.766Z"
+    },
+    {
+      "leadId": "47819",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9308 Jan St, Manassas Park, VA",
+      "ts": "2026-06-03T22:15:01.964Z"
     }
   ]
 }
