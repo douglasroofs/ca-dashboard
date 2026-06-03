@@ -3008,6 +3008,15 @@
       "date": "2026-06-03",
       "address": "4022 Gypsum Hill Rd, Haymarket, VA",
       "ts": "2026-06-03T18:42:13.528Z"
+    },
+    {
+      "leadId": "47708",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "231 N Wakefield St, Arlington, VA",
+      "ts": "2026-06-03T18:48:33.596Z"
     }
   ]
 }
