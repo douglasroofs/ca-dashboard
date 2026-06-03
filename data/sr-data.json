@@ -3503,6 +3503,15 @@
       "date": "2026-06-03",
       "address": "7224 Cadence Ct, Columbia, MD",
       "ts": "2026-06-03T21:06:13.924Z"
+    },
+    {
+      "leadId": "47778",
+      "repName": "Isabelle Price",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "7229 Single Wheel Path, Columbia, MD",
+      "ts": "2026-06-03T21:08:10.504Z"
     }
   ]
 }
