@@ -2864,6 +2864,15 @@
       "date": "2026-06-03",
       "address": "",
       "ts": "2026-06-03T16:53:38.502Z"
+    },
+    {
+      "leadId": "47662",
+      "repName": "George Bechara",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9546 Possum Hollow Dr, Delaplane, VA",
+      "ts": "2026-06-03T16:56:52.955Z"
     }
   ]
 }
