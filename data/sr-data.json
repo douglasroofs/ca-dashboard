@@ -2891,6 +2891,15 @@
       "date": "2026-06-03",
       "address": "1718 East Ave, McLean, VA",
       "ts": "2026-06-03T17:38:21.590Z"
+    },
+    {
+      "leadId": "47676",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "1723 East Ave, McLean, VA",
+      "ts": "2026-06-03T17:38:26.037Z"
     }
   ]
 }
