@@ -3296,6 +3296,15 @@
       "date": "2026-06-03",
       "address": "9304 S Whitt Dr, Manassas Park, VA",
       "ts": "2026-06-03T19:54:18.690Z"
+    },
+    {
+      "leadId": "47744",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9322 Brandon St, Manassas Park, VA",
+      "ts": "2026-06-03T19:58:33.108Z"
     }
   ]
 }
