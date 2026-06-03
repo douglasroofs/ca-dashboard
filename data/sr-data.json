@@ -3755,6 +3755,15 @@
       "date": "2026-06-03",
       "address": "9308 Jan St, Manassas Park, VA",
       "ts": "2026-06-03T22:15:01.964Z"
+    },
+    {
+      "leadId": "47822",
+      "repName": "Isabelle Price",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "",
+      "ts": "2026-06-03T22:20:21.476Z"
     }
   ]
 }
