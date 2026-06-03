@@ -166,7 +166,7 @@
       <div class="kgrid">
         <div class="kcard k1"><div class="klbl">Contract Signed MTD</div><div class="kval" id="kCSMtd">-</div><div class="ksub" id="kCSMtdJ">-</div></div>
         <div class="kcard k2"><div class="klbl">Approved MTD</div><div class="kval" id="kAMtd">-</div><div class="ksub" id="kAMtdJ">-</div></div>
-        <div class="kcard k3"><div class="klbl">CAs Accepted</div><div class="kval" id="kCAcc">-</div><div class="ksub" id="kCAccR">-</div></div>
+        <div class="kcard k3"><div class="klbl">Doors</div><div class="kval" id="kCAcc">-</div><div class="ksub" id="kCAccR">-</div></div>
         <div class="kcard k4"><div class="klbl">Total CAs</div><div class="kval" id="kCTot">-</div><div class="ksub">This month</div></div>
       </div>
       <div class="two-col">
@@ -496,7 +496,7 @@ function renderYTD(){
   rows.forEach(function(r){if(r.status.toLowerCase()==='accepted'&&r.jobId&&r.jobId.length>=4&&r.jobId.substring(0,2)===y2){var mv=parseInt(r.jobId.substring(2,4),10)-1;if(mv>=0&&mv<12)mo[mv]++;}});
   var ctx=document.getElementById('ytdChart').getContext('2d');
   if(ytdChartInst)ytdChartInst.destroy();
-  ytdChartInst=new Chart(ctx,{type:'bar',data:{labels:MO,datasets:[{label:'CAs Accepted',data:mo,backgroundColor:'#1a3a6b',borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
+  ytdChartInst=new Chart(ctx,{type:'bar',data:{labels:MO,datasets:[{label:'Doors',data:mo,backgroundColor:'#1a3a6b',borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1},grid:{color:'rgba(0,0,0,.05)'}},x:{grid:{display:false}}}}});
   var repMonthMap={};
   rows.forEach(function(r){if(!r.rep||r.status.toLowerCase()!=='accepted'||!r.jobId||r.jobId.length<4||r.jobId.substring(0,2)!==y2)return;var mv=parseInt(r.jobId.substring(2,4),10)-1;if(mv<0||mv>11)return;if(!repMonthMap[r.rep])repMonthMap[r.rep]={};if(!repMonthMap[r.rep][mv])repMonthMap[r.rep][mv]=[];repMonthMap[r.rep][mv].push(r);});
   var curMo=now.getMonth();
@@ -513,9 +513,9 @@ function renderYTD(){
     var col=gc[i%gc.length];
     var totalAcc=Object.values(repMonthMap[name]||{}).reduce(function(s,arr){return s+arr.length;},0);
     html+='<div class="ytd-rep">';
-    html+='<div class="ytd-row1"><span class="ytd-rep-name">'+name+'</span><span class="ytd-ca-count">'+totalAcc+' CAs accepted YTD</span></div>';
+    html+='<div class="ytd-row1"><span class="ytd-rep-name">'+name+'</span><span class="ytd-ca-count">'+totalAcc+' Doors YTD</span></div>';
     html+='<div class="ytd-rev-bar-row">';
-    html+='<div class="ytd-rev-label"><span class="ytd-rev-amt">'+fmtD(csAmt)+'<span style="font-size:.72rem;font-weight:400;color:var(--muted)"> / '+fmtD(revGoal)+'</span></span><span class="ytd-pace-lbl" style="color:'+(ok?'#059669':'#ef4444')+'">'+(ok?'On pace':'Behind pace')+'</span></div>';
+    html+='<div class="ytd-rev-label"><span class="ytd-rev-amt">'+fmtD(csAmt)+'<span style="font-size:.72rem;font-weight:400;color:var(--muted)"> / '+fmtD(revGoal)+'</span></span><span class="ytd-pace-lbl" style="color:'+(ok?'#059669':'#ef4444')+'">'+(ok?'On pace':'')+'</span></div>';
     html+='<div class="ytd-bar-bg"><div class="ytd-pace-tick" style="left:'+pacePct+'%"></div><div class="ytd-bar-fill" style="width:'+pct+'%;background:'+(ok?col:'#ef4444')+'">'+(pct>12?'<span class="ytd-bar-pct">'+pct+'%</span>':'')+'</div></div>';
     html+='</div>';
     if(aYtdAmt>0)html+='<div style="font-size:.72rem;color:var(--muted);margin-top:3px">Approved: <strong style="color:var(--text)">'+fmtD(aYtdAmt)+'</strong></div>';
@@ -771,6 +771,37 @@ function addDoorsToRepCards(){
 // Patch renderMTD to also refresh doors
 var _origRenderMTDSR=renderMTD;
 renderMTD=function(){_origRenderMTDSR.apply(this,arguments);setTimeout(addDoorsToRepCards,100);};
+
+// Competition CA override - uses official weekly data when available
+window._compOverride = null;
+(function loadCompOverride(){
+  fetch('/api/sr-data')
+    .then(function(r){return r.json();})
+    .then(function(d){ /* already loaded via srData */ });
+  fetch('https://raw.githubusercontent.com/douglasroofs/ca-dashboard/main/data/comp-override.json?cb='+Date.now())
+    .then(function(r){return r.json();})
+    .then(function(d){ window._compOverride=d; })
+    .catch(function(){});
+})();
+
+function getCompCAsForRepOverride(repName, weekNum){
+  if(!window._compOverride||!window._compOverride.weeks) return null;
+  var wk = window._compOverride.weeks[String(weekNum)];
+  if(!wk||Object.keys(wk).length===0) return null;
+  return wk[repName]||0;
+}
+
+var _origGetCompCAs = getCompCAsForRep;
+getCompCAsForRep = function(repName, startDate, endDate){
+  // Find which week this date range corresponds to
+  var weekNum = null;
+  for(var i=0;i<COMP_WEEKS.length;i++){
+    if(COMP_WEEKS[i].start===startDate){ weekNum=COMP_WEEKS[i].week; break; }
+  }
+  var override = weekNum ? getCompCAsForRepOverride(repName, weekNum) : null;
+  if(override!==null) return override;
+  return _origGetCompCAs(repName, startDate, endDate);
+};
 </script>
 </body>
 </html>
