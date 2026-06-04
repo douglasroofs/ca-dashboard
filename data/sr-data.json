@@ -4556,6 +4556,15 @@
       "date": "2026-06-04",
       "address": "8017 Orange Plank Road, Springfield, VA",
       "ts": "2026-06-04T18:07:33.835Z"
+    },
+    {
+      "leadId": "47988",
+      "repName": "Michael McCarthy",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "7500 Chancellor Way, Springfield, VA",
+      "ts": "2026-06-04T18:08:39.274Z"
     }
   ]
 }
