@@ -4718,6 +4718,15 @@
       "date": "2026-06-04",
       "address": "7817 Mulberry Bottom Ln, Springfield, VA",
       "ts": "2026-06-04T19:03:13.047Z"
+    },
+    {
+      "leadId": "48038",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "7606 Mineral Spring Ct, Springfield, VA",
+      "ts": "2026-06-04T19:03:39.105Z"
     }
   ]
 }
