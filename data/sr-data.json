@@ -4169,6 +4169,15 @@
       "date": "2026-06-04",
       "address": "8818 Fort Dr, Manassas, VA",
       "ts": "2026-06-04T16:42:30.230Z"
+    },
+    {
+      "leadId": "47926",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "8823 Weems Rd, Manassas, VA",
+      "ts": "2026-06-04T16:53:22.402Z"
     }
   ]
 }
