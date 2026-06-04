@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-03",
+  "updated": "2026-06-04",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -3935,6 +3935,15 @@
       "date": "2026-06-03",
       "address": "5201 32nd St N, Arlington, VA",
       "ts": "2026-06-03T23:58:46.139Z"
+    },
+    {
+      "leadId": "47867",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "5219 32nd St N, Arlington, VA",
+      "ts": "2026-06-04T00:03:44.191Z"
     }
   ]
 }
