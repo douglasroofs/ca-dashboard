@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-04",
+  "updated": "2026-06-03",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -4934,6 +4934,15 @@
       "date": "2026-06-04",
       "address": "7602 Mineral Spring Ct, Springfield, VA",
       "ts": "2026-06-04T19:45:35.043Z"
+    },
+    {
+      "leadId": "48120",
+      "repName": "Steven Arevalo",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-03",
+      "address": "2645 Meadow Hall Dr, Herndon, VA",
+      "ts": "2026-06-04T19:46:12.561Z"
     }
   ]
 }
