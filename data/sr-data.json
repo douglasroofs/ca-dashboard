@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-04",
+  "updated": "2026-06-03",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -4655,6 +4655,15 @@
       "date": "2026-06-04",
       "address": "7930 Orange Plank Rd, Springfield, VA",
       "ts": "2026-06-04T18:24:23.071Z"
+    },
+    {
+      "leadId": "48012",
+      "repName": "Isabelle Price",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "",
+      "ts": "2026-06-04T18:30:22.235Z"
     }
   ]
 }
