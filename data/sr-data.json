@@ -3944,6 +3944,15 @@
       "date": "2026-06-04",
       "address": "5219 32nd St N, Arlington, VA",
       "ts": "2026-06-04T00:03:44.191Z"
+    },
+    {
+      "leadId": "47868",
+      "repName": "Michael McCarthy",
+      "status": "PITCH MISS",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "5243 32nd St N, Arlington, VA",
+      "ts": "2026-06-04T00:05:44.818Z"
     }
   ]
 }
