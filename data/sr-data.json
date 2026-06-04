@@ -4340,6 +4340,15 @@
       "date": "2026-06-04",
       "address": "7902 Mulberry Bottom Ct, Springfield, VA",
       "ts": "2026-06-04T17:38:17.265Z"
+    },
+    {
+      "leadId": "47965",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "7600 Chancellor Way, Springfield, VA",
+      "ts": "2026-06-04T17:38:22.260Z"
     }
   ]
 }
