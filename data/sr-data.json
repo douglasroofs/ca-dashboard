@@ -3971,6 +3971,15 @@
       "date": "2026-06-04",
       "address": "3136 N Harrison St, Arlington, VA",
       "ts": "2026-06-04T00:13:54.040Z"
+    },
+    {
+      "leadId": "47876",
+      "repName": "Michael McCarthy",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "3109 N Inglewood St, Arlington, VA",
+      "ts": "2026-06-04T00:16:44.943Z"
     }
   ]
 }
