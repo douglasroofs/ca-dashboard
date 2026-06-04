@@ -5177,6 +5177,15 @@
       "date": "2026-06-04",
       "address": "9505 Spring Hill Farm Way, Manassas, VA",
       "ts": "2026-06-04T21:53:53.231Z"
+    },
+    {
+      "leadId": "48163",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "9501 Spring Hill Farm Way, Manassas, VA",
+      "ts": "2026-06-04T21:55:16.475Z"
     }
   ]
 }
