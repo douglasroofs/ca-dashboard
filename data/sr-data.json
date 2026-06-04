@@ -4322,6 +4322,15 @@
       "date": "2026-06-04",
       "address": "7904 Mulberry Bottom Ct, Springfield, VA",
       "ts": "2026-06-04T17:38:07.321Z"
+    },
+    {
+      "leadId": "47964",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "7900 Mulberry Bottom Ct, Springfield, VA",
+      "ts": "2026-06-04T17:38:11.051Z"
     }
   ]
 }
