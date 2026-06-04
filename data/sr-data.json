@@ -4367,6 +4367,15 @@
       "date": "2026-06-04",
       "address": "7512 Chancellor Way, Springfield, VA",
       "ts": "2026-06-04T17:45:08.941Z"
+    },
+    {
+      "leadId": "47967",
+      "repName": "Michael McCarthy",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "7512 Chancellor Way, Springfield, VA",
+      "ts": "2026-06-04T17:48:20.014Z"
     }
   ]
 }
