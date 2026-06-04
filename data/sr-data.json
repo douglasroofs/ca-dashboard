@@ -4547,6 +4547,15 @@
       "date": "2026-06-04",
       "address": "8015 Orange Plank Road, Springfield, VA",
       "ts": "2026-06-04T18:07:31.162Z"
+    },
+    {
+      "leadId": "47986",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "8017 Orange Plank Road, Springfield, VA",
+      "ts": "2026-06-04T18:07:33.835Z"
     }
   ]
 }
