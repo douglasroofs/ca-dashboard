@@ -4007,6 +4007,15 @@
       "date": "2026-06-04",
       "address": "9025 Weir St, Manassas, VA",
       "ts": "2026-06-04T15:25:52.673Z"
+    },
+    {
+      "leadId": "47885",
+      "repName": "David Kerns",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-04",
+      "address": "8808 Weir St, Manassas, VA",
+      "ts": "2026-06-04T15:29:56.092Z"
     }
   ]
 }
