@@ -4754,6 +4754,15 @@
       "date": "2026-06-04",
       "address": "7620 Mineral Spring Ct, Springfield, VA",
       "ts": "2026-06-04T19:06:58.256Z"
+    },
+    {
+      "leadId": "48048",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "7622 Mineral Spring Ct, Springfield, VA",
+      "ts": "2026-06-04T19:07:00.705Z"
     }
   ]
 }
