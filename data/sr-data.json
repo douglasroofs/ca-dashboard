@@ -5204,6 +5204,15 @@
       "date": "2026-06-04",
       "address": "1706 Fantasia Cir, Herndon, VA",
       "ts": "2026-06-04T22:04:13.721Z"
+    },
+    {
+      "leadId": "48166",
+      "repName": "David Kerns",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "9513 Spring Hill Farm Way, Manassas, VA",
+      "ts": "2026-06-04T22:31:23.790Z"
     }
   ]
 }
