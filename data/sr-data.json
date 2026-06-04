@@ -3998,6 +3998,15 @@
       "date": "2026-06-04",
       "address": "5501 Pembroke Terr, Bethesda, MD",
       "ts": "2026-06-04T14:57:06.151Z"
+    },
+    {
+      "leadId": "47883",
+      "repName": "Kelly Alston",
+      "status": "DO NOT KNOCK",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "9025 Weir St, Manassas, VA",
+      "ts": "2026-06-04T15:25:52.673Z"
     }
   ]
 }
