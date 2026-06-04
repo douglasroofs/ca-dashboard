@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-09",
+  "updated": "2026-06-04",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -4538,6 +4538,15 @@
       "date": "2026-04-09",
       "address": "7822 Mulberry Bottom Ln, Springfield, VA",
       "ts": "2026-06-04T18:05:35.874Z"
+    },
+    {
+      "leadId": "47987",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "8015 Orange Plank Road, Springfield, VA",
+      "ts": "2026-06-04T18:07:31.162Z"
     }
   ]
 }
