@@ -4052,6 +4052,15 @@
       "date": "2026-06-04",
       "address": "9250 Longstreet Ct, Manassas, VA",
       "ts": "2026-06-04T15:45:08.418Z"
+    },
+    {
+      "leadId": "47898",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "8903 Weir St, Manassas, VA",
+      "ts": "2026-06-04T15:49:47.585Z"
     }
   ]
 }
