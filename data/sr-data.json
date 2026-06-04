@@ -4871,6 +4871,15 @@
       "date": "2026-06-04",
       "address": "7629 Chancellor Way, Springfield, VA",
       "ts": "2026-06-04T19:16:17.117Z"
+    },
+    {
+      "leadId": "48069",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "1700 Asoleado Lane, Vienna, VA",
+      "ts": "2026-06-04T19:16:40.445Z"
     }
   ]
 }
