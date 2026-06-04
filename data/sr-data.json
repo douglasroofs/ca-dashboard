@@ -3980,6 +3980,15 @@
       "date": "2026-06-04",
       "address": "3109 N Inglewood St, Arlington, VA",
       "ts": "2026-06-04T00:16:44.943Z"
+    },
+    {
+      "leadId": "47877",
+      "repName": "Michael McCarthy",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "3105 N Inglewood St, Arlington, VA",
+      "ts": "2026-06-04T00:16:51.680Z"
     }
   ]
 }
