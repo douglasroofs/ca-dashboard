@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-03",
+  "updated": "2026-06-04",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -5114,6 +5114,15 @@
       "date": "2026-06-03",
       "address": "9261 Matthew Dr, Manassas Park, VA",
       "ts": "2026-06-04T21:33:03.820Z"
+    },
+    {
+      "leadId": "48055",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-04",
+      "address": "7619 Mineral Spring Ct, Springfield, VA",
+      "ts": "2026-06-04T21:33:34.039Z"
     }
   ]
 }
