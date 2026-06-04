@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-03",
+  "updated": "2026-06-04",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -4664,6 +4664,15 @@
       "date": "2026-06-03",
       "address": "",
       "ts": "2026-06-04T18:30:22.235Z"
+    },
+    {
+      "leadId": "48019",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "7602 Mineral Spring Ct, Springfield, VA",
+      "ts": "2026-06-04T18:58:37.360Z"
     }
   ]
 }
