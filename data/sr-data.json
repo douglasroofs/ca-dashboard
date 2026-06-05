@@ -6239,6 +6239,15 @@
       "date": "2026-06-05",
       "address": "10792 Cerise Ct, Manassas, VA",
       "ts": "2026-06-05T19:46:25.844Z"
+    },
+    {
+      "leadId": "48323",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "9508 Clematis St, Manassas, VA",
+      "ts": "2026-06-05T19:54:46.718Z"
     }
   ]
 }
