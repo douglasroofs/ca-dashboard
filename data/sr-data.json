@@ -6014,6 +6014,15 @@
       "date": "2026-06-05",
       "address": "11910 Rayborn Creek Dr, Manassas, VA",
       "ts": "2026-06-05T18:57:23.471Z"
+    },
+    {
+      "leadId": "48274",
+      "repName": "Jack Obert",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-05",
+      "address": "11901 Rayborn Creek Dr, Manassas, VA",
+      "ts": "2026-06-05T19:02:07.712Z"
     }
   ]
 }
