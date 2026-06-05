@@ -5870,6 +5870,15 @@
       "date": "2026-06-05",
       "address": "7816 Mulberry Bottom Ln, Springfield, VA",
       "ts": "2026-06-05T17:46:17.332Z"
+    },
+    {
+      "leadId": "48262",
+      "repName": "Jack Obert",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "8601 Boundbrook Terr, Manassas, VA",
+      "ts": "2026-06-05T17:47:44.432Z"
     }
   ]
 }
