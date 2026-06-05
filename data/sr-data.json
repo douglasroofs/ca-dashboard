@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-05",
+  "updated": "2026-06-04",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -5240,6 +5240,15 @@
       "date": "2026-06-05",
       "address": "11400 Georgetown Pike, Great Falls, VA",
       "ts": "2026-06-05T16:31:33.121Z"
+    },
+    {
+      "leadId": "47973",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-04",
+      "address": "7603 Chancellor Way, Springfield, VA",
+      "ts": "2026-06-05T16:35:56.734Z"
     }
   ]
 }
