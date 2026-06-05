@@ -6401,6 +6401,15 @@
       "date": "2026-06-05",
       "address": "3032 Shanandale Dr, Silver Spring, MD",
       "ts": "2026-06-05T20:44:09.442Z"
+    },
+    {
+      "leadId": "48354",
+      "repName": "David Kerns",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "9525 Clematis St, Manassas, VA",
+      "ts": "2026-06-05T20:45:16.348Z"
     }
   ]
 }
