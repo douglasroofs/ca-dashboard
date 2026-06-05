@@ -5942,6 +5942,15 @@
       "date": "2026-06-05",
       "address": "11905 Rayborn Creek Dr, Manassas, VA",
       "ts": "2026-06-05T18:01:22.850Z"
+    },
+    {
+      "leadId": "48276",
+      "repName": "Andrew Funk",
+      "status": "DO NOT KNOCK",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "7900 Laural Valley Way, Springfield, VA",
+      "ts": "2026-06-05T18:04:17.470Z"
     }
   ]
 }
