@@ -6023,6 +6023,15 @@
       "date": "2026-06-05",
       "address": "11901 Rayborn Creek Dr, Manassas, VA",
       "ts": "2026-06-05T19:02:07.712Z"
+    },
+    {
+      "leadId": "48293",
+      "repName": "Harvey Shoemaker",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "8708 Tarrytown Ct, Manassas, VA",
+      "ts": "2026-06-05T19:04:28.388Z"
     }
   ]
 }
