@@ -6446,6 +6446,15 @@
       "date": "2026-06-05",
       "address": "2900 Red Lion Ln, Silver Spring, MD",
       "ts": "2026-06-05T20:52:56.528Z"
+    },
+    {
+      "leadId": "48360",
+      "repName": "Harvey Shoemaker",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "8942 Hanson Grove Ct, Manassas, VA",
+      "ts": "2026-06-05T21:00:26.959Z"
     }
   ]
 }
