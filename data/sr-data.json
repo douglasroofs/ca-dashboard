@@ -6599,6 +6599,15 @@
       "date": "2026-06-05",
       "address": "11801 Grenadier Ct, Fairfax Station, VA",
       "ts": "2026-06-05T23:11:19.792Z"
+    },
+    {
+      "leadId": "48389",
+      "repName": "Harvey Shoemaker",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "6148 Sunpatterns Trail, Fairfax Station, VA",
+      "ts": "2026-06-05T23:28:20.319Z"
     }
   ]
 }
