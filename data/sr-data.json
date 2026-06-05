@@ -6527,6 +6527,15 @@
       "date": "2026-06-05",
       "address": "5921 One Penny Dr, Fairfax Station, VA",
       "ts": "2026-06-05T22:34:09.866Z"
+    },
+    {
+      "leadId": "48376",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-05",
+      "address": "1230 9th St NW, Washington, DC",
+      "ts": "2026-06-05T22:48:00.531Z"
     }
   ]
 }
