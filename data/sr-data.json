@@ -5987,6 +5987,15 @@
       "date": "2026-06-05",
       "address": "1806 Pollard Terrace, Vienna, VA",
       "ts": "2026-06-05T18:51:35.989Z"
+    },
+    {
+      "leadId": "48285",
+      "repName": "Harvey Shoemaker",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "7781 Ballston Dr, Springfield, VA",
+      "ts": "2026-06-05T18:52:03.422Z"
     }
   ]
 }
