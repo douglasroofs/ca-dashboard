@@ -6302,6 +6302,15 @@
       "date": "2026-06-05",
       "address": "12415 Mylott St, Silver Spring, MD",
       "ts": "2026-06-05T20:11:35.785Z"
+    },
+    {
+      "leadId": "48324",
+      "repName": "Harvey Shoemaker",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-05",
+      "address": "8610 Webster Tavern Way, Manassas, VA",
+      "ts": "2026-06-05T20:13:54.230Z"
     }
   ]
 }
