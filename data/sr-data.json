@@ -6356,6 +6356,15 @@
       "date": "2026-06-05",
       "address": "12516 O'Fallon St, Silver Spring, MD",
       "ts": "2026-06-05T20:25:50.962Z"
+    },
+    {
+      "leadId": "48338",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-05",
+      "address": "8610 Webster Tavern Way, Manassas, VA",
+      "ts": "2026-06-05T20:33:53.417Z"
     }
   ]
 }
