@@ -5357,6 +5357,15 @@
       "date": "2026-06-05",
       "address": "7614 Chancellor Way, Springfield, VA",
       "ts": "2026-06-05T16:43:16.581Z"
+    },
+    {
+      "leadId": "48174",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "7616 Chancellor Way, Springfield, VA",
+      "ts": "2026-06-05T16:43:27.169Z"
     }
   ]
 }
