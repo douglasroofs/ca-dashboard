@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-04",
+  "updated": "2026-06-05",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -5213,6 +5213,15 @@
       "date": "2026-06-04",
       "address": "9513 Spring Hill Farm Way, Manassas, VA",
       "ts": "2026-06-04T22:31:23.790Z"
+    },
+    {
+      "leadId": "37070",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-05",
+      "address": "7822 Mulberry Bottom Ln, Springfield, VA",
+      "ts": "2026-06-05T13:49:20.739Z"
     }
   ]
 }
