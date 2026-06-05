@@ -6194,6 +6194,15 @@
       "date": "2026-06-05",
       "address": "2192 Harithy Drive, Dunn Loring, VA",
       "ts": "2026-06-05T19:39:57.229Z"
+    },
+    {
+      "leadId": "48315",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "2186 Harithy Drive, Dunn Loring, VA",
+      "ts": "2026-06-05T19:39:58.621Z"
     }
   ]
 }
