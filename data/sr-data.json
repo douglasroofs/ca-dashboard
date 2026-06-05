@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-09",
+  "updated": "2026-06-05",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -5303,6 +5303,15 @@
       "date": "2026-04-09",
       "address": "7611 Chancellor Way, Springfield, VA",
       "ts": "2026-06-05T16:39:00.080Z"
+    },
+    {
+      "leadId": "48171",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "7609 Chancellor Way, Springfield, VA",
+      "ts": "2026-06-05T16:42:18.261Z"
     }
   ]
 }
