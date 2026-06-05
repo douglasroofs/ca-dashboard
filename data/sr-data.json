@@ -5897,6 +5897,15 @@
       "date": "2026-06-05",
       "address": "8619 Boundbrook Terr, Manassas, VA",
       "ts": "2026-06-05T17:51:45.342Z"
+    },
+    {
+      "leadId": "48269",
+      "repName": "Jack Obert",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "8627 Boundbrook Terr, Manassas, VA",
+      "ts": "2026-06-05T17:53:46.627Z"
     }
   ]
 }
