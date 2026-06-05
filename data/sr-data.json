@@ -6131,6 +6131,15 @@
       "date": "2026-06-05",
       "address": "8629 Webster Tavern Way, Manassas, VA",
       "ts": "2026-06-05T19:27:35.919Z"
+    },
+    {
+      "leadId": "48308",
+      "repName": "Harvey Shoemaker",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "11905 Molly Pitcher Cir, Manassas, VA",
+      "ts": "2026-06-05T19:28:05.643Z"
     }
   ]
 }
