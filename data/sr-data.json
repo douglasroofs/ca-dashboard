@@ -5924,6 +5924,15 @@
       "date": "2026-06-05",
       "address": "7650 Chancellor Way, Springfield, VA",
       "ts": "2026-06-05T17:58:53.982Z"
+    },
+    {
+      "leadId": "48274",
+      "repName": "Jack Obert",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "11901 Rayborn Creek Dr, Manassas, VA",
+      "ts": "2026-06-05T17:59:19.675Z"
     }
   ]
 }
