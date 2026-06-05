@@ -6437,6 +6437,15 @@
       "date": "2026-06-05",
       "address": "3009 Red Lion Ln, Silver Spring, MD",
       "ts": "2026-06-05T20:50:08.873Z"
+    },
+    {
+      "leadId": "48358",
+      "repName": "Isabelle Price",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-05",
+      "address": "2900 Red Lion Ln, Silver Spring, MD",
+      "ts": "2026-06-05T20:52:56.528Z"
     }
   ]
 }
