@@ -7562,6 +7562,15 @@
       "date": "2026-06-06",
       "address": "2635 New Banner Lane, Herndon, VA",
       "ts": "2026-06-06T17:00:53.593Z"
+    },
+    {
+      "leadId": "48543",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "6724 Caneel Ct, Springfield, VA",
+      "ts": "2026-06-06T17:00:59.377Z"
     }
   ]
 }
