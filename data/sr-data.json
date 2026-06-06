@@ -7355,6 +7355,15 @@
       "date": "2026-06-06",
       "address": "10374 Aragon Court, Manassas, VA",
       "ts": "2026-06-06T16:16:15.987Z"
+    },
+    {
+      "leadId": "48523",
+      "repName": "Christian Brown",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "9625 Magenta Street, Manassas, VA",
+      "ts": "2026-06-06T16:19:06.015Z"
     }
   ]
 }
