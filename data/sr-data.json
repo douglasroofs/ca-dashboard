@@ -7103,6 +7103,15 @@
       "date": "2026-06-06",
       "address": "7304 Silent Bird Ct, Columbia, MD",
       "ts": "2026-06-06T15:33:19.258Z"
+    },
+    {
+      "leadId": "48482",
+      "repName": "Andrew Funk",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "6729 Deland Dr, Springfield, VA",
+      "ts": "2026-06-06T15:36:41.966Z"
     }
   ]
 }
