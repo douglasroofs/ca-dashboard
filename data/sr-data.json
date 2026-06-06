@@ -7139,6 +7139,15 @@
       "date": "2026-06-06",
       "address": "9553 Basilwood Drive, Manassas, VA",
       "ts": "2026-06-06T15:41:21.978Z"
+    },
+    {
+      "leadId": "48498",
+      "repName": "Christian Brown",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "9570 Basilwood Drive, Manassas, VA",
+      "ts": "2026-06-06T15:43:00.315Z"
     }
   ]
 }
