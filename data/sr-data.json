@@ -7706,6 +7706,15 @@
       "date": "2026-06-06",
       "address": "6817 Mallow Ct, Springfield, VA",
       "ts": "2026-06-06T17:26:39.464Z"
+    },
+    {
+      "leadId": "48555",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "6819 Mallow Ct, Springfield, VA",
+      "ts": "2026-06-06T17:26:44.962Z"
     }
   ]
 }
