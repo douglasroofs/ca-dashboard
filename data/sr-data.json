@@ -6761,6 +6761,15 @@
       "date": "2026-06-06",
       "address": "7832 Anson Ct, Springfield, VA",
       "ts": "2026-06-06T14:53:33.185Z"
+    },
+    {
+      "leadId": "48438",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "7837 Anson Ct, Springfield, VA",
+      "ts": "2026-06-06T14:53:35.934Z"
     }
   ]
 }
