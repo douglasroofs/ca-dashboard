@@ -7877,6 +7877,15 @@
       "date": "2026-06-06",
       "address": "10932 Pennycress Street, Manassas, VA",
       "ts": "2026-06-06T17:56:42.651Z"
+    },
+    {
+      "leadId": "48584",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "10307 Jayeselle Dr, Manassas, VA",
+      "ts": "2026-06-06T18:05:26.321Z"
     }
   ]
 }
