@@ -7184,6 +7184,15 @@
       "date": "2026-06-06",
       "address": "",
       "ts": "2026-06-06T15:46:31.826Z"
+    },
+    {
+      "leadId": "48504",
+      "repName": "Christian Brown",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "10968 Pennycress Street, Manassas, VA",
+      "ts": "2026-06-06T15:48:32.313Z"
     }
   ]
 }
