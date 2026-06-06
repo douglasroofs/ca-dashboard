@@ -6887,6 +6887,15 @@
       "date": "2026-06-06",
       "address": "7310 Little Bird Path, Columbia, MD",
       "ts": "2026-06-06T15:11:00.629Z"
+    },
+    {
+      "leadId": "48456",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "6707 Deland Dr, Springfield, VA",
+      "ts": "2026-06-06T15:11:10.412Z"
     }
   ]
 }
