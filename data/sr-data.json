@@ -7112,6 +7112,15 @@
       "date": "2026-06-06",
       "address": "6729 Deland Dr, Springfield, VA",
       "ts": "2026-06-06T15:36:41.966Z"
+    },
+    {
+      "leadId": "46059",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-06",
+      "address": "10818 Peachwood Dr, Manassas, VA",
+      "ts": "2026-06-06T15:37:59.015Z"
     }
   ]
 }
