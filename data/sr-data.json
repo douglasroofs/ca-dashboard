@@ -7229,6 +7229,15 @@
       "date": "2026-06-06",
       "address": "9592 Magenta Street, Manassas, VA",
       "ts": "2026-06-06T15:53:49.316Z"
+    },
+    {
+      "leadId": "48509",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "",
+      "ts": "2026-06-06T15:55:10.190Z"
     }
   ]
 }
