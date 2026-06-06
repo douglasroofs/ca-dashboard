@@ -7418,6 +7418,15 @@
       "date": "2026-06-06",
       "address": "9604 Waterford Drive, Manassas, VA",
       "ts": "2026-06-06T16:26:06.007Z"
+    },
+    {
+      "leadId": "48482",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-06",
+      "address": "6729 Deland Dr, Springfield, VA",
+      "ts": "2026-06-06T16:37:09.779Z"
     }
   ]
 }
