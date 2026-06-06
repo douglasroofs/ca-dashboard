@@ -7823,6 +7823,15 @@
       "date": "2026-06-06",
       "address": "9512 Basilwood Drive, Manassas, VA",
       "ts": "2026-06-06T17:42:23.194Z"
+    },
+    {
+      "leadId": "48354",
+      "repName": "David Kerns",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-06",
+      "address": "9525 Clematis St, Manassas, VA",
+      "ts": "2026-06-06T17:45:03.466Z"
     }
   ]
 }
