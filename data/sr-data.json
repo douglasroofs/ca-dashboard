@@ -7058,6 +7058,15 @@
       "date": "2026-06-06",
       "address": "7334 Narrow Wind Way, Columbia, MD",
       "ts": "2026-06-06T15:25:21.932Z"
+    },
+    {
+      "leadId": "48477",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "",
+      "ts": "2026-06-06T15:26:31.995Z"
     }
   ]
 }
