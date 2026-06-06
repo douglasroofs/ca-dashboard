@@ -7796,6 +7796,15 @@
       "date": "2026-06-06",
       "address": "10086 Azalea Grove Drive, Manassas, VA",
       "ts": "2026-06-06T17:36:01.260Z"
+    },
+    {
+      "leadId": "48565",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "7556 Remington Rd, Manassas, VA",
+      "ts": "2026-06-06T17:36:29.493Z"
     }
   ]
 }
