@@ -7319,6 +7319,15 @@
       "date": "2026-06-06",
       "address": "10390 Navarone Place, Manassas, VA",
       "ts": "2026-06-06T16:08:00.844Z"
+    },
+    {
+      "leadId": "48519",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "10379 Navarone Place, Manassas, VA",
+      "ts": "2026-06-06T16:08:56.472Z"
     }
   ]
 }
