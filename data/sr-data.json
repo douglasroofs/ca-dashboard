@@ -7616,6 +7616,15 @@
       "date": "2026-06-06",
       "address": "7558 Remington Rd, Manassas, VA",
       "ts": "2026-06-06T17:09:29.983Z"
+    },
+    {
+      "leadId": "48548",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "8004 Greeley Blvd, Springfield, VA",
+      "ts": "2026-06-06T17:15:37.368Z"
     }
   ]
 }
