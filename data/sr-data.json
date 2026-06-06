@@ -7067,6 +7067,15 @@
       "date": "2026-06-06",
       "address": "",
       "ts": "2026-06-06T15:26:31.995Z"
+    },
+    {
+      "leadId": "48481",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "6730 Deland Dr, Springfield, VA",
+      "ts": "2026-06-06T15:28:52.122Z"
     }
   ]
 }
