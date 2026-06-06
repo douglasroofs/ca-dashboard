@@ -7265,6 +7265,15 @@
       "date": "2026-06-06",
       "address": "10394 Navarone Place, Manassas, VA",
       "ts": "2026-06-06T15:59:46.104Z"
+    },
+    {
+      "leadId": "48512",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "9665 Crecy Lane, Manassas, VA",
+      "ts": "2026-06-06T15:59:52.113Z"
     }
   ]
 }
