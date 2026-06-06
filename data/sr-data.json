@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-05",
+  "updated": "2026-06-06",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -6626,6 +6626,15 @@
       "date": "2026-06-05",
       "address": "5923 One Penny Dr, Fairfax Station, VA",
       "ts": "2026-06-05T23:59:38.864Z"
+    },
+    {
+      "leadId": "48399",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "6102 Eagle Landing Rd, Burke, VA",
+      "ts": "2026-06-06T00:14:06.450Z"
     }
   ]
 }
