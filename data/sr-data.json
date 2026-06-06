@@ -7688,6 +7688,15 @@
       "date": "2026-06-06",
       "address": "9353 River Crest Road, Manassas, VA",
       "ts": "2026-06-06T17:25:14.953Z"
+    },
+    {
+      "leadId": "48551",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "6811 Mallow Ct, Springfield, VA",
+      "ts": "2026-06-06T17:25:33.324Z"
     }
   ]
 }
