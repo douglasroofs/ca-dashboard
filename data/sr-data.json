@@ -7508,6 +7508,15 @@
       "date": "2026-06-06",
       "address": "9412 Waterford Drive, Manassas, VA",
       "ts": "2026-06-06T16:46:24.759Z"
+    },
+    {
+      "leadId": "48538",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "7920 Greeley Blvd, Springfield, VA",
+      "ts": "2026-06-06T16:46:48.330Z"
     }
   ]
 }
