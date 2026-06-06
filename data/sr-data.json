@@ -6734,6 +6734,15 @@
       "date": "2026-06-06",
       "address": "7134 Eden Brook Dr, Columbia, MD",
       "ts": "2026-06-06T14:52:25.322Z"
+    },
+    {
+      "leadId": "48432",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "7830 Anson Ct, Springfield, VA",
+      "ts": "2026-06-06T14:53:20.173Z"
     }
   ]
 }
