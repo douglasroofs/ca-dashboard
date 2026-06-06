@@ -7535,6 +7535,15 @@
       "date": "2026-06-06",
       "address": "6708 Caneel Ct, Springfield, VA",
       "ts": "2026-06-06T16:52:43.726Z"
+    },
+    {
+      "leadId": "48540",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "6711 Caneel Ct, Springfield, VA",
+      "ts": "2026-06-06T16:53:19.362Z"
     }
   ]
 }
