@@ -7193,6 +7193,15 @@
       "date": "2026-06-06",
       "address": "10968 Pennycress Street, Manassas, VA",
       "ts": "2026-06-06T15:48:32.313Z"
+    },
+    {
+      "leadId": "48505",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "9615 Flametree Court, Manassas, VA",
+      "ts": "2026-06-06T15:49:56.126Z"
     }
   ]
 }
