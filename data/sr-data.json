@@ -6959,6 +6959,15 @@
       "date": "2026-06-06",
       "address": "6712 Deland Dr, Springfield, VA",
       "ts": "2026-06-06T15:13:21.999Z"
+    },
+    {
+      "leadId": "48463",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "7309 Little Bird Path, Columbia, MD",
+      "ts": "2026-06-06T15:15:00.294Z"
     }
   ]
 }
