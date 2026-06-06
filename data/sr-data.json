@@ -6716,6 +6716,15 @@
       "date": "2026-06-06",
       "address": "7114 Eden Brook Dr, Columbia, MD",
       "ts": "2026-06-06T14:48:18.970Z"
+    },
+    {
+      "leadId": "48424",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "7120 Eden Brook Dr, Columbia, MD",
+      "ts": "2026-06-06T14:50:15.382Z"
     }
   ]
 }
