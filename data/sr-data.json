@@ -7463,6 +7463,15 @@
       "date": "2026-06-06",
       "address": "9420 Corey Drive, Manassas, VA",
       "ts": "2026-06-06T16:41:02.276Z"
+    },
+    {
+      "leadId": "48534",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "7921 Greeley Blvd, Springfield, VA",
+      "ts": "2026-06-06T16:42:35.938Z"
     }
   ]
 }
