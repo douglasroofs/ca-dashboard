@@ -7922,6 +7922,15 @@
       "date": "2026-06-06",
       "address": "10305 Jayeselle Drive, Manassas, VA",
       "ts": "2026-06-06T18:08:56.962Z"
+    },
+    {
+      "leadId": "48590",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "10401 Sorrell Drive, Manassas, VA",
+      "ts": "2026-06-06T18:11:07.724Z"
     }
   ]
 }
