@@ -7472,6 +7472,15 @@
       "date": "2026-06-06",
       "address": "7921 Greeley Blvd, Springfield, VA",
       "ts": "2026-06-06T16:42:35.938Z"
+    },
+    {
+      "leadId": "48535",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-06",
+      "address": "7923 Greeley Blvd, Springfield, VA",
+      "ts": "2026-06-06T16:43:23.016Z"
     }
   ]
 }
