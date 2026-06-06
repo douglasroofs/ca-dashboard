@@ -7553,6 +7553,15 @@
       "date": "2026-06-06",
       "address": "6713 Caneel Ct, Springfield, VA",
       "ts": "2026-06-06T16:53:40.807Z"
+    },
+    {
+      "leadId": "48542",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-06",
+      "address": "2635 New Banner Lane, Herndon, VA",
+      "ts": "2026-06-06T17:00:53.593Z"
     }
   ]
 }
