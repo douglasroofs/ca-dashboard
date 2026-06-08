@@ -8714,6 +8714,15 @@
       "date": "2026-06-08",
       "address": "40 S Aberdeen St, Arlington, VA",
       "ts": "2026-06-08T19:17:28.809Z"
+    },
+    {
+      "leadId": "48823",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "130 S Columbus St, Arlington, VA",
+      "ts": "2026-06-08T19:21:29.320Z"
     }
   ]
 }
