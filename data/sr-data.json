@@ -8822,6 +8822,15 @@
       "date": "2026-06-08",
       "address": "130 S Pershing Dr, Arlington, VA",
       "ts": "2026-06-08T19:56:45.257Z"
+    },
+    {
+      "leadId": "48847",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "111 S Pershing Dr, Arlington, VA",
+      "ts": "2026-06-08T19:57:53.336Z"
     }
   ]
 }
