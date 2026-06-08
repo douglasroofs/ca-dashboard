@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-05",
+  "updated": "2026-06-08",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -8300,6 +8300,15 @@
       "date": "2026-03-05",
       "address": "6560 Zoysia Ct, Alexandria, VA",
       "ts": "2026-06-08T17:40:31.251Z"
+    },
+    {
+      "leadId": "48744",
+      "repName": "Harvey Shoemaker",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "215 N Wakefield St, Arlington, VA",
+      "ts": "2026-06-08T17:46:54.475Z"
     }
   ]
 }
