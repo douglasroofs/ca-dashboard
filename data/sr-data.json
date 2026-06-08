@@ -8462,6 +8462,15 @@
       "date": "2026-06-08",
       "address": "6597 Zoysia Ct, Alexandria, VA",
       "ts": "2026-06-08T18:16:32.919Z"
+    },
+    {
+      "leadId": "48766",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "6587 Cypress Point Road, Alexandria, VA",
+      "ts": "2026-06-08T18:20:00.932Z"
     }
   ]
 }
