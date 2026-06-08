@@ -8381,6 +8381,15 @@
       "date": "2026-06-08",
       "address": "6581 Zoysia Ct, Alexandria, VA",
       "ts": "2026-06-08T18:13:52.018Z"
+    },
+    {
+      "leadId": "48752",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "6583 Zoysia Ct, Alexandria, VA",
+      "ts": "2026-06-08T18:13:55.804Z"
     }
   ]
 }
