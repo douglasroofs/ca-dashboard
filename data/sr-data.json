@@ -8984,6 +8984,15 @@
       "date": "2026-06-08",
       "address": "101 Staton Dr, Upper Marlboro, MD",
       "ts": "2026-06-08T22:53:18.934Z"
+    },
+    {
+      "leadId": "48913",
+      "repName": "Isabelle Price",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "100 Staton Dr, Upper Marlboro, MD",
+      "ts": "2026-06-08T22:56:28.101Z"
     }
   ]
 }
