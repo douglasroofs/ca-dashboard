@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-06",
+  "updated": "2026-06-08",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -8048,6 +8048,15 @@
       "date": "2026-06-06",
       "address": "121 Seneca Ridge Dr, Sterling, VA",
       "ts": "2026-06-06T19:05:37.065Z"
+    },
+    {
+      "leadId": "48705",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "6638 Cypress Point Rd, Alexandria, VA",
+      "ts": "2026-06-08T16:57:40.667Z"
     }
   ]
 }
