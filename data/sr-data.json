@@ -8471,6 +8471,15 @@
       "date": "2026-06-08",
       "address": "6587 Cypress Point Road, Alexandria, VA",
       "ts": "2026-06-08T18:20:00.932Z"
+    },
+    {
+      "leadId": "48769",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "230 N Wakefield St, Arlington, VA",
+      "ts": "2026-06-08T18:25:38.537Z"
     }
   ]
 }
