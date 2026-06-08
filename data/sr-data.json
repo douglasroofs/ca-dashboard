@@ -8930,6 +8930,15 @@
       "date": "2026-06-08",
       "address": "415 South Kensington Street, Arlington, VA",
       "ts": "2026-06-08T21:16:24.445Z"
+    },
+    {
+      "leadId": "48906",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "5626 Fifth St S, Arlington, VA",
+      "ts": "2026-06-08T21:17:48.923Z"
     }
   ]
 }
