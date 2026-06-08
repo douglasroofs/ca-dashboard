@@ -8615,6 +8615,15 @@
       "date": "2026-06-08",
       "address": "4500 Sawgrass Ct, Alexandria, VA",
       "ts": "2026-06-08T18:39:22.129Z"
+    },
+    {
+      "leadId": "48797",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "4612 Second Rd N, Arlington, VA",
+      "ts": "2026-06-08T18:43:05.407Z"
     }
   ]
 }
