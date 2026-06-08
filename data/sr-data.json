@@ -8624,6 +8624,15 @@
       "date": "2026-06-08",
       "address": "4612 Second Rd N, Arlington, VA",
       "ts": "2026-06-08T18:43:05.407Z"
+    },
+    {
+      "leadId": "48799",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "227 N Park Dr, Arlington, VA",
+      "ts": "2026-06-08T18:44:01.065Z"
     }
   ]
 }
