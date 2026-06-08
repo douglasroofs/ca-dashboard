@@ -9083,6 +9083,15 @@
       "date": "2026-06-08",
       "address": "13003 Keverton Dr, Upper Marlboro, MD",
       "ts": "2026-06-08T23:24:30.329Z"
+    },
+    {
+      "leadId": "48928",
+      "repName": "Isabelle Price",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "212 Graiden St, Upper Marlboro, MD",
+      "ts": "2026-06-08T23:26:33.862Z"
     }
   ]
 }
