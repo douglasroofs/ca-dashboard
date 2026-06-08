@@ -8210,6 +8210,15 @@
       "date": "2026-06-08",
       "address": "",
       "ts": "2026-06-08T17:02:50.594Z"
+    },
+    {
+      "leadId": "48729",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "6602 Cypress Point Rd, Alexandria, VA",
+      "ts": "2026-06-08T17:03:12.425Z"
     }
   ]
 }
