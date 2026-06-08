@@ -8552,6 +8552,15 @@
       "date": "2026-06-08",
       "address": "4548 Sawgrass Ct, Alexandria, VA",
       "ts": "2026-06-08T18:26:28.096Z"
+    },
+    {
+      "leadId": "48783",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "4537 Saucon Valley Court, Alexandria, VA",
+      "ts": "2026-06-08T18:27:06.210Z"
     }
   ]
 }
