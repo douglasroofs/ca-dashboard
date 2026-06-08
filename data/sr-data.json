@@ -8588,6 +8588,15 @@
       "date": "2026-06-08",
       "address": "220 N Wakefield St, Arlington, VA",
       "ts": "2026-06-08T18:34:32.809Z"
+    },
+    {
+      "leadId": "48788",
+      "repName": "Andrew Funk",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "4508 Sawgrass Ct, Alexandria, VA",
+      "ts": "2026-06-08T18:35:02.496Z"
     }
   ]
 }
