@@ -9092,6 +9092,15 @@
       "date": "2026-06-08",
       "address": "212 Graiden St, Upper Marlboro, MD",
       "ts": "2026-06-08T23:26:33.862Z"
+    },
+    {
+      "leadId": "47146",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-08",
+      "address": "1718 Asoleado Lane, Vienna, VA",
+      "ts": "2026-06-08T23:31:25.034Z"
     }
   ]
 }
