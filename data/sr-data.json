@@ -8507,6 +8507,15 @@
       "date": "2026-06-08",
       "address": "4519 Saucon Valley Court, Alexandria, VA",
       "ts": "2026-06-08T18:25:50.402Z"
+    },
+    {
+      "leadId": "48778",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "4523 Saucon Valley Court, Alexandria, VA",
+      "ts": "2026-06-08T18:25:52.221Z"
     }
   ]
 }
