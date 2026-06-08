@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-05",
+  "updated": "2026-06-08",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -8372,6 +8372,15 @@
       "date": "2026-03-05",
       "address": "6571 Zoysia Ct, Alexandria, VA",
       "ts": "2026-06-08T18:13:37.144Z"
+    },
+    {
+      "leadId": "48751",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "6581 Zoysia Ct, Alexandria, VA",
+      "ts": "2026-06-08T18:13:52.018Z"
     }
   ]
 }
