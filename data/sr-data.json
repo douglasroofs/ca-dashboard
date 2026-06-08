@@ -9155,6 +9155,15 @@
       "date": "2026-06-08",
       "address": "102 Essenton Dr, Upper Marlboro, MD",
       "ts": "2026-06-08T23:42:21.895Z"
+    },
+    {
+      "leadId": "48942",
+      "repName": "Isabelle Price",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "109 Essenton Dr, Upper Marlboro, MD",
+      "ts": "2026-06-08T23:46:13.888Z"
     }
   ]
 }
