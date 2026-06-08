@@ -8057,6 +8057,15 @@
       "date": "2026-06-08",
       "address": "6638 Cypress Point Rd, Alexandria, VA",
       "ts": "2026-06-08T16:57:40.667Z"
+    },
+    {
+      "leadId": "48707",
+      "repName": "Andrew Funk",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "",
+      "ts": "2026-06-08T16:57:47.282Z"
     }
   ]
 }
