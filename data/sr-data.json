@@ -9101,6 +9101,15 @@
       "date": "2026-06-08",
       "address": "1718 Asoleado Lane, Vienna, VA",
       "ts": "2026-06-08T23:31:25.034Z"
+    },
+    {
+      "leadId": "48929",
+      "repName": "Isabelle Price",
+      "status": "PITCH MISS",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "205 Graiden St, Upper Marlboro, MD",
+      "ts": "2026-06-08T23:31:30.346Z"
     }
   ]
 }
