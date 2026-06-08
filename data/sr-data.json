@@ -8687,6 +8687,15 @@
       "date": "2026-06-08",
       "address": "4701 Second St N, Arlington, VA",
       "ts": "2026-06-08T18:55:46.395Z"
+    },
+    {
+      "leadId": "48808",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "136 N Park Dr, Arlington, VA",
+      "ts": "2026-06-08T18:56:23.370Z"
     }
   ]
 }
