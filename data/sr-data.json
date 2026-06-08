@@ -8597,6 +8597,15 @@
       "date": "2026-06-08",
       "address": "4508 Sawgrass Ct, Alexandria, VA",
       "ts": "2026-06-08T18:35:02.496Z"
+    },
+    {
+      "leadId": "48790",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "4504 Sawgrass Ct, Alexandria, VA",
+      "ts": "2026-06-08T18:39:17.698Z"
     }
   ]
 }
