@@ -8885,6 +8885,15 @@
       "date": "2026-06-08",
       "address": "10213 Garden Way, Potomac, MD",
       "ts": "2026-06-08T20:21:11.742Z"
+    },
+    {
+      "leadId": "48881",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "4508 Sawgrass Court, Alexandria, VA",
+      "ts": "2026-06-08T20:29:31.558Z"
     }
   ]
 }
