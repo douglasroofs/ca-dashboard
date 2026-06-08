@@ -8858,6 +8858,15 @@
       "date": "2026-06-08",
       "address": "4426 First Rd S, Arlington, VA",
       "ts": "2026-06-08T20:00:13.267Z"
+    },
+    {
+      "leadId": "48852",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "142 S Pershing Dr, Arlington, VA",
+      "ts": "2026-06-08T20:01:27.582Z"
     }
   ]
 }
