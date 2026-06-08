@@ -8579,6 +8579,15 @@
       "date": "2026-06-08",
       "address": "4527 Saucon Valley Court, Alexandria, VA",
       "ts": "2026-06-08T18:28:06.147Z"
+    },
+    {
+      "leadId": "48787",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-08",
+      "address": "220 N Wakefield St, Arlington, VA",
+      "ts": "2026-06-08T18:34:32.809Z"
     }
   ]
 }
