@@ -9488,6 +9488,15 @@
       "date": "2026-06-09",
       "address": "5006 Sherier Pl NW, Washington, DC",
       "ts": "2026-06-09T17:00:52.555Z"
+    },
+    {
+      "leadId": "49022",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "",
+      "ts": "2026-06-09T17:00:55.565Z"
     }
   ]
 }
