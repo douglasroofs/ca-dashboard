@@ -9515,6 +9515,15 @@
       "date": "2026-06-09",
       "address": "5305 Cushing Pl NW, Washington, DC",
       "ts": "2026-06-09T17:02:10.618Z"
+    },
+    {
+      "leadId": "49025",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "5301 Cushing Pl NW, Washington, DC",
+      "ts": "2026-06-09T17:02:59.935Z"
     }
   ]
 }
