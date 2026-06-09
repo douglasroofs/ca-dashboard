@@ -9884,6 +9884,15 @@
       "date": "2026-06-09",
       "address": "9105 Southwick St, Fairfax, VA",
       "ts": "2026-06-09T21:21:28.772Z"
+    },
+    {
+      "leadId": "22066",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-09",
+      "address": "108 Fardale St SE, Vienna, VA",
+      "ts": "2026-06-09T21:22:29.934Z"
     }
   ]
 }
