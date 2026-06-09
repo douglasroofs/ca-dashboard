@@ -9227,6 +9227,15 @@
       "date": "2026-06-09",
       "address": "123 Weymouth St, Upper Marlboro, MD",
       "ts": "2026-06-09T00:01:44.895Z"
+    },
+    {
+      "leadId": "48958",
+      "repName": "Isabelle Price",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "110 Weymouth St, Upper Marlboro, MD",
+      "ts": "2026-06-09T00:04:05.116Z"
     }
   ]
 }
