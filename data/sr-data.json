@@ -10136,6 +10136,15 @@
       "date": "2026-06-09",
       "address": "3318 Parkside Terr, Fairfax, VA",
       "ts": "2026-06-09T23:48:35.499Z"
+    },
+    {
+      "leadId": "49440",
+      "repName": "Harvey Shoemaker",
+      "status": "PITCH MISS",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "3311 Parkside Terr, Fairfax, VA",
+      "ts": "2026-06-09T23:53:14.653Z"
     }
   ]
 }
