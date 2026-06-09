@@ -9803,6 +9803,15 @@
       "date": "2026-06-09",
       "address": "9609 Bel Glade St, Fairfax, VA",
       "ts": "2026-06-09T19:40:07.694Z"
+    },
+    {
+      "leadId": "49149",
+      "repName": "Andrew Prickel",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "",
+      "ts": "2026-06-09T20:11:28.699Z"
     }
   ]
 }
