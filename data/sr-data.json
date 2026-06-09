@@ -9866,6 +9866,15 @@
       "date": "2026-06-09",
       "address": "3608 Lido Pl, Fairfax, VA",
       "ts": "2026-06-09T21:12:39.668Z"
+    },
+    {
+      "leadId": "49247",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "9123 Southwick St, Fairfax, VA",
+      "ts": "2026-06-09T21:15:37.970Z"
     }
   ]
 }
