@@ -9452,6 +9452,15 @@
       "date": "2026-06-09",
       "address": "5316 Edmunds Pl NW, Washington, DC",
       "ts": "2026-06-09T16:40:22.387Z"
+    },
+    {
+      "leadId": "49015",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "5239 Sherier Pl NW, Washington, DC",
+      "ts": "2026-06-09T16:49:22.541Z"
     }
   ]
 }
