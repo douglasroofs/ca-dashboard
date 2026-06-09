@@ -9245,6 +9245,15 @@
       "date": "2026-06-09",
       "address": "4611 Wilson Blvd, Arlington, VA",
       "ts": "2026-06-09T14:18:14.257Z"
+    },
+    {
+      "leadId": "48984",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "5227 Sherier Pl NW, Washington, DC",
+      "ts": "2026-06-09T16:19:48.087Z"
     }
   ]
 }
