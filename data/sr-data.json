@@ -9236,6 +9236,15 @@
       "date": "2026-06-09",
       "address": "110 Weymouth St, Upper Marlboro, MD",
       "ts": "2026-06-09T00:04:05.116Z"
+    },
+    {
+      "leadId": "48971",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "4611 Wilson Blvd, Arlington, VA",
+      "ts": "2026-06-09T14:18:14.257Z"
     }
   ]
 }
