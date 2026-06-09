@@ -10064,6 +10064,15 @@
       "date": "2026-06-09",
       "address": "9127 Santayana Dr, Fairfax, VA",
       "ts": "2026-06-09T22:13:40.450Z"
+    },
+    {
+      "leadId": "49360",
+      "repName": "Harvey Shoemaker",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "9113 Santayana Dr, Fairfax, VA",
+      "ts": "2026-06-09T22:14:22.590Z"
     }
   ]
 }
