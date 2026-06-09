@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-08",
+  "updated": "2026-06-09",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -9218,6 +9218,15 @@
       "date": "2026-06-08",
       "address": "124 Weymouth St, Upper Marlboro, MD",
       "ts": "2026-06-09T00:00:00.605Z"
+    },
+    {
+      "leadId": "48956",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-09",
+      "address": "123 Weymouth St, Upper Marlboro, MD",
+      "ts": "2026-06-09T00:01:44.895Z"
     }
   ]
 }
