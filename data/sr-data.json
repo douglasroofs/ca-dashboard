@@ -10721,6 +10721,15 @@
       "date": "2026-06-10",
       "address": "9906 S Park Cir, Fairfax Station, VA",
       "ts": "2026-06-10T21:54:20.938Z"
+    },
+    {
+      "leadId": "49360",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-10",
+      "address": "9113 Santayana Dr, Fairfax, VA",
+      "ts": "2026-06-10T22:12:39.586Z"
     }
   ]
 }
