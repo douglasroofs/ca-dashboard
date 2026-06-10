@@ -10415,6 +10415,15 @@
       "date": "2026-06-10",
       "address": "44156 Bristow Cir, Ashburn, VA",
       "ts": "2026-06-10T17:39:13.174Z"
+    },
+    {
+      "leadId": "49517",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-10",
+      "address": "44148 Bristow Cir, Ashburn, VA",
+      "ts": "2026-06-10T17:39:18.155Z"
     }
   ]
 }
