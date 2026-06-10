@@ -10865,6 +10865,15 @@
       "date": "2026-06-10",
       "address": "7806 Belleflower Dr, Springfield, VA",
       "ts": "2026-06-10T23:23:50.547Z"
+    },
+    {
+      "leadId": "49663",
+      "repName": "David Kerns",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-10",
+      "address": "9517 Spring Hill Farm Way, Manassas, VA",
+      "ts": "2026-06-10T23:41:30.900Z"
     }
   ]
 }
