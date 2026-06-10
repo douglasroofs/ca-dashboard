@@ -10307,6 +10307,15 @@
       "date": "2026-06-10",
       "address": "44195 Chatham Way, Ashburn, VA",
       "ts": "2026-06-10T17:23:58.183Z"
+    },
+    {
+      "leadId": "49499",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-10",
+      "address": "44207 Chatham Way, Ashburn, VA",
+      "ts": "2026-06-10T17:24:03.171Z"
     }
   ]
 }
