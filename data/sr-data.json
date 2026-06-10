@@ -10469,6 +10469,15 @@
       "date": "2026-06-10",
       "address": "9123 Glenbrook Rd, Fairfax, VA",
       "ts": "2026-06-10T17:45:08.208Z"
+    },
+    {
+      "leadId": "49528",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-10",
+      "address": "20258 Catlett Pl, Ashburn, VA",
+      "ts": "2026-06-10T17:45:16.904Z"
     }
   ]
 }
