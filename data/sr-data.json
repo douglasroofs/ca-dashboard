@@ -10199,6 +10199,15 @@
       "date": "2026-06-10",
       "address": "8942 Hanson Grove Ct, Manassas, VA",
       "ts": "2026-06-10T13:43:47.517Z"
+    },
+    {
+      "leadId": "48338",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-10",
+      "address": "8610 Webster Tavern Way, Manassas, VA",
+      "ts": "2026-06-10T13:48:07.016Z"
     }
   ]
 }
