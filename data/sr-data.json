@@ -10649,6 +10649,15 @@
       "date": "2026-06-10",
       "address": "9126 Christopher St, Fairfax, VA",
       "ts": "2026-06-10T19:45:24.232Z"
+    },
+    {
+      "leadId": "31563",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-10",
+      "address": "6564 Zoysia Ct, Alexandria, VA",
+      "ts": "2026-06-10T20:07:07.261Z"
     }
   ]
 }
