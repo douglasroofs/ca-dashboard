@@ -10235,6 +10235,15 @@
       "date": "2026-06-10",
       "address": "",
       "ts": "2026-06-10T16:49:37.469Z"
+    },
+    {
+      "leadId": "49482",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-10",
+      "address": "20397 Altavista Way, Ashburn, VA",
+      "ts": "2026-06-10T16:49:41.512Z"
     }
   ]
 }
