@@ -10694,6 +10694,15 @@
       "date": "2026-06-10",
       "address": "609 South Oak Street, Falls Church, VA",
       "ts": "2026-06-10T20:23:26.308Z"
+    },
+    {
+      "leadId": "47749",
+      "repName": "David Kerns",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-10",
+      "address": "9314 Brandon St, Manassas Park, VA",
+      "ts": "2026-06-10T21:38:19.750Z"
     }
   ]
 }
