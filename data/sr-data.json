@@ -10793,6 +10793,15 @@
       "date": "2026-06-10",
       "address": "7814 Belleflower Dr, Springfield, VA",
       "ts": "2026-06-10T22:26:14.365Z"
+    },
+    {
+      "leadId": "49642",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-10",
+      "address": "7813 Belleflower Dr, Springfield, VA",
+      "ts": "2026-06-10T22:27:19.496Z"
     }
   ]
 }
