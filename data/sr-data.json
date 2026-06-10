@@ -10190,6 +10190,15 @@
       "date": "2026-06-10",
       "address": "3314 Parkside Terr, Fairfax, VA",
       "ts": "2026-06-10T01:18:00.242Z"
+    },
+    {
+      "leadId": "48360",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-10",
+      "address": "8942 Hanson Grove Ct, Manassas, VA",
+      "ts": "2026-06-10T13:43:47.517Z"
     }
   ]
 }
