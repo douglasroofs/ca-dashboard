@@ -10586,6 +10586,15 @@
       "date": "2026-06-10",
       "address": "19611 Aberlour Lane, Leesburg, VA",
       "ts": "2026-06-10T18:48:54.790Z"
+    },
+    {
+      "leadId": "49585",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-10",
+      "address": "19615 Aberlour Lane, Leesburg, VA",
+      "ts": "2026-06-10T18:48:56.834Z"
     }
   ]
 }
