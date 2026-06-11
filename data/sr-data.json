@@ -11603,6 +11603,15 @@
       "date": "2026-06-11",
       "address": "8018 Daffodil Ct, Springfield, VA",
       "ts": "2026-06-11T18:16:57.190Z"
+    },
+    {
+      "leadId": "49913",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "8020 Daffodil Ct, Springfield, VA",
+      "ts": "2026-06-11T18:17:01.047Z"
     }
   ]
 }
