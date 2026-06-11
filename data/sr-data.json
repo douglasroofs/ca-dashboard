@@ -10901,6 +10901,15 @@
       "date": "2026-06-11",
       "address": "202 Northwest Terrace, Silver Spring, MD",
       "ts": "2026-06-11T14:00:32.111Z"
+    },
+    {
+      "leadId": "49673",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "18213 Camdenhurst Dr, Gainesville, VA",
+      "ts": "2026-06-11T14:41:42.010Z"
     }
   ]
 }
