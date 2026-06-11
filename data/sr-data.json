@@ -11666,6 +11666,15 @@
       "date": "2026-06-11",
       "address": "301 Southwest Dr, Silver Spring, MD",
       "ts": "2026-06-11T18:30:52.772Z"
+    },
+    {
+      "leadId": "49943",
+      "repName": "Isabelle Price",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "13158 Morning Spring Ln, Fairfax, VA",
+      "ts": "2026-06-11T18:32:15.642Z"
     }
   ]
 }
