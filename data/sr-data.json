@@ -11963,6 +11963,15 @@
       "date": "2026-06-11",
       "address": "3116 White Peach Pl, Fairfax, VA",
       "ts": "2026-06-11T19:18:23.708Z"
+    },
+    {
+      "leadId": "46425",
+      "repName": "David Kerns",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-11",
+      "address": "4707 Briggs Rd, Fairfax, VA",
+      "ts": "2026-06-11T19:22:28.797Z"
     }
   ]
 }
