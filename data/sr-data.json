@@ -12233,6 +12233,15 @@
       "date": "2026-06-11",
       "address": "",
       "ts": "2026-06-11T20:08:13.205Z"
+    },
+    {
+      "leadId": "50053",
+      "repName": "Isabelle Price",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "13002 Mill Ct, Fairfax, VA",
+      "ts": "2026-06-11T20:10:13.706Z"
     }
   ]
 }
