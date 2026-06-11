@@ -11864,6 +11864,15 @@
       "date": "2026-06-11",
       "address": "13117 Madonna Ln, Fairfax, VA",
       "ts": "2026-06-11T19:08:13.066Z"
+    },
+    {
+      "leadId": "49978",
+      "repName": "Christian Brown",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "7585 Seabrook Lane, Springfield, VA",
+      "ts": "2026-06-11T19:08:43.477Z"
     }
   ]
 }
