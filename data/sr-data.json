@@ -11486,6 +11486,15 @@
       "date": "2026-06-11",
       "address": "",
       "ts": "2026-06-11T16:45:14.625Z"
+    },
+    {
+      "leadId": "49770",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "17100 Loftridge Ln, Gainesville, VA",
+      "ts": "2026-06-11T16:45:19.981Z"
     }
   ]
 }
