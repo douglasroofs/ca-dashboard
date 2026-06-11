@@ -12269,6 +12269,15 @@
       "date": "2026-06-11",
       "address": "3221 Amberley Ln, Fairfax, VA",
       "ts": "2026-06-11T20:14:04.712Z"
+    },
+    {
+      "leadId": "50061",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "4116 Majestic Ln, Fairfax, VA",
+      "ts": "2026-06-11T20:14:23.503Z"
     }
   ]
 }
