@@ -11783,6 +11783,15 @@
       "date": "2026-06-11",
       "address": "13159 Madonna Ln, Fairfax, VA",
       "ts": "2026-06-11T18:48:37.701Z"
+    },
+    {
+      "leadId": "49964",
+      "repName": "Andrew Funk",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "7807 Lobelia Ln, Springfield, VA",
+      "ts": "2026-06-11T18:50:33.665Z"
     }
   ]
 }
