@@ -11684,6 +11684,15 @@
       "date": "2026-06-11",
       "address": "13150 Morning Spring Ln, Fairfax, VA",
       "ts": "2026-06-11T18:34:00.806Z"
+    },
+    {
+      "leadId": "49950",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "13130 Morning Spring Ln, Fairfax, VA",
+      "ts": "2026-06-11T18:38:16.616Z"
     }
   ]
 }
