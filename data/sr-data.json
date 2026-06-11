@@ -12431,6 +12431,15 @@
       "date": "2026-06-11",
       "address": "13131 Pennypacker Ln, Fairfax, VA",
       "ts": "2026-06-11T21:00:47.994Z"
+    },
+    {
+      "leadId": "50100",
+      "repName": "George Bechara",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-11",
+      "address": "5835 Aberdale Pl, Adamstown, MD",
+      "ts": "2026-06-11T21:02:16.620Z"
     }
   ]
 }
