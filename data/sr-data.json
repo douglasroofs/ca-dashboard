@@ -12350,6 +12350,15 @@
       "date": "2026-06-11",
       "address": "",
       "ts": "2026-06-11T20:38:16.371Z"
+    },
+    {
+      "leadId": "50084",
+      "repName": "Isabelle Price",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "13131 Poplar Tree Rd, Fairfax, VA",
+      "ts": "2026-06-11T20:41:56.450Z"
     }
   ]
 }
