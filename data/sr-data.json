@@ -12278,6 +12278,15 @@
       "date": "2026-06-11",
       "address": "4116 Majestic Ln, Fairfax, VA",
       "ts": "2026-06-11T20:14:23.503Z"
+    },
+    {
+      "leadId": "50065",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "3213 Amberley Ln, Fairfax, VA",
+      "ts": "2026-06-11T20:18:38.833Z"
     }
   ]
 }
