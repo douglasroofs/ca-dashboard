@@ -12188,6 +12188,15 @@
       "date": "2026-06-11",
       "address": "3325 Mantua Dr, Fairfax, VA",
       "ts": "2026-06-11T20:01:23.209Z"
+    },
+    {
+      "leadId": "50045",
+      "repName": "Harvey Shoemaker",
+      "status": "PITCH MISS",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "3323 Mantua Dr, Fairfax, VA",
+      "ts": "2026-06-11T20:02:02.554Z"
     }
   ]
 }
