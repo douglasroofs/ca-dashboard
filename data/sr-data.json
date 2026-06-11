@@ -12098,6 +12098,15 @@
       "date": "2026-06-11",
       "address": "4100 Meadow Hill Ln, Fairfax, VA",
       "ts": "2026-06-11T19:45:51.070Z"
+    },
+    {
+      "leadId": "50030",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "3208 Chichester Ln, Fairfax, VA",
+      "ts": "2026-06-11T19:46:27.321Z"
     }
   ]
 }
