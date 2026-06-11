@@ -11621,6 +11621,15 @@
       "date": "2026-06-11",
       "address": "5861 Goldenwood Pl, Adamstown, MD",
       "ts": "2026-06-11T18:18:46.544Z"
+    },
+    {
+      "leadId": "49918",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "8007 Daffodil Ct, Springfield, VA",
+      "ts": "2026-06-11T18:27:28.917Z"
     }
   ]
 }
