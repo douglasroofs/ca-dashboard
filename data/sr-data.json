@@ -11495,6 +11495,15 @@
       "date": "2026-06-11",
       "address": "17100 Loftridge Ln, Gainesville, VA",
       "ts": "2026-06-11T16:45:19.981Z"
+    },
+    {
+      "leadId": "49802",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "7034 Flax St, Springfield, VA",
+      "ts": "2026-06-11T17:55:27.794Z"
     }
   ]
 }
