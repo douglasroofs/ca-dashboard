@@ -11414,6 +11414,15 @@
       "date": "2026-06-11",
       "address": "",
       "ts": "2026-06-11T16:43:50.196Z"
+    },
+    {
+      "leadId": "49759",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "",
+      "ts": "2026-06-11T16:43:54.043Z"
     }
   ]
 }
