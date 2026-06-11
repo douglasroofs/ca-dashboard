@@ -12323,6 +12323,15 @@
       "date": "2026-06-11",
       "address": "3225 Barbara Ln, Fairfax, VA",
       "ts": "2026-06-11T20:24:24.455Z"
+    },
+    {
+      "leadId": "50076",
+      "repName": "Isabelle Price",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "13102 Pennypacker Ln, Fairfax, VA",
+      "ts": "2026-06-11T20:33:44.231Z"
     }
   ]
 }
