@@ -11531,6 +11531,15 @@
       "date": "2026-06-11",
       "address": "7908 Viola St, Springfield, VA",
       "ts": "2026-06-11T18:00:20.636Z"
+    },
+    {
+      "leadId": "49807",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "7908 Viola St, Springfield, VA",
+      "ts": "2026-06-11T18:00:35.409Z"
     }
   ]
 }
