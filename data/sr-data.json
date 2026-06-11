@@ -11693,6 +11693,15 @@
       "date": "2026-06-11",
       "address": "13130 Morning Spring Ln, Fairfax, VA",
       "ts": "2026-06-11T18:38:16.616Z"
+    },
+    {
+      "leadId": "49952",
+      "repName": "Christian Brown",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "8368 Broughton Lane, Lorton, VA",
+      "ts": "2026-06-11T18:39:10.966Z"
     }
   ]
 }
