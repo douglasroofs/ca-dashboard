@@ -11378,6 +11378,15 @@
       "date": "2026-06-11",
       "address": "5756 Morland Dr S, Adamstown, MD",
       "ts": "2026-06-11T16:39:29.740Z"
+    },
+    {
+      "leadId": "49751",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "16100 Sheringham Way, Gainesville, VA",
+      "ts": "2026-06-11T16:41:59.163Z"
     }
   ]
 }
