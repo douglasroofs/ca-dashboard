@@ -11612,6 +11612,15 @@
       "date": "2026-06-11",
       "address": "8020 Daffodil Ct, Springfield, VA",
       "ts": "2026-06-11T18:17:01.047Z"
+    },
+    {
+      "leadId": "49915",
+      "repName": "George Bechara",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "5861 Goldenwood Pl, Adamstown, MD",
+      "ts": "2026-06-11T18:18:46.544Z"
     }
   ]
 }
