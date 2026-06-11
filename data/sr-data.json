@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-10",
+  "updated": "2026-06-11",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -10883,6 +10883,15 @@
       "date": "2026-06-10",
       "address": "9135 Leghorn Pl, Fairfax, VA",
       "ts": "2026-06-11T03:08:35.838Z"
+    },
+    {
+      "leadId": "49669",
+      "repName": "Christian Brown",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "212 Northwest Terrace, Silver Spring, MD",
+      "ts": "2026-06-11T14:00:25.846Z"
     }
   ]
 }
