@@ -11387,6 +11387,15 @@
       "date": "2026-06-11",
       "address": "16100 Sheringham Way, Gainesville, VA",
       "ts": "2026-06-11T16:41:59.163Z"
+    },
+    {
+      "leadId": "49753",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "16108 Sheringham Way, Gainesville, VA",
+      "ts": "2026-06-11T16:42:02.608Z"
     }
   ]
 }
