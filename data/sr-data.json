@@ -11567,6 +11567,15 @@
       "date": "2026-06-11",
       "address": "7009 Petunia St, Springfield, VA",
       "ts": "2026-06-11T18:06:38.440Z"
+    },
+    {
+      "leadId": "49905",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "7005 Petunia St, Springfield, VA",
+      "ts": "2026-06-11T18:06:42.413Z"
     }
   ]
 }
