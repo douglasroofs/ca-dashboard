@@ -12719,6 +12719,15 @@
       "date": "2026-06-11",
       "address": "",
       "ts": "2026-06-11T23:42:25.249Z"
+    },
+    {
+      "leadId": "50139",
+      "repName": "Michael McCarthy",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "8938 Glenbrook Rd, Fairfax, VA",
+      "ts": "2026-06-11T23:51:55.301Z"
     }
   ]
 }
