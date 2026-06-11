@@ -10955,6 +10955,15 @@
       "date": "2026-06-11",
       "address": "6013 Cantwell St, Gainesville, VA",
       "ts": "2026-06-11T14:42:22.731Z"
+    },
+    {
+      "leadId": "49680",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "6009 Cantwell St, Gainesville, VA",
+      "ts": "2026-06-11T14:42:24.593Z"
     }
   ]
 }
