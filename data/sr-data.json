@@ -11351,6 +11351,15 @@
       "date": "2026-06-11",
       "address": "18107 Camdenhurst Dr, Gainesville, VA",
       "ts": "2026-06-11T16:30:03.892Z"
+    },
+    {
+      "leadId": "49744",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "18104 Camdenhurst Dr, Gainesville, VA",
+      "ts": "2026-06-11T16:31:08.745Z"
     }
   ]
 }
