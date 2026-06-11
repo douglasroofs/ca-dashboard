@@ -11081,6 +11081,15 @@
       "date": "2026-06-11",
       "address": "18174 Camdenhurst Dr, Gainesville, VA",
       "ts": "2026-06-11T16:06:32.823Z"
+    },
+    {
+      "leadId": "49690",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-11",
+      "address": "18174 Camdenhurst Dr, Gainesville, VA",
+      "ts": "2026-06-11T16:06:41.526Z"
     }
   ]
 }
