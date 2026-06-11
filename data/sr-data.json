@@ -11270,6 +11270,15 @@
       "date": "2026-06-11",
       "address": "5512 Altenbury Loop, Gainesville, VA",
       "ts": "2026-06-11T16:20:27.704Z"
+    },
+    {
+      "leadId": "49735",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "",
+      "ts": "2026-06-11T16:20:29.858Z"
     }
   ]
 }
