@@ -12692,6 +12692,15 @@
       "date": "2026-06-11",
       "address": "9300 Santayana Dr, Fairfax, VA",
       "ts": "2026-06-11T23:02:01.393Z"
+    },
+    {
+      "leadId": "50134",
+      "repName": "Michael McCarthy",
+      "status": "PITCH MISS",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "3507 Alba Pl, Fairfax, VA",
+      "ts": "2026-06-11T23:12:20.922Z"
     }
   ]
 }
