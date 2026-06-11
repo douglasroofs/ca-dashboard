@@ -12215,6 +12215,15 @@
       "date": "2026-06-11",
       "address": "4205 Marble Ln, Fairfax, VA",
       "ts": "2026-06-11T20:04:40.871Z"
+    },
+    {
+      "leadId": "50048",
+      "repName": "Isabelle Price",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-11",
+      "address": "13005 Maepine Ct, Fairfax, VA",
+      "ts": "2026-06-11T20:07:08.458Z"
     }
   ]
 }
