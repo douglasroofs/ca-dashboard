@@ -13466,6 +13466,15 @@
       "date": "2026-06-12",
       "address": "9817 Squaw Valley Dr, Vienna, VA",
       "ts": "2026-06-12T18:45:28.541Z"
+    },
+    {
+      "leadId": "50340",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "1716 Asoleado Ln, Vienna, VA",
+      "ts": "2026-06-12T18:47:52.466Z"
     }
   ]
 }
