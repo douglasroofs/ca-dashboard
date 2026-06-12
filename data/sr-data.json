@@ -13547,6 +13547,15 @@
       "date": "2026-06-12",
       "address": "9315 Nancy St, Manassas Park, VA",
       "ts": "2026-06-12T19:58:05.730Z"
+    },
+    {
+      "leadId": "50362",
+      "repName": "Kelly Alston",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "9308 Brandon St, Manassas Park, VA",
+      "ts": "2026-06-12T19:59:56.789Z"
     }
   ]
 }
