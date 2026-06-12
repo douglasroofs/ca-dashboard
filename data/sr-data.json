@@ -13367,6 +13367,15 @@
       "date": "2026-06-12",
       "address": "5848 Hilldon St, McLean, VA",
       "ts": "2026-06-12T17:25:54.934Z"
+    },
+    {
+      "leadId": "50295",
+      "repName": "George Bechara",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "1503 Forest Ln, McLean, VA",
+      "ts": "2026-06-12T17:27:33.784Z"
     }
   ]
 }
