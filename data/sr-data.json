@@ -13214,6 +13214,15 @@
       "date": "2026-06-12",
       "address": "22204 Stablehouse Dr, Sterling, VA",
       "ts": "2026-06-12T16:57:33.701Z"
+    },
+    {
+      "leadId": "50264",
+      "repName": "George Bechara",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "6142 Farver Rd, McLean, VA",
+      "ts": "2026-06-12T17:00:53.257Z"
     }
   ]
 }
