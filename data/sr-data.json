@@ -13646,6 +13646,15 @@
       "date": "2026-06-12",
       "address": "9240 Stephanie St, Manassas Park, VA",
       "ts": "2026-06-12T20:38:35.800Z"
+    },
+    {
+      "leadId": "50383",
+      "repName": "Andrew Funk",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "11219 S Shore Rd, Reston, VA",
+      "ts": "2026-06-12T20:45:10.804Z"
     }
   ]
 }
