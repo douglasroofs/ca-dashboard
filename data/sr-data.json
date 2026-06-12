@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-03",
+  "updated": "2026-06-12",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -13511,6 +13511,15 @@
       "date": "2026-06-03",
       "address": "9302 Jan St, Manassas Park, VA",
       "ts": "2026-06-12T19:08:25.603Z"
+    },
+    {
+      "leadId": "50350",
+      "repName": "Kelly Alston",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "",
+      "ts": "2026-06-12T19:11:24.911Z"
     }
   ]
 }
