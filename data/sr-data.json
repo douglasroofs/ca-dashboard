@@ -13655,6 +13655,15 @@
       "date": "2026-06-12",
       "address": "11219 S Shore Rd, Reston, VA",
       "ts": "2026-06-12T20:45:10.804Z"
+    },
+    {
+      "leadId": "50394",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "9349 Cougar Ct, Manassas Park, VA",
+      "ts": "2026-06-12T21:59:05.162Z"
     }
   ]
 }
