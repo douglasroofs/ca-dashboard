@@ -13160,6 +13160,15 @@
       "date": "2026-06-12",
       "address": "22224 Stablehouse Dr, Sterling, VA",
       "ts": "2026-06-12T16:56:19.976Z"
+    },
+    {
+      "leadId": "50254",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "",
+      "ts": "2026-06-12T16:56:23.132Z"
     }
   ]
 }
