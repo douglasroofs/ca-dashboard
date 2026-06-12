@@ -13259,6 +13259,15 @@
       "date": "2026-06-12",
       "address": "1541 Forest Ln, McLean, VA",
       "ts": "2026-06-12T17:06:30.323Z"
+    },
+    {
+      "leadId": "50275",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "22196 Stablehouse Dr, Sterling, VA",
+      "ts": "2026-06-12T17:07:50.485Z"
     }
   ]
 }
