@@ -12818,6 +12818,15 @@
       "date": "2026-06-12",
       "address": "11219 S Shore Rd, Reston, VA",
       "ts": "2026-06-12T14:43:19.850Z"
+    },
+    {
+      "leadId": "50161",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "11219 S Shore Rd, Reston, VA",
+      "ts": "2026-06-12T14:43:24.392Z"
     }
   ]
 }
