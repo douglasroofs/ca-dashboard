@@ -13538,6 +13538,15 @@
       "date": "2026-06-12",
       "address": "9308 Paul Dr, Manassas Park, VA",
       "ts": "2026-06-12T19:37:26.948Z"
+    },
+    {
+      "leadId": "50361",
+      "repName": "David Kerns",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "9315 Nancy St, Manassas Park, VA",
+      "ts": "2026-06-12T19:58:05.730Z"
     }
   ]
 }
