@@ -12953,6 +12953,15 @@
       "date": "2026-06-12",
       "address": "4658 Hummingbird Ln, Fairfax, VA",
       "ts": "2026-06-12T15:06:04.166Z"
+    },
+    {
+      "leadId": "50179",
+      "repName": "Andrew Funk",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "1701 Shagbark Cir, Reston, VA",
+      "ts": "2026-06-12T15:08:24.034Z"
     }
   ]
 }
