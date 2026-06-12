@@ -13439,6 +13439,15 @@
       "date": "2026-06-12",
       "address": "1611 Lozano Dr, Vienna, VA",
       "ts": "2026-06-12T18:41:20.808Z"
+    },
+    {
+      "leadId": "50334",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "9505 Spring Hill Farm Way, Manassas, VA",
+      "ts": "2026-06-12T18:42:12.549Z"
     }
   ]
 }
