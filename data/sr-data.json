@@ -13232,6 +13232,15 @@
       "date": "2026-06-12",
       "address": "1609 Forest Ln, McLean, VA",
       "ts": "2026-06-12T17:03:03.289Z"
+    },
+    {
+      "leadId": "50269",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "1611 Forest Ln, McLean, VA",
+      "ts": "2026-06-12T17:04:32.714Z"
     }
   ]
 }
