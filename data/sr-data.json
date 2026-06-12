@@ -13241,6 +13241,15 @@
       "date": "2026-06-12",
       "address": "1611 Forest Ln, McLean, VA",
       "ts": "2026-06-12T17:04:32.714Z"
+    },
+    {
+      "leadId": "50270",
+      "repName": "George Bechara",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "1537 Forest Ln, McLean, VA",
+      "ts": "2026-06-12T17:05:03.779Z"
     }
   ]
 }
