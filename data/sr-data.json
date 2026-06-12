@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-11",
+  "updated": "2026-06-12",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -12737,6 +12737,15 @@
       "date": "2026-06-11",
       "address": "9208 Christopher St, Fairfax, VA",
       "ts": "2026-06-12T01:08:00.487Z"
+    },
+    {
+      "leadId": "50146",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "9103 Hamilton Drive, Fairfax, VA",
+      "ts": "2026-06-12T01:23:27.537Z"
     }
   ]
 }
