@@ -13286,6 +13286,15 @@
       "date": "2026-06-12",
       "address": "22197 Stablehouse Dr, Sterling, VA",
       "ts": "2026-06-12T17:07:54.793Z"
+    },
+    {
+      "leadId": "50278",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "1527 Forest Ln, McLean, VA",
+      "ts": "2026-06-12T17:08:58.132Z"
     }
   ]
 }
