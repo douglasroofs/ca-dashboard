@@ -13484,6 +13484,15 @@
       "date": "2026-06-12",
       "address": "9803 Squaw Valley Dr, Vienna, VA",
       "ts": "2026-06-12T18:56:25.569Z"
+    },
+    {
+      "leadId": "50346",
+      "repName": "Michael McCarthy",
+      "status": "PITCH MISS",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "9806 Squaw Valley Dr, Vienna, VA",
+      "ts": "2026-06-12T19:02:43.252Z"
     }
   ]
 }
