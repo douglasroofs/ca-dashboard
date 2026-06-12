@@ -12782,6 +12782,15 @@
       "date": "2026-06-12",
       "address": "3642 North Piedmont Street, Arlington, VA",
       "ts": "2026-06-12T13:59:42.094Z"
+    },
+    {
+      "leadId": "50157",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "11218 S Shore Rd, Reston, VA",
+      "ts": "2026-06-12T14:40:06.374Z"
     }
   ]
 }
