@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-12",
+  "updated": "2026-06-03",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -13502,6 +13502,15 @@
       "date": "2026-06-12",
       "address": "9806 Squaw Valley Dr, Vienna, VA",
       "ts": "2026-06-12T19:03:08.038Z"
+    },
+    {
+      "leadId": "47770",
+      "repName": "Kelly Alston",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-03",
+      "address": "9302 Jan St, Manassas Park, VA",
+      "ts": "2026-06-12T19:08:25.603Z"
     }
   ]
 }
