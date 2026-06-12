@@ -13223,6 +13223,15 @@
       "date": "2026-06-12",
       "address": "6142 Farver Rd, McLean, VA",
       "ts": "2026-06-12T17:00:53.257Z"
+    },
+    {
+      "leadId": "50267",
+      "repName": "George Bechara",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "1609 Forest Ln, McLean, VA",
+      "ts": "2026-06-12T17:03:03.289Z"
     }
   ]
 }
