@@ -13682,6 +13682,15 @@
       "date": "2026-06-12",
       "address": "5069 Burnside Farm Pl, Haymarket, VA",
       "ts": "2026-06-12T22:15:28.208Z"
+    },
+    {
+      "leadId": "50399",
+      "repName": "Marc Mitchell",
+      "status": "APPT. SCHEDULED",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "5010 Burnside Farm Pl, Haymarket, VA",
+      "ts": "2026-06-12T22:27:18.278Z"
     }
   ]
 }
