@@ -13322,6 +13322,15 @@
       "date": "2026-06-12",
       "address": "1533 Dahlia Ct, McLean, VA",
       "ts": "2026-06-12T17:17:18.309Z"
+    },
+    {
+      "leadId": "50285",
+      "repName": "George Bechara",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "1529 Dahlia Ct, McLean, VA",
+      "ts": "2026-06-12T17:18:30.521Z"
     }
   ]
 }
