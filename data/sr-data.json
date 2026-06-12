@@ -13412,6 +13412,15 @@
       "date": "2026-06-12",
       "address": "12502 Basswood Dr, Manassas, VA",
       "ts": "2026-06-12T18:20:37.484Z"
+    },
+    {
+      "leadId": "50329",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "9501 Spring Hill Farm Way, Manassas, VA",
+      "ts": "2026-06-12T18:29:32.758Z"
     }
   ]
 }
