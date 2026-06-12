@@ -12944,6 +12944,15 @@
       "date": "2026-06-12",
       "address": "8531 Old Dominion Dr, McLean, VA",
       "ts": "2026-06-12T15:05:24.508Z"
+    },
+    {
+      "leadId": "50189",
+      "repName": "Michael McCarthy",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "4658 Hummingbird Ln, Fairfax, VA",
+      "ts": "2026-06-12T15:06:04.166Z"
     }
   ]
 }
