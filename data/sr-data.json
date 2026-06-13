@@ -14789,6 +14789,15 @@
       "date": "2026-06-13",
       "address": "15698 Crestview Ln, Haymarket, VA",
       "ts": "2026-06-13T18:06:28.033Z"
+    },
+    {
+      "leadId": "50808",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-13",
+      "address": "14067 Timothy Drive, Gainesville, VA",
+      "ts": "2026-06-13T19:27:06.023Z"
     }
   ]
 }
