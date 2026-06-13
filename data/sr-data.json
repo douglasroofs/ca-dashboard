@@ -13997,6 +13997,15 @@
       "date": "2026-06-13",
       "address": "5342 Chaffins Farm Ct, Haymarket, VA",
       "ts": "2026-06-13T14:12:55.353Z"
+    },
+    {
+      "leadId": "50529",
+      "repName": "Isabelle Price",
+      "status": "DO NOT KNOCK",
+      "isCA": false,
+      "date": "2026-06-13",
+      "address": "5767 Benford Dr, Haymarket, VA",
+      "ts": "2026-06-13T14:13:25.436Z"
     }
   ]
 }
