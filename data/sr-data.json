@@ -14276,6 +14276,15 @@
       "date": "2026-06-13",
       "address": "4011 Latham Drive, Haymarket, VA",
       "ts": "2026-06-13T15:12:58.393Z"
+    },
+    {
+      "leadId": "50528",
+      "repName": "Harvey Shoemaker",
+      "status": "APPT. SCHEDULED",
+      "isCA": false,
+      "date": "2026-06-13",
+      "address": "5342 Chaffins Farm Ct, Haymarket, VA",
+      "ts": "2026-06-13T15:19:02.688Z"
     }
   ]
 }
