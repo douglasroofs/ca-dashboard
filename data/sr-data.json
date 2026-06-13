@@ -14591,6 +14591,15 @@
       "date": "2026-06-13",
       "address": "4019 Latham Drive, Haymarket, VA",
       "ts": "2026-06-13T15:57:52.840Z"
+    },
+    {
+      "leadId": "50647",
+      "repName": "Isabelle Price",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-13",
+      "address": "14405 Yellow Tavern Ct, Haymarket, VA",
+      "ts": "2026-06-13T16:08:32.818Z"
     }
   ]
 }
