@@ -14483,6 +14483,15 @@
       "date": "2026-06-13",
       "address": "4001 Latham Drive, Haymarket, VA",
       "ts": "2026-06-13T15:38:01.569Z"
+    },
+    {
+      "leadId": "50716",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-13",
+      "address": "15591 Newhope Dr, Haymarket, VA",
+      "ts": "2026-06-13T15:40:51.874Z"
     }
   ]
 }
