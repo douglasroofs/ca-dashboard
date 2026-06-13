@@ -14114,6 +14114,15 @@
       "date": "2026-06-13",
       "address": "3404 Heritage Farms Lane, Gainesville, VA",
       "ts": "2026-06-13T14:33:55.732Z"
+    },
+    {
+      "leadId": "50595",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-13",
+      "address": "3413 Amberfield Lane, Haymarket, VA",
+      "ts": "2026-06-13T14:33:58.429Z"
     }
   ]
 }
