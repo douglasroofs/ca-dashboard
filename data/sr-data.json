@@ -13907,6 +13907,15 @@
       "date": "2026-06-13",
       "address": "16001 Berkeley Dr, Haymarket, VA",
       "ts": "2026-06-13T13:56:33.338Z"
+    },
+    {
+      "leadId": "50499",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-13",
+      "address": "16013 Berkeley Dr, Haymarket, VA",
+      "ts": "2026-06-13T14:00:06.943Z"
     }
   ]
 }
