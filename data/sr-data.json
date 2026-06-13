@@ -14492,6 +14492,15 @@
       "date": "2026-06-13",
       "address": "15591 Newhope Dr, Haymarket, VA",
       "ts": "2026-06-13T15:40:51.874Z"
+    },
+    {
+      "leadId": "50717",
+      "repName": "George Bechara",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-13",
+      "address": "4530 Dogwood Tree Ct, Haymarket, VA",
+      "ts": "2026-06-13T15:41:33.756Z"
     }
   ]
 }
