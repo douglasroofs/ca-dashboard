@@ -14762,6 +14762,15 @@
       "date": "2026-06-13",
       "address": "",
       "ts": "2026-06-13T17:47:36.203Z"
+    },
+    {
+      "leadId": "50799",
+      "repName": "Harvey Shoemaker",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-13",
+      "address": "14592 Zacharys Mill Terr, Haymarket, VA",
+      "ts": "2026-06-13T17:59:12.356Z"
     }
   ]
 }
