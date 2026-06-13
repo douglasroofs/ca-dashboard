@@ -14321,6 +14321,15 @@
       "date": "2026-06-13",
       "address": "14405 Yellow Tavern Ct, Haymarket, VA",
       "ts": "2026-06-13T15:21:06.566Z"
+    },
+    {
+      "leadId": "50527",
+      "repName": "David Kerns",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-13",
+      "address": "15611 Berkeley Dr, Haymarket, VA",
+      "ts": "2026-06-13T15:27:14.302Z"
     }
   ]
 }
