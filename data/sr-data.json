@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-13",
+  "updated": "2026-06-12",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -13961,6 +13961,15 @@
       "date": "2026-06-13",
       "address": "5346 Chaffins Farm Ct, Haymarket, VA",
       "ts": "2026-06-13T14:07:26.300Z"
+    },
+    {
+      "leadId": "48069",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-12",
+      "address": "1700 Asoleado Lane, Vienna, VA",
+      "ts": "2026-06-13T14:08:26.487Z"
     }
   ]
 }
