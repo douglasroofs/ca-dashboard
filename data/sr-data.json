@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-13",
+  "updated": "2026-06-14",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -14861,6 +14861,15 @@
       "date": "2026-06-13",
       "address": "6308 22nd St N, Arlington, VA",
       "ts": "2026-06-13T22:51:51.566Z"
+    },
+    {
+      "leadId": "50808",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-14",
+      "address": "14067 Timothy Drive, Gainesville, VA",
+      "ts": "2026-06-14T02:20:26.866Z"
     }
   ]
 }
