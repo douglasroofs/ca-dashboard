@@ -15347,6 +15347,15 @@
       "date": "2026-06-15",
       "address": "3834 Prince William Dr, Fairfax, VA",
       "ts": "2026-06-15T22:22:42.603Z"
+    },
+    {
+      "leadId": "51054",
+      "repName": "Harvey Shoemaker",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-15",
+      "address": "9120 Okla Dr, Fairfax, VA",
+      "ts": "2026-06-15T22:42:33.063Z"
     }
   ]
 }
