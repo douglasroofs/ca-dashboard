@@ -15275,6 +15275,15 @@
       "date": "2026-06-15",
       "address": "4024 Iva Ln, Annandale, VA",
       "ts": "2026-06-15T18:33:12.597Z"
+    },
+    {
+      "leadId": "50990",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-06-15",
+      "address": "",
+      "ts": "2026-06-15T18:56:34.919Z"
     }
   ]
 }
