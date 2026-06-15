@@ -15077,6 +15077,15 @@
       "date": "2026-06-15",
       "address": "4161 Elizabeth Ln, Annandale, VA",
       "ts": "2026-06-15T16:23:32.545Z"
+    },
+    {
+      "leadId": "50852",
+      "repName": "Andrew Funk",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-15",
+      "address": "4161 Elizabeth Ln, Annandale, VA",
+      "ts": "2026-06-15T16:33:32.149Z"
     }
   ]
 }
