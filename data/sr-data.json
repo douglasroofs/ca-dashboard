@@ -14888,6 +14888,15 @@
       "date": "2026-03-28",
       "address": "4441 Flintstone Rd, Alexandria, VA",
       "ts": "2026-06-15T14:16:07.233Z"
+    },
+    {
+      "leadId": "35207",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-03-28",
+      "address": "4443 Flintstone Rd, Alexandria, VA",
+      "ts": "2026-06-15T14:16:16.936Z"
     }
   ]
 }
