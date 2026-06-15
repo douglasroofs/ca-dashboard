@@ -15041,6 +15041,15 @@
       "date": "2026-06-15",
       "address": "4032 Old Hickory Rd, Annandale, VA",
       "ts": "2026-06-15T15:31:05.599Z"
+    },
+    {
+      "leadId": "50844",
+      "repName": "Andrew Funk",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-06-15",
+      "address": "4032 Old Hickory Rd, Annandale, VA",
+      "ts": "2026-06-15T15:31:20.409Z"
     }
   ]
 }
