@@ -15284,6 +15284,15 @@
       "date": "2026-06-15",
       "address": "",
       "ts": "2026-06-15T18:56:34.919Z"
+    },
+    {
+      "leadId": "51015",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-15",
+      "address": "4159 Elizabeth Ln, Annandale, VA",
+      "ts": "2026-06-15T20:03:21.127Z"
     }
   ]
 }
