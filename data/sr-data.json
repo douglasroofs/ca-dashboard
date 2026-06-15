@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-28",
+  "updated": "2026-06-15",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -14933,6 +14933,15 @@
       "date": "2026-03-28",
       "address": "4445 Flintstone Rd, Alexandria, VA",
       "ts": "2026-06-15T14:20:03.880Z"
+    },
+    {
+      "leadId": "50828",
+      "repName": "Andrew Funk",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-06-15",
+      "address": "4440 Flintstone Rd, Alexandria, VA",
+      "ts": "2026-06-15T14:27:49.632Z"
     }
   ]
 }
