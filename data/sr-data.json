@@ -15437,6 +15437,15 @@
       "date": "2026-06-16",
       "address": "41895 Wooden Horse Terr, Aldie, VA",
       "ts": "2026-06-16T17:59:05.851Z"
+    },
+    {
+      "leadId": "48805",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-06-16",
+      "address": "6562 Zoysia Court, Alexandria, VA",
+      "ts": "2026-06-16T18:20:31.493Z"
     }
   ]
 }
