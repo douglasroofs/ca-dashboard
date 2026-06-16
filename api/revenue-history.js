@@ -5,7 +5,7 @@ module.exports = async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
 
     const { month } = req.query;
-    const accessToken = process.env.LEAP_ACCESS_TOKEN;
+        const accessToken = process.env.JP_API_TOKEN || process.env.LEAP_ACCESS_TOKEN;
 
     if (!accessToken) return res.status(500).json({ error: 'Missing LEAP_ACCESS_TOKEN' });
     if (!month || !/^\d{4}-\d{2}$/.test(month)) {
