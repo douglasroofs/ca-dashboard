@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-15",
+  "updated": "2026-06-16",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -15374,6 +15374,15 @@
       "date": "2026-06-15",
       "address": "Annapolis, MD",
       "ts": "2026-06-16T13:55:18.489Z"
+    },
+    {
+      "leadId": "51062",
+      "repName": "Jack Obert",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-06-16",
+      "address": "2074 Cobblestone Ln, Reston, VA",
+      "ts": "2026-06-16T13:55:51.378Z"
     }
   ]
 }
