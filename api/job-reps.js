@@ -85,11 +85,11 @@ module.exports = async (req, res) => {
 
     const nums = (url.searchParams.get('nums') || '').split(',').map(s => s.trim()).filter(Boolean);
     const out = {};
-    const batch = 5;
-    for (let i = 0; i < nums.length; i += batch) {
-      const slice = nums.slice(i, i + batch);
-      const jobs = await Promise.all(slice.map(n => fetchJob(token, n)));
-      slice.forEach((n, k) => { out[n] = salesmanOf(jobs[k]) || 'Unknown'; });
+    // resolve sequentially with a small delay to avoid rate-limit 401s
+    for (let i = 0; i < nums.length; i++) {
+      const job = await fetchJob(token, nums[i]);
+      out[nums[i]] = salesmanOf(job) || 'Unknown';
+      await new Promise((r) => setTimeout(r, 120));
     }
     res.status(200).json({ updated: new Date().toISOString(), reps: out });
   } catch (err) {
