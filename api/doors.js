@@ -67,11 +67,12 @@ module.exports = async (req, res) => {
     const usersRes = await srGet('/users');
     const allowedUserIds = new Set();
     const allowedReps = new Set();
+    const roster = [];
     arr(usersRes.json).forEach((u) => {
-      if (ALLOWED_TEAMS.has(teamNorm(u.team))) {
+      if (ALLOWED_TEAMS.has(teamNorm(u.team)) && u.active !== false) {
         if (u.id != null) allowedUserIds.add(u.id);
         const nm = [u.firstName, u.lastName].filter(Boolean).join(' ').trim();
-        if (nm) allowedReps.add(repKey(nm));
+        if (nm) { allowedReps.add(repKey(nm)); roster.push(nm); }
       }
     });
 
@@ -104,7 +105,7 @@ module.exports = async (req, res) => {
     }
     const reps = Object.keys(counts).map((rep) => ({ rep, doors: counts[rep] })).sort((a, b) => b.doors - a.doors);
     res.setHeader('Cache-Control', 'no-store');
-    res.status(200).json({ updated: new Date().toISOString(), total, reps, allowedReps: [...allowedReps] });
+    res.status(200).json({ updated: new Date().toISOString(), total, reps, allowedReps: [...allowedReps], roster });
   } catch (err) {
     res.status(500).json({ error: String(err && err.message ? err.message : err) });
   }
