@@ -1,4 +1,4 @@
-undefined// api/ca.js — CA (documents named "CA") count this month, by job salesman.
+// api/ca.js — CA (documents named "CA") count this month, by job salesman.
 // Served as a function because static-file publishing is currently stuck.
 // This is a snapshot refreshed by the daily scheduled task (reporting token is
 // browser-only / 24h, so it can't be computed live server-side).
@@ -12,13 +12,12 @@ const DATA = {
     { rep: 'Andrew Funk', count: 6 },
     { rep: 'David Kerns', count: 5 },
     { rep: 'Andrew Prickel', count: 4 },
-    { rep: 'Harvey Shoemaker', count: 4 },
     { rep: 'George Bechara', count: 4 },
+    { rep: 'Harvey Shoemaker', count: 4 },
     { rep: 'Jack Obert', count: 3 },
     { rep: 'Christian Brown', count: 2 },
+    { rep: 'Michael McCarthy', count: 2 },
     { rep: 'Alfred Duncan', count: 1 },
-    { rep: 'Michael McCarthy', count: 1 },
-    { rep: 'Unassigned', count: 1 },
   ],
 };
 
