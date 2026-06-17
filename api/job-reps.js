@@ -42,6 +42,7 @@ async function fetchJob(token, num) {
   const qs = new URLSearchParams();
   qs.set('job_number', num);
   qs.append('includes[]', 'reps');
+  qs.append('includes[]', 'customer');
   const res = await fetch(`${V1}/jobs?${qs.toString()}`, { headers: HDR(token) });
   if (!res.ok) return null;
   const j = await res.json();
@@ -50,19 +51,18 @@ async function fetchJob(token, num) {
 }
 
 // Pull the salesman name off a job. Adjust after we see the debug shape.
+function nameOf(p) { return p ? (p.full_name || [p.first_name, p.last_name].filter(Boolean).join(' ').trim() || null) : null; }
 function salesmanOf(job) {
   if (!job) return null;
-  const reps = job.reps || [];
-  // Prefer a rep explicitly flagged as sales/customer rep; else first rep.
-  let pick = null;
-  if (Array.isArray(reps)) {
-    pick = reps.find(r => /sales|customer/i.test(r.type || r.role || r.rep_type || '')) || reps[0];
-  }
-  if (pick) {
-    const name = [pick.first_name, pick.last_name].filter(Boolean).join(' ').trim();
-    return name || pick.name || pick.full_name || null;
-  }
-  return job.sales_rep || job.salesman || null;
+  // The assigned salesman is the customer's rep.
+  const cr = job.customer && job.customer.rep;
+  if (cr) return nameOf(cr);
+  // fallbacks: job reps, then estimators
+  const reps = (job.reps && job.reps.data) || job.reps || [];
+  if (Array.isArray(reps) && reps[0]) return nameOf(reps[0]);
+  const est = (job.estimators && job.estimators.data) || job.estimators || [];
+  if (Array.isArray(est) && est[0]) return nameOf(est[0]);
+  return null;
 }
 
 module.exports = async (req, res) => {
