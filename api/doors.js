@@ -1,17 +1,18 @@
 // api/doors.js — doors knocked per rep this month, from Sales Rabbit.
-// A "door" = a lead/pin owned by a rep, created this month, whose status is NOT
-// one of: Closed, Do Not Knock, Drive By.
+// Production: scoped to DC Inbound + DC Self Gen teams. A "door" = a pin owned by
+// an allowed rep, status NOT in {Closed, Do Not Knock, Drive By}, dispositioned
+// (statusModified) this month. Deduped by pin id.
 //
-// Auth: Authorization: Bearer ${SALESRABBIT_TOKEN}   Base: https://api.salesrabbit.com
-//   ?debug=1  -> shapes of users / lead statuses / leads so we can lock field names
+// ?debug=1      -> shapes of users / statuses / leads
+// ?debug=tally  -> attribution diagnostics for this month (names + counts only)
 
 const BASE = 'https://api.salesrabbit.com';
 const EXCLUDE_NORM = new Set(['closed', 'donotknock', 'driveby']);
-function norm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
-const ALLOWED_TEAMS = new Set(['dc inbound', 'dc self gen']);
-const SR_ALIAS = { 'mike mccarthy': 'michael mccarthy', 'izzy price': 'isabelle price', 'robert mumford-wilson': 'robert wilson' };
-function repKey(name) { var n = String(name == null ? '' : name).trim().toLowerCase().replace(/\s+/g, ' '); return SR_ALIAS[n] || n; }
-function teamNorm(t) { return String(t == null ? '' : t).trim().toLowerCase(); }
+const SR_ALIAS = {
+  'mike mccarthy': 'michael mccarthy',
+  'izzy price': 'isabelle price',
+  'robert mumford-wilson': 'robert wilson',
+};
 
 function tok() {
   const t = process.env.SALESRABBIT_TOKEN;
@@ -20,34 +21,48 @@ function tok() {
 }
 async function srGet(path, headers) {
   const res = await fetch(`${BASE}${path}`, {
-    headers: Object.assign({ Authorization: `Bearer ${tok()}`, Accept: 'application/json' }, headers || {}),
+    headers: Object.assign(
+      { Authorization: `Bearer ${tok()}`, Accept: 'application/json' },
+      headers || {}
+    ),
   });
   const text = await res.text();
-  let json; try { json = JSON.parse(text); } catch (_) { json = text; }
+  let json;
+  try { json = JSON.parse(text); } catch (_) { json = text; }
   return { status: res.status, json };
 }
 function arr(j) { return Array.isArray(j) ? j : (j && (j.data || j.results || j.records || j.items)) || []; }
 function pick(o, keys) { for (const k of keys) { if (o && o[k] != null) return o[k]; } return undefined; }
 function monthStart() { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), 1); }
+function norm(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/\s+/g, ' '); }
+function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
+function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
+function teamAllowed(t) {
+  const n = norm(t);
+  return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1);
+}
+
+// Pull every lead via simple page pagination.
+async function allLeads() {
+  const out = [];
+  let page = 1;
+  for (let guard = 0; guard < 120; guard++) {
+    const r = await srGet(`/leads?page=${page}&perPage=500`);
+    const leads = arr(r.json);
+    if (!leads.length) break;
+    for (const ld of leads) out.push(ld);
+    if (leads.length < 500) break;
+    page += 1;
+  }
+  return out;
+}
 
 module.exports = async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
     const debug = url.searchParams.get('debug');
 
-    if (debug === 'teams') {
-      const users = await srGet('/users');
-      const teamMap = {};
-      arr(users.json).forEach((u) => {
-        const t = u.team || u.department || u.region || '(none)';
-        const name = [u.firstName, u.lastName].filter(Boolean).join(' ').trim();
-        (teamMap[t] = teamMap[t] || []).push({ name, id: u.id, active: u.active });
-      });
-      res.status(200).json({ teamFields: { teamSeen: !!arr(users.json)[0] && 'team' in arr(users.json)[0] }, teams: Object.keys(teamMap).map((t) => ({ team: t, count: teamMap[t].length, members: teamMap[t] })) });
-      return;
-    }
-
-    if (debug) {
+    if (debug === '1') {
       const users = await srGet('/users');
       let statuses = await srGet('/leadStatuses');
       if (statuses.status >= 400) statuses = await srGet('/lead-statuses');
@@ -63,49 +78,96 @@ module.exports = async (req, res) => {
       return;
     }
 
-    // --- allowed roster: only DC Inbound + DC Self Gen teams ---
+    // ---- users + teams ----
     const usersRes = await srGet('/users');
-    const allowedUserIds = new Set();
-    const allowedReps = new Set();
-    const roster = [];
-    arr(usersRes.json).forEach((u) => {
-      if (ALLOWED_TEAMS.has(teamNorm(u.team)) && u.active !== false) {
-        if (u.id != null) allowedUserIds.add(u.id);
-        const nm = [u.firstName, u.lastName].filter(Boolean).join(' ').trim();
-        if (nm) { allowedReps.add(repKey(nm)); roster.push(nm); }
-      }
-    });
+    const allUsers = arr(usersRes.json).map((u) => ({
+      name: pick(u, ['fullName']) ||
+        [pick(u, ['firstName', 'first']), pick(u, ['lastName', 'last'])].filter(Boolean).join(' ').trim() ||
+        pick(u, ['name', 'email']) || '',
+      team: pick(u, ['team']) || '',
+      active: pick(u, ['active']),
+    }));
+    const allowedUsers = allUsers.filter((u) => teamAllowed(u.team) && u.active !== false);
+    const allowedReps = new Set(allowedUsers.map((u) => repKey(u.name)));
+    const roster = allowedUsers.map((u) => u.name);
 
-    // --- pull this month's knocked pins (Sales Rabbit incremental by If-Modified-Since) ---
     const start = monthStart();
+    const leads = await allLeads();
+
+    if (debug === 'tally') {
+      const teamCounts = {};
+      allUsers.forEach((u) => { const k = u.team || '(blank)'; teamCounts[k] = (teamCounts[k] || 0) + 1; });
+      const findUsers = allUsers
+        .filter((u) => /david|christian|aiden/i.test(u.name))
+        .map((u) => ({ name: u.name, team: u.team, allowed: allowedReps.has(repKey(u.name)) }));
+
+      const monthAllByName = {};       // statusModified this month, any status
+      const monthKnockByName = {};     // statusModified this month, excl 3 statuses
+      const createdByName = {};        // dateCreated this month
+      const lifetimeByName = {};       // all-time pins per name
+      const seenMonth = new Set();
+      leads.forEach((ld) => {
+        const owner = norm(pick(ld, ['userName']) || '');
+        if (owner) lifetimeByName[owner] = (lifetimeByName[owner] || 0) + 1;
+        const sm = new Date(pick(ld, ['statusModified']) || 0);
+        const dc = new Date(pick(ld, ['dateCreated']) || 0);
+        const st = statusNorm(pick(ld, ['status']));
+        if (!isNaN(dc) && dc >= start && owner) createdByName[owner] = (createdByName[owner] || 0) + 1;
+        if (!isNaN(sm) && sm >= start && owner) {
+          monthAllByName[owner] = (monthAllByName[owner] || 0) + 1;
+          if (!EXCLUDE_NORM.has(st)) monthKnockByName[owner] = (monthKnockByName[owner] || 0) + 1;
+        }
+      });
+      const top = (o) => Object.keys(o).sort((a, b) => o[b] - o[a]).slice(0, 40).map((k) => k + ': ' + o[k]);
+      const forNames = (o) => Object.keys(o).filter((k) => /david|christian|aiden/.test(k)).map((k) => k + ': ' + o[k]);
+      res.setHeader('Cache-Control', 'no-store');
+      res.status(200).json({
+        leadsScanned: leads.length,
+        monthStart: start.toISOString(),
+        teamCounts,
+        matchedUsers: findUsers,
+        davidChristianAiden: {
+          monthStatusModified_anyStatus: forNames(monthAllByName),
+          monthStatusModified_knockable: forNames(monthKnockByName),
+          createdThisMonth: forNames(createdByName),
+          lifetimePins: forNames(lifetimeByName),
+        },
+        topMonthKnockable: top(monthKnockByName),
+      });
+      return;
+    }
+
+    // ---- production tally ----
     const counts = {};
     const seen = new Set();
     let total = 0;
-    let since = new Date(start);
-    for (let guard = 0; guard < 30; guard++) {
-      const r = await srGet('/leads', { 'If-Modified-Since': since.toUTCString() });
-      const leads = arr(r.json);
-      if (!leads.length) break;
-      let maxMod = since.getTime();
-      for (const ld of leads) {
-        const mod = new Date(ld.dateModified || 0).getTime();
-        if (mod > maxMod) maxMod = mod;
-        if (seen.has(ld.id)) continue;
-        seen.add(ld.id);
-        if (!allowedReps.has(repKey(ld.userName))) continue;
-        const knocked = new Date(ld.statusModified || ld.dateCreated || 0);
-        if (isNaN(knocked) || knocked < start) continue; // dispositioned/knocked this month
-        if (EXCLUDE_NORM.has(norm(ld.status))) continue; // skip Closed / Do Not Knock / Drive-By
-        const rep = ld.userName || ('User ' + ld.userId);
-        counts[rep] = (counts[rep] || 0) + 1;
-        total += 1;
-      }
-      if (leads.length < 2000 || maxMod <= since.getTime()) break;
-      since = new Date(maxMod);
-    }
-    const reps = Object.keys(counts).map((rep) => ({ rep, doors: counts[rep] })).sort((a, b) => b.doors - a.doors);
+    leads.forEach((ld) => {
+      const rk = repKey(pick(ld, ['userName']) || '');
+      if (!allowedReps.has(rk)) return;
+      const sm = new Date(pick(ld, ['statusModified']) || 0);
+      if (isNaN(sm) || sm < start) return;
+      const st = statusNorm(pick(ld, ['status']));
+      if (EXCLUDE_NORM.has(st)) return;
+      const id = pick(ld, ['id']);
+      if (id != null) { if (seen.has(id)) return; seen.add(id); }
+      counts[rk] = (counts[rk] || 0) + 1;
+      total += 1;
+    });
+    // map repKey back to a display name
+    const display = {};
+    allowedUsers.forEach((u) => { display[repKey(u.name)] = u.name; });
+    const reps = Object.keys(counts)
+      .map((k) => ({ rep: display[k] || k, doors: counts[k] }))
+      .sort((a, b) => b.doors - a.doors);
+
     res.setHeader('Cache-Control', 'no-store');
-    res.status(200).json({ updated: new Date().toISOString(), total, reps, allowedReps: [...allowedReps], roster });
+    res.status(200).json({
+      updated: new Date().toISOString(),
+      total,
+      reps,
+      allowedReps: Array.from(allowedReps),
+      roster,
+    });
   } catch (err) {
     res.status(500).json({ error: String(err && err.message ? err.message : err) });
   }
