@@ -30,8 +30,8 @@ async function login() {
   if (!username || !password) throw new Error('JP_USERNAME / JP_PASSWORD not set in Vercel');
   const res = await fetch(`${V1}/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET }),
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: new URLSearchParams({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET }).toString(),
   });
   if (!res.ok) throw new Error(`login -> ${res.status}: ${(await res.text()).slice(0, 150)}`);
   const d = await res.json();
