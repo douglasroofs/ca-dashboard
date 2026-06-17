@@ -15,6 +15,7 @@
 //
 // Query params:
 //   ?debug=1   -> returns raw total + first rep row so we can confirm field names
+//   ?debug=auth -> secret-safe auth diagnostic (status codes only)
 //   ?month=YYYY-MM (optional; default = current month, MTD)
 
 const V1 = 'https://jobprogress.com/api/public/api/v1';
@@ -105,6 +106,32 @@ module.exports = async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     const debug = url.searchParams.get('debug');
     const month = url.searchParams.get('month');
+
+    if (debug === 'auth') {
+      // Secret-safe diagnostic: which credential authorizes the report endpoint?
+      const path = `${REPORT}/total?date_range_type[]=job_awarded_date&duration=MTD&with_inactive=0`;
+      const out = {
+        hasApiToken: !!process.env.JP_API_TOKEN,
+        hasUser: !!process.env.JP_USERNAME,
+        hasPass: !!process.env.JP_PASSWORD,
+      };
+      // A: Bearer JP_API_TOKEN
+      if (process.env.JP_API_TOKEN) {
+        try { out.A_bearerApiToken = (await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${process.env.JP_API_TOKEN}`, Accept: 'application/json' } })).status; } catch (e) { out.A_bearerApiToken = 'err'; }
+        // C: JP_API_TOKEN as ?token= query param
+        try { const sep = path.includes('?') ? '&' : '?'; out.C_queryToken = (await fetch(`${V1}${path}${sep}token=${encodeURIComponent(process.env.JP_API_TOKEN)}`, { headers: { Accept: 'application/json' } })).status; } catch (e) { out.C_queryToken = 'err'; }
+      }
+      // B: login -> Bearer access_token
+      if (process.env.JP_USERNAME && process.env.JP_PASSWORD) {
+        try {
+          const tok = await login();
+          out.B_loginOk = true;
+          out.B_bearerLoginToken = (await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${tok}`, Accept: 'application/json' } })).status;
+        } catch (e) { out.B_loginOk = false; out.B_loginErr = String(e.message || e).replace(/[A-Za-z0-9_\-\.]{14,}/g, '<x>'); }
+      }
+      res.status(200).json(out);
+      return;
+    }
 
     if (debug) {
       const total = await fetchTotal('job_awarded_date', month);
