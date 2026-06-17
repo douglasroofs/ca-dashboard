@@ -45,29 +45,31 @@ function teamAllowed(t) {
   return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1);
 }
 
-// Fetch only leads modified at/after `since`, advancing a dateModified cursor.
+// Fetch every lead whose STATUS was modified at/after `since`.
+// SalesRabbit caps /leads at 2000 rows, so we page by advancing the
+// If-Status-Modified-Since cursor to the newest statusModified each page
+// (default sort is ascending). Dedup by id handles boundary repeats.
+const CAP = 2000;
 async function leadsSince(since) {
   const out = [];
   const seen = new Set();
-  let cursor = new Date(since.getTime());
-  for (let guard = 0; guard < 40; guard++) {
-    const r = await srGet('/leads', { 'If-Modified-Since': cursor.toUTCString() });
+  let cursorMs = since.getTime();
+  for (let guard = 0; guard < 80; guard++) {
+    const r = await srGet('/leads', { 'If-Status-Modified-Since': new Date(cursorMs).toISOString() });
     const leads = arr(r.json);
     if (!leads.length) break;
-    let maxMod = cursor.getTime();
-    let added = 0;
+    let maxMs = cursorMs;
     for (const ld of leads) {
       const id = pick(ld, ['id']);
-      const m = new Date(pick(ld, ['dateModified']) || 0).getTime();
-      if (!isNaN(m) && m > maxMod) maxMod = m;
+      const sm = new Date(pick(ld, ['statusModified']) || 0).getTime();
+      if (!isNaN(sm) && sm > maxMs) maxMs = sm;
       if (id != null && seen.has(id)) continue;
       if (id != null) seen.add(id);
       out.push(ld);
-      added += 1;
     }
-    if (added === 0 || maxMod <= cursor.getTime()) break;
-    if (leads.length < 1000) break; // likely the last page
-    cursor = new Date(maxMod + 1000);
+    if (leads.length < CAP) break;      // last page
+    if (maxMs <= cursorMs) break;       // can't advance (all same ts) — stop
+    cursorMs = maxMs;                   // include boundary; dedup handles repeats
   }
   return out;
 }
