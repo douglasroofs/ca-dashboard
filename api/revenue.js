@@ -20,6 +20,10 @@
 
 const V1 = 'https://jobprogress.com/api/public/api/v1';
 
+// OAuth password-grant client used by the Leap web app (public constants from its JS bundle).
+const CLIENT_ID = process.env.JP_CLIENT_ID || '12345';
+const CLIENT_SECRET = process.env.JP_CLIENT_SECRET || 'XraqRySfIhUTuvdfz7ATuJxXYf8aX5MY';
+
 async function login() {
   const username = process.env.JP_USERNAME;
   const password = process.env.JP_PASSWORD;
@@ -27,7 +31,7 @@ async function login() {
   const res = await fetch(`${V1}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET }),
   });
   if (!res.ok) throw new Error(`login -> ${res.status}: ${(await res.text()).slice(0, 150)}`);
   const d = await res.json();
