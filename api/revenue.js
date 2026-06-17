@@ -75,6 +75,10 @@ async function apiGet(path) {
     const tk = await getToken();
     res = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${tk}`, Accept: 'application/json', platform: 'web' } });
   }
+  for (let i = 0; i < 3 && res.status >= 500; i++) {
+    await new Promise((r) => setTimeout(r, 600 * (i + 1)));
+    res = await fetch(`${V1}${path}`, { headers: HDR(cachedToken || token) });
+  }
   if (!res.ok) throw new Error(`GET ${path} -> ${res.status}: ${(await res.text()).slice(0, 150)}`);
   return res.json();
 }
