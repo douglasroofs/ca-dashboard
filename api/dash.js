@@ -42,7 +42,7 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 <script>
 var fmt=function(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})};
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function norm(s){return String(s||'').trim().toLowerCase()}
+function norm(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
 function load(){
 var b=document.getElementById('rf');b.disabled=true;
 document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
@@ -61,10 +61,11 @@ if(ca.updated)document.getElementById('caUpd').textContent='CAs as of '+ca.updat
 var map={};
 (rev.reps||[]).forEach(function(r){map[norm(r.rep)]={rep:r.rep,approved:r.approved_amount||0,contract:r.contract_amount||0,cas:0}});
 (ca.reps||[]).forEach(function(c){var k=norm(c.rep);if(map[k]){map[k].cas=c.count}else{map[k]={rep:c.rep,approved:0,contract:0,cas:c.count}}});
-var ALIAS={'mike mccarthy':'michael mccarthy','izzy price':'isabelle price'};
+var ALIAS={'mike mccarthy':'michael mccarthy','izzy price':'isabelle price','robert mumford-wilson':'robert wilson'};
 function dkey(n){var x=norm(n);return ALIAS[x]||x}
 (dr.reps||[]).forEach(function(d){var k=dkey(d.rep);if(map[k]){map[k].doors=d.doors}else{map[k]={rep:d.rep,approved:0,contract:0,cas:0,doors:d.doors}}});
 var rowsArr=Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return (b.contract-a.contract)||(b.approved-a.approved)||(b.cas-a.cas)});rowsArr=rowsArr.filter(function(r){var n=norm(r.rep);return !(n.indexOf('haley')>-1||n==='adam mulvaney'||n==='unassigned')});
+var allowSet=new Set(dr.allowedReps||[]);if(allowSet.size){rowsArr=rowsArr.filter(function(r){return allowSet.has(dkey(r.rep))})}
 var tD=0,tC=0,tAp=0,tCn=0;
 var rows=rowsArr.map(function(r,i){tC+=r.cas;tAp+=r.approved;tCn+=r.contract;return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+r.cas+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract)+'</td></tr>'}).join('');
 document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+rows+'</tbody>'+
