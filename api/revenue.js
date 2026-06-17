@@ -57,11 +57,13 @@ async function login() {
 
 // Cache a working token across the function lifetime.
 let cachedToken = null;
+let tokenPromise = null;
 async function getToken() {
   if (cachedToken) return cachedToken;
-  const t = await login();
-  cachedToken = await switchCompany(t); // bind company to this token, then reuse it everywhere
-  return cachedToken;
+  if (!tokenPromise) {
+    tokenPromise = (async () => { const t = await login(); cachedToken = await switchCompany(t); return cachedToken; })();
+  }
+  return tokenPromise; // share one in-flight login+switch across concurrent callers
 }
 
 async function apiGet(path) {
@@ -69,7 +71,7 @@ async function apiGet(path) {
   let res = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/json', platform: 'web' } });
   if (res.status === 401 || res.status === 403) {
     // stored token rejected — fall back to a fresh login and retry once
-    cachedToken = null;
+    cachedToken = null; tokenPromise = null;
     const tk = await getToken();
     res = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${tk}`, Accept: 'application/json', platform: 'web' } });
   }
@@ -160,6 +162,7 @@ module.exports = async (req, res) => {
       return;
     }
 
+    await getToken(); // authenticate once before firing parallel report calls
     const [apprTotal, signTotal, apprRows, signRows] = await Promise.all([
       fetchTotal('job_awarded_date', month),
       fetchTotal('contract_signed_date', month),
