@@ -8,6 +8,10 @@
 const BASE = 'https://api.salesrabbit.com';
 const EXCLUDE_NORM = new Set(['closed', 'donotknock', 'driveby']);
 function norm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
+const ALLOWED_TEAMS = new Set(['dc inbound', 'dc self gen']);
+const SR_ALIAS = { 'mike mccarthy': 'michael mccarthy', 'izzy price': 'isabelle price', 'robert mumford-wilson': 'robert wilson' };
+function repKey(name) { var n = String(name == null ? '' : name).trim().toLowerCase().replace(/\s+/g, ' '); return SR_ALIAS[n] || n; }
+function teamNorm(t) { return String(t == null ? '' : t).trim().toLowerCase(); }
 
 function tok() {
   const t = process.env.SALESRABBIT_TOKEN;
@@ -59,6 +63,18 @@ module.exports = async (req, res) => {
       return;
     }
 
+    // --- allowed roster: only DC Inbound + DC Self Gen teams ---
+    const usersRes = await srGet('/users');
+    const allowedUserIds = new Set();
+    const allowedReps = new Set();
+    arr(usersRes.json).forEach((u) => {
+      if (ALLOWED_TEAMS.has(teamNorm(u.team))) {
+        if (u.id != null) allowedUserIds.add(u.id);
+        const nm = [u.firstName, u.lastName].filter(Boolean).join(' ').trim();
+        if (nm) allowedReps.add(repKey(nm));
+      }
+    });
+
     // --- pull this month's knocked pins (Sales Rabbit incremental by If-Modified-Since) ---
     const start = monthStart();
     const counts = {};
@@ -75,6 +91,7 @@ module.exports = async (req, res) => {
         if (mod > maxMod) maxMod = mod;
         if (seen.has(ld.id)) continue;
         seen.add(ld.id);
+        if (!allowedUserIds.has(ld.userId)) continue;
         const knocked = new Date(ld.statusModified || ld.dateCreated || 0);
         if (isNaN(knocked) || knocked < start) continue; // dispositioned/knocked this month
         if (EXCLUDE_NORM.has(norm(ld.status))) continue; // skip Closed / Do Not Knock / Drive-By
@@ -87,7 +104,7 @@ module.exports = async (req, res) => {
     }
     const reps = Object.keys(counts).map((rep) => ({ rep, doors: counts[rep] })).sort((a, b) => b.doors - a.doors);
     res.setHeader('Cache-Control', 'no-store');
-    res.status(200).json({ updated: new Date().toISOString(), total, reps });
+    res.status(200).json({ updated: new Date().toISOString(), total, reps, allowedReps: [...allowedReps] });
   } catch (err) {
     res.status(500).json({ error: String(err && err.message ? err.message : err) });
   }
