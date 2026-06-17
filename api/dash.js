@@ -1,6 +1,76 @@
-// api/dash.js — full dashboard (revenue + CA) served as a function,
-// because static-file publishing is currently stuck on Vercel.
-const HTML = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Douglas Roofing - Revenue MTD</title><style>\nbody{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f6f9;color:#0f2438}\nheader{background:#0f2438;color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}\nheader h1{font-size:17px;margin:0;font-weight:600}\n.meta{font-size:12px;color:#aebfd2}\n.wrap{max-width:960px;margin:0 auto;padding:22px}\n.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}\n@media(max-width:600px){.cards{grid-template-columns:1fr}}\n.card{background:#fff;border:1px solid #e5e9f0;border-radius:12px;padding:20px}\n.card .label{font-size:12px;color:#6b7888;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}\n.card .value{font-size:32px;font-weight:700}\n.card .sub{font-size:12px;color:#6b7888;margin-top:6px}\n.a{border-top:3px solid #1f6feb}.c{border-top:3px solid #1a7f37}\nh2{font-size:15px;margin:0 0 12px}\ntable{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e9f0;border-radius:12px;overflow:hidden}\nth,td{text-align:left;padding:11px 15px;font-size:14px;border-bottom:1px solid #eef1f6}\nth{background:#fafbfc;color:#6b7888;font-size:11px;text-transform:uppercase;letter-spacing:.5px}\n.num{text-align:right;font-variant-numeric:tabular-nums}\ntr:last-child td{border-bottom:none}\n.rank{color:#9aa6b4;width:34px}\nbutton{background:#1f6feb;color:#fff;border:none;padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer}\n.state{padding:36px;text-align:center;color:#6b7888}\n</style></head><body>\n<header><h1>Douglas Roofing - Revenue (Month to Date)</h1><div style=\"display:flex;gap:12px;align-items:center\"><span class=\"meta\" id=\"upd\"></span><button id=\"rf\">Refresh</button></div></header>\n<div class=\"wrap\">\n<div class=\"cards\">\n<div class=\"card a\"><div class=\"label\">Approved</div><div class=\"value\" id=\"ap\">-</div><div class=\"sub\">Job awarded date</div></div>\n<div class=\"card c\"><div class=\"label\">Contract Signed</div><div class=\"value\" id=\"cn\">-</div><div class=\"sub\">Contract signed date</div></div>\n</div>\n<h2>Rep Leaderboard <span style=\"color:#6b7888;font-weight:400\">(by Contract Signed)</span></h2>\n<div id=\"tw\"><div class=\"state\">Loading...</div></div>\n<h2 style=\"margin-top:28px\">CAs (Month to Date) <span style=\"color:#6b7888;font-weight:400\">(by salesman)</span></h2>\n<div class=\"cards\" style=\"grid-template-columns:1fr\"><div class=\"card\" style=\"border-top:3px solid #b8860b;max-width:320px\"><div class=\"label\">Total CAs</div><div class=\"value\" id=\"caTotal\">-</div><div class=\"sub\" id=\"caUpd\">Documents named \"CA\" this month</div></div></div>\n<div id=\"caTw\"><div class=\"state\">Loading...</div></div>\n</div>\n<script>\nvar fmt=function(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})};\nfunction esc(s){return String(s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]})}\nfunction load(tries){\ntries=(typeof tries==='number')?tries:0;\nvar b=document.getElementById('rf');b.disabled=true;\ndocument.getElementById('tw').innerHTML='<div class=\"state\">Loading...</div>';\nfetch('/api/revenue',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){\nif(d.error)throw new Error(d.error);\ndocument.getElementById('ap').textContent=fmt(d.company.approved_amount);\ndocument.getElementById('cn').textContent=fmt(d.company.contract_amount);\ndocument.getElementById('upd').textContent='Updated '+new Date(d.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});\nvar rows=(d.reps||[]).filter(function(x){return !/haley/i.test(x.rep)}).map(function(r,i){return '<tr><td class=\"rank\">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class=\"num\">'+fmt(r.approved_amount)+'</td><td class=\"num\" style=\"font-weight:600\">'+fmt(r.contract_amount)+'</td></tr>'}).join('');\ndocument.getElementById('tw').innerHTML='<table><thead><tr><th class=\"rank\">#</th><th>Rep</th><th class=\"num\">Approved</th><th class=\"num\">Contract Signed</th></tr></thead><tbody>'+rows+'</tbody></table>';\n}).catch(function(e){if(tries<3){setTimeout(function(){load(tries+1)},1200);return}document.getElementById('tw').innerHTML='<div class=\"state\" style=\"color:#b42318\">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false});\n}\ndocument.getElementById('rf').addEventListener('click',load);load();\nfunction loadCA(){fetch('/api/ca',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){document.getElementById('caTotal').textContent=d.total;if(d.updated)document.getElementById('caUpd').textContent='Documents named \"CA\" this month \\u00b7 updated '+d.updated;var rows=(d.reps||[]).map(function(r,i){return '<tr><td class=\"rank\">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class=\"num\">'+r.count+'</td></tr>'}).join('');document.getElementById('caTw').innerHTML='<table><thead><tr><th class=\"rank\">#</th><th>Salesman</th><th class=\"num\">Count</th></tr></thead><tbody>'+rows+'</tbody></table>';}).catch(function(e){document.getElementById('caTw').innerHTML='<div class=\"state\">CA data unavailable</div>'})}loadCA();\n</script>\n</body></html>\n";
+// api/dash.js — combined Douglas Roofing dashboard (revenue + CA), served as a function.
+// One leaderboard: Rep | Doors | CAs | Approved $ | Contract Signed $, merged by rep.
+// Revenue from /api/revenue (live), CA counts from /api/ca. Doors is a placeholder
+// until door-knocking (Sales Rabbit) is wired up.
+
+const HTML = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Douglas Roofing - Dashboard</title><style>
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f6f9;color:#0f2438}
+header{background:#0f2438;color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+header h1{font-size:17px;margin:0;font-weight:600}
+.meta{font-size:12px;color:#aebfd2}
+.wrap{max-width:1000px;margin:0 auto;padding:22px}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:22px}
+@media(max-width:700px){.cards{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid #e5e9f0;border-radius:12px;padding:18px 20px}
+.card .label{font-size:12px;color:#6b7888;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.card .value{font-size:28px;font-weight:700}
+.card .sub{font-size:12px;color:#6b7888;margin-top:6px}
+.a{border-top:3px solid #1f6feb}.c{border-top:3px solid #1a7f37}.k{border-top:3px solid #b8860b}
+h2{font-size:15px;margin:24px 0 12px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e9f0;border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:11px 14px;font-size:14px;border-bottom:1px solid #eef1f6}
+th{background:#fafbfc;color:#6b7888;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:none}
+.rank{color:#9aa6b4;width:30px}
+.muted{color:#9aa6b4}
+button{background:#1f6feb;color:#fff;border:none;padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer}
+.state{padding:30px;text-align:center;color:#6b7888}
+tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
+.hd{display:flex;gap:12px;align-items:center}
+</style></head><body>
+<header><h1>Douglas Roofing - Dashboard (Month to Date)</h1><div class="hd"><span class="meta" id="upd"></span><button id="rf">Refresh</button></div></header>
+<div class="wrap">
+<div class="cards">
+<div class="card a"><div class="label">Approved Revenue</div><div class="value" id="cAp">-</div><div class="sub">Job awarded date</div></div>
+<div class="card c"><div class="label">Contract Signed Revenue</div><div class="value" id="cCn">-</div><div class="sub">Contract signed date</div></div>
+<div class="card k"><div class="label">CAs</div><div class="value" id="cCa">-</div><div class="sub" id="caUpd">Documents named "CA" this month</div></div>
+</div>
+<h2>Rep Leaderboard <span style="color:#6b7888;font-weight:400">(by Contract Signed)</span></h2>
+<div id="tw"><div class="state">Loading...</div></div>
+</div>
+<script>
+var fmt=function(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function norm(s){return String(s||'').trim().toLowerCase()}
+function load(){
+var b=document.getElementById('rf');b.disabled=true;
+document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
+Promise.all([
+  fetch('/api/revenue',{cache:'no-store'}).then(function(r){return r.json()}),
+  fetch('/api/ca',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0}})
+]).then(function(res){
+var rev=res[0], ca=res[1];
+if(rev.error)throw new Error(rev.error);
+document.getElementById('cAp').textContent=fmt(rev.company.approved_amount);
+document.getElementById('cCn').textContent=fmt(rev.company.contract_amount);
+document.getElementById('cCa').textContent=(ca.total!=null?ca.total:'-');
+document.getElementById('upd').textContent='Updated '+new Date(rev.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+if(ca.updated)document.getElementById('caUpd').textContent='CAs as of '+ca.updated;
+var map={};
+(rev.reps||[]).forEach(function(r){map[norm(r.rep)]={rep:r.rep,approved:r.approved_amount||0,contract:r.contract_amount||0,cas:0}});
+(ca.reps||[]).forEach(function(c){var k=norm(c.rep);if(map[k]){map[k].cas=c.count}else{map[k]={rep:c.rep,approved:0,contract:0,cas:c.count}}});
+var rowsArr=Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return (b.contract-a.contract)||(b.approved-a.approved)||(b.cas-a.cas)});
+var tD=0,tC=0,tAp=0,tCn=0;
+var rows=rowsArr.map(function(r,i){tC+=r.cas;tAp+=r.approved;tCn+=r.contract;return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num muted">&mdash;</td><td class="num">'+r.cas+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract)+'</td></tr>'}).join('');
+document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+rows+'</tbody>'+
+'<tfoot><tr><td></td><td>Total</td><td class="num muted">&mdash;</td><td class="num">'+tC+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+fmt(tCn)+'</td></tr></tfoot></table>';
+}).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false});
+}
+document.getElementById('rf').addEventListener('click',load);load();
+</script>
+</body></html>`;
+
 module.exports = (req, res) => {
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'no-store');
