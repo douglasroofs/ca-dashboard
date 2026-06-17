@@ -6,7 +6,8 @@
 //   ?debug=1  -> shapes of users / lead statuses / leads so we can lock field names
 
 const BASE = 'https://api.salesrabbit.com';
-const EXCLUDE = ['closed', 'do not knock', 'drive by'];
+const EXCLUDE_NORM = new Set(['closed', 'donotknock', 'driveby']);
+function norm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
 
 function tok() {
   const t = process.env.SALESRABBIT_TOKEN;
@@ -46,47 +47,31 @@ module.exports = async (req, res) => {
       return;
     }
 
-    // --- build rep name map ---
-    const usersRes = await srGet('/users');
-    const userName = {};
-    arr(usersRes.json).forEach((u) => {
-      const id = pick(u, ['id', 'userId']);
-      const name = pick(u, ['fullName']) || [pick(u, ['firstName', 'first']), pick(u, ['lastName', 'last'])].filter(Boolean).join(' ').trim() || pick(u, ['name', 'email']);
-      if (id != null) userName[id] = name || ('User ' + id);
-    });
-
-    // --- excluded status ids (by name) ---
-    let statusesRes = await srGet('/leadStatuses');
-    if (statusesRes.status >= 400) statusesRes = await srGet('/lead-statuses');
-    const excludedIds = new Set();
-    const statusNameById = {};
-    arr(statusesRes.json).forEach((s) => {
-      statusNameById[s.id] = s.name;
-      if (EXCLUDE.includes(String(s.name || '').trim().toLowerCase())) excludedIds.add(s.id);
-    });
-
-    // --- pull leads (paginate) and tally ---
+    // --- pull this month's knocked pins (Sales Rabbit incremental by If-Modified-Since) ---
     const start = monthStart();
     const counts = {};
+    const seen = new Set();
     let total = 0;
-    let page = 1;
-    for (let guard = 0; guard < 60; guard++) {
-      const r = await srGet(`/leads?page=${page}&perPage=200`);
+    let since = new Date(start);
+    for (let guard = 0; guard < 30; guard++) {
+      const r = await srGet('/leads', { 'If-Modified-Since': since.toUTCString() });
       const leads = arr(r.json);
       if (!leads.length) break;
+      let maxMod = since.getTime();
       for (const ld of leads) {
-        const created = new Date(pick(ld, ['dateCreated', 'createdDate', 'created', 'dateAdded', 'date']) || 0);
-        if (isNaN(created) || created < start) continue;
-        const statusId = pick(ld, ['statusId', 'leadStatusId', 'status_id']);
-        const statusName = (pick(ld, ['status', 'statusName']) || statusNameById[statusId] || '').toString().trim().toLowerCase();
-        if (excludedIds.has(statusId) || EXCLUDE.includes(statusName)) continue;
-        const owner = pick(ld, ['ownerId', 'userId', 'assignedUserId', 'repId']) ?? (ld.owner && ld.owner.id);
-        const rep = userName[owner] || 'Unassigned';
+        const mod = new Date(ld.dateModified || 0).getTime();
+        if (mod > maxMod) maxMod = mod;
+        if (seen.has(ld.id)) continue;
+        seen.add(ld.id);
+        const knocked = new Date(ld.statusModified || ld.dateCreated || 0);
+        if (isNaN(knocked) || knocked < start) continue; // dispositioned/knocked this month
+        if (EXCLUDE_NORM.has(norm(ld.status))) continue; // skip Closed / Do Not Knock / Drive-By
+        const rep = ld.userName || ('User ' + ld.userId);
         counts[rep] = (counts[rep] || 0) + 1;
         total += 1;
       }
-      if (leads.length < 200) break;
-      page += 1;
+      if (leads.length < 2000 || maxMod <= since.getTime()) break;
+      since = new Date(maxMod);
     }
     const reps = Object.keys(counts).map((rep) => ({ rep, doors: counts[rep] })).sort((a, b) => b.doors - a.doors);
     res.setHeader('Cache-Control', 'no-store');
