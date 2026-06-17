@@ -95,6 +95,32 @@ module.exports = async (req, res) => {
       return;
     }
 
+    if (debug === 'v1') {
+      // Probe the newer JSON:API at integrate.salesrabbit.com/v1
+      const startIso = monthStart().toISOString();
+      async function v1(qs) {
+        const res = await fetch('https://integrate.salesrabbit.com/v1/leads' + qs, {
+          headers: { Authorization: `Bearer ${tok()}`, Accept: 'application/vnd.api+json' },
+        });
+        const text = await res.text();
+        let j; try { j = JSON.parse(text); } catch (_) { j = text; }
+        return { status: res.status, j, raw: typeof j === 'string' ? text.slice(0, 200) : null };
+      }
+      const redact = (o) => JSON.parse(JSON.stringify(o).replace(/[A-Za-z0-9_\-.@]{24,}/g, '<x>'));
+      const a = await v1('?page[limit]=1&page[count]=true&include=assignee,lead_status');
+      const d0 = a.j && a.j.data && a.j.data[0];
+      const b = await v1('?page[limit]=1&page[count]=true&filter[latest_activity_at][gte]=' + encodeURIComponent(startIso));
+      let c = await v1('?page[limit]=1&page[count]=true&filter[status_updated_at][gte]=' + encodeURIComponent(startIso));
+      res.setHeader('Cache-Control', 'no-store');
+      res.status(200).json({
+        monthStart: startIso,
+        base: { status: a.status, meta: a.j && a.j.meta, attrKeys: d0 && d0.attributes ? Object.keys(d0.attributes) : null, relKeys: d0 && d0.relationships ? Object.keys(d0.relationships) : null, includedTypes: a.j && a.j.included ? a.j.included.map((x) => x.type).slice(0, 6) : null, sample: d0 ? redact(d0) : null, raw: a.raw },
+        byLatestActivity: { status: b.status, meta: b.j && b.j.meta, raw: b.raw },
+        byStatusUpdated: { status: c.status, meta: c.j && c.j.meta, raw: c.raw },
+      });
+      return;
+    }
+
     if (debug === 'probe') {
       // find a recent lead id to test per-lead endpoints
       const recent = await srGet('/leads', { 'If-Modified-Since': monthStart().toUTCString() });
