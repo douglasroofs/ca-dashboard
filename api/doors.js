@@ -95,6 +95,29 @@ module.exports = async (req, res) => {
       return;
     }
 
+    if (debug === 'sort') {
+      const startIso = monthStart().toISOString();
+      const hdr = { 'If-Status-Modified-Since': startIso };
+      async function probe(path, headers) {
+        const r = await srGet(path, headers);
+        const a = arr(r.json);
+        const sm = a.map((l) => pick(l, ['statusModified'])).filter(Boolean);
+        return { status: r.status, count: a.length, firstSM: sm.slice(0, 2), lastSM: sm.slice(-2), firstId: (a[0] || {}).id, lastId: (a[a.length - 1] || {}).id };
+      }
+      const out = {};
+      out.noSort = await probe('/leads', hdr);
+      out.sortStatusModifiedAsc = await probe('/leads?sort_by=statusModified', hdr);
+      out.sortStatusModifiedDesc = await probe('/leads?sort_by=-statusModified', hdr);
+      out.sort_status_modified = await probe('/leads?sort_by=status_modified', hdr);
+      // does page/offset pagination actually advance?
+      out.page1 = await probe('/leads?perPage=2000&page=1', hdr);
+      out.page2 = await probe('/leads?perPage=2000&page=2', hdr);
+      out.page1SamePage2 = out.page1.firstId === out.page2.firstId;
+      res.setHeader('Cache-Control', 'no-store');
+      res.status(200).json({ monthStart: startIso, out });
+      return;
+    }
+
     if (debug === 'v1') {
       // Probe the newer JSON:API at integrate.salesrabbit.com/v1
       const startIso = monthStart().toISOString();
@@ -108,7 +131,6 @@ module.exports = async (req, res) => {
         return { status: res.status, body: redactStr(text).slice(0, 300) };
       }
       const OLD = (process.env.SALESRABBIT_TOKEN || '').trim();
-      // Does the PLUS key work on the CLASSIC api (api.salesrabbit.com)? If yes it's a classic key.
       async function classicTest(key) {
         const res = await fetch('https://api.salesrabbit.com/users', {
           headers: { Authorization: `Bearer ${key}`, Accept: 'application/json' },
@@ -131,51 +153,20 @@ module.exports = async (req, res) => {
     }
 
     if (debug === 'probe') {
-      // find a recent lead id to test per-lead endpoints
       const recent = await srGet('/leads', { 'If-Modified-Since': monthStart().toUTCString() });
       const lid = (arr(recent.json)[0] || {}).id;
       const candidates = [
-        `/leads/${lid}`,
-        `/leads/${lid}/history`,
-        `/leads/${lid}/activities`,
-        `/leads/${lid}/activity`,
-        '/activities',
-        '/leadActivities',
-        '/lead-activities',
-        '/history',
-        '/knocks',
-        '/leadHistory',
-        '/v2/leads?perPage=1',
-        '/areas',
+        `/leads/${lid}`, `/leads/${lid}/history`, '/activities', '/areas',
       ];
       const out = [];
       for (const p of candidates) {
         try {
           const r = await srGet(p);
           const a = arr(r.json);
-          const s0 = a[0] || (r.json && typeof r.json === 'object' ? r.json : {});
-          out.push({ ep: p, status: r.status, isArray: Array.isArray(r.json) || !!(r.json && r.json.data), count: a.length, keys: Object.keys(s0 || {}).slice(0, 25) });
-        } catch (e) {
-          out.push({ ep: p, error: String(e && e.message ? e.message : e) });
-        }
+          out.push({ ep: p, status: r.status, count: a.length });
+        } catch (e) { out.push({ ep: p, error: String(e) }); }
       }
-      // Full field dump of one lead (detail view) + list item, redacted.
-      const redact = (o) => JSON.parse(JSON.stringify(o).replace(/[A-Za-z0-9_\-.@]{24,}/g, '<x>'));
-      const detail = await srGet(`/leads/${lid}`);
-      const detailObj = (detail.json && detail.json.data) || detail.json || {};
-      const listItem = arr(recent.json)[0] || {};
-      // try the leads list WITH a few extra query params that might add the updater
-      const withParams = await srGet(`/leads?perPage=1&include=user,status,history,owner`);
-      const wp0 = arr(withParams.json)[0] || {};
-      res.setHeader('Cache-Control', 'no-store');
-      res.status(200).json({
-        testLeadId: lid,
-        results: out,
-        detailKeys: Object.keys(detailObj),
-        detailSample: redact(detailObj),
-        listItemKeys: Object.keys(listItem),
-        withIncludeKeys: Object.keys(wp0),
-      });
+      res.status(200).json({ testLeadId: lid, results: out });
       return;
     }
 
