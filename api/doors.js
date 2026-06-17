@@ -91,7 +91,7 @@ module.exports = async (req, res) => {
         if (mod > maxMod) maxMod = mod;
         if (seen.has(ld.id)) continue;
         seen.add(ld.id);
-        if (!allowedUserIds.has(ld.userId)) continue;
+        if (!allowedReps.has(repKey(ld.userName))) continue;
         const knocked = new Date(ld.statusModified || ld.dateCreated || 0);
         if (isNaN(knocked) || knocked < start) continue; // dispositioned/knocked this month
         if (EXCLUDE_NORM.has(norm(ld.status))) continue; // skip Closed / Do Not Knock / Drive-By
