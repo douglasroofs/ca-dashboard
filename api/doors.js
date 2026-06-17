@@ -98,27 +98,27 @@ module.exports = async (req, res) => {
     if (debug === 'v1') {
       // Probe the newer JSON:API at integrate.salesrabbit.com/v1
       const startIso = monthStart().toISOString();
-      const PLUS = process.env.SALESRABBIT_PLUS_TOKEN || '';
-      async function v1(qs) {
-        const res = await fetch('https://integrate.salesrabbit.com/v1/leads' + qs, {
-          headers: { Authorization: `Bearer ${PLUS}`, Accept: 'application/vnd.api+json' },
+      const PLUS = (process.env.SALESRABBIT_PLUS_TOKEN || '').trim();
+      const redactStr = (s) => String(s).replace(/[A-Za-z0-9_\-.@]{24,}/g, '<x>');
+      async function tryAuth(hdrs) {
+        const res = await fetch('https://integrate.salesrabbit.com/v1/leads?page[limit]=1', {
+          headers: Object.assign({ Accept: 'application/vnd.api+json' }, hdrs),
         });
         const text = await res.text();
-        let j; try { j = JSON.parse(text); } catch (_) { j = text; }
-        return { status: res.status, j, raw: typeof j === 'string' ? text.slice(0, 200) : null };
+        return { status: res.status, body: redactStr(text).slice(0, 300) };
       }
-      const redact = (o) => JSON.parse(JSON.stringify(o).replace(/[A-Za-z0-9_\-.@]{24,}/g, '<x>'));
-      const a = await v1('?page[limit]=1&page[count]=true&include=assignee,lead_status');
-      const d0 = a.j && a.j.data && a.j.data[0];
-      const b = await v1('?page[limit]=1&page[count]=true&filter[latest_activity_at][gte]=' + encodeURIComponent(startIso));
-      let c = await v1('?page[limit]=1&page[count]=true&filter[status_updated_at][gte]=' + encodeURIComponent(startIso));
+      const variants = {
+        bearer: await tryAuth({ Authorization: `Bearer ${PLUS}` }),
+        rawAuth: await tryAuth({ Authorization: PLUS }),
+        xApiKey: await tryAuth({ 'X-Api-Key': PLUS }),
+        apiKey: await tryAuth({ 'Api-Key': PLUS }),
+      };
       res.setHeader('Cache-Control', 'no-store');
       res.status(200).json({
         monthStart: startIso,
         plusTokenPresent: !!PLUS,
-        base: { status: a.status, meta: a.j && a.j.meta, attrKeys: d0 && d0.attributes ? Object.keys(d0.attributes) : null, relKeys: d0 && d0.relationships ? Object.keys(d0.relationships) : null, includedTypes: a.j && a.j.included ? a.j.included.map((x) => x.type).slice(0, 6) : null, sample: d0 ? redact(d0) : null, raw: a.raw },
-        byLatestActivity: { status: b.status, meta: b.j && b.j.meta, raw: b.raw },
-        byStatusUpdated: { status: c.status, meta: c.j && c.j.meta, raw: c.raw },
+        plusTokenLen: PLUS.length,
+        variants,
       });
       return;
     }
