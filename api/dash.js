@@ -29,7 +29,7 @@ button{background:#1f6feb;color:#fff;border:none;padding:8px 14px;border-radius:
 tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 .hd{display:flex;gap:12px;align-items:center}
 </style></head><body>
-<header><h1>Douglas Roofing - DC Dashboard (Month to Date)</h1><div class="hd"><span class="meta" id="upd"></span><button id="rf">Refresh</button></div></header>
+<header><h1>Douglas Roofing - DC Dashboard (Month to Date)</h1><div class="hd"><span class="meta" id="upd"></span><button id="rf">Refresh</button><button id="ud" style="background:#475569" title="Recompute doors live from Sales Rabbit (~25s). The 7am refresh saves it automatically.">Update doors now</button></div></header>
 <div class="wrap">
 <div class="cards">
 <div class="card d"><div class="label">Doors Knocked</div><div class="value" id="cDr">-</div><div class="sub">Pins this month</div></div>
@@ -45,12 +45,12 @@ var fmt=function(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFra
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function norm(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
 function load(){
-var b=document.getElementById('rf');b.disabled=true;
+var b=document.getElementById('rf');b.disabled=true;var ud=document.getElementById('ud');if(ud){ud.disabled=true;ud.textContent=window.__liveDoors?'Updating doors\u2026 (~25s)':'Update doors now';}
 document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
 Promise.all([
   fetch('/api/revenue',{cache:'no-store'}).then(function(r){return r.json()}),
   fetch('/api/ca',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0}}),
-  fetch('/api/doors',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0,roster:[],allowedReps:[]}})
+  fetch((window.__liveDoors?'/api/doors?live=1':'/api/doors'),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0,roster:[],allowedReps:[]}})
 ]).then(function(res){
 var rev=res[0], ca=res[1], dr=res[2];
 if(rev.error)throw new Error(rev.error);
@@ -75,9 +75,9 @@ document.getElementById('cAp').textContent=fmt(tAp);
 document.getElementById('cCn').textContent=fmt(tCn);
 var rows=rowsArr.map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract)+'</td></tr>'}).join('');
 document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+rows+'</tbody><tfoot><tr><td></td><td>Total</td><td class="num">'+tD+'</td><td class="num">'+tC+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+fmt(tCn)+'</td></tr></tfoot></table>';
-}).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false});
+}).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false;var ud=document.getElementById('ud');if(ud){ud.disabled=false;ud.textContent='Update doors now';}window.__liveDoors=false;});
 }
-document.getElementById('rf').addEventListener('click',load);load();
+document.getElementById('rf').addEventListener('click',function(){window.__liveDoors=false;load();});var _ud=document.getElementById('ud');if(_ud)_ud.addEventListener('click',function(){window.__liveDoors=true;load();});load();
 </script>
 </body></html>`;
 
