@@ -29,6 +29,9 @@ button{background:#1f6feb;color:#fff;border:none;padding:8px 14px;border-radius:
 </div>
 <h2>Rep Leaderboard <span style="color:#6b7888;font-weight:400">(by Contract Signed)</span></h2>
 <div id="tw"><div class="state">Loading...</div></div>
+<h2 style="margin-top:28px">CAs (Month to Date) <span style="color:#6b7888;font-weight:400">(by salesman)</span></h2>
+<div class="cards" style="grid-template-columns:1fr"><div class="card" style="border-top:3px solid #b8860b;max-width:320px"><div class="label">Total CAs</div><div class="value" id="caTotal">-</div><div class="sub" id="caUpd">Documents named "CA" this month</div></div></div>
+<div id="caTw"><div class="state">Loading...</div></div>
 </div>
 <script>
 var fmt=function(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})};
@@ -47,5 +50,6 @@ document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</t
 }).catch(function(e){if(tries<3){setTimeout(function(){load(tries+1)},1200);return}document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false});
 }
 document.getElementById('rf').addEventListener('click',load);load();
+function loadCA(){fetch('/data/ca.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){document.getElementById('caTotal').textContent=d.total;if(d.updated)document.getElementById('caUpd').textContent='Documents named "CA" this month \u00b7 updated '+d.updated;var rows=(d.reps||[]).map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+r.count+'</td></tr>'}).join('');document.getElementById('caTw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Salesman</th><th class="num">Count</th></tr></thead><tbody>'+rows+'</tbody></table>';}).catch(function(e){document.getElementById('caTw').innerHTML='<div class="state">CA data unavailable</div>'})}loadCA();
 </script>
 </body></html>
