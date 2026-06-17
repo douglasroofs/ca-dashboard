@@ -129,6 +129,7 @@ async function compute() {
 
 module.exports = async (req, res) => {
   try {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     const url = new URL(req.url, 'http://localhost');
     const live = url.searchParams.get('live');
     const debug = url.searchParams.get('debug');
