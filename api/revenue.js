@@ -130,7 +130,7 @@ module.exports = async (req, res) => {
         try {
           const tok = await login();
           out.B_loginOk = true;
-          out.B_bearerLoginToken = (await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${tok}`, Accept: 'application/json' } })).status;
+          const _rr = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${tok}`, Accept: 'application/json' } }); out.B_bearerLoginToken = _rr.status; out.B_reportBody = (await _rr.text()).slice(0,220).replace(/[A-Za-z0-9_\-\.]{20,}/g,'<x>');
         } catch (e) { out.B_loginOk = false; out.B_loginErr = String(e.message || e).replace(/[A-Za-z0-9_\-\.]{14,}/g, '<x>'); }
       }
       res.status(200).json(out);
