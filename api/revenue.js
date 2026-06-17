@@ -24,6 +24,21 @@ const V1 = 'https://jobprogress.com/api/public/api/v1';
 const CLIENT_ID = process.env.JP_CLIENT_ID || '12345';
 const CLIENT_SECRET = process.env.JP_CLIENT_SECRET || 'XraqRySfIhUTuvdfz7ATuJxXYf8aX5MY';
 
+// Account has multiple companies; bind the token to Douglas Roofing (5154) after login.
+const COMPANY_ID = process.env.JP_COMPANY_ID || '5154';
+
+async function switchCompany(token) {
+  const res = await fetch(`${V1}/users/switch_company`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json', platform: 'web' },
+    body: new URLSearchParams({ company_id: COMPANY_ID }).toString(),
+  });
+  if (!res.ok) throw new Error(`switch_company -> ${res.status}: ${(await res.text()).slice(0, 150)}`);
+  const d = await res.json().catch(() => ({}));
+  // Binds company to the same token server-side; reuse a returned token if one ever appears.
+  return (d && d.token && d.token.access_token) || (d && d.access_token) || token;
+}
+
 async function login() {
   const username = process.env.JP_USERNAME;
   const password = process.env.JP_PASSWORD;
@@ -44,18 +59,19 @@ async function login() {
 let cachedToken = null;
 async function getToken() {
   if (cachedToken) return cachedToken;
-  if (process.env.JP_API_TOKEN) cachedToken = process.env.JP_API_TOKEN; // try the stored token first
-  else cachedToken = await login();
+  const t = await login();
+  cachedToken = await switchCompany(t); // bind company to this token, then reuse it everywhere
   return cachedToken;
 }
 
 async function apiGet(path) {
   let token = await getToken();
-  let res = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' } });
-  if (res.status === 401 && process.env.JP_USERNAME) {
+  let res = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/json', platform: 'web' } });
+  if (res.status === 401 || res.status === 403) {
     // stored token rejected — fall back to a fresh login and retry once
-    cachedToken = await login();
-    res = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${cachedToken}`, Accept: 'application/json' } });
+    cachedToken = null;
+    const tk = await getToken();
+    res = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${tk}`, Accept: 'application/json', platform: 'web' } });
   }
   if (!res.ok) throw new Error(`GET ${path} -> ${res.status}: ${(await res.text()).slice(0, 150)}`);
   return res.json();
