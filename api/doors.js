@@ -10,27 +10,108 @@
 // status NOT in {Closed, Do Not Knock, Drive By}, status-updated this month.
 
 const SNAPSHOT = {
-  updated: '2026-06-17T22:12:49.764Z',
-  total: 2790,
-  reps: [
-    { rep: 'Andrew Funk', doors: 677 },
-    { rep: 'Harvey Shoemaker', doors: 464 },
-    { rep: 'Christian Brown', doors: 363 },
-    { rep: 'Mike Mccarthy', doors: 299 },
-    { rep: 'Aiden Glonek', doors: 248 },
-    { rep: 'Izzy Price', doors: 245 },
-    { rep: 'Jack Obert', doors: 230 },
-    { rep: 'David Kerns', doors: 144 },
-    { rep: 'Kelly Alston', doors: 67 },
-    { rep: 'George Bechara', doors: 32 },
-    { rep: 'Marc Mitchell', doors: 7 },
-    { rep: 'Solomon Lincoln Jr.', doors: 7 },
-    { rep: 'Andrew  Prickel', doors: 4 },
-    { rep: 'Kevin Mahan', doors: 2 },
-    { rep: 'Steven Arevalo', doors: 1 },
+  "updated": "2026-06-17T22:51:09.840Z",
+  "total": 2792,
+  "reps": [
+    {
+      "rep": "Andrew Funk",
+      "doors": 677
+    },
+    {
+      "rep": "Harvey Shoemaker",
+      "doors": 464
+    },
+    {
+      "rep": "Christian Brown",
+      "doors": 363
+    },
+    {
+      "rep": "Mike Mccarthy",
+      "doors": 299
+    },
+    {
+      "rep": "Aiden Glonek",
+      "doors": 250
+    },
+    {
+      "rep": "Izzy Price",
+      "doors": 245
+    },
+    {
+      "rep": "Jack Obert",
+      "doors": 230
+    },
+    {
+      "rep": "David Kerns",
+      "doors": 144
+    },
+    {
+      "rep": "Kelly Alston",
+      "doors": 67
+    },
+    {
+      "rep": "George Bechara",
+      "doors": 32
+    },
+    {
+      "rep": "Marc Mitchell",
+      "doors": 7
+    },
+    {
+      "rep": "Solomon Lincoln Jr.",
+      "doors": 7
+    },
+    {
+      "rep": "Andrew  Prickel",
+      "doors": 4
+    },
+    {
+      "rep": "Kevin Mahan",
+      "doors": 2
+    },
+    {
+      "rep": "Steven Arevalo",
+      "doors": 1
+    }
   ],
-  allowedReps: ['steven arevalo', 'marc mitchell', 'andrew funk', 'michael mccarthy', 'george bechara', 'isabelle price', 'jack obert', 'harvey shoemaker', 'kevin mahan', 'robert wilson', 'andrew prickel', 'alfred duncan', 'christian brown', 'kelly alston', 'david kerns', 'aiden glonek', 'solomon lincoln jr.'],
-  roster: ['Steven Arevalo', 'Marc Mitchell', 'Andrew Funk', 'Mike Mccarthy', 'George Bechara', 'Izzy Price', 'Jack Obert', 'Harvey Shoemaker', 'Kevin Mahan', 'Robert Wilson', 'Andrew Prickel', 'Alfred Duncan', 'Christian Brown', 'Kelly Alston', 'David Kerns', 'Aiden Glonek', 'Solomon Lincoln Jr.'],
+  "allowedReps": [
+    "steven arevalo",
+    "marc mitchell",
+    "andrew funk",
+    "michael mccarthy",
+    "george bechara",
+    "isabelle price",
+    "jack obert",
+    "harvey shoemaker",
+    "kevin mahan",
+    "robert wilson",
+    "andrew prickel",
+    "alfred duncan",
+    "christian brown",
+    "kelly alston",
+    "david kerns",
+    "aiden glonek",
+    "solomon lincoln jr."
+  ],
+  "roster": [
+    "Steven Arevalo",
+    "Marc Mitchell",
+    "Andrew Funk",
+    "Mike Mccarthy",
+    "George Bechara",
+    "Izzy Price",
+    "Jack Obert",
+    "Harvey Shoemaker",
+    "Kevin Mahan",
+    "Robert Mumford-Wilson",
+    "Andrew  Prickel",
+    "Alfred Duncan",
+    "Christian Brown",
+    "Kelly Alston",
+    "David Kerns",
+    "Aiden Glonek",
+    "Solomon Lincoln Jr."
+  ]
 };
 
 const BASE = 'https://api.salesrabbit.com';
@@ -129,7 +210,6 @@ async function compute() {
 
 module.exports = async (req, res) => {
   try {
-    res.setHeader('Access-Control-Allow-Origin', '*');
     const url = new URL(req.url, 'http://localhost');
     const live = url.searchParams.get('live');
     const debug = url.searchParams.get('debug');
