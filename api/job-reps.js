@@ -72,13 +72,13 @@ module.exports = async (req, res) => {
     const token = await getToken();
 
     if (debug) {
-      const job = await fetchJob(token, debug);
-      res.status(200).json({
-        found: !!job,
-        jobKeys: job ? Object.keys(job) : [],
-        reps: job ? job.reps : null,
-        repKeys: job && job.reps && job.reps[0] ? Object.keys(job.reps[0]) : [],
-      });
+      const qs = new URLSearchParams(); qs.set('job_number', debug);
+      ['reps','estimators','customer','sub_contractors','division'].forEach((x) => qs.append('includes[]', x));
+      const r = await fetch(`${V1}/jobs?${qs.toString()}`, { headers: HDR(token) });
+      const j = await r.json();
+      const job = (j.data || [])[0] || {};
+      const repish = {}; Object.keys(job).forEach((k) => { if (/rep|sales|estimat|assign/i.test(k)) repish[k] = job[k]; });
+      res.status(200).json({ status: r.status, repish, reps: job.reps, estimators: job.estimators, customer: job.customer ? { id: job.customer.id, rep: job.customer.rep, reps: job.customer.reps } : null });
       return;
     }
 
