@@ -1,4 +1,4 @@
-// api/ca.js — CA (documents named "CA") count this month, by job salesman.
+undefined// api/ca.js — CA (documents named "CA") count this month, by job salesman.
 // Served as a function because static-file publishing is currently stuck.
 // This is a snapshot refreshed by the daily scheduled task (reporting token is
 // browser-only / 24h, so it can't be computed live server-side).
