@@ -122,8 +122,23 @@ module.exports = async (req, res) => {
           out.push({ ep: p, error: String(e && e.message ? e.message : e) });
         }
       }
+      // Full field dump of one lead (detail view) + list item, redacted.
+      const redact = (o) => JSON.parse(JSON.stringify(o).replace(/[A-Za-z0-9_\-.@]{24,}/g, '<x>'));
+      const detail = await srGet(`/leads/${lid}`);
+      const detailObj = (detail.json && detail.json.data) || detail.json || {};
+      const listItem = arr(recent.json)[0] || {};
+      // try the leads list WITH a few extra query params that might add the updater
+      const withParams = await srGet(`/leads?perPage=1&include=user,status,history,owner`);
+      const wp0 = arr(withParams.json)[0] || {};
       res.setHeader('Cache-Control', 'no-store');
-      res.status(200).json({ testLeadId: lid, results: out });
+      res.status(200).json({
+        testLeadId: lid,
+        results: out,
+        detailKeys: Object.keys(detailObj),
+        detailSample: redact(detailObj),
+        listItemKeys: Object.keys(listItem),
+        withIncludeKeys: Object.keys(wp0),
+      });
       return;
     }
 
