@@ -41,7 +41,7 @@ if(d.error)throw new Error(d.error);
 document.getElementById('ap').textContent=fmt(d.company.approved_amount);
 document.getElementById('cn').textContent=fmt(d.company.contract_amount);
 document.getElementById('upd').textContent='Updated '+new Date(d.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-var rows=(d.reps||[]).map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+fmt(r.approved_amount)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract_amount)+'</td></tr>'}).join('');
+var rows=(d.reps||[]).filter(function(x){return !/haley/i.test(x.rep)}).map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+fmt(r.approved_amount)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract_amount)+'</td></tr>'}).join('');
 document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+rows+'</tbody></table>';
 }).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false});
 }
