@@ -98,9 +98,10 @@ module.exports = async (req, res) => {
     if (debug === 'v1') {
       // Probe the newer JSON:API at integrate.salesrabbit.com/v1
       const startIso = monthStart().toISOString();
+      const PLUS = process.env.SALESRABBIT_PLUS_TOKEN || '';
       async function v1(qs) {
         const res = await fetch('https://integrate.salesrabbit.com/v1/leads' + qs, {
-          headers: { Authorization: `Bearer ${tok()}`, Accept: 'application/vnd.api+json' },
+          headers: { Authorization: `Bearer ${PLUS}`, Accept: 'application/vnd.api+json' },
         });
         const text = await res.text();
         let j; try { j = JSON.parse(text); } catch (_) { j = text; }
@@ -114,6 +115,7 @@ module.exports = async (req, res) => {
       res.setHeader('Cache-Control', 'no-store');
       res.status(200).json({
         monthStart: startIso,
+        plusTokenPresent: !!PLUS,
         base: { status: a.status, meta: a.j && a.j.meta, attrKeys: d0 && d0.attributes ? Object.keys(d0.attributes) : null, relKeys: d0 && d0.relationships ? Object.keys(d0.relationships) : null, includedTypes: a.j && a.j.included ? a.j.included.map((x) => x.type).slice(0, 6) : null, sample: d0 ? redact(d0) : null, raw: a.raw },
         byLatestActivity: { status: b.status, meta: b.j && b.j.meta, raw: b.raw },
         byStatusUpdated: { status: c.status, meta: c.j && c.j.meta, raw: c.raw },
