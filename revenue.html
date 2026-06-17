@@ -55,11 +55,11 @@ if(ca.updated)document.getElementById('caUpd').textContent='CAs as of '+ca.updat
 var map={};
 (rev.reps||[]).forEach(function(r){map[norm(r.rep)]={rep:r.rep,approved:r.approved_amount||0,contract:r.contract_amount||0,cas:0}});
 (ca.reps||[]).forEach(function(c){var k=norm(c.rep);if(map[k]){map[k].cas=c.count}else{map[k]={rep:c.rep,approved:0,contract:0,cas:c.count}}});
-var rowsArr=Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return (b.contract-a.contract)||(b.approved-a.approved)||(b.cas-a.cas)});
+var rowsArr=Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return (b.contract-a.contract)||(b.approved-a.approved)||(b.cas-a.cas)});rowsArr=rowsArr.filter(function(r){var n=norm(r.rep);return !(n.indexOf('haley')>-1||n==='adam mulvaney'||n==='unassigned')});
 var tD=0,tC=0,tAp=0,tCn=0;
 var rows=rowsArr.map(function(r,i){tC+=r.cas;tAp+=r.approved;tCn+=r.contract;return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num muted">&mdash;</td><td class="num">'+r.cas+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract)+'</td></tr>'}).join('');
 document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+rows+'</tbody>'+
-'<tfoot><tr><td></td><td>Total</td><td class="num muted">&mdash;</td><td class="num">'+tC+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+fmt(tCn)+'</td></tr></tfoot></table>';
+'<tfoot><tr><td></td><td>Total (office)</td><td class="num muted">&mdash;</td><td class="num">'+(ca.total!=null?ca.total:tC)+'</td><td class="num">'+fmt(rev.company.approved_amount)+'</td><td class="num">'+fmt(rev.company.contract_amount)+'</td></tr></tfoot></table>';
 }).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false});
 }
 document.getElementById('rf').addEventListener('click',load);load();
