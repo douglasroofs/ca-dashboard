@@ -3,6 +3,9 @@
 // an allowed rep, status NOT in {Closed, Do Not Knock, Drive By}, dispositioned
 // (statusModified) this month. Deduped by pin id.
 //
+// Efficiency: only leads modified since the 1st of the month are fetched, via the
+// If-Modified-Since header (incremental cursor on dateModified).
+//
 // ?debug=1      -> shapes of users / statuses / leads
 // ?debug=tally  -> attribution diagnostics for this month (names + counts only)
 
@@ -42,17 +45,29 @@ function teamAllowed(t) {
   return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1);
 }
 
-// Pull every lead via simple page pagination.
-async function allLeads() {
+// Fetch only leads modified at/after `since`, advancing a dateModified cursor.
+async function leadsSince(since) {
   const out = [];
-  let page = 1;
-  for (let guard = 0; guard < 120; guard++) {
-    const r = await srGet(`/leads?page=${page}&perPage=500`);
+  const seen = new Set();
+  let cursor = new Date(since.getTime());
+  for (let guard = 0; guard < 40; guard++) {
+    const r = await srGet('/leads', { 'If-Modified-Since': cursor.toUTCString() });
     const leads = arr(r.json);
     if (!leads.length) break;
-    for (const ld of leads) out.push(ld);
-    if (leads.length < 500) break;
-    page += 1;
+    let maxMod = cursor.getTime();
+    let added = 0;
+    for (const ld of leads) {
+      const id = pick(ld, ['id']);
+      const m = new Date(pick(ld, ['dateModified']) || 0).getTime();
+      if (!isNaN(m) && m > maxMod) maxMod = m;
+      if (id != null && seen.has(id)) continue;
+      if (id != null) seen.add(id);
+      out.push(ld);
+      added += 1;
+    }
+    if (added === 0 || maxMod <= cursor.getTime()) break;
+    if (leads.length < 1000) break; // likely the last page
+    cursor = new Date(maxMod + 1000);
   }
   return out;
 }
@@ -92,23 +107,20 @@ module.exports = async (req, res) => {
     const roster = allowedUsers.map((u) => u.name);
 
     const start = monthStart();
-    const leads = await allLeads();
+    const leads = await leadsSince(start);
 
     if (debug === 'tally') {
       const teamCounts = {};
       allUsers.forEach((u) => { const k = u.team || '(blank)'; teamCounts[k] = (teamCounts[k] || 0) + 1; });
       const findUsers = allUsers
-        .filter((u) => /david|christian|aiden/i.test(u.name))
+        .filter((u) => /david|christian|aiden|kerns|brown/i.test(u.name))
         .map((u) => ({ name: u.name, team: u.team, allowed: allowedReps.has(repKey(u.name)) }));
 
-      const monthAllByName = {};       // statusModified this month, any status
-      const monthKnockByName = {};     // statusModified this month, excl 3 statuses
-      const createdByName = {};        // dateCreated this month
-      const lifetimeByName = {};       // all-time pins per name
-      const seenMonth = new Set();
+      const monthAllByName = {};
+      const monthKnockByName = {};
+      const createdByName = {};
       leads.forEach((ld) => {
         const owner = norm(pick(ld, ['userName']) || '');
-        if (owner) lifetimeByName[owner] = (lifetimeByName[owner] || 0) + 1;
         const sm = new Date(pick(ld, ['statusModified']) || 0);
         const dc = new Date(pick(ld, ['dateCreated']) || 0);
         const st = statusNorm(pick(ld, ['status']));
@@ -119,10 +131,10 @@ module.exports = async (req, res) => {
         }
       });
       const top = (o) => Object.keys(o).sort((a, b) => o[b] - o[a]).slice(0, 40).map((k) => k + ': ' + o[k]);
-      const forNames = (o) => Object.keys(o).filter((k) => /david|christian|aiden/.test(k)).map((k) => k + ': ' + o[k]);
+      const forNames = (o) => Object.keys(o).filter((k) => /david|christian|aiden|kerns|brown/.test(k)).map((k) => k + ': ' + o[k]);
       res.setHeader('Cache-Control', 'no-store');
       res.status(200).json({
-        leadsScanned: leads.length,
+        leadsScannedSinceMonthStart: leads.length,
         monthStart: start.toISOString(),
         teamCounts,
         matchedUsers: findUsers,
@@ -130,7 +142,6 @@ module.exports = async (req, res) => {
           monthStatusModified_anyStatus: forNames(monthAllByName),
           monthStatusModified_knockable: forNames(monthKnockByName),
           createdThisMonth: forNames(createdByName),
-          lifetimePins: forNames(lifetimeByName),
         },
         topMonthKnockable: top(monthKnockByName),
       });
@@ -153,7 +164,6 @@ module.exports = async (req, res) => {
       counts[rk] = (counts[rk] || 0) + 1;
       total += 1;
     });
-    // map repKey back to a display name
     const display = {};
     allowedUsers.forEach((u) => { display[repKey(u.name)] = u.name; });
     const reps = Object.keys(counts)
