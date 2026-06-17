@@ -67,6 +67,7 @@ function salesmanOf(job) {
 
 module.exports = async (req, res) => {
   try {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     const url = new URL(req.url, 'http://localhost');
     const debug = url.searchParams.get('debug');
     const token = await getToken();
