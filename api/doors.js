@@ -46,30 +46,24 @@ function teamAllowed(t) {
 }
 
 // Fetch every lead whose STATUS was modified at/after `since`.
-// SalesRabbit caps /leads at 2000 rows, so we page by advancing the
-// If-Status-Modified-Since cursor to the newest statusModified each page
-// (default sort is ascending). Dedup by id handles boundary repeats.
+// SalesRabbit caps /leads at 2000 rows per request, but supports real
+// offset pagination via ?perPage=&page=. We page through until a short page.
 const CAP = 2000;
 async function leadsSince(since) {
   const out = [];
   const seen = new Set();
-  let cursorMs = since.getTime();
-  for (let guard = 0; guard < 80; guard++) {
-    const r = await srGet('/leads', { 'If-Status-Modified-Since': new Date(cursorMs).toISOString() });
+  const hdr = { 'If-Status-Modified-Since': since.toISOString() };
+  for (let page = 1; page <= 60; page++) {
+    const r = await srGet(`/leads?perPage=${CAP}&page=${page}`, hdr);
     const leads = arr(r.json);
     if (!leads.length) break;
-    let maxMs = cursorMs;
     for (const ld of leads) {
       const id = pick(ld, ['id']);
-      const sm = new Date(pick(ld, ['statusModified']) || 0).getTime();
-      if (!isNaN(sm) && sm > maxMs) maxMs = sm;
       if (id != null && seen.has(id)) continue;
       if (id != null) seen.add(id);
       out.push(ld);
     }
-    if (leads.length < CAP) break;      // last page
-    if (maxMs <= cursorMs) break;       // can't advance (all same ts) — stop
-    cursorMs = maxMs;                   // include boundary; dedup handles repeats
+    if (leads.length < CAP) break; // last page
   }
   return out;
 }
@@ -109,7 +103,6 @@ module.exports = async (req, res) => {
       out.sortStatusModifiedAsc = await probe('/leads?sort_by=statusModified', hdr);
       out.sortStatusModifiedDesc = await probe('/leads?sort_by=-statusModified', hdr);
       out.sort_status_modified = await probe('/leads?sort_by=status_modified', hdr);
-      // does page/offset pagination actually advance?
       out.page1 = await probe('/leads?perPage=2000&page=1', hdr);
       out.page2 = await probe('/leads?perPage=2000&page=2', hdr);
       out.page1SamePage2 = out.page1.firstId === out.page2.firstId;
@@ -119,7 +112,6 @@ module.exports = async (req, res) => {
     }
 
     if (debug === 'v1') {
-      // Probe the newer JSON:API at integrate.salesrabbit.com/v1
       const startIso = monthStart().toISOString();
       const PLUS = (process.env.SALESRABBIT_PLUS_TOKEN || '').trim();
       const redactStr = (s) => String(s).replace(/[A-Za-z0-9_\-.@]{24,}/g, '<x>');
@@ -149,24 +141,6 @@ module.exports = async (req, res) => {
         oldWorksOnClassicApi: await classicTest(OLD),
         integrateBearer,
       });
-      return;
-    }
-
-    if (debug === 'probe') {
-      const recent = await srGet('/leads', { 'If-Modified-Since': monthStart().toUTCString() });
-      const lid = (arr(recent.json)[0] || {}).id;
-      const candidates = [
-        `/leads/${lid}`, `/leads/${lid}/history`, '/activities', '/areas',
-      ];
-      const out = [];
-      for (const p of candidates) {
-        try {
-          const r = await srGet(p);
-          const a = arr(r.json);
-          out.push({ ep: p, status: r.status, count: a.length });
-        } catch (e) { out.push({ ep: p, error: String(e) }); }
-      }
-      res.status(200).json({ testLeadId: lid, results: out });
       return;
     }
 
