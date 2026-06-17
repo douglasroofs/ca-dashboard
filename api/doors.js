@@ -93,6 +93,40 @@ module.exports = async (req, res) => {
       return;
     }
 
+    if (debug === 'probe') {
+      // find a recent lead id to test per-lead endpoints
+      const recent = await srGet('/leads', { 'If-Modified-Since': monthStart().toUTCString() });
+      const lid = (arr(recent.json)[0] || {}).id;
+      const candidates = [
+        `/leads/${lid}`,
+        `/leads/${lid}/history`,
+        `/leads/${lid}/activities`,
+        `/leads/${lid}/activity`,
+        '/activities',
+        '/leadActivities',
+        '/lead-activities',
+        '/history',
+        '/knocks',
+        '/leadHistory',
+        '/v2/leads?perPage=1',
+        '/areas',
+      ];
+      const out = [];
+      for (const p of candidates) {
+        try {
+          const r = await srGet(p);
+          const a = arr(r.json);
+          const s0 = a[0] || (r.json && typeof r.json === 'object' ? r.json : {});
+          out.push({ ep: p, status: r.status, isArray: Array.isArray(r.json) || !!(r.json && r.json.data), count: a.length, keys: Object.keys(s0 || {}).slice(0, 25) });
+        } catch (e) {
+          out.push({ ep: p, error: String(e && e.message ? e.message : e) });
+        }
+      }
+      res.setHeader('Cache-Control', 'no-store');
+      res.status(200).json({ testLeadId: lid, results: out });
+      return;
+    }
+
     // ---- users + teams ----
     const usersRes = await srGet('/users');
     const allUsers = arr(usersRes.json).map((u) => ({
