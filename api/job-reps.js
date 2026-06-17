@@ -16,7 +16,7 @@ async function login() {
   const res = await fetch(`${V1}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-    body: new URLSearchParams({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET }).toString(),
+    body: new URLSearchParams({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET, end_existing_sessions: '0' }).toString(),
   });
   if (!res.ok) throw new Error(`login -> ${res.status}`);
   const d = await res.json();
