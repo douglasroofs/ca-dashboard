@@ -1,13 +1,37 @@
 // api/doors.js — doors knocked per rep this month, from Sales Rabbit.
-// Production: scoped to DC Inbound + DC Self Gen teams. A "door" = a pin owned by
-// an allowed rep, status NOT in {Closed, Do Not Knock, Drive By}, dispositioned
-// (statusModified) this month. Deduped by pin id.
 //
-// Efficiency: only leads modified since the 1st of the month are fetched, via the
-// If-Modified-Since header (incremental cursor on dateModified).
+// DEFAULT: serves the SNAPSHOT below instantly (so the dashboard + Refresh
+//   button are fast). The snapshot is refreshed by the daily scheduled task.
+// ?live=1     : recompute fresh from Sales Rabbit (slow, ~25s). Used by the
+//               daily refresh task to produce a new snapshot.
+// ?debug=tally: attribution diagnostics for this month (names + counts only).
 //
-// ?debug=1      -> shapes of users / statuses / leads
-// ?debug=tally  -> attribution diagnostics for this month (names + counts only)
+// A "door" = a pin owned by an allowed rep (DC Inbound + DC Self Gen),
+// status NOT in {Closed, Do Not Knock, Drive By}, status-updated this month.
+
+const SNAPSHOT = {
+  updated: '2026-06-17T22:12:49.764Z',
+  total: 2790,
+  reps: [
+    { rep: 'Andrew Funk', doors: 677 },
+    { rep: 'Harvey Shoemaker', doors: 464 },
+    { rep: 'Christian Brown', doors: 363 },
+    { rep: 'Mike Mccarthy', doors: 299 },
+    { rep: 'Aiden Glonek', doors: 248 },
+    { rep: 'Izzy Price', doors: 245 },
+    { rep: 'Jack Obert', doors: 230 },
+    { rep: 'David Kerns', doors: 144 },
+    { rep: 'Kelly Alston', doors: 67 },
+    { rep: 'George Bechara', doors: 32 },
+    { rep: 'Marc Mitchell', doors: 7 },
+    { rep: 'Solomon Lincoln Jr.', doors: 7 },
+    { rep: 'Andrew  Prickel', doors: 4 },
+    { rep: 'Kevin Mahan', doors: 2 },
+    { rep: 'Steven Arevalo', doors: 1 },
+  ],
+  allowedReps: ['steven arevalo', 'marc mitchell', 'andrew funk', 'michael mccarthy', 'george bechara', 'isabelle price', 'jack obert', 'harvey shoemaker', 'kevin mahan', 'robert wilson', 'andrew prickel', 'alfred duncan', 'christian brown', 'kelly alston', 'david kerns', 'aiden glonek', 'solomon lincoln jr.'],
+  roster: ['Steven Arevalo', 'Marc Mitchell', 'Andrew Funk', 'Mike Mccarthy', 'George Bechara', 'Izzy Price', 'Jack Obert', 'Harvey Shoemaker', 'Kevin Mahan', 'Robert Wilson', 'Andrew Prickel', 'Alfred Duncan', 'Christian Brown', 'Kelly Alston', 'David Kerns', 'Aiden Glonek', 'Solomon Lincoln Jr.'],
+};
 
 const BASE = 'https://api.salesrabbit.com';
 const EXCLUDE_NORM = new Set(['closed', 'donotknock', 'driveby']);
@@ -16,6 +40,7 @@ const SR_ALIAS = {
   'izzy price': 'isabelle price',
   'robert mumford-wilson': 'robert wilson',
 };
+const CAP = 2000;
 
 function tok() {
   const t = process.env.SALESRABBIT_TOKEN;
@@ -24,10 +49,7 @@ function tok() {
 }
 async function srGet(path, headers) {
   const res = await fetch(`${BASE}${path}`, {
-    headers: Object.assign(
-      { Authorization: `Bearer ${tok()}`, Accept: 'application/json' },
-      headers || {}
-    ),
+    headers: Object.assign({ Authorization: `Bearer ${tok()}`, Accept: 'application/json' }, headers || {}),
   });
   const text = await res.text();
   let json;
@@ -45,10 +67,7 @@ function teamAllowed(t) {
   return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1);
 }
 
-// Fetch every lead whose STATUS was modified at/after `since`.
-// SalesRabbit caps /leads at 2000 rows per request, but supports real
-// offset pagination via ?perPage=&page=. We page through until a short page.
-const CAP = 2000;
+// Fetch every lead whose status was updated since `since`, via offset pagination.
 async function leadsSince(since) {
   const out = [];
   const seen = new Set();
@@ -63,172 +82,83 @@ async function leadsSince(since) {
       if (id != null) seen.add(id);
       out.push(ld);
     }
-    if (leads.length < CAP) break; // last page
+    if (leads.length < CAP) break;
   }
   return out;
+}
+
+async function compute() {
+  const usersRes = await srGet('/users');
+  const allUsers = arr(usersRes.json).map((u) => ({
+    name: pick(u, ['fullName']) ||
+      [pick(u, ['firstName', 'first']), pick(u, ['lastName', 'last'])].filter(Boolean).join(' ').trim() ||
+      pick(u, ['name', 'email']) || '',
+    team: pick(u, ['team']) || '',
+    active: pick(u, ['active']),
+  }));
+  const allowedUsers = allUsers.filter((u) => teamAllowed(u.team) && u.active !== false);
+  const allowedReps = new Set(allowedUsers.map((u) => repKey(u.name)));
+  const roster = allowedUsers.map((u) => u.name);
+
+  const start = monthStart();
+  const leads = await leadsSince(start);
+
+  const counts = {};
+  const seen = new Set();
+  let total = 0;
+  leads.forEach((ld) => {
+    const rk = repKey(pick(ld, ['userName']) || '');
+    if (!allowedReps.has(rk)) return;
+    const sm = new Date(pick(ld, ['statusModified']) || 0);
+    if (isNaN(sm) || sm < start) return;
+    const st = statusNorm(pick(ld, ['status']));
+    if (EXCLUDE_NORM.has(st)) return;
+    const id = pick(ld, ['id']);
+    if (id != null) { if (seen.has(id)) return; seen.add(id); }
+    counts[rk] = (counts[rk] || 0) + 1;
+    total += 1;
+  });
+  const display = {};
+  allowedUsers.forEach((u) => { display[repKey(u.name)] = u.name; });
+  const reps = Object.keys(counts)
+    .map((k) => ({ rep: display[k] || k, doors: counts[k] }))
+    .sort((a, b) => b.doors - a.doors);
+
+  return { updated: new Date().toISOString(), total, reps, allowedReps: Array.from(allowedReps), roster, leadsScanned: leads.length };
 }
 
 module.exports = async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
+    const live = url.searchParams.get('live');
     const debug = url.searchParams.get('debug');
 
-    if (debug === '1') {
-      const users = await srGet('/users');
-      let statuses = await srGet('/leadStatuses');
-      if (statuses.status >= 400) statuses = await srGet('/lead-statuses');
-      const leads = await srGet('/leads');
-      const u0 = arr(users.json)[0] || {};
-      const l0 = arr(leads.json)[0] || {};
-      const redact = (o) => JSON.parse(JSON.stringify(o).replace(/[A-Za-z0-9_\-.@]{24,}/g, '<x>'));
-      res.status(200).json({
-        users: { status: users.status, count: arr(users.json).length, sampleKeys: Object.keys(u0) },
-        statuses: { status: statuses.status, list: arr(statuses.json).map((s) => ({ id: s.id, name: s.name })).slice(0, 50) },
-        leads: { status: leads.status, count: arr(leads.json).length, sampleKeys: Object.keys(l0), sample: redact(l0) },
-      });
-      return;
-    }
-
-    if (debug === 'sort') {
-      const startIso = monthStart().toISOString();
-      const hdr = { 'If-Status-Modified-Since': startIso };
-      async function probe(path, headers) {
-        const r = await srGet(path, headers);
-        const a = arr(r.json);
-        const sm = a.map((l) => pick(l, ['statusModified'])).filter(Boolean);
-        return { status: r.status, count: a.length, firstSM: sm.slice(0, 2), lastSM: sm.slice(-2), firstId: (a[0] || {}).id, lastId: (a[a.length - 1] || {}).id };
-      }
-      const out = {};
-      out.noSort = await probe('/leads', hdr);
-      out.sortStatusModifiedAsc = await probe('/leads?sort_by=statusModified', hdr);
-      out.sortStatusModifiedDesc = await probe('/leads?sort_by=-statusModified', hdr);
-      out.sort_status_modified = await probe('/leads?sort_by=status_modified', hdr);
-      out.page1 = await probe('/leads?perPage=2000&page=1', hdr);
-      out.page2 = await probe('/leads?perPage=2000&page=2', hdr);
-      out.page1SamePage2 = out.page1.firstId === out.page2.firstId;
-      res.setHeader('Cache-Control', 'no-store');
-      res.status(200).json({ monthStart: startIso, out });
-      return;
-    }
-
-    if (debug === 'v1') {
-      const startIso = monthStart().toISOString();
-      const PLUS = (process.env.SALESRABBIT_PLUS_TOKEN || '').trim();
-      const redactStr = (s) => String(s).replace(/[A-Za-z0-9_\-.@]{24,}/g, '<x>');
-      async function tryAuth(hdrs) {
-        const res = await fetch('https://integrate.salesrabbit.com/v1/leads?page[limit]=1', {
-          headers: Object.assign({ Accept: 'application/vnd.api+json' }, hdrs),
-        });
-        const text = await res.text();
-        return { status: res.status, body: redactStr(text).slice(0, 300) };
-      }
-      const OLD = (process.env.SALESRABBIT_TOKEN || '').trim();
-      async function classicTest(key) {
-        const res = await fetch('https://api.salesrabbit.com/users', {
-          headers: { Authorization: `Bearer ${key}`, Accept: 'application/json' },
-        });
-        return res.status;
-      }
-      const integrateBearer = await tryAuth({ Authorization: `Bearer ${PLUS}` });
-      res.setHeader('Cache-Control', 'no-store');
-      res.status(200).json({
-        monthStart: startIso,
-        plusTokenPresent: !!PLUS,
-        plusTokenLen: PLUS.length,
-        oldTokenLen: OLD.length,
-        plusEqualsOld: PLUS === OLD,
-        plusWorksOnClassicApi: await classicTest(PLUS),
-        oldWorksOnClassicApi: await classicTest(OLD),
-        integrateBearer,
-      });
-      return;
-    }
-
-    // ---- users + teams ----
-    const usersRes = await srGet('/users');
-    const allUsers = arr(usersRes.json).map((u) => ({
-      name: pick(u, ['fullName']) ||
-        [pick(u, ['firstName', 'first']), pick(u, ['lastName', 'last'])].filter(Boolean).join(' ').trim() ||
-        pick(u, ['name', 'email']) || '',
-      team: pick(u, ['team']) || '',
-      active: pick(u, ['active']),
-    }));
-    const allowedUsers = allUsers.filter((u) => teamAllowed(u.team) && u.active !== false);
-    const allowedReps = new Set(allowedUsers.map((u) => repKey(u.name)));
-    const roster = allowedUsers.map((u) => u.name);
-
-    const start = monthStart();
-    const leads = await leadsSince(start);
-
     if (debug === 'tally') {
-      const teamCounts = {};
-      allUsers.forEach((u) => { const k = u.team || '(blank)'; teamCounts[k] = (teamCounts[k] || 0) + 1; });
-      const findUsers = allUsers
-        .filter((u) => /david|christian|aiden|kerns|brown/i.test(u.name))
-        .map((u) => ({ name: u.name, team: u.team, allowed: allowedReps.has(repKey(u.name)) }));
-
-      const monthAllByName = {};
-      const monthKnockByName = {};
-      const createdByName = {};
+      const start = monthStart();
+      const leads = await leadsSince(start);
+      const byName = {};
       leads.forEach((ld) => {
         const owner = norm(pick(ld, ['userName']) || '');
         const sm = new Date(pick(ld, ['statusModified']) || 0);
-        const dc = new Date(pick(ld, ['dateCreated']) || 0);
         const st = statusNorm(pick(ld, ['status']));
-        if (!isNaN(dc) && dc >= start && owner) createdByName[owner] = (createdByName[owner] || 0) + 1;
-        if (!isNaN(sm) && sm >= start && owner) {
-          monthAllByName[owner] = (monthAllByName[owner] || 0) + 1;
-          if (!EXCLUDE_NORM.has(st)) monthKnockByName[owner] = (monthKnockByName[owner] || 0) + 1;
-        }
+        if (!isNaN(sm) && sm >= start && owner && !EXCLUDE_NORM.has(st)) byName[owner] = (byName[owner] || 0) + 1;
       });
-      const top = (o) => Object.keys(o).sort((a, b) => o[b] - o[a]).slice(0, 40).map((k) => k + ': ' + o[k]);
-      const forNames = (o) => Object.keys(o).filter((k) => /david|christian|aiden|kerns|brown/.test(k)).map((k) => k + ': ' + o[k]);
+      const top = Object.keys(byName).sort((a, b) => byName[b] - byName[a]).slice(0, 40).map((k) => k + ': ' + byName[k]);
       res.setHeader('Cache-Control', 'no-store');
-      res.status(200).json({
-        leadsScannedSinceMonthStart: leads.length,
-        monthStart: start.toISOString(),
-        teamCounts,
-        matchedUsers: findUsers,
-        davidChristianAiden: {
-          monthStatusModified_anyStatus: forNames(monthAllByName),
-          monthStatusModified_knockable: forNames(monthKnockByName),
-          createdThisMonth: forNames(createdByName),
-        },
-        topMonthKnockable: top(monthKnockByName),
-      });
+      res.status(200).json({ leadsScanned: leads.length, monthStart: start.toISOString(), topKnockable: top });
       return;
     }
 
-    // ---- production tally ----
-    const counts = {};
-    const seen = new Set();
-    let total = 0;
-    leads.forEach((ld) => {
-      const rk = repKey(pick(ld, ['userName']) || '');
-      if (!allowedReps.has(rk)) return;
-      const sm = new Date(pick(ld, ['statusModified']) || 0);
-      if (isNaN(sm) || sm < start) return;
-      const st = statusNorm(pick(ld, ['status']));
-      if (EXCLUDE_NORM.has(st)) return;
-      const id = pick(ld, ['id']);
-      if (id != null) { if (seen.has(id)) return; seen.add(id); }
-      counts[rk] = (counts[rk] || 0) + 1;
-      total += 1;
-    });
-    const display = {};
-    allowedUsers.forEach((u) => { display[repKey(u.name)] = u.name; });
-    const reps = Object.keys(counts)
-      .map((k) => ({ rep: display[k] || k, doors: counts[k] }))
-      .sort((a, b) => b.doors - a.doors);
+    if (live === '1') {
+      const data = await compute();
+      res.setHeader('Cache-Control', 'no-store');
+      res.status(200).json(data);
+      return;
+    }
 
+    // Default: instant snapshot.
     res.setHeader('Cache-Control', 'no-store');
-    res.status(200).json({
-      updated: new Date().toISOString(),
-      total,
-      reps,
-      allowedReps: Array.from(allowedReps),
-      roster,
-    });
+    res.status(200).json(SNAPSHOT);
   } catch (err) {
     res.status(500).json({ error: String(err && err.message ? err.message : err) });
   }
