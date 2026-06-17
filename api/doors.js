@@ -107,18 +107,25 @@ module.exports = async (req, res) => {
         const text = await res.text();
         return { status: res.status, body: redactStr(text).slice(0, 300) };
       }
-      const variants = {
-        bearer: await tryAuth({ Authorization: `Bearer ${PLUS}` }),
-        rawAuth: await tryAuth({ Authorization: PLUS }),
-        xApiKey: await tryAuth({ 'X-Api-Key': PLUS }),
-        apiKey: await tryAuth({ 'Api-Key': PLUS }),
-      };
+      const OLD = (process.env.SALESRABBIT_TOKEN || '').trim();
+      // Does the PLUS key work on the CLASSIC api (api.salesrabbit.com)? If yes it's a classic key.
+      async function classicTest(key) {
+        const res = await fetch('https://api.salesrabbit.com/users', {
+          headers: { Authorization: `Bearer ${key}`, Accept: 'application/json' },
+        });
+        return res.status;
+      }
+      const integrateBearer = await tryAuth({ Authorization: `Bearer ${PLUS}` });
       res.setHeader('Cache-Control', 'no-store');
       res.status(200).json({
         monthStart: startIso,
         plusTokenPresent: !!PLUS,
         plusTokenLen: PLUS.length,
-        variants,
+        oldTokenLen: OLD.length,
+        plusEqualsOld: PLUS === OLD,
+        plusWorksOnClassicApi: await classicTest(PLUS),
+        oldWorksOnClassicApi: await classicTest(OLD),
+        integrateBearer,
       });
       return;
     }
