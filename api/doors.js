@@ -31,6 +31,18 @@ module.exports = async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     const debug = url.searchParams.get('debug');
 
+    if (debug === 'teams') {
+      const users = await srGet('/users');
+      const teamMap = {};
+      arr(users.json).forEach((u) => {
+        const t = u.team || u.department || u.region || '(none)';
+        const name = [u.firstName, u.lastName].filter(Boolean).join(' ').trim();
+        (teamMap[t] = teamMap[t] || []).push({ name, id: u.id, active: u.active });
+      });
+      res.status(200).json({ teamFields: { teamSeen: !!arr(users.json)[0] && 'team' in arr(users.json)[0] }, teams: Object.keys(teamMap).map((t) => ({ team: t, count: teamMap[t].length, members: teamMap[t] })) });
+      return;
+    }
+
     if (debug) {
       const users = await srGet('/users');
       let statuses = await srGet('/leadStatuses');
