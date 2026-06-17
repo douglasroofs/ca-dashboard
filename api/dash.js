@@ -64,6 +64,7 @@ var map={};
 var ALIAS={'mike mccarthy':'michael mccarthy','izzy price':'isabelle price','robert mumford-wilson':'robert wilson'};
 function dkey(n){var x=norm(n);return ALIAS[x]||x}
 (dr.reps||[]).forEach(function(d){var k=dkey(d.rep);if(map[k]){map[k].doors=d.doors}else{map[k]={rep:d.rep,approved:0,contract:0,cas:0,doors:d.doors}}});
+(dr.roster||[]).forEach(function(nm){var k=dkey(nm);if(!map[k]){map[k]={rep:nm,approved:0,contract:0,cas:0,doors:0}}});
 var rowsArr=Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return (b.contract-a.contract)||(b.approved-a.approved)||(b.cas-a.cas)});rowsArr=rowsArr.filter(function(r){var n=norm(r.rep);return !(n.indexOf('haley')>-1||n==='adam mulvaney'||n==='unassigned')});
 var allowSet=new Set(dr.allowedReps||[]);if(allowSet.size){rowsArr=rowsArr.filter(function(r){return allowSet.has(dkey(r.rep))})}
 var tD=0,tC=0,tAp=0,tCn=0;
