@@ -1,117 +1,40 @@
 // api/doors.js — doors knocked per rep this month, from Sales Rabbit.
 //
-// DEFAULT: serves the SNAPSHOT below instantly (so the dashboard + Refresh
-//   button are fast). The snapshot is refreshed by the daily scheduled task.
-// ?live=1     : recompute fresh from Sales Rabbit (slow, ~25s). Used by the
-//               daily refresh task to produce a new snapshot.
-// ?debug=tally: attribution diagnostics for this month (names + counts only).
+// ?office=herndon (default) | richmond   — selects the team scope + snapshot.
+//   herndon  = DC Inbound + DC Self Gen
+//   richmond = Richmond Storm + Richmond Retail
+// DEFAULT: serves the office's SNAPSHOT instantly (dashboard + Refresh are fast).
+// ?live=1     : recompute fresh from Sales Rabbit (slow ~25-30s). Used by the daily task.
+// ?debug=tally: per-owner knockable counts for this month (names + counts only).
 //
-// A "door" = a pin owned by an allowed rep (DC Inbound + DC Self Gen),
-// status NOT in {Closed, Do Not Knock, Drive By}, status-updated this month.
+// A "door" = a pin owned by an allowed rep, status NOT in {Closed, Do Not Knock,
+// Drive By}, status-updated this month. Both offices share one Sales Rabbit account.
 
-const SNAPSHOT = {
-  "updated": "2026-06-17T22:51:09.840Z",
-  "total": 2792,
-  "reps": [
-    {
-      "rep": "Andrew Funk",
-      "doors": 677
-    },
-    {
-      "rep": "Harvey Shoemaker",
-      "doors": 464
-    },
-    {
-      "rep": "Christian Brown",
-      "doors": 363
-    },
-    {
-      "rep": "Mike Mccarthy",
-      "doors": 299
-    },
-    {
-      "rep": "Aiden Glonek",
-      "doors": 250
-    },
-    {
-      "rep": "Izzy Price",
-      "doors": 245
-    },
-    {
-      "rep": "Jack Obert",
-      "doors": 230
-    },
-    {
-      "rep": "David Kerns",
-      "doors": 144
-    },
-    {
-      "rep": "Kelly Alston",
-      "doors": 67
-    },
-    {
-      "rep": "George Bechara",
-      "doors": 32
-    },
-    {
-      "rep": "Marc Mitchell",
-      "doors": 7
-    },
-    {
-      "rep": "Solomon Lincoln Jr.",
-      "doors": 7
-    },
-    {
-      "rep": "Andrew  Prickel",
-      "doors": 4
-    },
-    {
-      "rep": "Kevin Mahan",
-      "doors": 2
-    },
-    {
-      "rep": "Steven Arevalo",
-      "doors": 1
-    }
-  ],
-  "allowedReps": [
-    "steven arevalo",
-    "marc mitchell",
-    "andrew funk",
-    "michael mccarthy",
-    "george bechara",
-    "isabelle price",
-    "jack obert",
-    "harvey shoemaker",
-    "kevin mahan",
-    "robert wilson",
-    "andrew prickel",
-    "alfred duncan",
-    "christian brown",
-    "kelly alston",
-    "david kerns",
-    "aiden glonek",
-    "solomon lincoln jr."
-  ],
-  "roster": [
-    "Steven Arevalo",
-    "Marc Mitchell",
-    "Andrew Funk",
-    "Mike Mccarthy",
-    "George Bechara",
-    "Izzy Price",
-    "Jack Obert",
-    "Harvey Shoemaker",
-    "Kevin Mahan",
-    "Robert Mumford-Wilson",
-    "Andrew  Prickel",
-    "Alfred Duncan",
-    "Christian Brown",
-    "Kelly Alston",
-    "David Kerns",
-    "Aiden Glonek",
-    "Solomon Lincoln Jr."
-  ]
+const SNAPSHOTS = {
+  herndon: {
+    updated: '2026-06-17T22:12:49.764Z',
+    total: 2790,
+    reps: [
+      { rep: 'Andrew Funk', doors: 677 },
+      { rep: 'Harvey Shoemaker', doors: 464 },
+      { rep: 'Christian Brown', doors: 363 },
+      { rep: 'Mike Mccarthy', doors: 299 },
+      { rep: 'Aiden Glonek', doors: 248 },
+      { rep: 'Izzy Price', doors: 245 },
+      { rep: 'Jack Obert', doors: 230 },
+      { rep: 'David Kerns', doors: 144 },
+      { rep: 'Kelly Alston', doors: 67 },
+      { rep: 'George Bechara', doors: 32 },
+      { rep: 'Marc Mitchell', doors: 7 },
+      { rep: 'Solomon Lincoln Jr.', doors: 7 },
+      { rep: 'Andrew  Prickel', doors: 4 },
+      { rep: 'Kevin Mahan', doors: 2 },
+      { rep: 'Steven Arevalo', doors: 1 },
+    ],
+    allowedReps: ['steven arevalo', 'marc mitchell', 'andrew funk', 'michael mccarthy', 'george bechara', 'isabelle price', 'jack obert', 'harvey shoemaker', 'kevin mahan', 'robert wilson', 'andrew prickel', 'alfred duncan', 'christian brown', 'kelly alston', 'david kerns', 'aiden glonek', 'solomon lincoln jr.'],
+    roster: ['Steven Arevalo', 'Marc Mitchell', 'Andrew Funk', 'Mike Mccarthy', 'George Bechara', 'Izzy Price', 'Jack Obert', 'Harvey Shoemaker', 'Kevin Mahan', 'Robert Wilson', 'Andrew Prickel', 'Alfred Duncan', 'Christian Brown', 'Kelly Alston', 'David Kerns', 'Aiden Glonek', 'Solomon Lincoln Jr.'],
+  },
+  richmond: { updated: null, total: 0, reps: [], allowedReps: [], roster: [] },
 };
 
 const BASE = 'https://api.salesrabbit.com';
@@ -143,8 +66,9 @@ function monthStart() { const n = new Date(); return new Date(n.getFullYear(), n
 function norm(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/\s+/g, ' '); }
 function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
-function teamAllowed(t) {
+function teamAllowed(t, office) {
   const n = norm(t);
+  if (office === 'richmond') return n.indexOf('richmond') > -1;
   return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1);
 }
 
@@ -168,7 +92,7 @@ async function leadsSince(since) {
   return out;
 }
 
-async function compute() {
+async function compute(office) {
   const usersRes = await srGet('/users');
   const allUsers = arr(usersRes.json).map((u) => ({
     name: pick(u, ['fullName']) ||
@@ -177,7 +101,7 @@ async function compute() {
     team: pick(u, ['team']) || '',
     active: pick(u, ['active']),
   }));
-  const allowedUsers = allUsers.filter((u) => teamAllowed(u.team) && u.active !== false);
+  const allowedUsers = allUsers.filter((u) => teamAllowed(u.team, office) && u.active !== false);
   const allowedReps = new Set(allowedUsers.map((u) => repKey(u.name)));
   const roster = allowedUsers.map((u) => u.name);
 
@@ -205,12 +129,14 @@ async function compute() {
     .map((k) => ({ rep: display[k] || k, doors: counts[k] }))
     .sort((a, b) => b.doors - a.doors);
 
-  return { updated: new Date().toISOString(), total, reps, allowedReps: Array.from(allowedReps), roster, leadsScanned: leads.length };
+  return { updated: new Date().toISOString(), total, reps, allowedReps: Array.from(allowedReps), roster, leadsScanned: leads.length, office };
 }
 
 module.exports = async (req, res) => {
   try {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     const url = new URL(req.url, 'http://localhost');
+    const office = (url.searchParams.get('office') || 'herndon').toLowerCase();
     const live = url.searchParams.get('live');
     const debug = url.searchParams.get('debug');
 
@@ -224,22 +150,22 @@ module.exports = async (req, res) => {
         const st = statusNorm(pick(ld, ['status']));
         if (!isNaN(sm) && sm >= start && owner && !EXCLUDE_NORM.has(st)) byName[owner] = (byName[owner] || 0) + 1;
       });
-      const top = Object.keys(byName).sort((a, b) => byName[b] - byName[a]).slice(0, 40).map((k) => k + ': ' + byName[k]);
+      const top = Object.keys(byName).sort((a, b) => byName[b] - byName[a]).slice(0, 60).map((k) => k + ': ' + byName[k]);
       res.setHeader('Cache-Control', 'no-store');
       res.status(200).json({ leadsScanned: leads.length, monthStart: start.toISOString(), topKnockable: top });
       return;
     }
 
     if (live === '1') {
-      const data = await compute();
+      const data = await compute(office);
       res.setHeader('Cache-Control', 'no-store');
       res.status(200).json(data);
       return;
     }
 
-    // Default: instant snapshot.
+    // Default: instant snapshot for the requested office.
     res.setHeader('Cache-Control', 'no-store');
-    res.status(200).json(SNAPSHOT);
+    res.status(200).json(SNAPSHOTS[office] || SNAPSHOTS.herndon);
   } catch (err) {
     res.status(500).json({ error: String(err && err.message ? err.message : err) });
   }
