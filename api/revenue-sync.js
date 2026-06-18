@@ -10,18 +10,20 @@
  *
  * Runtime: Vercel serverless function. Trigger manually at /api/revenue-sync
  * or add the daily cron in vercel.json (bottom of file).
- *
- * SECRETS — read only from Vercel env vars (exact case-sensitive names):
- *   herndon    Leap API token, Herndon account
- *   Richmond   Leap API token, Richmond account   (v2)
- *   ampliphy   Amplify (SalesScreen) API key
  * --------------------------------------------------------------------------
  */
 
+// ── Secrets ─────────────────────────────────────────────────────────────────
+// Falls back across the likely Vercel variable names so it works no matter
+// exactly what each key was named.
+const HERNDON_TOKEN  = process.env.herndon  || process.env.LEAP_ACCESS_TOKEN;
+const RICHMOND_TOKEN = process.env.Richmond || process.env.RICH_LEAP_API_KEY;
+const AMPLIFY_KEY    = process.env.ampliphy || process.env.SALESRABBIT_PLUS_TOKEN;
+
 // ── Per-office config ──────────────────────────────────────────────────────
 const OFFICES = [
-  { name: "herndon", reportId: 3955, keyEnv: "herndon" },     // "Amplify Revenue Sync - Herndon"
-  // { name: "richmond", reportId: null, keyEnv: "Richmond" },  // v2 — build the same report in Richmond
+  { name: "herndon", reportId: 3955, token: HERNDON_TOKEN },   // "Amplify Revenue Sync - Herndon"
+  // { name: "richmond", reportId: null, token: RICHMOND_TOKEN },  // v2 — build the same report in Richmond
 ];
 
 // Column display-names in the DataBuilder report (confirmed against report 3955).
@@ -84,8 +86,8 @@ const LEAP_REPORTING_BASE = "https://reporting-api.jobprogress.com";
 
 // ── Leap extraction ────────────────────────────────────────────────────────
 async function fetchReportRows(office) {
-  const token = process.env[office.keyEnv];
-  if (!token) throw new Error(`Missing env var ${office.keyEnv}`);
+  const token = office.token;
+  if (!token) throw new Error(`Missing Leap token for ${office.name} (set "herndon" or LEAP_ACCESS_TOKEN in Vercel)`);
   if (!office.reportId) { console.warn(`No reportId for ${office.name} — skipping`); return []; }
 
   const auth = { Authorization: "Bearer " + token, "Content-Type": "application/json" };
@@ -167,8 +169,8 @@ function toRegistrations(row) {
 
 // ── Amplify push (POST a list, header apiKey) ──────────────────────────────
 async function pushToAmplify(records) {
-  const key = process.env.ampliphy;
-  if (!key) throw new Error("Missing env var ampliphy");
+  const key = AMPLIFY_KEY;
+  if (!key) throw new Error('Missing Amplify key (set "ampliphy" or SALESRABBIT_PLUS_TOKEN in Vercel)');
   let ok = 0;
   const CHUNK = 100;                                         // rate limit 200/min
   for (let i = 0; i < records.length; i += CHUNK) {
