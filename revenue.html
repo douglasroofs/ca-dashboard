@@ -29,7 +29,7 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 <div class="wrap">
 <div class="cards">
 <div class="card d"><div class="label">Doors Knocked</div><div class="value" id="cDr">-</div><div class="sub">Pins this month</div></div>
-<div class="card k"><div class="label">CAs</div><div class="value" id="cCa">-</div><div class="sub" id="caUpd">Documents named "CA" this month</div></div>
+<div class="card k"><div class="label">CAs</div><div class="value" id="cCa">-</div><div class="sub" id="caUpd">ICA + SGCA this month</div></div>
 <div class="card a"><div class="label">Approved Revenue</div><div class="value" id="cAp">-</div><div class="sub">Job awarded date</div></div>
 <div class="card c"><div class="label">Contract Signed Revenue</div><div class="value" id="cCn">-</div><div class="sub">Contract signed date</div></div>
 </div>
@@ -41,22 +41,22 @@ var fmt=function(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFra
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function norm(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
 function load(){
-var b=document.getElementById('rf');b.disabled=true;var ud=document.getElementById('ud');if(ud){ud.disabled=true;ud.textContent=window.__liveDoors?'Updating doors\u2026 (~25s)':'Update doors now';}
+var b=document.getElementById('rf');b.disabled=true;var ud=document.getElementById('ud');if(ud){ud.disabled=true;ud.textContent=window.__liveDoors?'Updating doors… (~25s)':'Update doors now';}
 document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
 Promise.all([
-  fetch('/api/revenue',{cache:'no-store'}).then(function(r){return r.json()}),
-  fetch('/api/ca',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0}}),
-  fetch((window.__liveDoors?'/api/doors?live=1':'/api/doors'),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0,roster:[],allowedReps:[]}})
+fetch('/api/revenue',{cache:'no-store'}).then(function(r){return r.json()}),
+fetch('/api/ca-history?office=herndon&live=1',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],months:[]}}),
+fetch((window.__liveDoors?'/api/doors?live=1':'/api/doors'),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0,roster:[],allowedReps:[]}})
 ]).then(function(res){
 var rev=res[0], ca=res[1], dr=res[2];
 if(rev.error)throw new Error(rev.error);
 document.getElementById('upd').textContent='Updated '+new Date(rev.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-if(ca.updated)document.getElementById('caUpd').textContent='Documents named "CA" · as of '+ca.updated;
+if(ca.updated)document.getElementById('caUpd').textContent='ICA + SGCA pins · as of '+new Date(ca.updated).toLocaleDateString('en-US',{month:'short',day:'numeric'});
 var ALIAS={'mike mccarthy':'michael mccarthy','izzy price':'isabelle price','robert mumford-wilson':'robert wilson'};
 function dkey(n){var x=norm(n);return ALIAS[x]||x}
 var map={};
 (rev.reps||[]).forEach(function(r){map[norm(r.rep)]={rep:r.rep,approved:r.approved_amount||0,contract:r.contract_amount||0,cas:0,doors:0}});
-(ca.reps||[]).forEach(function(c){var k=dkey(c.rep);if(map[k]){map[k].cas=c.count}else{map[k]={rep:c.rep,approved:0,contract:0,cas:c.count,doors:0}}});
+(ca.reps||[]).forEach(function(c){var cc=(c.counts&&c.counts.length)?c.counts[c.counts.length-1]:0;var k=dkey(c.rep);if(map[k]){map[k].cas=cc}else{map[k]={rep:c.rep,approved:0,contract:0,cas:cc,doors:0}}});
 (dr.reps||[]).forEach(function(d){var k=dkey(d.rep);if(map[k]){map[k].doors=d.doors}else{map[k]={rep:d.rep,approved:0,contract:0,cas:0,doors:d.doors}}});
 (dr.roster||[]).forEach(function(nm){var k=dkey(nm);if(!map[k]){map[k]={rep:nm,approved:0,contract:0,cas:0,doors:0}}});
 var rowsArr=Object.keys(map).map(function(k){return map[k]});
