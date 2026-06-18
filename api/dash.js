@@ -28,8 +28,9 @@ button{background:#1f6feb;color:#fff;border:none;padding:8px 14px;border-radius:
 .state{padding:30px;text-align:center;color:#6b7888}
 tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 .hd{display:flex;gap:12px;align-items:center}
+.nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 8px}.nav a{color:#aebfd2;text-decoration:none;font-size:13px;padding:5px 10px;border-radius:6px}.nav a.on{background:#1f6feb;color:#fff}.nav a:hover{color:#fff}
 </style></head><body>
-<header><h1>Douglas Roofing - DC Dashboard (Month to Date)</h1><div class="hd"><span class="meta" id="upd"></span><button id="rf">Refresh</button><button id="ud" style="background:#475569" title="Recompute doors live from Sales Rabbit (~25s). The 7am refresh saves it automatically.">Update doors now</button></div></header>
+<header><h1>Douglas Roofing - DC Dashboard (Month to Date)</h1><nav class="nav"><a class="on" href="/revenue.html">Herndon</a><a href="/richmond.html">Richmond</a><a href="/ca-bonus.html">CA by Month</a></nav><div class="hd"><span class="meta" id="upd"></span><button id="rf">Refresh</button><button id="ud" style="background:#475569" title="Recompute doors live from Sales Rabbit (~25s). The 7am refresh saves it automatically.">Update doors now</button></div></header>
 <div class="wrap">
 <div class="cards">
 <div class="card d"><div class="label">Doors Knocked</div><div class="value" id="cDr">-</div><div class="sub">Pins this month</div></div>
