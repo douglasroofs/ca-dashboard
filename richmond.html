@@ -32,16 +32,17 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 <div class="cards">
 <div class="card d"><div class="label">Doors Knocked</div><div class="value" id="cDr">-</div><div class="sub">Pins this month</div></div>
 <div class="card k"><div class="label">CAs</div><div class="value" id="cCa">-</div><div class="sub">ICA + SGCA this month</div></div>
-<div class="card a"><div class="label">Approved Revenue</div><div class="value" id="cAp">-</div><div class="sub">Pending Richmond report</div></div>
-<div class="card c"><div class="label">Contract Signed Revenue</div><div class="value" id="cCn">-</div><div class="sub">Pending Richmond report</div></div>
+<div class="card a"><div class="label">Approved Revenue</div><div class="value" id="cAp">-</div><div class="sub">Job awarded date (MTD)</div></div>
+<div class="card c"><div class="label">Contract Signed Revenue</div><div class="value" id="cCn">-</div><div class="sub">Pending contract-signed report</div></div>
 </div>
-<h2>Rep Leaderboard <span>(Richmond Storm + Retail, by Doors)</span></h2>
+<h2>Rep Leaderboard <span>(Richmond Storm + Retail, by Approved $)</span></h2>
 <div id="tw"><div class="state">Loading...</div></div>
-<div class="note">Doors = Sales Rabbit pins this month (Storm + Retail). CAs = ICA + SGCA set this month. Approved / Contract Signed revenue will populate once the Richmond DataBuilder report is connected.</div>
+<div class="note">Doors = Sales Rabbit pins this month (Storm + Retail). CAs = ICA + SGCA set this month. Approved = Leap "Sales Rep Revenue MTD" (job sub-total by awarded date). Contract Signed needs a sibling Leap report (same report filtered by contract-signed date).</div>
 </div>
 <script>
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function norm(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
+function fmt(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function load(opts){
   opts=opts||{};
   var b=document.getElementById('rf');b.disabled=true;
@@ -49,24 +50,28 @@ function load(opts){
   document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
   Promise.all([
     fetch((opts.liveDoors?'/api/doors?office=richmond&live=1':'/api/doors?office=richmond')+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}),
-    fetch('/api/ca-history?office=richmond&live=1&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],months:[]}})
+    fetch('/api/ca-history?office=richmond&live=1&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],months:[]}}),
+    fetch('/api/rich-revenue?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[]}})
   ]).then(function(res){
-    var dr=res[0], ca=res[1];
+    var dr=res[0], ca=res[1], rev=res[2];
     if(dr.error)throw new Error(dr.error);
     document.getElementById('upd').textContent='Updated '+new Date(dr.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
     var caMap={};(ca.reps||[]).forEach(function(r){var c=r.counts||[];caMap[norm(r.rep)]=c.length?c[c.length-1]:0;});
+    var revMap={};((rev&&rev.reps)||[]).forEach(function(r){revMap[norm(r.rep)]={approved:r.approved||0,contract:r.contract||0,rep:r.rep};});
     var map={};
     (dr.roster||[]).forEach(function(nm){map[norm(nm)]={rep:nm,doors:0,cas:caMap[norm(nm)]||0};});
     (dr.reps||[]).forEach(function(r){var k=norm(r.rep);if(!map[k])map[k]={rep:r.rep,doors:0,cas:caMap[k]||0};map[k].doors=r.doors;});
     (ca.reps||[]).forEach(function(r){var k=norm(r.rep);if(!map[k])map[k]={rep:r.rep,doors:0,cas:caMap[k]||0};});
-    var rows=Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return (b.doors-a.doors)||(b.cas-a.cas)});
-    var tD=0,tC=0;rows.forEach(function(r){tD+=r.doors||0;tC+=r.cas||0;});
+    Object.keys(revMap).forEach(function(k){if(!map[k])map[k]={rep:revMap[k].rep,doors:0,cas:caMap[k]||0};});
+    Object.keys(map).forEach(function(k){var rv=revMap[k]||{};map[k].approved=rv.approved||0;map[k].contract=rv.contract||0;});
+    var rows=Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return (b.approved-a.approved)||(b.doors-a.doors)});
+    var tD=0,tC=0,tAp=0,tCn=0;rows.forEach(function(r){tD+=r.doors||0;tC+=r.cas||0;tAp+=r.approved||0;tCn+=r.contract||0;});
     document.getElementById('cDr').textContent=tD;
     document.getElementById('cCa').textContent=tC;
-    document.getElementById('cAp').textContent='—';
-    document.getElementById('cCn').textContent='—';
-    var body=rows.map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+'</td><td class="num">—</td><td class="num">—</td></tr>'}).join('');
-    document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td></td><td>Total</td><td class="num">'+tD+'</td><td class="num">'+tC+'</td><td class="num">—</td><td class="num">—</td></tr></tfoot></table>';
+    document.getElementById('cAp').textContent=fmt(tAp);
+    document.getElementById('cCn').textContent=tCn>0?fmt(tCn):'—';
+    var body=rows.map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num">'+(r.contract>0?fmt(r.contract):'—')+'</td></tr>'}).join('');
+    document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td></td><td>Total</td><td class="num">'+tD+'</td><td class="num">'+tC+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+(tCn>0?fmt(tCn):'—')+'</td></tr></tfoot></table>';
   }).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false;if(ud){ud.disabled=false;ud.textContent='Update doors now';}});
 }
 document.getElementById('rf').addEventListener('click',function(){load();});
