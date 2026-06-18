@@ -111,14 +111,22 @@ module.exports = async (req, res) => {
     if (debug === 'probe') {
       const since = new Date(new Date().getFullYear(), 0, 1);
       const hdr = { 'If-Status-Modified-Since': since.toISOString() };
-      const r1 = await srGet('/leads?leadStatus=ICA&perPage=5', hdr);
-      const r2 = await srGet('/leads?leadStatus=SGCA&perPage=5', hdr);
-      const a1 = arr(r1.json), a2 = arr(r2.json);
+      const variants = {
+        leadStatus_name: '/leads?leadStatus=ICA&perPage=8',
+        status_name: '/leads?status=ICA&perPage=8',
+        statusId21: '/leads?statusId=21&perPage=8',
+        leadStatusId21: '/leads?leadStatusId=21&perPage=8',
+        filter_status: '/leads?' + encodeURIComponent('filter[status]') + '=ICA&perPage=8',
+        filter_statusId: '/leads?' + encodeURIComponent('filter[statusId]') + '=21&perPage=8',
+      };
+      const out = {};
+      for (const k of Object.keys(variants)) {
+        const rr = await srGet(variants[k], hdr);
+        const aa = arr(rr.json);
+        out[k] = { status: rr.status, count: aa.length, statuses: aa.slice(0, 8).map((l) => pick(l, ['status'])) };
+      }
       res.setHeader('Cache-Control', 'no-store');
-      res.status(200).json({
-        ica: { status: r1.status, count: a1.length, sampleStatuses: a1.slice(0, 5).map((l) => pick(l, ['status'])) },
-        sgca: { status: r2.status, count: a2.length, sampleStatuses: a2.slice(0, 5).map((l) => pick(l, ['status'])) },
-      });
+      res.status(200).json(out);
       return;
     }
 
