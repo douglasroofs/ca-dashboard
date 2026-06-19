@@ -12,8 +12,8 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-06-18T11:08:47.975Z",
-    "total": 2798,
+    "updated": "2026-06-19T14:06:36.638Z",
+    "total": 2925,
     "reps": [
       {
         "rep": "Andrew Funk",
@@ -25,31 +25,31 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Christian Brown",
-        "doors": 363
+        "doors": 372
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 303
+        "doors": 339
+      },
+      {
+        "rep": "Izzy Price",
+        "doors": 285
+      },
+      {
+        "rep": "Jack Obert",
+        "doors": 260
       },
       {
         "rep": "Aiden Glonek",
         "doors": 251
       },
       {
-        "rep": "Izzy Price",
-        "doors": 245
-      },
-      {
-        "rep": "Jack Obert",
-        "doors": 230
-      },
-      {
         "rep": "David Kerns",
-        "doors": 145
+        "doors": 146
       },
       {
         "rep": "Kelly Alston",
-        "doors": 67
+        "doors": 78
       },
       {
         "rep": "George Bechara",
@@ -116,32 +116,32 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-06-18T11:09:06.125Z",
-    "total": 1466,
+    "updated": "2026-06-19T14:06:59.818Z",
+    "total": 1566,
     "reps": [
       {
         "rep": "Andrew Harris",
-        "doors": 355
+        "doors": 396
       },
       {
         "rep": "Carter Massengill",
         "doors": 232
       },
       {
+        "rep": "Travis Kizzar",
+        "doors": 183
+      },
+      {
+        "rep": "Felipe Osorio",
+        "doors": 168
+      },
+      {
         "rep": "JR Zaguehi",
         "doors": 159
       },
       {
-        "rep": "Travis Kizzar",
-        "doors": 155
-      },
-      {
         "rep": "Logan Burbic",
         "doors": 146
-      },
-      {
-        "rep": "Felipe Osorio",
-        "doors": 137
       },
       {
         "rep": "Pedro Ramirez",
