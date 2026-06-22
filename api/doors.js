@@ -12,8 +12,8 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-06-19T14:06:36.638Z",
-    "total": 2925,
+    "updated": "2026-06-22T15:36:49.538Z",
+    "total": 3098,
     "reps": [
       {
         "rep": "Andrew Funk",
@@ -24,36 +24,40 @@ const SNAPSHOTS = {
         "doors": 464
       },
       {
-        "rep": "Christian Brown",
-        "doors": 372
+        "rep": "Mike Mccarthy",
+        "doors": 401
       },
       {
-        "rep": "Mike Mccarthy",
-        "doors": 339
+        "rep": "Christian Brown",
+        "doors": 398
+      },
+      {
+        "rep": "Jack Obert",
+        "doors": 300
       },
       {
         "rep": "Izzy Price",
         "doors": 285
       },
       {
-        "rep": "Jack Obert",
-        "doors": 260
-      },
-      {
         "rep": "Aiden Glonek",
-        "doors": 251
+        "doors": 277
       },
       {
         "rep": "David Kerns",
-        "doors": 146
+        "doors": 148
       },
       {
         "rep": "Kelly Alston",
-        "doors": 78
+        "doors": 80
       },
       {
         "rep": "George Bechara",
-        "doors": 32
+        "doors": 35
+      },
+      {
+        "rep": "Carol Wright",
+        "doors": 8
       },
       {
         "rep": "Marc Mitchell",
@@ -65,14 +69,22 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Andrew  Prickel",
-        "doors": 4
+        "doors": 5
       },
       {
         "rep": "Kevin Mahan",
         "doors": 2
       },
       {
+        "rep": "Ethan Wiley",
+        "doors": 2
+      },
+      {
         "rep": "Steven Arevalo",
+        "doors": 1
+      },
+      {
+        "rep": "Robert Mumford-Wilson",
         "doors": 1
       }
     ],
@@ -93,7 +105,11 @@ const SNAPSHOTS = {
       "kelly alston",
       "david kerns",
       "aiden glonek",
-      "solomon lincoln jr."
+      "solomon lincoln jr.",
+      "ethan wiley",
+      "carol wright",
+      "thurmond shaw",
+      "jason cresswell"
     ],
     "roster": [
       "Steven Arevalo",
@@ -112,32 +128,36 @@ const SNAPSHOTS = {
       "Kelly Alston",
       "David Kerns",
       "Aiden Glonek",
-      "Solomon Lincoln Jr."
+      "Solomon Lincoln Jr.",
+      "Ethan Wiley",
+      "Carol Wright",
+      "Thurmond shaw",
+      "Jason Cresswell"
     ]
   },
   "richmond": {
-    "updated": "2026-06-19T14:06:59.818Z",
-    "total": 1566,
+    "updated": "2026-06-22T15:37:10.546Z",
+    "total": 1665,
     "reps": [
       {
         "rep": "Andrew Harris",
-        "doors": 396
+        "doors": 397
       },
       {
         "rep": "Carter Massengill",
-        "doors": 232
-      },
-      {
-        "rep": "Travis Kizzar",
-        "doors": 183
+        "doors": 262
       },
       {
         "rep": "Felipe Osorio",
-        "doors": 168
+        "doors": 216
+      },
+      {
+        "rep": "Travis Kizzar",
+        "doors": 184
       },
       {
         "rep": "JR Zaguehi",
-        "doors": 159
+        "doors": 178
       },
       {
         "rep": "Logan Burbic",
