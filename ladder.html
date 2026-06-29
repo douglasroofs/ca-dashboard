@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Douglas Roofing — 12 Week Ladder Competition</title>
+<style>
+  :root{
+    --bg:#0b1622; --panel:#11233a; --panel2:#0e1d31; --card:#13294a;
+    --line:#1f3a5c; --blue:#2d6cb5; --blue-bright:#3b9ae1; --blue-glow:#5bb8ff;
+    --text:#eaf2fb; --muted:#8fa6c2; --gold:#ffd54a; --gold2:#f5c451;
+    --green:#34d27b; --amber:#f5b942;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, #1c3a5e 0%, transparent 60%),
+      linear-gradient(180deg,#0b1622 0%, #0a131f 100%);
+    color:var(--text); min-height:100vh; padding:24px 16px 60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+  header{text-align:center;margin-bottom:18px}
+  .brand{font-size:13px;letter-spacing:6px;color:var(--blue-bright);font-weight:700}
+  h1{font-size:clamp(26px,5vw,44px);font-weight:900;letter-spacing:1px;line-height:1.05;margin:6px 0 4px;
+    background:linear-gradient(180deg,#dcebff 0%, #2d6cb5 120%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 18px rgba(59,154,225,.25)}
+  .tagline{color:var(--muted);font-size:13px;letter-spacing:3px;text-transform:uppercase}
+  .updated{color:var(--muted);font-size:11px;letter-spacing:1px;margin-top:8px;text-transform:uppercase}
+
+  .statusbar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:20px 0 26px}
+  .chip{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+    border-radius:12px;padding:11px 18px;text-align:center;min-width:140px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  .chip .k{font-size:11px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+  .chip .v{font-size:21px;font-weight:800;margin-top:3px}
+  .chip.now{border-color:var(--blue-bright);box-shadow:0 0 0 1px var(--blue-bright),0 6px 22px rgba(59,154,225,.35)}
+  .chip.now .v{color:var(--blue-glow)}
+  .chip.prize .v{font-size:15px;color:var(--gold2)}
+
+  section{margin-bottom:30px}
+  .sec-title{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-bright);
+    font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+  .sec-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+  th,td{padding:13px 16px;text-align:left;border-bottom:1px solid #15294480}
+  th{background:#0c1d33;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+  tr:last-child td{border-bottom:none}
+  tr.row:hover{background:#10243f}
+  .rank{font-weight:900;font-size:17px;color:var(--muted);text-align:center;width:48px}
+  .rank.g1{color:#ffd54a} .rank.g2{color:#cdd6e3} .rank.g3{color:#d99a5b}
+  td.rep b{font-size:15px} td.rep .office{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+  .trophies{font-size:15px;letter-spacing:1px;white-space:nowrap}
+  .tcount{color:var(--gold2);font-weight:800;margin-left:6px}
+  .chasing{color:var(--blue-glow);font-weight:700}
+  .champ{color:var(--green);font-weight:800}
+
+  .ladder{display:flex;flex-direction:column;gap:8px}
+  .rung{display:flex;align-items:stretch;gap:14px;background:linear-gradient(180deg,var(--card),#0e1f3a);
+    border:1px solid var(--line);border-radius:12px;padding:12px 16px;transition:.2s}
+  .rung.future{opacity:.45}
+  .rung.current{border-color:var(--blue-bright);box-shadow:0 0 0 1px var(--blue-bright),0 8px 26px rgba(59,154,225,.3);
+    background:linear-gradient(180deg,#1a3a64,#102443)}
+  .rung-left{min-width:200px;flex-shrink:0}
+  .rung .wk{font-size:10px;letter-spacing:2px;color:var(--muted);font-weight:800;text-transform:uppercase}
+  .rung.current .wk{color:var(--blue-glow)}
+  .rung .pz{font-weight:800;font-size:16px;margin-top:2px}
+  .rung .rd{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:3px}
+  .rung-right{flex:1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;align-content:center}
+  .repchip{font-size:12px;font-weight:700;padding:5px 11px;border-radius:16px;
+    background:rgba(59,154,225,.15);color:var(--blue-glow);border:1px solid rgba(59,154,225,.45)}
+  .empty{font-size:12px;color:#46618a;font-style:italic}
+  .cleared{font-size:11px;color:var(--green);margin-left:auto;align-self:center;white-space:nowrap}
+  .nowtag{font-size:9px;font-weight:900;letter-spacing:1px;background:var(--blue-bright);color:#fff;
+    padding:2px 7px;border-radius:5px;margin-left:8px;vertical-align:middle}
+  .band{font-weight:900;letter-spacing:2px;font-size:12px;color:var(--blue-glow);margin:14px 0 2px;display:flex;gap:8px;align-items:center}
+  .band small{color:var(--muted);font-weight:600;letter-spacing:1px}
+  .grand{border-color:var(--gold)!important;box-shadow:0 0 0 1px rgba(255,213,74,.4),0 8px 26px rgba(255,213,74,.15)}
+  .grand .pz{color:var(--gold)}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:34px;letter-spacing:2px;text-transform:uppercase}
+  @media(max-width:600px){.rung{flex-direction:column;gap:8px}.rung-left{min-width:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">D O U G L A S &nbsp; R O O F I N G</div>
+    <h1>12&nbsp;WEEK LADDER COMPETITION</h1>
+    <div class="tagline">Climb Higher · Earn More · Take Home the Win</div>
+    <div class="updated" id="updated"></div>
+  </header>
+
+  <div class="statusbar" id="statusbar"></div>
+
+  <section>
+    <div class="sec-title">Standings</div>
+    <div class="tablewrap"><table id="board"></table></div>
+  </section>
+
+  <section>
+    <div class="sec-title">The Prize Ladder — Where Everyone Stands</div>
+    <div class="ladder" id="ladder"></div>
+  </section>
+
+  <footer>Knock More Doors · File More Claims · Close More Deals · Win Big</footer>
+</div>
+
+<script>
+/* ============================================================
+   DOUGLAS ROOFING — 12 WEEK LADDER LEADERBOARD
+   ------------------------------------------------------------
+   TO UPDATE WEEKLY: edit the two marked spots below, then
+   re-commit this file. (1) CURRENT_WEEK  (2) STANDINGS earned #.
+   ============================================================ */
+
+const CURRENT_WEEK = 7;          // <-- set the current week (rain weeks already accounted for)
+const LAST_UPDATED = '2026-06-29'; // <-- date you last updated standings
+
+/* STANDINGS: earned = # of ladder rungs/prizes each rep has cleared (0-12) */
+const STANDINGS = [
+  {name:'Andrew Funk',      office:'Herndon', earned:3},
+  {name:'David Kerns',      office:'Herndon', earned:3},
+  {name:'Andrew Prickel',   office:'Herndon', earned:2},
+  {name:'George Bechara',   office:'Herndon', earned:2},
+  {name:'Harvey Shoemaker', office:'Herndon', earned:2},
+  {name:'Jack Obert',       office:'Herndon', earned:1},
+  {name:'Christian Brown',  office:'Herndon', earned:1},
+  {name:'Michael McCarthy', office:'Herndon', earned:1},
+  {name:'Alfred Duncan',    office:'Herndon', earned:0},
+];
+
+/* ----- fixed competition structure (don't need to edit) ----- */
+const TOTAL_WEEKS = 12;
+const ROUNDS = [
+  {name:'GENERATE', label:'Round 1', weeks:[1,2,3,4],   doors:200, claims:2},
+  {name:'BUILD',    label:'Round 2', weeks:[5,6,7,8],   doors:200, claims:3},
+  {name:'DOMINATE', label:'Round 3', weeks:[9,10,11,12],doors:200, claims:4},
+];
+const PRIZES = {
+  1:'Dougy Hat', 2:'$75 Gas Card', 3:'Nats Tix / Pitch Hopper', 4:'Apple Watch / AirPods',
+  5:'Truck Detail', 6:'Shoe Shopping', 7:'Hyperlite / Nobu for 2', 8:'Stocks / Golf Clubs',
+  9:'$1K Shopping Spree', 10:'Travel Package', 11:'Watch', 12:'Truck'
+};
+
+const reps = STANDINGS;
+const clampEarned=e=>Math.max(0,Math.min(TOTAL_WEEKS,Number(e)||0));
+const chasing=rep=>{const e=clampEarned(rep.earned);return e>=TOTAL_WEEKS?null:e+1;};
+const roundForWeek=w=>ROUNDS.find(r=>r.weeks.includes(w));
+const firstName=s=>String(s).trim().split(/\s+/)[0];
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function renderStatus(){
+  const r=roundForWeek(CURRENT_WEEK);
+  const totalPrizes=reps.reduce((a,b)=>a+clampEarned(b.earned),0);
+  document.getElementById('updated').textContent='Last updated: '+LAST_UPDATED;
+  document.getElementById('statusbar').innerHTML=`
+    <div class="chip now"><div class="k">Current Week</div><div class="v">Week ${CURRENT_WEEK} / ${TOTAL_WEEKS}</div></div>
+    <div class="chip"><div class="k">${r.label}</div><div class="v">${r.name}</div></div>
+    <div class="chip"><div class="k">Competitors</div><div class="v">${reps.length}</div></div>
+    <div class="chip"><div class="k">Prizes Claimed</div><div class="v" style="color:var(--gold2)">${totalPrizes}</div></div>
+    <div class="chip prize"><div class="k">This Week's Prize</div><div class="v">${PRIZES[CURRENT_WEEK]}</div></div>`;
+}
+function renderBoard(){
+  const rows=[...reps].sort((a,b)=>clampEarned(b.earned)-clampEarned(a.earned)||a.name.localeCompare(b.name));
+  let h=`<thead><tr><th style="text-align:center">#</th><th>Rep</th><th>Prizes Earned</th><th>Now Chasing</th></tr></thead><tbody>`;
+  rows.forEach((rep,i)=>{
+    const e=clampEarned(rep.earned), rk=i+1, g=rk<=3?`g${rk}`:'';
+    const ch=chasing(rep);
+    const trophies=e>0?('🏆'.repeat(Math.min(e,6))+(e>6?'…':'')):'<span style="color:#46618a">—</span>';
+    const chase=ch?`<span class="chasing">Week ${ch}</span> · ${esc(PRIZES[ch])}`:`<span class="champ">🏁 Completed the ladder!</span>`;
+    h+=`<tr class="row"><td class="rank ${g}">${rk}</td>
+      <td class="rep"><b>${esc(rep.name)}</b><div class="office">${esc(rep.office)}</div></td>
+      <td><span class="trophies">${trophies}</span><span class="tcount">${e}</span></td>
+      <td>${chase}</td></tr>`;
+  });
+  document.getElementById('board').innerHTML=h+'</tbody>';
+}
+function renderLadder(){
+  let h='';
+  [...ROUNDS].reverse().forEach(r=>{
+    h+=`<div class="band">${r.label}: ${r.name}<small>· Weeks ${r.weeks[0]}–${r.weeks[3]} · ${r.doors} doors / ${r.claims} claims weekly</small></div>`;
+    [...r.weeks].reverse().forEach(w=>{
+      const cls=w>CURRENT_WEEK?'future':(w===CURRENT_WEEK?'current':'');
+      const grand=w===12?'grand':'';
+      const here=reps.filter(rep=>chasing(rep)===w);
+      const cleared=reps.filter(rep=>clampEarned(rep.earned)>=w).length;
+      const chips=here.length?here.map(rep=>`<span class="repchip">${esc(firstName(rep.name))}</span>`).join('')
+        :`<span class="empty">no one chasing this rung yet</span>`;
+      h+=`<div class="rung ${cls} ${grand}">
+        <div class="rung-left"><div class="wk">Week ${w}${w===CURRENT_WEEK?'<span class="nowtag">THIS WEEK</span>':''}</div>
+          <div class="pz">${PRIZES[w]}</div><div class="rd">${r.name}</div></div>
+        <div class="rung-right">${chips}${cleared?`<span class="cleared">✓ ${cleared} cleared</span>`:''}</div></div>`;
+    });
+  });
+  document.getElementById('ladder').innerHTML=h;
+}
+renderStatus();renderBoard();renderLadder();
+</script>
+</body>
+</html>
