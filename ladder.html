@@ -37,12 +37,8 @@
     color:var(--text);padding:9px 16px;border-radius:9px;font-size:13px;font-weight:600;transition:.15s}
   button:hover{border-color:var(--blue-bright);color:var(--blue-glow)}
   button.primary{background:linear-gradient(180deg,var(--blue-bright),var(--blue));border-color:var(--blue-bright);color:#fff}
-  .saved{color:var(--green);font-size:12px;font-weight:700;opacity:0;transition:.3s;align-self:center}
+  .saved{color:var(--green);font-size:13px;font-weight:700;opacity:0;transition:.3s;align-self:center}
   .saved.show{opacity:1}
-  .draftbar{display:none;justify-content:center;align-items:center;gap:12px;background:rgba(245,185,66,.1);
-    border:1px solid rgba(245,185,66,.4);color:var(--amber);border-radius:10px;padding:9px 14px;margin-bottom:18px;font-size:13px;font-weight:600}
-  .draftbar.show{display:flex}
-  .draftbar button{padding:5px 11px;font-size:12px}
 
   section{margin-bottom:30px}
   .sec-title{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-bright);
@@ -94,10 +90,9 @@
   input[type=text],input[type=number],select{font-family:inherit;background:#0a1830;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:7px 10px;font-size:13px}
   input[type=number]{width:70px;text-align:center} input[type=text]{width:160px}
   .delrep{background:none;border:none;color:#ff6b6b;cursor:pointer;font-size:16px}
-  .edit-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-  .pubbox{margin-top:14px;display:none}
-  .pubbox.show{display:block}
-  .pubbox textarea{width:100%;height:120px;background:#0a1830;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:10px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+  .edit-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+  .spacer{flex:1}
+  .linkbtn{background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;padding:0}
   footer{text-align:center;color:var(--muted);font-size:12px;margin-top:34px;letter-spacing:2px;text-transform:uppercase}
   @media(max-width:600px){.rung{flex-direction:column;gap:8px}.rung-left{min-width:0}}
 </style>
@@ -115,20 +110,13 @@
 
   <div class="toolbar">
     <button class="primary" id="editToggle">✎ Edit Standings</button>
-    <button id="resetBtn">↺ Reset to Published</button>
-    <span class="saved" id="savedMsg">✓ Saved on this device</span>
-  </div>
-
-  <div class="draftbar" id="draftbar">
-    ✎ You're viewing your own edits (saved on this device only).
-    <button id="publishBtn">Publish to team</button>
-    <button id="discardBtn">Discard</button>
+    <span class="saved" id="savedMsg">✓ Saved</span>
   </div>
 
   <!-- EDIT -->
   <div class="editpanel" id="editPanel">
     <h3>Edit Standings</h3>
-    <div class="hint">Set the <b>current week</b> and each rep's <b>Prizes Earned</b> (rungs cleared, 0–12). Changes save on <b>your device</b> instantly. To make them official on the team link for everyone, click <b>Save</b> then <b>Publish to team</b>.</div>
+    <div class="hint">Set the <b>current week</b> and each rep's <b>Prizes Earned</b> (rungs cleared, 0–12), then click <b>Save</b>. Changes save to this screen and stay put.</div>
     <div class="weekpick">
       <label>Current week:</label>
       <select id="weekSel"></select>
@@ -136,14 +124,11 @@
     </div>
     <div style="overflow-x:auto"><table class="etable" id="editTable"></table></div>
     <div class="edit-actions">
-      <button class="primary" id="saveBtn">Save (this device)</button>
-      <button id="publishBtn2">Publish to team</button>
+      <button class="primary" id="saveBtn">Save</button>
       <button id="cancelBtn">Close</button>
-    </div>
-    <div class="pubbox" id="pubbox">
-      <div class="hint" style="margin-top:14px">Copy this and send it to Claude (or paste it into the file on GitHub) to update the live link for everyone:</div>
-      <textarea id="pubcode" readonly></textarea>
-      <div class="edit-actions"><button class="primary" id="copyBtn">📋 Copy</button></div>
+      <span class="spacer"></span>
+      <button class="linkbtn" id="backupBtn">Download backup</button>
+      <button class="linkbtn" id="resetBtn">Reset to original roster</button>
     </div>
   </div>
 
@@ -163,12 +148,11 @@
 <script>
 /* ============================================================
    DOUGLAS ROOFING — 12 WEEK LADDER LEADERBOARD
-   PUBLISHED (team) DATA — edit these two spots to update the
-   official link for everyone, then re-commit this file.
+   Edits are made right on the page (Edit Standings) and saved
+   to this screen. The values below are just the starting roster.
    ============================================================ */
-const PUBLISHED_WEEK = 7;            // official current week
-const LAST_UPDATED   = '2026-06-29'; // date standings last published
-const PUBLISHED_STANDINGS = [
+const DEFAULT_WEEK = 7;
+const DEFAULT_STANDINGS = [
   {name:'Andrew Funk',      office:'Herndon', earned:3},
   {name:'David Kerns',      office:'Herndon', earned:3},
   {name:'Andrew Prickel',   office:'Herndon', earned:2},
@@ -193,16 +177,16 @@ const PRIZES = {
   9:'$1K Shopping Spree', 10:'Travel Package', 11:'Watch', 12:'Truck'
 };
 
-/* ----- state: local edits (this device) override published ----- */
-const LS_KEY='douglas_ladder_live';
-let CURRENT_WEEK = PUBLISHED_WEEK;
+/* ----- state: saved on this screen ----- */
+const LS_KEY='douglas_ladder_office';
+let CURRENT_WEEK = DEFAULT_WEEK;
 let reps;
-let isDraft=false;
+let savedOn = '';
 (function init(){
   try{const s=JSON.parse(localStorage.getItem(LS_KEY));
-    if(s&&Array.isArray(s.reps)){reps=s.reps;CURRENT_WEEK=s.week||PUBLISHED_WEEK;isDraft=true;return;}
+    if(s&&Array.isArray(s.reps)){reps=s.reps;CURRENT_WEEK=s.week||DEFAULT_WEEK;savedOn=s.savedOn||'';return;}
   }catch(e){}
-  reps=JSON.parse(JSON.stringify(PUBLISHED_STANDINGS));
+  reps=JSON.parse(JSON.stringify(DEFAULT_STANDINGS));
 })();
 
 const clampEarned=e=>Math.max(0,Math.min(TOTAL_WEEKS,Number(e)||0));
@@ -211,12 +195,12 @@ const roundForWeek=w=>ROUNDS.find(r=>r.weeks.includes(w));
 const firstName=s=>String(s).trim().split(/\s+/)[0];
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
-function render(){renderStatus();renderBoard();renderLadder();document.getElementById('draftbar').classList.toggle('show',isDraft);}
+function render(){renderStatus();renderBoard();renderLadder();}
 
 function renderStatus(){
   const r=roundForWeek(CURRENT_WEEK);
   const totalPrizes=reps.reduce((a,b)=>a+clampEarned(b.earned),0);
-  document.getElementById('updated').textContent=(isDraft?'Your draft · ':'Last updated: ')+(isDraft?'':LAST_UPDATED);
+  document.getElementById('updated').textContent= savedOn? ('Updated '+savedOn) : '';
   document.getElementById('statusbar').innerHTML=`
     <div class="chip now"><div class="k">Current Week</div><div class="v">Week ${CURRENT_WEEK} / ${TOTAL_WEEKS}</div></div>
     <div class="chip"><div class="k">${r.label}</div><div class="v">${r.name}</div></div>
@@ -259,8 +243,8 @@ function renderLadder(){
   document.getElementById('ladder').innerHTML=h;
 }
 
-/* ----- editing ----- */
-function flash(){const m=document.getElementById('savedMsg');m.classList.add('show');setTimeout(()=>m.classList.remove('show'),1600);}
+/* ----- editing (saves directly to this screen) ----- */
+function flash(msg){const m=document.getElementById('savedMsg');if(msg)m.textContent=msg;m.classList.add('show');setTimeout(()=>m.classList.remove('show'),1700);}
 function buildEdit(){
   const sel=document.getElementById('weekSel');
   sel.innerHTML='';
@@ -284,23 +268,19 @@ function collect(){
     reps[i][f]= f==='earned'?clampEarned(inp.value):inp.value;
   });
 }
-function saveLocal(){collect();localStorage.setItem(LS_KEY,JSON.stringify({week:CURRENT_WEEK,reps}));isDraft=true;render();flash();}
-function pubCode(){
+function save(){
   collect();
-  const lines=reps.map(r=>`  {name:${JSON.stringify(r.name)}, office:${JSON.stringify(r.office)}, earned:${clampEarned(r.earned)}},`).join('\n');
-  const today=new Date().toISOString().slice(0,10);
-  return `const PUBLISHED_WEEK = ${CURRENT_WEEK};\nconst LAST_UPDATED   = '${today}';\nconst PUBLISHED_STANDINGS = [\n${lines}\n];`;
+  savedOn=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  localStorage.setItem(LS_KEY,JSON.stringify({week:CURRENT_WEEK,reps,savedOn}));
+  render();flash('✓ Saved');
 }
-function showPub(){document.getElementById('pubcode').value=pubCode();document.getElementById('pubbox').classList.add('show');document.getElementById('editPanel').classList.add('open');document.getElementById('pubbox').scrollIntoView({behavior:'smooth',block:'nearest'});}
 
 document.getElementById('editToggle').onclick=()=>{const p=document.getElementById('editPanel');p.classList.toggle('open');if(p.classList.contains('open')){buildEdit();p.scrollIntoView({behavior:'smooth',block:'nearest'});}};
 document.getElementById('cancelBtn').onclick=()=>document.getElementById('editPanel').classList.remove('open');
 document.getElementById('addRepBtn').onclick=()=>{collect();reps.push({name:'New Rep',office:'Herndon',earned:0});buildEdit();};
-document.getElementById('saveBtn').onclick=saveLocal;
-document.getElementById('publishBtn').onclick=showPub;
-document.getElementById('publishBtn2').onclick=showPub;
-document.getElementById('copyBtn').onclick=()=>{const ta=document.getElementById('pubcode');ta.select();navigator.clipboard.writeText(ta.value);document.getElementById('copyBtn').textContent='✓ Copied';setTimeout(()=>document.getElementById('copyBtn').textContent='📋 Copy',1500);};
-document.getElementById('discardBtn').onclick=()=>{localStorage.removeItem(LS_KEY);location.reload();};
+document.getElementById('saveBtn').onclick=save;
+document.getElementById('resetBtn').onclick=()=>{if(confirm('Reset back to the original roster? This clears your saved changes on this screen.')){localStorage.removeItem(LS_KEY);location.reload();}};
+document.getElementById('backupBtn').onclick=()=>{collect();const blob=new Blob([JSON.stringify({week:CURRENT_WEEK,reps},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ladder-backup.json';a.click();};
 
 render();
 </script>
