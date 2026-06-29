@@ -12,23 +12,18 @@
     --green:#34d27b; --amber:#f5b942;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;
-    background:
-      radial-gradient(1200px 500px at 50% -10%, #1c3a5e 0%, transparent 60%),
-      linear-gradient(180deg,#0b1622 0%, #0a131f 100%);
-    color:var(--text); min-height:100vh; padding:24px 16px 60px;
-  }
+  body{font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;
+    background:radial-gradient(1200px 500px at 50% -10%, #1c3a5e 0%, transparent 60%),linear-gradient(180deg,#0b1622 0%, #0a131f 100%);
+    color:var(--text); min-height:100vh; padding:24px 16px 60px}
   .wrap{max-width:1080px;margin:0 auto}
   header{text-align:center;margin-bottom:18px}
   .brand{font-size:13px;letter-spacing:6px;color:var(--blue-bright);font-weight:700}
   h1{font-size:clamp(26px,5vw,44px);font-weight:900;letter-spacing:1px;line-height:1.05;margin:6px 0 4px;
-    background:linear-gradient(180deg,#dcebff 0%, #2d6cb5 120%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 18px rgba(59,154,225,.25)}
+    background:linear-gradient(180deg,#dcebff 0%, #2d6cb5 120%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 18px rgba(59,154,225,.25)}
   .tagline{color:var(--muted);font-size:13px;letter-spacing:3px;text-transform:uppercase}
   .updated{color:var(--muted);font-size:11px;letter-spacing:1px;margin-top:8px;text-transform:uppercase}
 
-  .statusbar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:20px 0 26px}
+  .statusbar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:20px 0 22px}
   .chip{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
     border-radius:12px;padding:11px 18px;text-align:center;min-width:140px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
   .chip .k{font-size:11px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
@@ -36,6 +31,18 @@
   .chip.now{border-color:var(--blue-bright);box-shadow:0 0 0 1px var(--blue-bright),0 6px 22px rgba(59,154,225,.35)}
   .chip.now .v{color:var(--blue-glow)}
   .chip.prize .v{font-size:15px;color:var(--gold2)}
+
+  .toolbar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+  button{font-family:inherit;cursor:pointer;border:1px solid var(--line);background:linear-gradient(180deg,#1a3354,#11233a);
+    color:var(--text);padding:9px 16px;border-radius:9px;font-size:13px;font-weight:600;transition:.15s}
+  button:hover{border-color:var(--blue-bright);color:var(--blue-glow)}
+  button.primary{background:linear-gradient(180deg,var(--blue-bright),var(--blue));border-color:var(--blue-bright);color:#fff}
+  .saved{color:var(--green);font-size:12px;font-weight:700;opacity:0;transition:.3s;align-self:center}
+  .saved.show{opacity:1}
+  .draftbar{display:none;justify-content:center;align-items:center;gap:12px;background:rgba(245,185,66,.1);
+    border:1px solid rgba(245,185,66,.4);color:var(--amber);border-radius:10px;padding:9px 14px;margin-bottom:18px;font-size:13px;font-weight:600}
+  .draftbar.show{display:flex}
+  .draftbar button{padding:5px 11px;font-size:12px}
 
   section{margin-bottom:30px}
   .sec-title{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-bright);
@@ -60,24 +67,37 @@
   .rung{display:flex;align-items:stretch;gap:14px;background:linear-gradient(180deg,var(--card),#0e1f3a);
     border:1px solid var(--line);border-radius:12px;padding:12px 16px;transition:.2s}
   .rung.future{opacity:.45}
-  .rung.current{border-color:var(--blue-bright);box-shadow:0 0 0 1px var(--blue-bright),0 8px 26px rgba(59,154,225,.3);
-    background:linear-gradient(180deg,#1a3a64,#102443)}
+  .rung.current{border-color:var(--blue-bright);box-shadow:0 0 0 1px var(--blue-bright),0 8px 26px rgba(59,154,225,.3);background:linear-gradient(180deg,#1a3a64,#102443)}
   .rung-left{min-width:200px;flex-shrink:0}
   .rung .wk{font-size:10px;letter-spacing:2px;color:var(--muted);font-weight:800;text-transform:uppercase}
   .rung.current .wk{color:var(--blue-glow)}
   .rung .pz{font-weight:800;font-size:16px;margin-top:2px}
   .rung .rd{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:3px}
   .rung-right{flex:1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;align-content:center}
-  .repchip{font-size:12px;font-weight:700;padding:5px 11px;border-radius:16px;
-    background:rgba(59,154,225,.15);color:var(--blue-glow);border:1px solid rgba(59,154,225,.45)}
+  .repchip{font-size:12px;font-weight:700;padding:5px 11px;border-radius:16px;background:rgba(59,154,225,.15);color:var(--blue-glow);border:1px solid rgba(59,154,225,.45)}
   .empty{font-size:12px;color:#46618a;font-style:italic}
   .cleared{font-size:11px;color:var(--green);margin-left:auto;align-self:center;white-space:nowrap}
-  .nowtag{font-size:9px;font-weight:900;letter-spacing:1px;background:var(--blue-bright);color:#fff;
-    padding:2px 7px;border-radius:5px;margin-left:8px;vertical-align:middle}
+  .nowtag{font-size:9px;font-weight:900;letter-spacing:1px;background:var(--blue-bright);color:#fff;padding:2px 7px;border-radius:5px;margin-left:8px;vertical-align:middle}
   .band{font-weight:900;letter-spacing:2px;font-size:12px;color:var(--blue-glow);margin:14px 0 2px;display:flex;gap:8px;align-items:center}
   .band small{color:var(--muted);font-weight:600;letter-spacing:1px}
   .grand{border-color:var(--gold)!important;box-shadow:0 0 0 1px rgba(255,213,74,.4),0 8px 26px rgba(255,213,74,.15)}
   .grand .pz{color:var(--gold)}
+
+  .editpanel{display:none;background:var(--panel2);border:1px solid var(--blue);border-radius:14px;padding:18px;margin-bottom:30px}
+  .editpanel.open{display:block}
+  .editpanel h3{font-size:15px;margin-bottom:4px}
+  .editpanel .hint{color:var(--muted);font-size:12px;margin-bottom:14px;line-height:1.5}
+  .weekpick{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .etable{width:100%;border-collapse:collapse;font-size:13px}
+  .etable th,.etable td{padding:8px;border-bottom:1px solid #15294480;text-align:left}
+  .etable th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+  input[type=text],input[type=number],select{font-family:inherit;background:#0a1830;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:7px 10px;font-size:13px}
+  input[type=number]{width:70px;text-align:center} input[type=text]{width:160px}
+  .delrep{background:none;border:none;color:#ff6b6b;cursor:pointer;font-size:16px}
+  .edit-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .pubbox{margin-top:14px;display:none}
+  .pubbox.show{display:block}
+  .pubbox textarea{width:100%;height:120px;background:#0a1830;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:10px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
   footer{text-align:center;color:var(--muted);font-size:12px;margin-top:34px;letter-spacing:2px;text-transform:uppercase}
   @media(max-width:600px){.rung{flex-direction:column;gap:8px}.rung-left{min-width:0}}
 </style>
@@ -92,6 +112,40 @@
   </header>
 
   <div class="statusbar" id="statusbar"></div>
+
+  <div class="toolbar">
+    <button class="primary" id="editToggle">✎ Edit Standings</button>
+    <button id="resetBtn">↺ Reset to Published</button>
+    <span class="saved" id="savedMsg">✓ Saved on this device</span>
+  </div>
+
+  <div class="draftbar" id="draftbar">
+    ✎ You're viewing your own edits (saved on this device only).
+    <button id="publishBtn">Publish to team</button>
+    <button id="discardBtn">Discard</button>
+  </div>
+
+  <!-- EDIT -->
+  <div class="editpanel" id="editPanel">
+    <h3>Edit Standings</h3>
+    <div class="hint">Set the <b>current week</b> and each rep's <b>Prizes Earned</b> (rungs cleared, 0–12). Changes save on <b>your device</b> instantly. To make them official on the team link for everyone, click <b>Save</b> then <b>Publish to team</b>.</div>
+    <div class="weekpick">
+      <label>Current week:</label>
+      <select id="weekSel"></select>
+      <button id="addRepBtn">+ Add Rep</button>
+    </div>
+    <div style="overflow-x:auto"><table class="etable" id="editTable"></table></div>
+    <div class="edit-actions">
+      <button class="primary" id="saveBtn">Save (this device)</button>
+      <button id="publishBtn2">Publish to team</button>
+      <button id="cancelBtn">Close</button>
+    </div>
+    <div class="pubbox" id="pubbox">
+      <div class="hint" style="margin-top:14px">Copy this and send it to Claude (or paste it into the file on GitHub) to update the live link for everyone:</div>
+      <textarea id="pubcode" readonly></textarea>
+      <div class="edit-actions"><button class="primary" id="copyBtn">📋 Copy</button></div>
+    </div>
+  </div>
 
   <section>
     <div class="sec-title">Standings</div>
@@ -109,16 +163,12 @@
 <script>
 /* ============================================================
    DOUGLAS ROOFING — 12 WEEK LADDER LEADERBOARD
-   ------------------------------------------------------------
-   TO UPDATE WEEKLY: edit the two marked spots below, then
-   re-commit this file. (1) CURRENT_WEEK  (2) STANDINGS earned #.
+   PUBLISHED (team) DATA — edit these two spots to update the
+   official link for everyone, then re-commit this file.
    ============================================================ */
-
-const CURRENT_WEEK = 7;          // <-- set the current week (rain weeks already accounted for)
-const LAST_UPDATED = '2026-06-29'; // <-- date you last updated standings
-
-/* STANDINGS: earned = # of ladder rungs/prizes each rep has cleared (0-12) */
-const STANDINGS = [
+const PUBLISHED_WEEK = 7;            // official current week
+const LAST_UPDATED   = '2026-06-29'; // date standings last published
+const PUBLISHED_STANDINGS = [
   {name:'Andrew Funk',      office:'Herndon', earned:3},
   {name:'David Kerns',      office:'Herndon', earned:3},
   {name:'Andrew Prickel',   office:'Herndon', earned:2},
@@ -130,7 +180,7 @@ const STANDINGS = [
   {name:'Alfred Duncan',    office:'Herndon', earned:0},
 ];
 
-/* ----- fixed competition structure (don't need to edit) ----- */
+/* ----- fixed competition structure ----- */
 const TOTAL_WEEKS = 12;
 const ROUNDS = [
   {name:'GENERATE', label:'Round 1', weeks:[1,2,3,4],   doors:200, claims:2},
@@ -143,17 +193,30 @@ const PRIZES = {
   9:'$1K Shopping Spree', 10:'Travel Package', 11:'Watch', 12:'Truck'
 };
 
-const reps = STANDINGS;
+/* ----- state: local edits (this device) override published ----- */
+const LS_KEY='douglas_ladder_live';
+let CURRENT_WEEK = PUBLISHED_WEEK;
+let reps;
+let isDraft=false;
+(function init(){
+  try{const s=JSON.parse(localStorage.getItem(LS_KEY));
+    if(s&&Array.isArray(s.reps)){reps=s.reps;CURRENT_WEEK=s.week||PUBLISHED_WEEK;isDraft=true;return;}
+  }catch(e){}
+  reps=JSON.parse(JSON.stringify(PUBLISHED_STANDINGS));
+})();
+
 const clampEarned=e=>Math.max(0,Math.min(TOTAL_WEEKS,Number(e)||0));
 const chasing=rep=>{const e=clampEarned(rep.earned);return e>=TOTAL_WEEKS?null:e+1;};
 const roundForWeek=w=>ROUNDS.find(r=>r.weeks.includes(w));
 const firstName=s=>String(s).trim().split(/\s+/)[0];
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
+function render(){renderStatus();renderBoard();renderLadder();document.getElementById('draftbar').classList.toggle('show',isDraft);}
+
 function renderStatus(){
   const r=roundForWeek(CURRENT_WEEK);
   const totalPrizes=reps.reduce((a,b)=>a+clampEarned(b.earned),0);
-  document.getElementById('updated').textContent='Last updated: '+LAST_UPDATED;
+  document.getElementById('updated').textContent=(isDraft?'Your draft · ':'Last updated: ')+(isDraft?'':LAST_UPDATED);
   document.getElementById('statusbar').innerHTML=`
     <div class="chip now"><div class="k">Current Week</div><div class="v">Week ${CURRENT_WEEK} / ${TOTAL_WEEKS}</div></div>
     <div class="chip"><div class="k">${r.label}</div><div class="v">${r.name}</div></div>
@@ -195,7 +258,51 @@ function renderLadder(){
   });
   document.getElementById('ladder').innerHTML=h;
 }
-renderStatus();renderBoard();renderLadder();
+
+/* ----- editing ----- */
+function flash(){const m=document.getElementById('savedMsg');m.classList.add('show');setTimeout(()=>m.classList.remove('show'),1600);}
+function buildEdit(){
+  const sel=document.getElementById('weekSel');
+  sel.innerHTML='';
+  for(let w=1;w<=TOTAL_WEEKS;w++)sel.innerHTML+=`<option value="${w}" ${w===CURRENT_WEEK?'selected':''}>Week ${w} — ${PRIZES[w]}</option>`;
+  sel.onchange=()=>{CURRENT_WEEK=Number(sel.value);};
+  const t=document.getElementById('editTable');
+  let h=`<thead><tr><th>Rep</th><th>Office</th><th style="text-align:center">Prizes Earned (0-12)</th><th></th></tr></thead><tbody>`;
+  reps.forEach((rep,i)=>{
+    h+=`<tr>
+      <td><input type="text" data-i="${i}" data-f="name" value="${esc(rep.name)}"></td>
+      <td><input type="text" data-i="${i}" data-f="office" value="${esc(rep.office)}" style="width:120px"></td>
+      <td style="text-align:center"><input type="number" min="0" max="12" data-i="${i}" data-f="earned" value="${clampEarned(rep.earned)}"></td>
+      <td><button class="delrep" data-del="${i}" title="Remove">✕</button></td></tr>`;
+  });
+  t.innerHTML=h+'</tbody>';
+  t.querySelectorAll('button[data-del]').forEach(b=>b.onclick=()=>{collect();reps.splice(Number(b.dataset.del),1);buildEdit();});
+}
+function collect(){
+  document.querySelectorAll('#editTable input').forEach(inp=>{
+    const i=Number(inp.dataset.i),f=inp.dataset.f;if(!reps[i])return;
+    reps[i][f]= f==='earned'?clampEarned(inp.value):inp.value;
+  });
+}
+function saveLocal(){collect();localStorage.setItem(LS_KEY,JSON.stringify({week:CURRENT_WEEK,reps}));isDraft=true;render();flash();}
+function pubCode(){
+  collect();
+  const lines=reps.map(r=>`  {name:${JSON.stringify(r.name)}, office:${JSON.stringify(r.office)}, earned:${clampEarned(r.earned)}},`).join('\n');
+  const today=new Date().toISOString().slice(0,10);
+  return `const PUBLISHED_WEEK = ${CURRENT_WEEK};\nconst LAST_UPDATED   = '${today}';\nconst PUBLISHED_STANDINGS = [\n${lines}\n];`;
+}
+function showPub(){document.getElementById('pubcode').value=pubCode();document.getElementById('pubbox').classList.add('show');document.getElementById('editPanel').classList.add('open');document.getElementById('pubbox').scrollIntoView({behavior:'smooth',block:'nearest'});}
+
+document.getElementById('editToggle').onclick=()=>{const p=document.getElementById('editPanel');p.classList.toggle('open');if(p.classList.contains('open')){buildEdit();p.scrollIntoView({behavior:'smooth',block:'nearest'});}};
+document.getElementById('cancelBtn').onclick=()=>document.getElementById('editPanel').classList.remove('open');
+document.getElementById('addRepBtn').onclick=()=>{collect();reps.push({name:'New Rep',office:'Herndon',earned:0});buildEdit();};
+document.getElementById('saveBtn').onclick=saveLocal;
+document.getElementById('publishBtn').onclick=showPub;
+document.getElementById('publishBtn2').onclick=showPub;
+document.getElementById('copyBtn').onclick=()=>{const ta=document.getElementById('pubcode');ta.select();navigator.clipboard.writeText(ta.value);document.getElementById('copyBtn').textContent='✓ Copied';setTimeout(()=>document.getElementById('copyBtn').textContent='📋 Copy',1500);};
+document.getElementById('discardBtn').onclick=()=>{localStorage.removeItem(LS_KEY);location.reload();};
+
+render();
 </script>
 </body>
 </html>
