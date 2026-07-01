@@ -153,15 +153,14 @@
    ============================================================ */
 const DEFAULT_WEEK = 7;
 const DEFAULT_STANDINGS = [
-  {name:'Andrew Funk',      office:'Herndon', earned:3},
-  {name:'David Kerns',      office:'Herndon', earned:3},
-  {name:'Andrew Prickel',   office:'Herndon', earned:2},
-  {name:'George Bechara',   office:'Herndon', earned:2},
-  {name:'Harvey Shoemaker', office:'Herndon', earned:2},
-  {name:'Jack Obert',       office:'Herndon', earned:1},
-  {name:'Christian Brown',  office:'Herndon', earned:1},
-  {name:'Michael McCarthy', office:'Herndon', earned:1},
-  {name:'Alfred Duncan',    office:'Herndon', earned:0},
+  {name:'Andrew Funk',      office:'Herndon', earned:3, revenue:0},
+  {name:'David Kerns',      office:'Herndon', earned:3, revenue:0},
+  {name:'Andrew Prickel',   office:'Herndon', earned:2, revenue:0},
+  {name:'George Bechara',   office:'Herndon', earned:2, revenue:0},
+  {name:'Harvey Shoemaker', office:'Herndon', earned:2, revenue:0},
+  {name:'Jack Obert',       office:'Herndon', earned:1, revenue:0},
+  {name:'Christian Brown',  office:'Herndon', earned:1, revenue:0},
+  {name:'Michael McCarthy', office:'Herndon', earned:1, revenue:0},
 ];
 
 /* ----- fixed competition structure ----- */
@@ -178,7 +177,7 @@ const PRIZES = {
 };
 
 /* ----- state: saved on this screen ----- */
-const LS_KEY='douglas_ladder_office';
+const LS_KEY='douglas_ladder_office2';
 let CURRENT_WEEK = DEFAULT_WEEK;
 let reps;
 let savedOn = '';
@@ -190,6 +189,8 @@ let savedOn = '';
 })();
 
 const clampEarned=e=>Math.max(0,Math.min(TOTAL_WEEKS,Number(e)||0));
+const clampRev=v=>Math.max(0,Math.round(Number(v)||0));
+const money=v=>'$'+clampRev(v).toLocaleString();
 const chasing=rep=>{const e=clampEarned(rep.earned);return e>=TOTAL_WEEKS?null:e+1;};
 const roundForWeek=w=>ROUNDS.find(r=>r.weeks.includes(w));
 const firstName=s=>String(s).trim().split(/\s+/)[0];
@@ -200,17 +201,19 @@ function render(){renderStatus();renderBoard();renderLadder();}
 function renderStatus(){
   const r=roundForWeek(CURRENT_WEEK);
   const totalPrizes=reps.reduce((a,b)=>a+clampEarned(b.earned),0);
+  const totalRev=reps.reduce((a,b)=>a+clampRev(b.revenue),0);
   document.getElementById('updated').textContent= savedOn? ('Updated '+savedOn) : '';
   document.getElementById('statusbar').innerHTML=`
     <div class="chip now"><div class="k">Current Week</div><div class="v">Week ${CURRENT_WEEK} / ${TOTAL_WEEKS}</div></div>
     <div class="chip"><div class="k">${r.label}</div><div class="v">${r.name}</div></div>
     <div class="chip"><div class="k">Competitors</div><div class="v">${reps.length}</div></div>
     <div class="chip"><div class="k">Prizes Claimed</div><div class="v" style="color:var(--gold2)">${totalPrizes}</div></div>
+    <div class="chip"><div class="k">Team Revenue</div><div class="v" style="color:var(--green)">${money(totalRev)}</div></div>
     <div class="chip prize"><div class="k">This Week's Prize</div><div class="v">${PRIZES[CURRENT_WEEK]}</div></div>`;
 }
 function renderBoard(){
   const rows=[...reps].sort((a,b)=>clampEarned(b.earned)-clampEarned(a.earned)||a.name.localeCompare(b.name));
-  let h=`<thead><tr><th style="text-align:center">#</th><th>Rep</th><th>Prizes Earned</th><th>Now Chasing</th></tr></thead><tbody>`;
+  let h=`<thead><tr><th style="text-align:center">#</th><th>Rep</th><th>Prizes Earned</th><th>Revenue</th><th>Now Chasing</th></tr></thead><tbody>`;
   rows.forEach((rep,i)=>{
     const e=clampEarned(rep.earned), rk=i+1, g=rk<=3?`g${rk}`:'';
     const ch=chasing(rep);
@@ -219,6 +222,7 @@ function renderBoard(){
     h+=`<tr class="row"><td class="rank ${g}">${rk}</td>
       <td class="rep"><b>${esc(rep.name)}</b><div class="office">${esc(rep.office)}</div></td>
       <td><span class="trophies">${trophies}</span><span class="tcount">${e}</span></td>
+      <td style="font-variant-numeric:tabular-nums;color:var(--green);font-weight:700">${money(rep.revenue)}</td>
       <td>${chase}</td></tr>`;
   });
   document.getElementById('board').innerHTML=h+'</tbody>';
@@ -251,12 +255,13 @@ function buildEdit(){
   for(let w=1;w<=TOTAL_WEEKS;w++)sel.innerHTML+=`<option value="${w}" ${w===CURRENT_WEEK?'selected':''}>Week ${w} — ${PRIZES[w]}</option>`;
   sel.onchange=()=>{CURRENT_WEEK=Number(sel.value);};
   const t=document.getElementById('editTable');
-  let h=`<thead><tr><th>Rep</th><th>Office</th><th style="text-align:center">Prizes Earned (0-12)</th><th></th></tr></thead><tbody>`;
+  let h=`<thead><tr><th>Rep</th><th>Office</th><th style="text-align:center">Prizes Earned (0-12)</th><th style="text-align:center">Revenue ($)</th><th></th></tr></thead><tbody>`;
   reps.forEach((rep,i)=>{
     h+=`<tr>
       <td><input type="text" data-i="${i}" data-f="name" value="${esc(rep.name)}"></td>
       <td><input type="text" data-i="${i}" data-f="office" value="${esc(rep.office)}" style="width:120px"></td>
       <td style="text-align:center"><input type="number" min="0" max="12" data-i="${i}" data-f="earned" value="${clampEarned(rep.earned)}"></td>
+      <td style="text-align:center"><input type="number" min="0" step="1" data-i="${i}" data-f="revenue" value="${clampRev(rep.revenue)}" style="width:110px"></td>
       <td><button class="delrep" data-del="${i}" title="Remove">✕</button></td></tr>`;
   });
   t.innerHTML=h+'</tbody>';
@@ -265,7 +270,7 @@ function buildEdit(){
 function collect(){
   document.querySelectorAll('#editTable input').forEach(inp=>{
     const i=Number(inp.dataset.i),f=inp.dataset.f;if(!reps[i])return;
-    reps[i][f]= f==='earned'?clampEarned(inp.value):inp.value;
+    reps[i][f]= f==='earned'?clampEarned(inp.value):(f==='revenue'?clampRev(inp.value):inp.value);
   });
 }
 function save(){
@@ -277,7 +282,7 @@ function save(){
 
 document.getElementById('editToggle').onclick=()=>{const p=document.getElementById('editPanel');p.classList.toggle('open');if(p.classList.contains('open')){buildEdit();p.scrollIntoView({behavior:'smooth',block:'nearest'});}};
 document.getElementById('cancelBtn').onclick=()=>document.getElementById('editPanel').classList.remove('open');
-document.getElementById('addRepBtn').onclick=()=>{collect();reps.push({name:'New Rep',office:'Herndon',earned:0});buildEdit();};
+document.getElementById('addRepBtn').onclick=()=>{collect();reps.push({name:'New Rep',office:'Herndon',earned:0,revenue:0});buildEdit();};
 document.getElementById('saveBtn').onclick=save;
 document.getElementById('resetBtn').onclick=()=>{if(confirm('Reset back to the original roster? This clears your saved changes on this screen.')){localStorage.removeItem(LS_KEY);location.reload();}};
 document.getElementById('backupBtn').onclick=()=>{collect();const blob=new Blob([JSON.stringify({week:CURRENT_WEEK,reps},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ladder-backup.json';a.click();};
