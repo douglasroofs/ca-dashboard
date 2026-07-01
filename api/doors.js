@@ -12,83 +12,15 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-06-28T12:38:05.190Z",
-    "total": 4336,
+    "updated": "2026-07-01T11:05:30.168Z",
+    "total": 6,
     "reps": [
-      {
-        "rep": "Andrew Funk",
-        "doors": 677
-      },
-      {
-        "rep": "Harvey Shoemaker",
-        "doors": 527
-      },
-      {
-        "rep": "Christian Brown",
-        "doors": 512
-      },
-      {
-        "rep": "Mike Mccarthy",
-        "doors": 498
-      },
-      {
-        "rep": "Jack Obert",
-        "doors": 372
-      },
-      {
-        "rep": "Izzy Price",
-        "doors": 304
-      },
-      {
-        "rep": "Aiden Glonek",
-        "doors": 303
-      },
-      {
-        "rep": "Ethan Wiley",
-        "doors": 271
-      },
-      {
-        "rep": "Thurmond shaw",
-        "doors": 240
-      },
-      {
-        "rep": "David Kerns",
-        "doors": 221
-      },
-      {
-        "rep": "Kelly Alston",
-        "doors": 177
-      },
-      {
-        "rep": "Carol Wright",
-        "doors": 88
-      },
-      {
-        "rep": "Jason Cresswell",
-        "doors": 86
-      },
-      {
-        "rep": "George Bechara",
-        "doors": 40
-      },
-      {
-        "rep": "Marc Mitchell",
-        "doors": 8
-      },
       {
         "rep": "Andrew  Prickel",
         "doors": 5
       },
       {
-        "rep": "Steven Arevalo",
-        "doors": 4
-      },
-      {
-        "rep": "Kevin Mahan",
-        "doors": 2
-      },
-      {
-        "rep": "Robert Mumford-Wilson",
+        "rep": "Mike Mccarthy",
         "doors": 1
       }
     ],
@@ -138,52 +70,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-06-28T12:38:22.582Z",
-    "total": 2249,
+    "updated": "2026-07-01T11:05:31.914Z",
+    "total": 4,
     "reps": [
       {
-        "rep": "Andrew Harris",
-        "doors": 483
-      },
-      {
-        "rep": "Carter Massengill",
-        "doors": 361
-      },
-      {
-        "rep": "Felipe Osorio",
-        "doors": 301
-      },
-      {
-        "rep": "Travis Kizzar",
-        "doors": 249
-      },
-      {
         "rep": "JR Zaguehi",
-        "doors": 204
-      },
-      {
-        "rep": "Logan Burbic",
-        "doors": 182
-      },
-      {
-        "rep": "Joshua Baca",
-        "doors": 132
-      },
-      {
-        "rep": "Pedro Ramirez",
-        "doors": 131
-      },
-      {
-        "rep": "Brandon Simmons",
-        "doors": 130
-      },
-      {
-        "rep": "Kenny Gonzalez",
-        "doors": 41
-      },
-      {
-        "rep": "Justin Coghill",
-        "doors": 35
+        "doors": 4
       }
     ],
     "allowedReps": [
@@ -198,7 +90,6 @@ const SNAPSHOTS = {
       "pedro ramirez",
       "andrew harris",
       "jr zaguehi",
-      "kenny gonzalez",
       "dalton barr",
       "cristina saunders",
       "marcus schanewolf",
@@ -216,7 +107,6 @@ const SNAPSHOTS = {
       "Pedro Ramirez",
       "Andrew Harris",
       "JR Zaguehi",
-      "Kenny Gonzalez",
       "Dalton Barr",
       "Cristina Saunders",
       "marcus schanewolf",
