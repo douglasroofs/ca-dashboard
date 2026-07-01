@@ -5,20 +5,10 @@
 // To update: edit DATA below (the daily task rewrites it).
 
 const DATA = {
-  updated: '2026-06-17',
-  month: '2026-06',
-  total: 31,
-  reps: [
-    { rep: 'Andrew Funk', count: 6 },
-    { rep: 'David Kerns', count: 5 },
-    { rep: 'Andrew Prickel', count: 4 },
-    { rep: 'George Bechara', count: 4 },
-    { rep: 'Harvey Shoemaker', count: 4 },
-    { rep: 'Jack Obert', count: 3 },
-    { rep: 'Christian Brown', count: 2 },
-    { rep: 'Michael McCarthy', count: 2 },
-    { rep: 'Alfred Duncan', count: 1 },
-  ],
+  updated: '2026-07-01',
+  month: '2026-07',
+  total: 0,
+  reps: [],
 };
 
 module.exports = (req, res) => {
