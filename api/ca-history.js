@@ -9,8 +9,283 @@
 // default (no live)          serve the stored year SNAPSHOT — CA-by-month grid.
 
 const SNAPSHOTS = {
-  herndon: { updated: null, year: null, months: [], reps: [] },
-  richmond: { updated: null, year: null, months: [], reps: [] },
+  "herndon": {
+    "updated": "2026-07-07T17:03:03.282Z",
+    "year": 2026,
+    "months": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "reps": [
+      {
+        "rep": "David Kerns",
+        "counts": [
+          0,
+          0,
+          11,
+          8,
+          5,
+          6,
+          1
+        ],
+        "total": 31
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "counts": [
+          0,
+          1,
+          1,
+          2,
+          5,
+          18,
+          2
+        ],
+        "total": 29
+      },
+      {
+        "rep": "Andrew Funk",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          6,
+          15,
+          3
+        ],
+        "total": 24
+      },
+      {
+        "rep": "Jack Obert",
+        "counts": [
+          0,
+          0,
+          3,
+          5,
+          8,
+          6,
+          1
+        ],
+        "total": 23
+      },
+      {
+        "rep": "Mike Mccarthy",
+        "counts": [
+          1,
+          0,
+          4,
+          0,
+          8,
+          6,
+          3
+        ],
+        "total": 22
+      },
+      {
+        "rep": "Christian Brown",
+        "counts": [
+          1,
+          0,
+          1,
+          3,
+          5,
+          7,
+          5
+        ],
+        "total": 22
+      },
+      {
+        "rep": "Marc Mitchell",
+        "counts": [
+          5,
+          2,
+          4,
+          5,
+          4,
+          1,
+          0
+        ],
+        "total": 21
+      },
+      {
+        "rep": "Izzy Price",
+        "counts": [
+          2,
+          0,
+          5,
+          2,
+          5,
+          3,
+          0
+        ],
+        "total": 17
+      },
+      {
+        "rep": "George Bechara",
+        "counts": [
+          2,
+          0,
+          2,
+          5,
+          2,
+          4,
+          0
+        ],
+        "total": 15
+      },
+      {
+        "rep": "Steven Arevalo",
+        "counts": [
+          2,
+          2,
+          5,
+          3,
+          0,
+          3,
+          0
+        ],
+        "total": 15
+      },
+      {
+        "rep": "Carol Wright",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          8
+        ],
+        "total": 11
+      },
+      {
+        "rep": "Robert Mumford-Wilson",
+        "counts": [
+          3,
+          0,
+          0,
+          3,
+          1,
+          0,
+          0
+        ],
+        "total": 7
+      },
+      {
+        "rep": "Aiden Glonek",
+        "counts": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "total": 1
+      },
+      {
+        "rep": "Kelly Alston",
+        "counts": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 1
+      }
+    ]
+  },
+  "richmond": {
+    "updated": "2026-07-07T17:03:43.953Z",
+    "year": 2026,
+    "months": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "reps": [
+      {
+        "rep": "Joshua Baca",
+        "counts": [
+          0,
+          2,
+          13,
+          13,
+          6,
+          21,
+          6
+        ],
+        "total": 61
+      },
+      {
+        "rep": "Travis Kizzar",
+        "counts": [
+          3,
+          2,
+          10,
+          1,
+          6,
+          9,
+          5
+        ],
+        "total": 36
+      },
+      {
+        "rep": "Logan Burbic",
+        "counts": [
+          0,
+          6,
+          8,
+          5,
+          6,
+          8,
+          1
+        ],
+        "total": 34
+      },
+      {
+        "rep": "Justin Coghill",
+        "counts": [
+          1,
+          1,
+          2,
+          4,
+          6,
+          7,
+          0
+        ],
+        "total": 21
+      },
+      {
+        "rep": "Brandon Simmons",
+        "counts": [
+          2,
+          1,
+          1,
+          5,
+          2,
+          9,
+          0
+        ],
+        "total": 20
+      }
+    ]
+  }
 };
 
 const BASE = 'https://api.salesrabbit.com';
