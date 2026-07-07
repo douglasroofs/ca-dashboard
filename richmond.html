@@ -27,7 +27,7 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 .note{color:#6b7888;font-size:12px;margin:10px 2px 0}
 .nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 8px}.nav a{color:#aebfd2;text-decoration:none;font-size:13px;padding:5px 10px;border-radius:6px}.nav a.on{background:#1f6feb;color:#fff}.nav a:hover{color:#fff}
 </style></head><body>
-<header><h1>Douglas Roofing - Richmond (Month to Date)</h1><nav class="nav"><a href="/revenue.html">Herndon</a><a class="on" href="/richmond.html">Richmond</a><a href="/ca-bonus.html">CA by Month</a></nav><div class="hd"><span class="meta" id="upd"></span><button id="ud" style="background:#475569" title="Recompute doors live from Sales Rabbit (~25s).">Update doors now</button><button id="rf">Refresh</button></div></header>
+<header><h1>Douglas Roofing - Richmond (Month to Date)</h1><nav class="nav"><a href="/revenue.html">Herndon</a><a class="on" href="/richmond.html">Richmond</a><a href="/ca-bonus.html">CA by Month</a></nav><div class="hd"><span class="meta" id="upd"></span><button id="rf">Refresh</button></div></header>
 <div class="wrap">
 <div class="cards">
 <div class="card d"><div class="label">Doors Knocked</div><div class="value" id="cDr">-</div><div class="sub">Pins this month</div></div>
@@ -46,10 +46,10 @@ function fmt(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFractio
 function load(opts){
   opts=opts||{};
   var b=document.getElementById('rf');b.disabled=true;
-  var ud=document.getElementById('ud');if(ud){ud.disabled=true;ud.textContent=opts.liveDoors?'Updating doors... (~25s)':'Update doors now';}
+  
   document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
   Promise.all([
-    fetch((opts.liveDoors?'/api/doors?office=richmond&live=1':'/api/doors?office=richmond')+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}),
+    fetch('/api/doors?office=richmond&live=1'+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}),
     fetch('/api/ca-history?office=richmond&live=1&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],months:[]}}),
     fetch('/api/rich-revenue?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[]}})
   ]).then(function(res){
