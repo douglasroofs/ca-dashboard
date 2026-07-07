@@ -301,7 +301,7 @@ function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace
 function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
 function arr(j) { return Array.isArray(j) ? j : (j && (j.data || j.results || j.records || j.items)) || []; }
 function monthStart() { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), 1); }
-function stormAllowed(team, office) { const n = norm(team); if (office === 'richmond') return n.indexOf('richmond') > -1 && n.indexOf('storm') > -1; return n.indexOf('self') > -1 && n.indexOf('gen') > -1; }
+function stormAllowed(team, office) { const n = norm(team); if (office === 'richmond') return n.indexOf('richmond') > -1 && n.indexOf('storm') > -1; return (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1; }
 
 async function compute(office, year, monthOnly) {
   const usersRes = await srGet('/users');
