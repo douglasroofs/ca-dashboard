@@ -7,7 +7,196 @@
 // ?office=herndon (default) | richmond   selects team scope + snapshot.
 // ?live=1 : recompute fresh from Sales Rabbit (one /leadStatusHistories page, ~5-10s).
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
-const SNAPSHOTS = {"herndon":{"updated":"2026-07-02T14:15:17.655Z","total":170,"reps":[{"rep":"Thurmond shaw","doors":33},{"rep":"Mike Mccarthy","doors":31},{"rep":"David Kerns","doors":27},{"rep":"Jason Cresswell","doors":17},{"rep":"Ethan Wiley","doors":14},{"rep":"Carol Wright","doors":14},{"rep":"Harvey Shoemaker","doors":12},{"rep":"Izzy Price","doors":10},{"rep":"Andrew Prickel","doors":5},{"rep":"George Bechara","doors":3},{"rep":"Andrew Funk","doors":2},{"rep":"Christian Brown","doors":2}],"allowedReps":["steven arevalo","marc mitchell","andrew funk","michael mccarthy","george bechara","isabelle price","jack obert","harvey shoemaker","kevin mahan","robert wilson","andrew prickel","alfred duncan","christian brown","kelly alston","david kerns","aiden glonek","ethan wiley","carol wright","thurmond shaw","jason cresswell"],"roster":["Steven Arevalo","Marc Mitchell","Andrew Funk","Mike Mccarthy","George Bechara","Izzy Price","Jack Obert","Harvey Shoemaker","Kevin Mahan","Robert Mumford-Wilson","Andrew Prickel","Alfred Duncan","Christian Brown","Kelly Alston","David Kerns","Aiden Glonek","Ethan Wiley","Carol Wright","Thurmond shaw","Jason Cresswell"]},"richmond":{"updated":"2026-07-02T14:15:20.273Z","total":166,"reps":[{"rep":"Andrew Harris","doors":41},{"rep":"Logan Burbic","doors":40},{"rep":"Felipe Osorio","doors":31},{"rep":"Joshua Baca","doors":20},{"rep":"Carter Massengill","doors":20},{"rep":"Travis Kizzar","doors":7},{"rep":"JR Zaguehi","doors":7}],"allowedReps":["justin coghill","brandon simmons","travis kizzar","kevin mccann","joshua baca","logan burbic","bryan courtney","carter massengill","pedro ramirez","andrew harris","jr zaguehi","dalton barr","cristina saunders","marcus schanewolf","felipe osorio"],"roster":["Justin Coghill","Brandon Simmons","Travis Kizzar","Kevin Mccann","Joshua Baca","Logan Burbic","Bryan Courtney","Carter Massengill","Pedro Ramirez","Andrew Harris","JR Zaguehi","Dalton Barr","Cristina Saunders","marcus schanewolf","Felipe Osorio"]}};
+const SNAPSHOTS = {
+  "herndon": {
+    "updated": "2026-07-07T16:47:12.579Z",
+    "total": 466,
+    "reps": [
+      {
+        "rep": "Carol Wright",
+        "doors": 72
+      },
+      {
+        "rep": "Andrew Funk",
+        "doors": 66
+      },
+      {
+        "rep": "Mike Mccarthy",
+        "doors": 59
+      },
+      {
+        "rep": "David Kerns",
+        "doors": 51
+      },
+      {
+        "rep": "Izzy Price",
+        "doors": 42
+      },
+      {
+        "rep": "Thurmond shaw",
+        "doors": 34
+      },
+      {
+        "rep": "Aiden Glonek",
+        "doors": 33
+      },
+      {
+        "rep": "Christian Brown",
+        "doors": 31
+      },
+      {
+        "rep": "Jason Cresswell",
+        "doors": 18
+      },
+      {
+        "rep": "Ethan Wiley",
+        "doors": 16
+      },
+      {
+        "rep": "Andrew  Prickel",
+        "doors": 14
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 13
+      },
+      {
+        "rep": "Kelly Alston",
+        "doors": 13
+      },
+      {
+        "rep": "George Bechara",
+        "doors": 3
+      },
+      {
+        "rep": "Jack Obert",
+        "doors": 1
+      }
+    ],
+    "allowedReps": [
+      "steven arevalo",
+      "marc mitchell",
+      "andrew funk",
+      "michael mccarthy",
+      "george bechara",
+      "isabelle price",
+      "jack obert",
+      "harvey shoemaker",
+      "kevin mahan",
+      "robert wilson",
+      "andrew prickel",
+      "alfred duncan",
+      "christian brown",
+      "kelly alston",
+      "david kerns",
+      "aiden glonek",
+      "ethan wiley",
+      "carol wright",
+      "thurmond shaw",
+      "jason cresswell"
+    ],
+    "roster": [
+      "Steven Arevalo",
+      "Marc Mitchell",
+      "Andrew Funk",
+      "Mike Mccarthy",
+      "George Bechara",
+      "Izzy Price",
+      "Jack Obert",
+      "Harvey Shoemaker",
+      "Kevin Mahan",
+      "Robert Mumford-Wilson",
+      "Andrew Prickel",
+      "Alfred Duncan",
+      "Christian Brown",
+      "Kelly Alston",
+      "David Kerns",
+      "Aiden Glonek",
+      "Ethan Wiley",
+      "Carol Wright",
+      "Thurmond shaw",
+      "Jason Cresswell"
+    ]
+  },
+  "richmond": {
+    "updated": "2026-07-07T16:47:13.239Z",
+    "total": 553,
+    "reps": [
+      {
+        "rep": "Carter Massengill",
+        "doors": 97
+      },
+      {
+        "rep": "Dalton Barr",
+        "doors": 90
+      },
+      {
+        "rep": "Andrew Harris",
+        "doors": 82
+      },
+      {
+        "rep": "Logan Burbic",
+        "doors": 82
+      },
+      {
+        "rep": "Felipe Osorio",
+        "doors": 75
+      },
+      {
+        "rep": "Joshua Baca",
+        "doors": 55
+      },
+      {
+        "rep": "Travis Kizzar",
+        "doors": 34
+      },
+      {
+        "rep": "JT Dillon",
+        "doors": 20
+      },
+      {
+        "rep": "JR Zaguehi",
+        "doors": 17
+      },
+      {
+        "rep": "Brandon Simmons",
+        "doors": 1
+      }
+    ],
+    "allowedReps": [
+      "justin coghill",
+      "brandon simmons",
+      "travis kizzar",
+      "joshua baca",
+      "logan burbic",
+      "carter massengill",
+      "pedro ramirez",
+      "andrew harris",
+      "jr zaguehi",
+      "dalton barr",
+      "cristina saunders",
+      "marcus schanewolf",
+      "felipe osorio",
+      "jt dillon"
+    ],
+    "roster": [
+      "Justin Coghill",
+      "Brandon Simmons",
+      "Travis Kizzar",
+      "Joshua Baca",
+      "Logan Burbic",
+      "Carter Massengill",
+      "Pedro Ramirez",
+      "Andrew Harris",
+      "JR Zaguehi",
+      "Dalton Barr",
+      "Cristina Saunders",
+      "marcus schanewolf",
+      "Felipe Osorio",
+      "JT Dillon"
+    ]
+  }
+};
 
 const BASE = 'https://api.salesrabbit.com';
 const EXCLUDE_NORM = new Set(['closed', 'donotknock', 'driveby']);
