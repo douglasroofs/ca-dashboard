@@ -61,6 +61,10 @@ async function pullReport(token, dateType, duration) {
 
 module.exports = async (req, res) => {
   try {
+    if (req.url.indexOf('debug=env') > -1) {
+      var names = Object.keys(process.env).filter(function (k) { return /JP|CLIENT|SECRET|JOBPROG|LEAP|GRANT|OAUTH|TOKEN/i.test(k); });
+      return res.status(200).json({ env: names });
+    }
     var q = (req.url.split('?')[1] || '');
     var duration = 'MTD';
     q.split('&').forEach(function (kv) { var p = kv.split('='); if (p[0] === 'duration' && p[1]) duration = decodeURIComponent(p[1]).toUpperCase(); });
