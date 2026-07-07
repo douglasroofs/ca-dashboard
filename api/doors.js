@@ -229,15 +229,13 @@ async function compute(office) {
 
   const start = monthStart();
   const hdr = { 'If-Status-Modified-Since': start.toISOString() };
-  const counts = {}; const seenLead = new Set(); let total = 0, eventsScanned = 0;
-  for (let page = 1; page <= 120; page++) {
+  const counts = {}; let total = 0, eventsScanned = 0;
+  for (let page = 1; page <= 60; page++) {
     const r = await srGet('/leadStatusHistories?perPage=' + CAP + '&page=' + page, hdr);
     const data = (r.json && r.json.data) || {};
     const ids = Object.keys(data);
     if (!ids.length) break;
-    let fresh = 0;
     for (const lid of ids) {
-      if (seenLead.has(lid)) continue; seenLead.add(lid); fresh++;
       const evs = data[lid] || [];
       for (const ev of evs) {
         eventsScanned++;
@@ -251,7 +249,7 @@ async function compute(office) {
         total += 1;
       }
     }
-    if (fresh === 0) break;
+    if (ids.length < CAP) break;
   }
   const reps = Object.keys(counts).map((k) => ({ rep: display[k] || k, doors: counts[k] })).sort((a, b) => b.doors - a.doors);
   return { updated: new Date().toISOString(), total, reps, allowedReps: Array.from(allowedReps), roster, eventsScanned, office };
@@ -263,6 +261,14 @@ module.exports = async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     const office = (url.searchParams.get('office') || 'herndon').toLowerCase();
     const live = url.searchParams.get('live');
+    if (url.searchParams.get('debug') === 'teams') {
+      const uu = arr((await srGet('/users')).json);
+      const byTeam = {};
+      uu.forEach((u) => { const team = pick(u,['team'])||'(none)'; const active = pick(u,['active']); const name = pick(u,['fullName'])||[pick(u,['firstName','first']),pick(u,['lastName','last'])].filter(Boolean).join(' ').trim()||pick(u,['name','email'])||'?'; if(!byTeam[team])byTeam[team]=[]; byTeam[team].push(name+(active===false?' [inactive]':'')); });
+      res.setHeader('Cache-Control','no-store');
+      res.status(200).json({ teams: Object.keys(byTeam).map((t)=>({team:t,count:byTeam[t].length,reps:byTeam[t]})) });
+      return;
+    }
     res.setHeader('Cache-Control', 'no-store');
     if (live === '1') { const data = await compute(office); res.status(200).json(data); return; }
     res.status(200).json(SNAPSHOTS[office] || SNAPSHOTS.herndon);
