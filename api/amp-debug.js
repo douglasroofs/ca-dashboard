@@ -1,4 +1,4 @@
-// api/amp-debug.js — TEMPORARY diagnostic (delete after use). Compares doors/CA counting defs vs Amplify.
+// api/amp-debug.js — TEMPORARY diagnostic (delete after use).
 const BASE='https://api.salesrabbit.com';
 const EXCL=new Set(['closed','donotknock','driveby']);
 const CA=new Set(['ica','sgca']);
@@ -17,6 +17,13 @@ async function leadsSince(since){const out=[];const seen=new Set();const hdr={'I
 module.exports=async(req,res)=>{
  try{
   res.setHeader('Access-Control-Allow-Origin','*');res.setHeader('Cache-Control','no-store');
+  const qp=new URL(req.url,'http://x').searchParams;
+  if(qp.get('probe')==='hist'){
+   const cand=['/leadStatusHistories','/leadStatusHistory','/statusHistories','/leadStatuses','/leadHistories'];
+   const out={};
+   for(const p of cand){try{const r=await srGet(p+'?perPage=3');const a=arr(r.json);out[p]={status:r.status,count:a.length,keys:a[0]?Object.keys(a[0]):null,sample:JSON.stringify(a[0]||r.json).slice(0,400)};}catch(e){out[p]='err '+String(e).slice(0,40);}}
+   res.status(200).json(out);return;
+  }
   const start=monthStart();
   const us=arr((await srGet('/users')).json).map(u=>({name:pick(u,['fullName'])||[pick(u,['firstName','first']),pick(u,['lastName','last'])].filter(Boolean).join(' ').trim()||pick(u,['name','email'])||'',team:pick(u,['team'])||'',active:pick(u,['active'])}));
   const allowedUsers=us.filter(u=>teamAllowed(u.team)&&u.active!==false);
