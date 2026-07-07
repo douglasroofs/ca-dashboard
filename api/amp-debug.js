@@ -1,4 +1,4 @@
-// api/amp-debug.js — TEMPORARY diagnostic (delete after use).
+// api/amp-debug.js — TEMPORARY diagnostic (delete after use). Event-based counting from /leadStatusHistories.
 const BASE='https://api.salesrabbit.com';
 const EXCL=new Set(['closed','donotknock','driveby']);
 const CA=new Set(['ica','sgca']);
@@ -13,38 +13,25 @@ function statusNorm(s){return String(s==null?'':s).toLowerCase().replace(/[^a-z0
 function repKey(n){const x=norm(n);return ALIAS[x]||x;}
 function teamAllowed(t){const n=norm(t);return n.indexOf('inbound')>-1||(n.indexOf('self')>-1&&n.indexOf('gen')>-1);}
 function monthStart(){const n=new Date();return new Date(n.getFullYear(),n.getMonth(),1);}
-async function leadsSince(since){const out=[];const seen=new Set();const hdr={'If-Status-Modified-Since':since.toISOString()};for(let p=1;p<=60;p++){const r=await srGet('/leads?perPage='+CAP+'&page='+p,hdr);const ls=arr(r.json);if(!ls.length)break;for(const ld of ls){const id=pick(ld,['id']);if(id!=null&&seen.has(id))continue;if(id!=null)seen.add(id);out.push(ld);}if(ls.length<CAP)break;}return out;}
 module.exports=async(req,res)=>{
  try{
   res.setHeader('Access-Control-Allow-Origin','*');res.setHeader('Cache-Control','no-store');
-  const qp=new URL(req.url,'http://x').searchParams;
-  if(qp.get('probe')==='hist'){
-   const cand=['/leadStatusHistories','/leadStatusHistory','/statusHistories','/leadStatuses','/leadHistories'];
-   const out={};
-   for(const p of cand){try{const r=await srGet(p+'?perPage=3');const a=arr(r.json);out[p]={status:r.status,count:a.length,keys:a[0]?Object.keys(a[0]):null,sample:JSON.stringify(a[0]||r.json).slice(0,400)};}catch(e){out[p]='err '+String(e).slice(0,40);}}
-   res.status(200).json(out);return;
-  }
   const start=monthStart();
-  const us=arr((await srGet('/users')).json).map(u=>({name:pick(u,['fullName'])||[pick(u,['firstName','first']),pick(u,['lastName','last'])].filter(Boolean).join(' ').trim()||pick(u,['name','email'])||'',team:pick(u,['team'])||'',active:pick(u,['active'])}));
-  const allowedUsers=us.filter(u=>teamAllowed(u.team)&&u.active!==false);
-  const allowed=new Set(allowedUsers.map(u=>repKey(u.name)));
-  const disp={};allowedUsers.forEach(u=>{disp[repKey(u.name)]=u.name;});
-  const leads=await leadsSince(start);
-  const A={},B={},C={},CAcur={},CAdc={};const statusDist={};const seen=new Set();
-  leads.forEach(ld=>{
-   const rk=repKey(pick(ld,['userName'])||'');if(!allowed.has(rk))return;
-   const id=pick(ld,['id']);if(id!=null){if(seen.has(id))return;seen.add(id);}
-   const sm=new Date(pick(ld,['statusModified'])||0);const dc=new Date(pick(ld,['dateCreated'])||0);const st=statusNorm(pick(ld,['status']));
-   const inSM=!isNaN(sm)&&sm>=start;const inDC=!isNaN(dc)&&dc>=start;
-   if(inSM&&!EXCL.has(st))A[rk]=(A[rk]||0)+1;
-   if(inDC)B[rk]=(B[rk]||0)+1;
-   if(inDC&&!EXCL.has(st))C[rk]=(C[rk]||0)+1;
-   if(CA.has(st)&&inSM)CAcur[rk]=(CAcur[rk]||0)+1;
-   if(CA.has(st)&&inDC)CAdc[rk]=(CAdc[rk]||0)+1;
-   if(inDC){const raw=pick(ld,['status'])||'?';statusDist[raw]=(statusDist[raw]||0)+1;}
-  });
-  const reps=Array.from(allowed).map(rk=>({rep:disp[rk]||rk,A:A[rk]||0,B:B[rk]||0,C:C[rk]||0,CAcur:CAcur[rk]||0,CAdc:CAdc[rk]||0})).filter(r=>r.A||r.B||r.C).sort((a,b)=>b.B-a.B);
+  const us=arr((await srGet('/users')).json);
+  const uInfo={};
+  us.forEach(u=>{const id=String(pick(u,['id']));const name=pick(u,['fullName'])||[pick(u,['firstName','first']),pick(u,['lastName','last'])].filter(Boolean).join(' ').trim()||pick(u,['name','email'])||'';const team=pick(u,['team'])||'';uInfo[id]={name:name,rk:repKey(name),allowed:teamAllowed(team)&&pick(u,['active'])!==false};});
+  const hdr={'If-Status-Modified-Since':start.toISOString()};
+  const doorsAll={},doorsExcl={},caCnt={},distinctLeads={};const evStatus={};let pages=0,leadCnt=0,evAll=0,evMonth=0;
+  for(let p=1;p<=80;p++){
+   const r=await srGet('/leadStatusHistories?perPage='+CAP+'&page='+p,hdr);
+   const data=(r.json&&r.json.data)||{};const ids=Object.keys(data);if(!ids.length)break;pages++;leadCnt+=ids.length;
+   ids.forEach(lid=>{(data[lid]||[]).forEach(ev=>{evAll++;const d=new Date(ev.statusUpdated||ev.leadModified||0);if(isNaN(d)||d<start)return;const inf=uInfo[String(ev.changedByUserId)];if(!inf||!inf.allowed)return;evMonth++;const st=statusNorm(ev.name);const rk=inf.rk;doorsAll[rk]=(doorsAll[rk]||0)+1;if(!EXCL.has(st))doorsExcl[rk]=(doorsExcl[rk]||0)+1;if(CA.has(st))caCnt[rk]=(caCnt[rk]||0)+1;evStatus[ev.name||'?']=(evStatus[ev.name||'?']||0)+1;});});
+   if(ids.length<CAP)break;
+  }
+  const disp={};us.forEach(u=>{const id=String(pick(u,['id']));if(uInfo[id])disp[uInfo[id].rk]=uInfo[id].name;});
+  const keys=new Set([].concat(Object.keys(doorsAll),Object.keys(caCnt)));
+  const reps=Array.from(keys).map(rk=>({rep:disp[rk]||rk,doorsAll:doorsAll[rk]||0,doorsExcl:doorsExcl[rk]||0,ca:caCnt[rk]||0})).sort((a,b)=>b.doorsAll-a.doorsAll);
   const sum=k=>reps.reduce((s,r)=>s+r[k],0);
-  res.status(200).json({month:start.toISOString().slice(0,7),leadsScanned:leads.length,usersCount:us.length,allowedCount:allowed.size,totals:{A:sum('A'),B:sum('B'),C:sum('C'),CAcur:sum('CAcur'),CAdc:sum('CAdc')},reps,statusDist});
+  res.status(200).json({month:start.toISOString().slice(0,7),pages,leadCnt,evAll,evMonth,totals:{doorsAll:sum('doorsAll'),doorsExcl:sum('doorsExcl'),ca:sum('ca')},evStatus,reps});
  }catch(e){res.status(500).json({error:String(e&&e.message||e)});}
 };
