@@ -20,11 +20,11 @@ const CAP = 2000;
 
 function tok() { const t = process.env.SALESRABBIT_TOKEN; if (!t) throw new Error('SALESRABBIT_TOKEN not set in Vercel'); return t; }
 async function srGet(path, headers) { const res = await fetch(BASE + path, { headers: Object.assign({ Authorization: 'Bearer ' + tok(), Accept: 'application/json' }, headers || {}) }); const text = await res.text(); let json; try { json = JSON.parse(text); } catch (_) { json = text; } return { status: res.status, json }; }
-function arr(j) { return Array.isArray(j) ? j : (j && (j.data || j.results || j.records || j.items)) || []; }
 function pick(o, keys) { for (const k of keys) { if (o && o[k] != null) return o[k]; } return undefined; }
 function norm(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/\s+/g, ' '); }
 function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
+function arr(j) { return Array.isArray(j) ? j : (j && (j.data || j.results || j.records || j.items)) || []; }
 function monthStart() { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), 1); }
 function stormAllowed(team, office) { const n = norm(team); if (office === 'richmond') return n.indexOf('richmond') > -1 && n.indexOf('storm') > -1; return n.indexOf('self') > -1 && n.indexOf('gen') > -1; }
 
@@ -43,13 +43,16 @@ async function compute(office, year, monthOnly) {
   const now = new Date();
   const since = monthOnly ? monthStart() : new Date(year, 0, 1);
   const hdr = { 'If-Status-Modified-Since': since.toISOString() };
-  const counts = {}; const seen = new Set(); let eventsScanned = 0;
-  for (let page = 1; page <= 80; page++) {
+  const counts = {}; const seen = new Set(); const seenLead = new Set(); let eventsScanned = 0, pages = 0;
+  for (let page = 1; page <= 120; page++) {
     const r = await srGet('/leadStatusHistories?perPage=' + CAP + '&page=' + page, hdr);
     const data = (r.json && r.json.data) || {};
     const ids = Object.keys(data);
     if (!ids.length) break;
+    pages++;
+    let fresh = 0;
     for (const lid of ids) {
+      if (seenLead.has(lid)) continue; seenLead.add(lid); fresh++;
       for (const ev of (data[lid] || [])) {
         eventsScanned++;
         const st = statusNorm(ev.name);
@@ -66,7 +69,7 @@ async function compute(office, year, monthOnly) {
         counts[rk][m]++;
       }
     }
-    if (ids.length < CAP) break;
+    if (fresh === 0) break;
   }
   const lastMonth = (monthOnly || year === now.getFullYear()) ? now.getMonth() : 11;
   const firstMonth = monthOnly ? now.getMonth() : 0;
@@ -75,7 +78,7 @@ async function compute(office, year, monthOnly) {
     const c = counts[rk]; const total = months.reduce((a, m) => a + c[m], 0);
     return { rep: display[rk] || rk, counts: months.map((m) => c[m]), total };
   }).sort((a, b) => b.total - a.total);
-  return { office, year, updated: new Date().toISOString(), months, reps, eventsScanned };
+  return { office, year, updated: new Date().toISOString(), months, reps, eventsScanned, pages, leadsScanned: seenLead.size };
 }
 
 module.exports = async (req, res) => {
