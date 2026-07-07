@@ -85,6 +85,18 @@ module.exports = async (req, res) => {
       await tryTok('RICH_LEAP_API_KEY+switch', process.env.RICH_LEAP_API_KEY, true);
       await tryTok('JP_API_TOKEN', process.env.JP_API_TOKEN, false);
       await tryTok('LEAP_ACCESS_TOKEN', process.env.LEAP_ACCESS_TOKEN, false);
+      // Reporting API (reporting-api.jobprogress.com) report 3421 (Richmond)
+      async function tryReport(label, tok) {
+        if (!tok) { out.push({ label: label, note: 'missing env' }); return; }
+        try {
+          var r = await fetch('https://reporting-api.jobprogress.com/api/reports/3421', { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + tok } });
+          var txt = await r.text();
+          out.push({ label: label, status: r.status, len: txt.length, looksJson: txt.charAt(0) === '{' });
+        } catch (e) { out.push({ label: label, err: String(e.message || e) }); }
+      }
+      await tryReport('REPORTING RICH_LEAP_API_KEY', process.env.RICH_LEAP_API_KEY);
+      await tryReport('REPORTING JP_API_TOKEN', process.env.JP_API_TOKEN);
+      await tryReport('REPORTING LEAP_ACCESS_TOKEN', process.env.LEAP_ACCESS_TOKEN);
       return res.status(200).json({ probe: out });
     }
     var q = (req.url.split('?')[1] || '');
