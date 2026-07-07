@@ -1,12 +1,12 @@
 // api/ca-history.js — monthly CA counts (ICA + SGCA) per rep, from Sales Rabbit status history.
 //
-// A "CA" = a distinct lead that reached ICA or SGCA in a given month, credited to the rep who set
-// it (changedByUserId), scoped to the office's Storm team. Counted from /leadStatusHistories events
-// (dated by when the status was set), so it matches how Amplify counts CAs.
+// A CA = a distinct lead that reached ICA or SGCA in a given month, credited to the rep who set
+// it (changedByUserId), scoped to the office's Storm team. Counted from /leadStatusHistories events.
 //
 // ?office=herndon|richmond   Storm scope: Herndon = DC Self Gen, Richmond = Richmond Storm.
-// ?live=1[&year=YYYY]        recompute from Sales Rabbit. &scope=month = current month only (fast).
-// default                    serve the stored (empty) SNAPSHOT; the dashboards always call live.
+// ?live=1                    current month only (fast) — dashboard CA cards.
+// ?live=1&scope=year         full Jan..now grid (heavy) — daily task builds the snapshot.
+// default (no live)          serve the stored year SNAPSHOT — CA-by-month grid.
 
 const SNAPSHOTS = {
   herndon: { updated: null, year: null, months: [], reps: [] },
@@ -89,7 +89,7 @@ module.exports = async (req, res) => {
     const office = (url.searchParams.get('office') || 'herndon').toLowerCase();
     const year = parseInt(url.searchParams.get('year') || '', 10) || new Date().getFullYear();
     const live = url.searchParams.get('live');
-    const monthOnly = url.searchParams.get('scope') === 'month';
+    const monthOnly = url.searchParams.get('scope') !== 'year';
     if (live === '1') { const data = await compute(office, year, monthOnly); res.status(200).json(data); return; }
     res.status(200).json(SNAPSHOTS[office] || SNAPSHOTS.herndon);
   } catch (err) {
