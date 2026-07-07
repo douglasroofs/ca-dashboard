@@ -229,13 +229,15 @@ async function compute(office) {
 
   const start = monthStart();
   const hdr = { 'If-Status-Modified-Since': start.toISOString() };
-  const counts = {}; let total = 0, eventsScanned = 0;
-  for (let page = 1; page <= 60; page++) {
+  const counts = {}; const seenLead = new Set(); let total = 0, eventsScanned = 0;
+  for (let page = 1; page <= 120; page++) {
     const r = await srGet('/leadStatusHistories?perPage=' + CAP + '&page=' + page, hdr);
     const data = (r.json && r.json.data) || {};
     const ids = Object.keys(data);
     if (!ids.length) break;
+    let fresh = 0;
     for (const lid of ids) {
+      if (seenLead.has(lid)) continue; seenLead.add(lid); fresh++;
       const evs = data[lid] || [];
       for (const ev of evs) {
         eventsScanned++;
@@ -249,7 +251,7 @@ async function compute(office) {
         total += 1;
       }
     }
-    if (ids.length < CAP) break;
+    if (fresh === 0) break;
   }
   const reps = Object.keys(counts).map((k) => ({ rep: display[k] || k, doors: counts[k] })).sort((a, b) => b.doors - a.doors);
   return { updated: new Date().toISOString(), total, reps, allowedReps: Array.from(allowedReps), roster, eventsScanned, office };
