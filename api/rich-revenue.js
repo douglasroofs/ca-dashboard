@@ -65,6 +65,28 @@ module.exports = async (req, res) => {
       var names = Object.keys(process.env).filter(function (k) { return /JP|CLIENT|SECRET|JOBPROG|LEAP|GRANT|OAUTH|TOKEN/i.test(k); });
       return res.status(200).json({ env: names });
     }
+    if (req.url.indexOf('debug=probe') > -1) {
+      var out = [];
+      async function tryTok(label, tok, doSwitch) {
+        if (!tok) { out.push({ label: label, note: 'missing env' }); return; }
+        try {
+          if (doSwitch) {
+            var sw = await fetch(BASE + '/users/switch_company', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'platform': 'web', 'Authorization': 'Bearer ' + tok }, body: JSON.stringify({ company_id: RICHMOND_COMPANY }) });
+            if (!sw.ok) { out.push({ label: label, switchStatus: sw.status }); return; }
+          }
+          var r = await fetch(BASE + '/reports/sales_performance_summary_report?date_range_type[]=job_awarded_date&duration=YTD&limit=200&page=1', { headers: { 'Accept': 'application/json', 'platform': 'web', 'Authorization': 'Bearer ' + tok } });
+          var j = await r.json().catch(function () { return {}; });
+          var rows = (j && j.data) || [];
+          var names2 = rows.map(function (x) { return String(x.full_name || '').trim(); });
+          out.push({ label: label, status: r.status, rows: rows.length, hasBryan: names2.indexOf('Bryan Courtney') > -1, hasPrickel: names2.some(function (n) { return /Prickel/.test(n); }), sample: names2.slice(0, 3) });
+        } catch (e) { out.push({ label: label, err: String(e.message || e) }); }
+      }
+      await tryTok('RICH_LEAP_API_KEY', process.env.RICH_LEAP_API_KEY, false);
+      await tryTok('RICH_LEAP_API_KEY+switch', process.env.RICH_LEAP_API_KEY, true);
+      await tryTok('JP_API_TOKEN', process.env.JP_API_TOKEN, false);
+      await tryTok('LEAP_ACCESS_TOKEN', process.env.LEAP_ACCESS_TOKEN, false);
+      return res.status(200).json({ probe: out });
+    }
     var q = (req.url.split('?')[1] || '');
     var duration = 'MTD';
     q.split('&').forEach(function (kv) { var p = kv.split('='); if (p[0] === 'duration' && p[1]) duration = decodeURIComponent(p[1]).toUpperCase(); });
