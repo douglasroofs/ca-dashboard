@@ -42,8 +42,8 @@ var office='herndon';
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function load(){
   var b=document.getElementById('rf');b.disabled=true;
-  document.getElementById('tw').innerHTML='<div class="state">Computing... (~5s)</div>';
-  fetch('/api/ca-history?office='+office+'&live=1&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){
+  document.getElementById('tw').innerHTML='<div class="state">Loading grid...</div>';
+  fetch('/api/ca-history?office='+office+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){
     if(d.error)throw new Error(d.error);
     document.getElementById('upd').textContent='Updated '+new Date(d.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
     var months=d.months||[];var reps=d.reps||[];
