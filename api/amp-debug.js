@@ -18,7 +18,7 @@ module.exports=async(req,res)=>{
  try{
   res.setHeader('Access-Control-Allow-Origin','*');res.setHeader('Cache-Control','no-store');
   const start=monthStart();
-  const us=arr((await srGet('/users')).json).map(u=>({name:pick(u,['fullName'])||pick(u,['name','email'])||'',team:pick(u,['team'])||'',active:pick(u,['active'])}));
+  const us=arr((await srGet('/users')).json).map(u=>({name:pick(u,['fullName'])||[pick(u,['firstName','first']),pick(u,['lastName','last'])].filter(Boolean).join(' ').trim()||pick(u,['name','email'])||'',team:pick(u,['team'])||'',active:pick(u,['active'])}));
   const allowedUsers=us.filter(u=>teamAllowed(u.team)&&u.active!==false);
   const allowed=new Set(allowedUsers.map(u=>repKey(u.name)));
   const disp={};allowedUsers.forEach(u=>{disp[repKey(u.name)]=u.name;});
@@ -38,6 +38,6 @@ module.exports=async(req,res)=>{
   });
   const reps=Array.from(allowed).map(rk=>({rep:disp[rk]||rk,A:A[rk]||0,B:B[rk]||0,C:C[rk]||0,CAcur:CAcur[rk]||0,CAdc:CAdc[rk]||0})).filter(r=>r.A||r.B||r.C).sort((a,b)=>b.B-a.B);
   const sum=k=>reps.reduce((s,r)=>s+r[k],0);
-  res.status(200).json({month:start.toISOString().slice(0,7),leadsScanned:leads.length,totals:{A:sum('A'),B:sum('B'),C:sum('C'),CAcur:sum('CAcur'),CAdc:sum('CAdc')},reps,statusDist});
+  res.status(200).json({month:start.toISOString().slice(0,7),leadsScanned:leads.length,usersCount:us.length,allowedCount:allowed.size,totals:{A:sum('A'),B:sum('B'),C:sum('C'),CAcur:sum('CAcur'),CAdc:sum('CAdc')},reps,statusDist});
  }catch(e){res.status(500).json({error:String(e&&e.message||e)});}
 };
