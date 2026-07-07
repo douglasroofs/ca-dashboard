@@ -1,9 +1,10 @@
 // api/rich-revenue.js
 // Live Richmond revenue from JobProgress "Sales Performance" summary report.
-// Fully server-side: authenticates with stored JP creds (JP_USERNAME/JP_PASSWORD),
-// switches to the Richmond company (6026), and reads the same report the Herndon
-// dashboard uses (field: contract_amount). No dependency on any browser login.
-// Response shape (unchanged for richmond.html): { updated, duration, office, reps:[{rep, approved, contract}] }
+// Fully server-side: logs in with stored JP creds (JP_USERNAME/JP_PASSWORD +
+// JP_CLIENT_ID/JP_CLIENT_SECRET), switches to the Richmond company (6026), and
+// reads the same report the Herndon dashboard uses (field: contract_amount).
+// No dependency on any browser login.
+// Response: { updated, duration, office, reps:[{rep, approved, contract}] }
 
 const BASE = 'https://jobprogress.com/api/public/api/v1';
 const RICHMOND_COMPANY = 6026;
@@ -26,12 +27,20 @@ async function jpLogin() {
   var r = await fetch(BASE + '/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'platform': 'web' },
-    body: JSON.stringify({ username: process.env.JP_USERNAME, password: process.env.JP_PASSWORD })
+    body: JSON.stringify({
+      username: process.env.JP_USERNAME,
+      password: process.env.JP_PASSWORD,
+      grant_type: 'password',
+      client_id: process.env.JP_CLIENT_ID,
+      client_secret: process.env.JP_CLIENT_SECRET,
+      platform: 'web',
+      end_existing_sessions: false
+    })
   });
   var j = await r.json().catch(function () { return {}; });
   if (!r.ok) throw new Error('login ' + r.status + ' ' + (j && j.error && j.error.message ? j.error.message : ''));
   var tok = findToken(j);
-  if (!tok) throw new Error('token not found; keys=' + Object.keys(j || {}).join(',') + (j && j.data ? ' data=' + Object.keys(j.data).join(',') : ''));
+  if (!tok) throw new Error('token not found; keys=' + Object.keys(j || {}).join(','));
   return tok;
 }
 
@@ -61,44 +70,6 @@ async function pullReport(token, dateType, duration) {
 
 module.exports = async (req, res) => {
   try {
-    if (req.url.indexOf('debug=env') > -1) {
-      var names = Object.keys(process.env).filter(function (k) { return /JP|CLIENT|SECRET|JOBPROG|LEAP|GRANT|OAUTH|TOKEN/i.test(k); });
-      return res.status(200).json({ env: names });
-    }
-    if (req.url.indexOf('debug=probe') > -1) {
-      var out = [];
-      async function tryTok(label, tok, doSwitch) {
-        if (!tok) { out.push({ label: label, note: 'missing env' }); return; }
-        try {
-          if (doSwitch) {
-            var sw = await fetch(BASE + '/users/switch_company', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'platform': 'web', 'Authorization': 'Bearer ' + tok }, body: JSON.stringify({ company_id: RICHMOND_COMPANY }) });
-            if (!sw.ok) { out.push({ label: label, switchStatus: sw.status }); return; }
-          }
-          var r = await fetch(BASE + '/reports/sales_performance_summary_report?date_range_type[]=job_awarded_date&duration=YTD&limit=200&page=1', { headers: { 'Accept': 'application/json', 'platform': 'web', 'Authorization': 'Bearer ' + tok } });
-          var j = await r.json().catch(function () { return {}; });
-          var rows = (j && j.data) || [];
-          var names2 = rows.map(function (x) { return String(x.full_name || '').trim(); });
-          out.push({ label: label, status: r.status, rows: rows.length, hasBryan: names2.indexOf('Bryan Courtney') > -1, hasPrickel: names2.some(function (n) { return /Prickel/.test(n); }), sample: names2.slice(0, 3) });
-        } catch (e) { out.push({ label: label, err: String(e.message || e) }); }
-      }
-      await tryTok('RICH_LEAP_API_KEY', process.env.RICH_LEAP_API_KEY, false);
-      await tryTok('RICH_LEAP_API_KEY+switch', process.env.RICH_LEAP_API_KEY, true);
-      await tryTok('JP_API_TOKEN', process.env.JP_API_TOKEN, false);
-      await tryTok('LEAP_ACCESS_TOKEN', process.env.LEAP_ACCESS_TOKEN, false);
-      // Reporting API (reporting-api.jobprogress.com) report 3421 (Richmond)
-      async function tryReport(label, tok) {
-        if (!tok) { out.push({ label: label, note: 'missing env' }); return; }
-        try {
-          var r = await fetch('https://reporting-api.jobprogress.com/api/reports/3421', { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + tok } });
-          var txt = await r.text();
-          out.push({ label: label, status: r.status, len: txt.length, looksJson: txt.charAt(0) === '{' });
-        } catch (e) { out.push({ label: label, err: String(e.message || e) }); }
-      }
-      await tryReport('REPORTING RICH_LEAP_API_KEY', process.env.RICH_LEAP_API_KEY);
-      await tryReport('REPORTING JP_API_TOKEN', process.env.JP_API_TOKEN);
-      await tryReport('REPORTING LEAP_ACCESS_TOKEN', process.env.LEAP_ACCESS_TOKEN);
-      return res.status(200).json({ probe: out });
-    }
     var q = (req.url.split('?')[1] || '');
     var duration = 'MTD';
     q.split('&').forEach(function (kv) { var p = kv.split('='); if (p[0] === 'duration' && p[1]) duration = decodeURIComponent(p[1]).toUpperCase(); });
