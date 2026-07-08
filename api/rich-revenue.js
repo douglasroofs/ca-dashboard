@@ -32,16 +32,16 @@ async function jpLogin() {
   var r = await fetch(BASE + '/login', {
     method: 'POST',
     redirect: 'follow',
-    headers: Object.assign({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'platform': 'web' }, BROWSER_HEADERS),
-    body: JSON.stringify({
-      username: process.env.JP_USERNAME,
-      password: process.env.JP_PASSWORD,
+    headers: Object.assign({ 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json', 'platform': 'web' }, BROWSER_HEADERS),
+    body: new URLSearchParams({
+      username: process.env.JP_USERNAME || '',
+      password: process.env.JP_PASSWORD || '',
       grant_type: 'password',
-      client_id: process.env.JP_CLIENT_ID,
-      client_secret: process.env.JP_CLIENT_SECRET,
+      client_id: process.env.JP_CLIENT_ID || '',
+      client_secret: process.env.JP_CLIENT_SECRET || '',
       platform: 'web',
-      end_existing_sessions: false
-    })
+      end_existing_sessions: 'false'
+    }).toString()
   });
   var j = await r.json().catch(function () { return {}; });
   if (!r.ok) throw new Error('login ' + r.status + ' ' + (j && j.error && j.error.message ? j.error.message : ''));
