@@ -67,7 +67,7 @@ var lc=lx.leapCA||{};Object.keys(lc).forEach(function(name){var o=ensure(name);v
 var ap=lx.approved||{};Object.keys(ap).forEach(function(name){var k=dkey(name);if(map[k])map[k].approved=ap[name];});
 var cn=lx.contract||{};Object.keys(cn).forEach(function(name){var k=dkey(name);if(map[k])map[k].contract=cn[name];});
 var rows=Object.keys(map).map(function(k){var o=map[k];o.srYTD=months.reduce(function(a,m){return a+o.sr[m]},0);o.leapYTD=months.reduce(function(a,m){return a+o.leap[m]},0);return o;});
-rows.sort(function(a,b){return (b.srYTD-a.srYTD)||(b.leapYTD-a.leapYTD)});
+rows=rows.filter(function(o){var n=norm(o.rep);return !(n.indexOf('haley')>-1||n.indexOf('solomon')>-1||n==='adam mulvaney'||n==='unassigned');});rows.sort(function(a,b){return (b.srYTD-a.srYTD)||(b.leapYTD-a.leapYTD)});
 var head='<tr><th class="rank">#</th><th class="rep">Rep</th>'+months.map(function(m){return '<th class="num">'+MONTHS[m]+'</th>'}).join('')+'<th class="num tot">YTD</th><th class="num rev">Approved</th><th class="num rev">Contract</th></tr>';
 var cT=months.map(function(){return {sr:0,leap:0}});var gSR=0,gL=0,gAp=0,gCn=0;
 var body=rows.map(function(o,i){
