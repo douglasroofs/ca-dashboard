@@ -70,6 +70,13 @@ async function pullReport(token, dateType, duration) {
 
 module.exports = async (req, res) => {
   try {
+    if (req.url.indexOf('debug=cred') > -1) {
+      var ci = process.env.JP_CLIENT_ID || '', cs = process.env.JP_CLIENT_SECRET || '';
+      return res.status(200).json({
+        client_id_len: ci.length, client_id_first2: ci.slice(0, 2), client_id_trimmedDiff: ci.length - ci.trim().length,
+        client_secret_len: cs.length, client_secret_first2: cs.slice(0, 2), client_secret_trimmedDiff: cs.length - cs.trim().length
+      });
+    }
     var q = (req.url.split('?')[1] || '');
     var duration = 'MTD';
     q.split('&').forEach(function (kv) { var p = kv.split('='); if (p[0] === 'duration' && p[1]) duration = decodeURIComponent(p[1]).toUpperCase(); });
