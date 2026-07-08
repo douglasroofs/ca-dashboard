@@ -9,32 +9,36 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-07T16:47:12.579Z",
-    "total": 466,
+    "updated": "2026-07-08T01:44:49.766Z",
+    "total": 660,
     "reps": [
       {
-        "rep": "Carol Wright",
-        "doors": 72
-      },
-      {
         "rep": "Andrew Funk",
-        "doors": 66
+        "doors": 135
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 59
+        "doors": 103
+      },
+      {
+        "rep": "Carol Wright",
+        "doors": 77
+      },
+      {
+        "rep": "Thurmond shaw",
+        "doors": 65
+      },
+      {
+        "rep": "Izzy Price",
+        "doors": 62
       },
       {
         "rep": "David Kerns",
         "doors": 51
       },
       {
-        "rep": "Izzy Price",
-        "doors": 42
-      },
-      {
-        "rep": "Thurmond shaw",
-        "doors": 34
+        "rep": "Jason Cresswell",
+        "doors": 38
       },
       {
         "rep": "Aiden Glonek",
@@ -45,7 +49,7 @@ const SNAPSHOTS = {
         "doors": 31
       },
       {
-        "rep": "Jason Cresswell",
+        "rep": "Andrew  Prickel",
         "doors": 18
       },
       {
@@ -53,12 +57,8 @@ const SNAPSHOTS = {
         "doors": 16
       },
       {
-        "rep": "Andrew  Prickel",
-        "doors": 14
-      },
-      {
         "rep": "Harvey Shoemaker",
-        "doors": 13
+        "doors": 14
       },
       {
         "rep": "Kelly Alston",
@@ -85,7 +85,6 @@ const SNAPSHOTS = {
       "kevin mahan",
       "robert wilson",
       "andrew prickel",
-      "alfred duncan",
       "christian brown",
       "kelly alston",
       "david kerns",
@@ -106,8 +105,7 @@ const SNAPSHOTS = {
       "Harvey Shoemaker",
       "Kevin Mahan",
       "Robert Mumford-Wilson",
-      "Andrew Prickel",
-      "Alfred Duncan",
+      "Andrew  Prickel",
       "Christian Brown",
       "Kelly Alston",
       "David Kerns",
@@ -119,47 +117,51 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-07T16:47:13.239Z",
-    "total": 553,
+    "updated": "2026-07-08T01:44:50.341Z",
+    "total": 747,
     "reps": [
       {
-        "rep": "Carter Massengill",
-        "doors": 97
+        "rep": "Andrew Harris",
+        "doors": 166
       },
       {
         "rep": "Dalton Barr",
-        "doors": 90
+        "doors": 113
       },
       {
-        "rep": "Andrew Harris",
-        "doors": 82
-      },
-      {
-        "rep": "Logan Burbic",
-        "doors": 82
+        "rep": "Carter Massengill",
+        "doors": 100
       },
       {
         "rep": "Felipe Osorio",
-        "doors": 75
+        "doors": 94
+      },
+      {
+        "rep": "Logan Burbic",
+        "doors": 87
       },
       {
         "rep": "Joshua Baca",
-        "doors": 55
-      },
-      {
-        "rep": "Travis Kizzar",
-        "doors": 34
+        "doors": 57
       },
       {
         "rep": "JT Dillon",
-        "doors": 20
+        "doors": 54
+      },
+      {
+        "rep": "Travis Kizzar",
+        "doors": 41
       },
       {
         "rep": "JR Zaguehi",
-        "doors": 17
+        "doors": 26
       },
       {
         "rep": "Brandon Simmons",
+        "doors": 8
+      },
+      {
+        "rep": "Justin Coghill",
         "doors": 1
       }
     ],
