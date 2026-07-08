@@ -31,7 +31,7 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 <div class="wrap">
 <div class="cards">
 <div class="card d"><div class="label">Doors Knocked</div><div class="value" id="cDr">-</div><div class="sub">Pins this month</div></div>
-<div class="card k"><div class="label">CAs</div><div class="value" id="cCa">-</div><div class="sub">ICA + SGCA this month</div></div>
+<div class="card k"><div class="label">CAs</div><div class="value" id="cCa">-</div><div class="sub">SR / Leap CAs this month</div></div>
 <div class="card a"><div class="label">Approved Revenue</div><div class="value" id="cAp">-</div><div class="sub">Job awarded date (MTD)</div></div>
 <div class="card c"><div class="label">Contract Signed Revenue</div><div class="value" id="cCn">-</div><div class="sub">Pending contract-signed report</div></div>
 </div>
@@ -49,11 +49,12 @@ function load(opts){
   
   document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
   Promise.all([
+    fetch('/api/leap-extra?office=richmond&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{}}}),
     fetch('/api/doors?office=richmond&live=1'+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}),
     fetch('/api/ca-history?office=richmond&live=1&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],months:[]}}),
     fetch('/api/rich-revenue?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[]}})
   ]).then(function(res){
-    var dr=res[0], ca=res[1], rev=res[2];
+    var le=res[0], dr=res[1], ca=res[2], rev=res[3];
     if(dr.error)throw new Error(dr.error);
     document.getElementById('upd').textContent='Updated '+new Date(dr.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
     var caMap={};(ca.reps||[]).forEach(function(r){var c=r.counts||[];caMap[norm(r.rep)]=c.length?c[c.length-1]:0;});
@@ -64,14 +65,15 @@ function load(opts){
     (ca.reps||[]).forEach(function(r){var k=norm(r.rep);if(!map[k])map[k]={rep:r.rep,doors:0,cas:caMap[k]||0};});
     Object.keys(revMap).forEach(function(k){if(!map[k])map[k]={rep:revMap[k].rep,doors:0,cas:caMap[k]||0};});
     Object.keys(map).forEach(function(k){var rv=revMap[k]||{};map[k].approved=rv.approved||0;map[k].contract=rv.contract||0;});
+    var _curM=(new Date()).getMonth();var _lc=(le&&le.leapCA)||{};var _leapCur={};Object.keys(_lc).forEach(function(rp){_leapCur[norm(rp)]=(_lc[rp]||[])[_curM]||0;});Object.keys(map).forEach(function(k){map[k].leapCa=_leapCur[k]||0;});
     var rows=Object.keys(map).map(function(k){return map[k]}).sort(function(a,b){return (b.approved-a.approved)||(b.doors-a.doors)});
-    var tD=0,tC=0,tAp=0,tCn=0;rows.forEach(function(r){tD+=r.doors||0;tC+=r.cas||0;tAp+=r.approved||0;tCn+=r.contract||0;});
+    var tD=0,tC=0,tAp=0,tCn=0,tLeap=0;rows.forEach(function(r){tD+=r.doors||0;tC+=r.cas||0;tAp+=r.approved||0;tCn+=r.contract||0;tLeap+=r.leapCa||0;});
     document.getElementById('cDr').textContent=tD;
-    document.getElementById('cCa').textContent=tC;
+    document.getElementById('cCa').textContent=tC+' / '+tLeap;
     document.getElementById('cAp').textContent=fmt(tAp);
     document.getElementById('cCn').textContent=tCn>0?fmt(tCn):'—';
-    var body=rows.map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num">'+(r.contract>0?fmt(r.contract):'—')+'</td></tr>'}).join('');
-    document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td></td><td>Total</td><td class="num">'+tD+'</td><td class="num">'+tC+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+(tCn>0?fmt(tCn):'—')+'</td></tr></tfoot></table>';
+    var body=rows.map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+' / '+(r.leapCa||0)+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num">'+(r.contract>0?fmt(r.contract):'—')+'</td></tr>'}).join('');
+    document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs (SR/Leap)</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td></td><td>Total</td><td class="num">'+tD+'</td><td class="num">'+tC+' / '+tLeap+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+(tCn>0?fmt(tCn):'—')+'</td></tr></tfoot></table>';
   }).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false;if(ud){ud.disabled=false;ud.textContent='Update doors now';}});
 }
 document.getElementById('rf').addEventListener('click',function(){load();});
