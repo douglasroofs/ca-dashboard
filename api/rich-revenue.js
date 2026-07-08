@@ -6,8 +6,13 @@
 // No dependency on any browser login.
 // Response: { updated, duration, office, reps:[{rep, approved, contract}] }
 
-const BASE = 'https://jobprogress.com/api/public/api/v1';
+const BASE = 'https://www.jobprogress.com/api/public/api/v1';
 const RICHMOND_COMPANY = 6026;
+const BROWSER_HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+  'Origin': 'https://www.jobprogress.com',
+  'Referer': 'https://www.jobprogress.com/app/'
+};
 
 function findToken(obj) {
   var found = null;
@@ -26,7 +31,8 @@ function findToken(obj) {
 async function jpLogin() {
   var r = await fetch(BASE + '/login', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'platform': 'web' },
+    redirect: 'follow',
+    headers: Object.assign({ 'Content-Type': 'application/json', 'Accept': 'application/json', 'platform': 'web' }, BROWSER_HEADERS),
     body: JSON.stringify({
       username: process.env.JP_USERNAME,
       password: process.env.JP_PASSWORD,
