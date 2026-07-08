@@ -12,7 +12,6 @@ const DATA = {
   richmond: { updated: "2026-07-08", leapCA: {"Joshua Baca":[0,0,0,0,0,12,3,0,0,0,0,0],"Brandon Simmons":[0,0,0,0,0,8,1,0,0,0,0,0],"Justin Coghill":[0,0,0,0,0,6,0,0,0,0,0,0],"Travis Kizzar":[0,0,0,0,0,10,5,0,0,0,0,0],"Logan Burbic":[0,0,0,0,0,2,0,0,0,0,0,0],"Marcus Schanewolf":[0,0,0,0,0,1,0,0,0,0,0,0]}, approved: {}, contract: {} }
 };
 module.exports = (req, res) => {
-  if((req.url||'').indexOf('debug=testkey')>-1){ return (async()=>{ var k=process.env.RICH_LEAP_API_KEY||''; var out=[]; async function T(label,url,opts){try{var r=await fetch(url,opts);out.push({label:label,status:r.status});}catch(e){out.push({label:label,err:String(e.message)});}} var RA='https://reporting-api.jobprogress.com/api/reports/3950'; await T('bearer',RA,{headers:{'Authorization':'Bearer '+k,'Accept':'application/json'}}); await T('xapikey',RA,{headers:{'X-Api-Key':k,'Accept':'application/json'}}); await T('query',RA+'?api_key='+encodeURIComponent(k),{headers:{'Accept':'application/json'}}); res.setHeader('Content-Type','application/json'); res.status(200).json({keyLen:k.length, tests:out}); })(); }
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Cache-Control', 'no-store');
