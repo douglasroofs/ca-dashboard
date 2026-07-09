@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-08T12:02:13.473Z",
+    "updated": "2026-07-09T14:10:21.298Z",
     "year": 2026,
     "months": [
       0,
@@ -30,10 +30,10 @@ const SNAPSHOTS = {
           11,
           8,
           5,
-          6,
+          7,
           1
         ],
-        "total": 31
+        "total": 32
       },
       {
         "rep": "Harvey Shoemaker",
@@ -49,19 +49,6 @@ const SNAPSHOTS = {
         "total": 29
       },
       {
-        "rep": "Andrew Funk",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          4,
-          15,
-          4
-        ],
-        "total": 23
-      },
-      {
         "rep": "Jack Obert",
         "counts": [
           0,
@@ -69,10 +56,10 @@ const SNAPSHOTS = {
           3,
           5,
           8,
-          6,
-          1
+          5,
+          3
         ],
-        "total": 23
+        "total": 24
       },
       {
         "rep": "Mike Mccarthy",
@@ -81,9 +68,22 @@ const SNAPSHOTS = {
           0,
           4,
           0,
-          8,
-          6,
+          9,
+          5,
           3
+        ],
+        "total": 22
+      },
+      {
+        "rep": "Andrew Funk",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          4,
+          14,
+          4
         ],
         "total": 22
       },
@@ -122,9 +122,9 @@ const SNAPSHOTS = {
           2,
           5,
           3,
-          0
+          1
         ],
-        "total": 17
+        "total": 18
       },
       {
         "rep": "George Bechara",
@@ -148,9 +148,9 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          8
+          10
         ],
-        "total": 12
+        "total": 14
       },
       {
         "rep": "Robert Mumford-Wilson",
@@ -207,7 +207,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-08T12:02:52.623Z",
+    "updated": "2026-07-09T14:11:02.371Z",
     "year": 2026,
     "months": [
       0,
@@ -227,8 +227,8 @@ const SNAPSHOTS = {
           13,
           13,
           6,
-          20,
-          6
+          19,
+          7
         ],
         "total": 60
       },
@@ -241,9 +241,9 @@ const SNAPSHOTS = {
           1,
           6,
           9,
-          7
+          8
         ],
-        "total": 38
+        "total": 39
       },
       {
         "rep": "Logan Burbic",
