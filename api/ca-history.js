@@ -1,12 +1,12 @@
-// api/ca-history.js â monthly CA counts (ICA + SGCA) per rep, from Sales Rabbit status history.
+// api/ca-history.js Ã¢ÂÂ monthly CA counts (ICA + SGCA) per rep, from Sales Rabbit status history.
 //
 // A CA = a distinct lead that reached ICA or SGCA in a given month, credited to the rep who set
 // it (changedByUserId), scoped to the office's Storm team. Counted from /leadStatusHistories events.
 //
 // ?office=herndon|richmond   Storm scope: Herndon = DC Self Gen, Richmond = Richmond Storm.
-// ?live=1                    current month only (fast) â dashboard CA cards.
-// ?live=1&scope=year         full Jan..now grid (heavy) â daily task builds the snapshot.
-// default (no live)          serve the stored year SNAPSHOT â CA-by-month grid.
+// ?live=1                    current month only (fast) Ã¢ÂÂ dashboard CA cards.
+// ?live=1&scope=year         full Jan..now grid (heavy) Ã¢ÂÂ daily task builds the snapshot.
+// default (no live)          serve the stored year SNAPSHOT Ã¢ÂÂ CA-by-month grid.
 
 const SNAPSHOTS = {
   "herndon": {
@@ -314,7 +314,7 @@ function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace
 function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
 function arr(j) { return Array.isArray(j) ? j : (j && (j.data || j.results || j.records || j.items)) || []; }
 function monthStart() { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), 1); }
-function stormAllowed(team, office) { const n = norm(team); if (office === 'richmond') return n.indexOf('richmond') > -1 && n.indexOf('storm') > -1; return (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('inbound') > -1; }
+function stormAllowed(team, office) { const n = norm(team); if (office === 'richmond') return n.indexOf('richmond') > -1; return (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('inbound') > -1; }
 
 async function compute(office, year, monthOnly) {
   const usersRes = await srGet('/users');
