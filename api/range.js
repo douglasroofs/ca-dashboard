@@ -1,4 +1,4 @@
-// api/range.js ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
+// api/range.js ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
 //
 // Purely additive: does NOT touch doors.js / ca-history.js / leap-extra.js or their snapshots.
 // The MTD tabs keep using those snapshots by default; this endpoint is only hit when a user
@@ -28,7 +28,23 @@ function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
 function teamAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1; }
 function stormAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1 && n.indexOf('storm') > -1; return (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('inbound') > -1; }
 
-async function compute(office, start, end) {
+// Lead OWNER attribution. SalesRabbit /leads exposes userId (assigned rep).
+// Amplify credits a door to the lead's OWNER; our default credits changedByUserId.
+async function leadOwners(start) {
+  const hdr = { 'If-Status-Modified-Since': start.toISOString() };
+  const owners = {};
+  for (let page = 1; page <= 200; page++) {
+    const r = await srGet('/leads?perPage=1000&page=' + page, hdr);
+    const rows = arr(r.json);
+    if (!rows.length) break;
+    let fresh = 0;
+    rows.forEach(function (l) { const id = String(l.id); if (!(id in owners)) fresh++; owners[id] = String(l.userId); });
+    if (fresh === 0) break;
+  }
+  return owners;
+}
+
+async function compute(office, start, end, attr) {
   const usersRes = await srGet('/users');
   const allUsers = arr(usersRes.json).map((u) => ({
     id: String(pick(u, ['id'])),
@@ -44,6 +60,7 @@ async function compute(office, start, end) {
   const caById = {}; live.filter((u) => stormAllowed(u.team, office)).forEach((u) => { caById[u.id] = repKey(u.name); });
   const display = {}; live.forEach((u) => { display[repKey(u.name)] = u.name; });
 
+  const owners = (attr === 'owner') ? await leadOwners(start) : null;
   const hdr = { 'If-Status-Modified-Since': start.toISOString() };
   const byStatus = {};
   const byStatusRep = {};
@@ -64,11 +81,12 @@ async function compute(office, start, end) {
         const d = new Date(ev.statusUpdated || 0);
         if (isNaN(d) || d < start || d > end) continue;
         const st = statusNorm(ev.name);
-        const anyRep = doorsById[String(ev.changedByUserId)] || caById[String(ev.changedByUserId)];
+        const anyRep = doorsById[uid] || caById[uid];
         if (anyRep) { byStatus[st] = (byStatus[st] || 0) + 1; const k2 = anyRep + '|' + st; byStatusRep[k2] = (byStatusRep[k2] || 0) + 1; }
-        const dk = doorsById[String(ev.changedByUserId)];
+        const uid = owners ? (owners[lid] || String(ev.changedByUserId)) : String(ev.changedByUserId);
+        const dk = doorsById[uid];
         if (dk && !EXCLUDE_NORM.has(st)) { doors[dk] = (doors[dk] || 0) + 1; doorsTotal++; }
-        const ck = caById[String(ev.changedByUserId)];
+        const ck = caById[uid];
         if (ck && CA_NORM.has(st)) { const key = ck + '|' + lid; if (!seenCa.has(key)) { seenCa.add(key); cas[ck] = (cas[ck] || 0) + 1; caTotal++; } }
       }
     }
@@ -106,7 +124,9 @@ module.exports = async (req, res) => {
     const start = new Date(s + 'T00:00:00.000Z');
     const end = new Date(e + 'T23:59:59.999Z');
     if (end < start) { res.status(400).json({ error: 'end date is before start date' }); return; }
-    const data = await compute(office, start, end);
+    const attr = (url.searchParams.get('attr') || '').toLowerCase();
+    const data = await compute(office, start, end, attr);
+    data.attr = attr === 'owner' ? 'owner' : 'changer';
     data.start = s; data.end = e;
     res.status(200).json(data);
   } catch (err) {
