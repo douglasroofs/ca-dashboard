@@ -1,4 +1,4 @@
-// api/range.js ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
+// api/range.js ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
 //
 // Purely additive: does NOT touch doors.js / ca-history.js / leap-extra.js or their snapshots.
 // The MTD tabs keep using those snapshots by default; this endpoint is only hit when a user
@@ -81,9 +81,9 @@ async function compute(office, start, end, attr) {
         const d = new Date(ev.statusUpdated || 0);
         if (isNaN(d) || d < start || d > end) continue;
         const st = statusNorm(ev.name);
+        const uid = owners ? (owners[lid] || String(ev.changedByUserId)) : String(ev.changedByUserId);
         const anyRep = doorsById[uid] || caById[uid];
         if (anyRep) { byStatus[st] = (byStatus[st] || 0) + 1; const k2 = anyRep + '|' + st; byStatusRep[k2] = (byStatusRep[k2] || 0) + 1; }
-        const uid = owners ? (owners[lid] || String(ev.changedByUserId)) : String(ev.changedByUserId);
         const dk = doorsById[uid];
         if (dk && !EXCLUDE_NORM.has(st)) { doors[dk] = (doors[dk] || 0) + 1; doorsTotal++; }
         const ck = caById[uid];
