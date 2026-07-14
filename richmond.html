@@ -26,9 +26,16 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 .hd{display:flex;gap:10px;align-items:center}
 .note{color:#6b7888;font-size:12px;margin:10px 2px 0}
 .nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 8px}.nav a{color:#aebfd2;text-decoration:none;font-size:13px;padding:5px 10px;border-radius:6px}.nav a.on{background:#1f6feb;color:#fff}.nav a:hover{color:#fff}
+
+.rangebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid #e5e9f0;border-radius:12px;padding:10px 14px;margin-bottom:18px}
+.rangebar input[type=date]{border:1px solid #dfe4ec;border-radius:8px;padding:6px 8px;font-size:13px;color:#0f2438;font-family:inherit}
+.rangebar .rl{font-size:12px;color:#6b7888;text-transform:uppercase;letter-spacing:.5px}
+.rangebar button.ghost{background:#fff;color:#1f6feb;border:1px solid #cfe0fb}
+.rangebar .note{font-size:12px;color:#6b7888;margin-left:auto}
 </style></head><body>
 <header><h1>Douglas Roofing - Richmond (Month to Date)</h1><nav class="nav"><a href="/revenue.html">Herndon</a><a class="on" href="/richmond.html">Richmond</a><a href="/ca-bonus.html">CA by Month</a></nav><div class="hd"><span class="meta" id="upd"></span><button id="rf">Refresh</button></div></header>
 <div class="wrap">
+<div class="rangebar"><span class="rl">Range</span><input type="date" id="dFrom"><span class="rl">to</span><input type="date" id="dTo"><button id="apply">Apply</button><button id="d7" class="ghost">Last 7 days</button><button id="reset" class="ghost">Month to date</button><span class="note" id="rangeNote">Month to date</span></div>
 <div class="cards">
 <div class="card d"><div class="label">Doors Knocked</div><div class="value" id="cDr">-</div><div class="sub">Pins this month</div></div>
 <div class="card k"><div class="label">CAs</div><div class="value" id="cCa">-</div><div class="sub">SR / Leap CAs this month</div></div>
@@ -43,18 +50,34 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function norm(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
 function fmt(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
-function load(opts){
-  opts=opts||{};
-  var b=document.getElementById('rf');b.disabled=true;
-  
-  document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
-  Promise.all([
-    fetch('/api/leap-extra?office=richmond&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{}}}),
-    fetch('/api/doors?office=richmond&live=1'+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}),
-    fetch('/api/ca-history?office=richmond&live=1&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],months:[]}}),
-    fetch('/api/rich-revenue?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[]}})
-  ]).then(function(res){
-    var le=res[0], dr=res[1], ca=res[2], rev=res[3];
+var CUR=null;
+function pad2(n){return (n<10?'0':'')+n}
+function iso(d){return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate())}
+function fullMonthIdx(rg){var s=new Date(rg.start+'T12:00:00'),e=new Date(rg.end+'T12:00:00');if(s.getFullYear()!==(new Date()).getFullYear())return -1;if(s.getMonth()!==e.getMonth())return -1;if(s.getDate()!==1)return -1;var last=new Date(s.getFullYear(),s.getMonth()+1,0).getDate();if(e.getDate()!==last)return -1;return s.getMonth()}
+function srcs(rg){
+if(!rg){return Promise.all([
+fetch('/api/ca-history?office=richmond&live=1&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],months:[]}}),
+fetch('/api/doors?office=richmond&live=1&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0,roster:[],allowedReps:[]}})
+])}
+return fetch('/api/range?office=richmond&start='+rg.start+'&end='+rg.end+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+if(j.error)throw new Error(j.error);
+var ca={updated:j.updated,reps:(j.reps||[]).map(function(x){return {rep:x.rep,counts:[x.cas||0]}})};
+var dr={updated:j.updated,total:(j.totals&&j.totals.doors)||0,reps:(j.reps||[]).map(function(x){return {rep:x.rep,doors:x.doors||0}}),roster:[],allowedReps:[]};
+return [ca,dr];
+})}
+function load(rg){
+CUR=rg||null;
+var b=document.getElementById('rf');b.disabled=true;
+document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
+var _mIdx=CUR?fullMonthIdx(CUR):(new Date()).getMonth();
+var _leapNA=!!(CUR&&_mIdx<0);
+document.getElementById('rangeNote').textContent=CUR?(CUR.start+' \u2192 '+CUR.end+(_leapNA?'  \u00b7  Leap CAs are monthly \u2014 showing SR CAs':'')):'Month to date';
+Promise.all([
+fetch('/api/leap-extra?office=richmond&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{}}}),
+fetch('/api/rich-revenue'+(CUR?('?start='+CUR.start+'&end='+CUR.end+'&t='):'?t=')+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[]}}),
+srcs(CUR)
+]).then(function(res0){
+var le=res0[0], rev=res0[1], ca=res0[2][0], dr=res0[2][1];
     if(dr.error)throw new Error(dr.error);
     document.getElementById('upd').textContent='Updated '+new Date(dr.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
     var caMap={};(ca.reps||[]).forEach(function(r){var c=r.counts||[];caMap[norm(r.rep)]=c.length?c[c.length-1]:0;});
@@ -65,19 +88,30 @@ function load(opts){
     (ca.reps||[]).forEach(function(r){var k=norm(r.rep);if(!map[k])map[k]={rep:r.rep,doors:0,cas:caMap[k]||0};});
     Object.keys(revMap).forEach(function(k){if(!map[k])map[k]={rep:revMap[k].rep,doors:0,cas:caMap[k]||0};});
     Object.keys(map).forEach(function(k){var rv=revMap[k]||{};map[k].approved=rv.approved||0;map[k].contract=rv.contract||0;});
-    var _curM=(new Date()).getMonth();var _lc=(le&&le.leapCA)||{};var _leapCur={};Object.keys(_lc).forEach(function(rp){_leapCur[norm(rp)]=(_lc[rp]||[])[_curM]||0;});Object.keys(map).forEach(function(k){map[k].leapCa=_leapCur[k]||0;});
+    var _curM=_mIdx;var _lc=(le&&le.leapCA)||{};var _leapCur={};Object.keys(_lc).forEach(function(rp){_leapCur[norm(rp)]=(_lc[rp]||[])[_curM]||0;});Object.keys(map).forEach(function(k){map[k].leapCa=_leapNA?null:(_leapCur[k]||0);});
     var rows=Object.keys(map).map(function(k){return map[k]}).filter(function(o){var n=norm(o.rep);return !(n.indexOf('haley')>-1||n.indexOf('solomon')>-1||n==='adam mulvaney'||n==='unassigned');}).sort(function(a,b){return (b.approved-a.approved)||(b.doors-a.doors)});
     var tD=0,tC=0,tAp=0,tCn=0,tLeap=0;rows.forEach(function(r){tD+=r.doors||0;tC+=r.cas||0;tAp+=r.approved||0;tCn+=r.contract||0;tLeap+=r.leapCa||0;});
     document.getElementById('cDr').textContent=tD;
-    document.getElementById('cCa').textContent=tC+' / '+tLeap;
+    document.getElementById('cCa').textContent=tC+' / '+(_leapNA?'\u2014':tLeap);
     document.getElementById('cAp').textContent=fmt(tAp);
     document.getElementById('cCn').textContent=tCn>0?fmt(tCn):'—';
-    var body=rows.map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+' / '+(r.leapCa||0)+'</td><td class="num">'+((r.leapCa||0)>0?Math.round((r.doors||0)/(r.leapCa||1)):'—')+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num">'+(r.contract>0?fmt(r.contract):'—')+'</td></tr>'}).join('');
-    document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs (SR/Leap)</th><th class="num">Doors/CA</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td></td><td>Total</td><td class="num">'+tD+'</td><td class="num">'+tC+' / '+tLeap+'</td><td class="num">'+(tLeap>0?Math.round(tD/tLeap):'—')+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+(tCn>0?fmt(tCn):'—')+'</td></tr></tfoot></table>';
+    var body=rows.map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+' / '+(_leapNA?'—':(r.leapCa||0))+'</td><td class="num">'+(_leapNA?((r.cas||0)>0?Math.round((r.doors||0)/(r.cas||1)):'—'):((r.leapCa||0)>0?Math.round((r.doors||0)/(r.leapCa||1)):'—'))+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num">'+(r.contract>0?fmt(r.contract):'—')+'</td></tr>'}).join('');
+    document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs (SR/Leap)</th><th class="num">Doors/CA</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td></td><td>Total</td><td class="num">'+tD+'</td><td class="num">'+tC+' / '+(_leapNA?'—':tLeap)+'</td><td class="num">'+(_leapNA?(tC>0?Math.round(tD/tC):'—'):(tLeap>0?Math.round(tD/tLeap):'—'))+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+(tCn>0?fmt(tCn):'—')+'</td></tr></tfoot></table>';
   }).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false;if(ud){ud.disabled=false;ud.textContent='Update doors now';}});
 }
 document.getElementById('rf').addEventListener('click',function(){load();});
 var _ud=document.getElementById('ud');if(_ud)_ud.addEventListener('click',function(){load({liveDoors:true});});
 load();
+<script>
+(function(){
+var rf=document.getElementById('rf');
+if(rf){var rf2=rf.cloneNode(true);rf.parentNode.replaceChild(rf2,rf);rf2.addEventListener('click',function(){load(CUR);});}
+document.getElementById('apply').addEventListener('click',function(){var s=document.getElementById('dFrom').value,e=document.getElementById('dTo').value;if(!s||!e){alert('Pick both a start and end date.');return}if(e<s){alert('End date is before start date.');return}load({start:s,end:e});});
+document.getElementById('d7').addEventListener('click',function(){var n=new Date();var s=new Date(n.getTime()-6*864e5);document.getElementById('dFrom').value=iso(s);document.getElementById('dTo').value=iso(n);load({start:iso(s),end:iso(n)});});
+document.getElementById('reset').addEventListener('click',function(){var n=new Date();document.getElementById('dFrom').value=iso(new Date(n.getFullYear(),n.getMonth(),1));document.getElementById('dTo').value=iso(n);load(null);});
+var n=new Date();
+document.getElementById('dFrom').value=iso(new Date(n.getFullYear(),n.getMonth(),1));
+document.getElementById('dTo').value=iso(n);
+})();
 </script>
 </body></html>
