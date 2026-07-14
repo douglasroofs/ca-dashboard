@@ -62,7 +62,7 @@ fetch('/api/doors?office=richmond&live=1&t='+Date.now(),{cache:'no-store'}).then
 return fetch('/api/range?office=richmond&start='+rg.start+'&end='+rg.end+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
 if(j.error)throw new Error(j.error);
 var ca={updated:j.updated,reps:(j.reps||[]).map(function(x){return {rep:x.rep,counts:[x.cas||0]}})};
-var dr={updated:j.updated,total:(j.totals&&j.totals.doors)||0,reps:(j.reps||[]).map(function(x){return {rep:x.rep,doors:x.doors||0}}),roster:[],allowedReps:[]};
+var dr={updated:j.updated,total:(j.totals&&j.totals.doors)||0,reps:(j.reps||[]).map(function(x){return {rep:x.rep,doors:x.doors||0}}),roster:(j.roster||[]),allowedReps:(j.allowedReps||[])};
 return [ca,dr];
 })}
 function load(rg){
