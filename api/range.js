@@ -1,4 +1,4 @@
-// api/range.js Ã¢ÂÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
+// api/range.js ÃÂ¢ÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
 //
 // Purely additive: does NOT touch doors.js / ca-history.js / leap-extra.js or their snapshots.
 // The MTD tabs keep using those snapshots by default; this endpoint is only hit when a user
@@ -45,6 +45,8 @@ async function compute(office, start, end) {
   const display = {}; live.forEach((u) => { display[repKey(u.name)] = u.name; });
 
   const hdr = { 'If-Status-Modified-Since': start.toISOString() };
+  const byStatus = {};
+  const byStatusRep = {};
   const doors = {}; const cas = {};
   const seenLead = new Set(); const seenCa = new Set();
   let doorsTotal = 0, caTotal = 0, eventsScanned = 0, pages = 0;
@@ -62,6 +64,8 @@ async function compute(office, start, end) {
         const d = new Date(ev.statusUpdated || 0);
         if (isNaN(d) || d < start || d > end) continue;
         const st = statusNorm(ev.name);
+        const anyRep = doorsById[String(ev.changedByUserId)] || caById[String(ev.changedByUserId)];
+        if (anyRep) { byStatus[st] = (byStatus[st] || 0) + 1; const k2 = anyRep + '|' + st; byStatusRep[k2] = (byStatusRep[k2] || 0) + 1; }
         const dk = doorsById[String(ev.changedByUserId)];
         if (dk && !EXCLUDE_NORM.has(st)) { doors[dk] = (doors[dk] || 0) + 1; doorsTotal++; }
         const ck = caById[String(ev.changedByUserId)];
@@ -76,7 +80,7 @@ async function compute(office, start, end) {
   const reps = Object.keys(keys)
     .map((k) => ({ rep: display[k] || k, doors: doors[k] || 0, cas: cas[k] || 0 }))
     .sort((a, b) => (b.doors - a.doors) || (b.cas - a.cas));
-  return { office, totals: { doors: doorsTotal, cas: caTotal }, reps, allowedReps, roster, eventsScanned, pages, leadsScanned: seenLead.size, updated: new Date().toISOString() };
+  return { office, totals: { doors: doorsTotal, cas: caTotal }, reps, allowedReps, roster, byStatus, byStatusRep, eventsScanned, pages, leadsScanned: seenLead.size, updated: new Date().toISOString() };
 }
 
 module.exports = async (req, res) => {
