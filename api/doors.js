@@ -1,4 +1,4 @@
-// api/doors.js — doors knocked per rep this month, from Sales Rabbit.
+// api/doors.js â doors knocked per rep this month, from Sales Rabbit.
 //
 // A "door" = a KNOCK EVENT: a SalesRabbit lead status-history entry (each disposition a rep
 // records), status NOT in {Closed, Do Not Knock, Drive By}, event dated this month, credited to
@@ -9,64 +9,68 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-14T14:02:50.907Z",
-    "total": 1295,
+    "updated": "2026-07-14T16:44:40.322Z",
+    "total": 1962,
     "reps": [
       {
         "rep": "Andrew Funk",
-        "doors": 321
+        "doors": 469
       },
       {
         "rep": "Thurmond shaw",
-        "doors": 228
+        "doors": 290
       },
       {
         "rep": "Aiden Glonek",
-        "doors": 215
+        "doors": 248
       },
       {
         "rep": "Ethan Wiley",
-        "doors": 153
-      },
-      {
-        "rep": "Jason Cresswell",
-        "doors": 108
+        "doors": 169
       },
       {
         "rep": "Carol Wright",
-        "doors": 83
+        "doors": 157
       },
       {
-        "rep": "Izzy Price",
-        "doors": 63
-      },
-      {
-        "rep": "Christian Brown",
-        "doors": 57
+        "rep": "Jason Cresswell",
+        "doors": 146
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 29
+        "doors": 132
       },
       {
-        "rep": "Harvey Shoemaker",
-        "doors": 21
+        "rep": "Izzy Price",
+        "doors": 125
+      },
+      {
+        "rep": "Christian Brown",
+        "doors": 87
       },
       {
         "rep": "David Kerns",
-        "doors": 8
+        "doors": 59
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 35
       },
       {
         "rep": "Andrew  Prickel",
-        "doors": 6
+        "doors": 25
       },
       {
-        "rep": "Jack Obert",
-        "doors": 2
+        "rep": "Kelly Alston",
+        "doors": 13
       },
       {
         "rep": "George Bechara",
-        "doors": 1
+        "doors": 4
+      },
+      {
+        "rep": "Jack Obert",
+        "doors": 3
       }
     ],
     "allowedReps": [
@@ -113,52 +117,56 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-14T14:02:51.734Z",
-    "total": 670,
+    "updated": "2026-07-14T16:44:42.036Z",
+    "total": 1522,
     "reps": [
       {
         "rep": "Andrew Harris",
-        "doors": 226
-      },
-      {
-        "rep": "Felipe Osorio",
-        "doors": 135
+        "doors": 422
       },
       {
         "rep": "Dalton Barr",
+        "doors": 279
+      },
+      {
+        "rep": "Felipe Osorio",
+        "doors": 233
+      },
+      {
+        "rep": "Carter Massengill",
         "doors": 125
       },
       {
         "rep": "JR Zaguehi",
-        "doors": 78
-      },
-      {
-        "rep": "Travis Kizzar",
-        "doors": 50
-      },
-      {
-        "rep": "Carter Massengill",
-        "doors": 18
-      },
-      {
-        "rep": "Brandon Simmons",
-        "doors": 13
-      },
-      {
-        "rep": "Joshua Baca",
-        "doors": 8
-      },
-      {
-        "rep": "Justin Coghill",
-        "doors": 7
+        "doors": 112
       },
       {
         "rep": "Logan Burbic",
-        "doors": 7
+        "doors": 96
+      },
+      {
+        "rep": "Travis Kizzar",
+        "doors": 90
+      },
+      {
+        "rep": "Joshua Baca",
+        "doors": 63
+      },
+      {
+        "rep": "JT Dillon",
+        "doors": 54
+      },
+      {
+        "rep": "Brandon Simmons",
+        "doors": 21
       },
       {
         "rep": "Kylea White",
-        "doors": 3
+        "doors": 19
+      },
+      {
+        "rep": "Justin Coghill",
+        "doors": 8
       }
     ],
     "allowedReps": [
