@@ -1,4 +1,4 @@
-// api/range.js ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
+// api/range.js ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
 //
 // Purely additive: does NOT touch doors.js / ca-history.js / leap-extra.js or their snapshots.
 // The MTD tabs keep using those snapshots by default; this endpoint is only hit when a user
@@ -26,7 +26,7 @@ function norm(s) { return String(s == null ? '' : s).trim().toLowerCase().replac
 function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
 function teamAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1; }
-function stormAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1 && n.indexOf('storm') > -1; return (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('inbound') > -1; }
+function stormAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('inbound') > -1; }
 
 // Lead OWNER attribution. SalesRabbit /leads exposes userId (assigned rep).
 // Amplify credits a door to the lead's OWNER; our default credits changedByUserId.
