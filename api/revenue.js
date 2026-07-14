@@ -85,14 +85,16 @@ async function apiGet(path) {
 
 const REPORT = '/reports/sales_performance_summary_report';
 
-function durationParams(month) {
+function durationParams(month, s0, e0) {
+  var okd = function (x) { return typeof x === 'string' && x.length === 10 && !isNaN(Date.parse(x)); };
+  if (okd(s0) && okd(e0)) return 'duration=DUR&start_date=' + s0 + '&end_date=' + e0;
   // The report supports duration=MTD directly. If a specific month is passed, use an explicit range.
   if (month && /^\d{4}-\d{2}$/.test(month)) {
     const y = +month.slice(0, 4), m = +month.slice(5, 7);
     const pad = (n) => String(n).padStart(2, '0');
     const start = `${y}-${pad(m)}-01`;
     const end = `${y}-${pad(m)}-${pad(new Date(y, m, 0).getDate())}`;
-    return `duration=custom&start_date=${start}&end_date=${end}`;
+    return `duration=DUR&start_date=${start}&end_date=${end}`;
   }
   return 'duration=MTD';
 }
@@ -110,14 +112,14 @@ function repName(row) {
   return row.full_name || row.name || [row.first_name, row.last_name].filter(Boolean).join(' ').trim() || 'Unassigned';
 }
 
-async function fetchTotal(dateType, month) {
-  const j = await apiGet(`${REPORT}/total?date_range_type[]=${dateType}&${durationParams(month)}&with_inactive=0`);
+async function fetchTotal(dateType, month, s0, e0) {
+  const j = await apiGet(`${REPORT}/total?date_range_type[]=${dateType}&${durationParams(month, s0, e0)}&with_inactive=0`);
   return j.data || j;
 }
-async function fetchRows(dateType, month) {
+async function fetchRows(dateType, month, s0, e0) {
   const rows = [];
   for (let page = 1; page <= 50; page++) {
-    const j = await apiGet(`${REPORT}?date_range_type[]=${dateType}&${durationParams(month)}&limit=100&page=${page}&sort_field=full_name&sort_order=asc&with_inactive=0`);
+    const j = await apiGet(`${REPORT}?date_range_type[]=${dateType}&${durationParams(month, s0, e0)}&limit=100&page=${page}&sort_field=full_name&sort_order=asc&with_inactive=0`);
     const data = j.data || j.rows || [];
     rows.push(...data);
     const pag = (j.meta && j.meta.pagination) || j.pagination || {};
@@ -132,6 +134,8 @@ module.exports = async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     const debug = url.searchParams.get('debug');
     const month = url.searchParams.get('month');
+    const qs = url.searchParams.get('start');
+    const qe = url.searchParams.get('end');
 
     if (debug === 'auth') {
       // Secret-safe diagnostic: which credential authorizes the report endpoint?
@@ -168,10 +172,10 @@ module.exports = async (req, res) => {
 
     await getToken(); // authenticate once before firing parallel report calls
     const [apprTotal, signTotal, apprRows, signRows] = await Promise.all([
-      fetchTotal('job_awarded_date', month),
-      fetchTotal('contract_signed_date', month),
-      fetchRows('job_awarded_date', month),
-      fetchRows('contract_signed_date', month),
+      fetchTotal('job_awarded_date', month, qs, qe),
+      fetchTotal('contract_signed_date', month, qs, qe),
+      fetchRows('job_awarded_date', month, qs, qe),
+      fetchRows('contract_signed_date', month, qs, qe),
     ]);
 
     const apprByRep = {}; apprRows.forEach((r) => { apprByRep[repName(r)] = dollars(r); });
@@ -184,7 +188,7 @@ module.exports = async (req, res) => {
 
     res.status(200).json({
       updated: new Date().toISOString(),
-      duration: month || 'MTD',
+      duration: (qs && qe) ? (qs + '..' + qe) : (month || 'MTD'),
       company: { approved_amount: dollars(apprTotal), contract_amount: dollars(signTotal) },
       reps,
     });
