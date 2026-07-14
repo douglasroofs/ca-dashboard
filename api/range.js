@@ -1,4 +1,4 @@
-// api/range.js — doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
+// api/range.js â doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
 //
 // Purely additive: does NOT touch doors.js / ca-history.js / leap-extra.js or their snapshots.
 // The MTD tabs keep using those snapshots by default; this endpoint is only hit when a user
@@ -37,7 +37,10 @@ async function compute(office, start, end) {
     active: pick(u, ['active']),
   }));
   const live = allUsers.filter((u) => u.active !== false);
-  const doorsById = {}; live.filter((u) => teamAllowed(u.team, office)).forEach((u) => { doorsById[u.id] = repKey(u.name); });
+  const doorsUsers = live.filter((u) => teamAllowed(u.team, office));
+  const doorsById = {}; doorsUsers.forEach((u) => { doorsById[u.id] = repKey(u.name); });
+  const allowedReps = Array.from(new Set(doorsUsers.map((u) => repKey(u.name))));
+  const roster = doorsUsers.map((u) => u.name);
   const caById = {}; live.filter((u) => stormAllowed(u.team, office)).forEach((u) => { caById[u.id] = repKey(u.name); });
   const display = {}; live.forEach((u) => { display[repKey(u.name)] = u.name; });
 
@@ -73,7 +76,7 @@ async function compute(office, start, end) {
   const reps = Object.keys(keys)
     .map((k) => ({ rep: display[k] || k, doors: doors[k] || 0, cas: cas[k] || 0 }))
     .sort((a, b) => (b.doors - a.doors) || (b.cas - a.cas));
-  return { office, totals: { doors: doorsTotal, cas: caTotal }, reps, eventsScanned, pages, leadsScanned: seenLead.size, updated: new Date().toISOString() };
+  return { office, totals: { doors: doorsTotal, cas: caTotal }, reps, allowedReps, roster, eventsScanned, pages, leadsScanned: seenLead.size, updated: new Date().toISOString() };
 }
 
 module.exports = async (req, res) => {
