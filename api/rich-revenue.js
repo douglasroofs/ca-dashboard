@@ -59,8 +59,10 @@ async function switchCompany(token, companyId) {
   if (!r.ok) throw new Error('switch_company ' + r.status);
 }
 
-async function pullReport(token, dateType, duration) {
-  var url = BASE + '/reports/sales_performance_summary_report?date_range_type[]=' + encodeURIComponent(dateType) + '&duration=' + encodeURIComponent(duration) + '&limit=200&page=1';
+async function pullReport(token, dateType, duration, s0, e0) {
+  var okd = function (x) { return typeof x === 'string' && x.length === 10 && !isNaN(Date.parse(x)); };
+  var dq = (okd(s0) && okd(e0)) ? ('&duration=DUR&start_date=' + s0 + '&end_date=' + e0) : ('&duration=' + encodeURIComponent(duration));
+  var url = BASE + '/reports/sales_performance_summary_report?date_range_type[]=' + encodeURIComponent(dateType) + dq + '&limit=200&page=1';
   var r = await fetch(url, { headers: { 'Accept': 'application/json', 'platform': 'web', 'Authorization': 'Bearer ' + token } });
   if (!r.ok) throw new Error('report ' + dateType + ' ' + r.status);
   var j = await r.json();
@@ -80,11 +82,13 @@ module.exports = async (req, res) => {
     var duration = 'MTD';
     q.split('&').forEach(function (kv) { var p = kv.split('='); if (p[0] === 'duration' && p[1]) duration = decodeURIComponent(p[1]).toUpperCase(); });
     if (duration !== 'YTD' && duration !== 'MTD') duration = 'MTD';
+    var qs = null, qe = null;
+    q.split('&').forEach(function (kv) { var p = kv.split('='); if (p[0] === 'start' && p[1]) qs = decodeURIComponent(p[1]); if (p[0] === 'end' && p[1]) qe = decodeURIComponent(p[1]); });
 
     var token = await jpLogin();
     await switchCompany(token, RICHMOND_COMPANY);
-    var approved = await pullReport(token, 'job_awarded_date', duration);
-    var contract = await pullReport(token, 'contract_signed_date', duration);
+    var approved = await pullReport(token, 'job_awarded_date', duration, qs, qe);
+    var contract = await pullReport(token, 'contract_signed_date', duration, qs, qe);
 
     var names = {};
     Object.keys(approved).forEach(function (n) { names[n] = 1; });
@@ -95,7 +99,7 @@ module.exports = async (req, res) => {
       .sort(function (a, b) { return (b.approved - a.approved) || (b.contract - a.contract); });
 
     res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
-    res.status(200).json({ updated: new Date().toISOString(), duration: duration, office: 'richmond', reps: reps });
+    res.status(200).json({ updated: new Date().toISOString(), duration: (qs && qe) ? (qs + '..' + qe) : duration, office: 'richmond', reps: reps });
   } catch (e) {
     res.status(200).json({ updated: new Date().toISOString(), duration: 'MTD', office: 'richmond', reps: [], error: String((e && e.message) || e) });
   }
