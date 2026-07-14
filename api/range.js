@@ -1,4 +1,4 @@
-// api/range.js ÃÂ¢ÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
+// api/range.js ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
 //
 // Purely additive: does NOT touch doors.js / ca-history.js / leap-extra.js or their snapshots.
 // The MTD tabs keep using those snapshots by default; this endpoint is only hit when a user
@@ -88,6 +88,16 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Cache-Control', 'no-store');
     const url = new URL(req.url, 'http://localhost');
+    if (url.searchParams.get('probe') === 'leads') {
+      const r = await srGet('/leads?perPage=5&page=1');
+      const rows = arr(r.json);
+      const first = rows[0] || {};
+      const keys = Object.keys(first);
+      const userish = {};
+      keys.forEach(function (k) { if (/user|owner|assign|rep/i.test(k)) userish[k] = first[k]; });
+      res.status(200).json({ status: r.status, rowCount: rows.length, keys, userish });
+      return;
+    }
     const office = (url.searchParams.get('office') || 'herndon').toLowerCase();
     const s = url.searchParams.get('start') || '';
     const e = url.searchParams.get('end') || '';
