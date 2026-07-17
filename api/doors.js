@@ -9,56 +9,56 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-14T16:44:40.322Z",
-    "total": 1962,
+    "updated": "2026-07-17T11:08:22.574Z",
+    "total": 2687,
     "reps": [
       {
         "rep": "Andrew Funk",
-        "doors": 469
+        "doors": 549
       },
       {
         "rep": "Thurmond shaw",
-        "doors": 290
+        "doors": 449
       },
       {
         "rep": "Aiden Glonek",
-        "doors": 248
+        "doors": 363
       },
       {
         "rep": "Ethan Wiley",
-        "doors": 169
-      },
-      {
-        "rep": "Carol Wright",
-        "doors": 157
+        "doors": 321
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 146
+        "doors": 217
+      },
+      {
+        "rep": "Carol Wright",
+        "doors": 209
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 132
+        "doors": 151
       },
       {
         "rep": "Izzy Price",
-        "doors": 125
+        "doors": 127
       },
       {
         "rep": "Christian Brown",
-        "doors": 87
-      },
-      {
-        "rep": "David Kerns",
-        "doors": 59
+        "doors": 106
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 35
+        "doors": 77
+      },
+      {
+        "rep": "David Kerns",
+        "doors": 70
       },
       {
         "rep": "Andrew  Prickel",
-        "doors": 25
+        "doors": 28
       },
       {
         "rep": "Kelly Alston",
@@ -117,40 +117,44 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-14T16:44:42.036Z",
-    "total": 1522,
+    "updated": "2026-07-17T11:08:24.599Z",
+    "total": 2180,
     "reps": [
       {
         "rep": "Andrew Harris",
-        "doors": 422
+        "doors": 517
       },
       {
         "rep": "Dalton Barr",
-        "doors": 279
+        "doors": 365
       },
       {
         "rep": "Felipe Osorio",
-        "doors": 233
+        "doors": 282
       },
       {
         "rep": "Carter Massengill",
-        "doors": 125
+        "doors": 223
+      },
+      {
+        "rep": "Kylea White",
+        "doors": 215
       },
       {
         "rep": "JR Zaguehi",
-        "doors": 112
-      },
-      {
-        "rep": "Logan Burbic",
-        "doors": 96
+        "doors": 160
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 90
+        "doors": 128
+      },
+      {
+        "rep": "Logan Burbic",
+        "doors": 121
       },
       {
         "rep": "Joshua Baca",
-        "doors": 63
+        "doors": 85
       },
       {
         "rep": "JT Dillon",
@@ -161,12 +165,8 @@ const SNAPSHOTS = {
         "doors": 21
       },
       {
-        "rep": "Kylea White",
-        "doors": 19
-      },
-      {
         "rep": "Justin Coghill",
-        "doors": 8
+        "doors": 9
       }
     ],
     "allowedReps": [
@@ -205,7 +205,6 @@ const SNAPSHOTS = {
     ]
   }
 };
-
 const BASE = 'https://api.salesrabbit.com';
 const EXCLUDE_NORM = new Set(['closed', 'donotknock', 'driveby']);
 const SR_ALIAS = { 'mike mccarthy': 'michael mccarthy', 'izzy price': 'isabelle price', 'robert mumford-wilson': 'robert wilson' };
