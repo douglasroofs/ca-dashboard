@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-17T11:14:04.147Z",
+    "updated": "2026-07-18T13:18:12.586Z",
     "year": 2026,
     "months": [
       0,
@@ -23,28 +23,15 @@ const SNAPSHOTS = {
     ],
     "reps": [
       {
-        "rep": "Harvey Shoemaker",
-        "counts": [
-          0,
-          1,
-          1,
-          2,
-          5,
-          17,
-          5
-        ],
-        "total": 31
-      },
-      {
         "rep": "Andrew Funk",
         "counts": [
           0,
           0,
           0,
           0,
-          6,
+          5,
           14,
-          11
+          12
         ],
         "total": 31
       },
@@ -60,6 +47,19 @@ const SNAPSHOTS = {
           1
         ],
         "total": 31
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "counts": [
+          0,
+          1,
+          1,
+          2,
+          5,
+          16,
+          5
+        ],
+        "total": 30
       },
       {
         "rep": "Andrew  Prickel",
@@ -108,10 +108,10 @@ const SNAPSHOTS = {
           1,
           3,
           4,
-          7,
+          6,
           6
         ],
-        "total": 22
+        "total": 21
       },
       {
         "rep": "Marc Mitchell",
@@ -153,6 +153,19 @@ const SNAPSHOTS = {
         "total": 16
       },
       {
+        "rep": "Steven Arevalo",
+        "counts": [
+          2,
+          2,
+          5,
+          3,
+          0,
+          3,
+          0
+        ],
+        "total": 15
+      },
+      {
         "rep": "Carol Wright",
         "counts": [
           0,
@@ -161,22 +174,9 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          10
+          9
         ],
-        "total": 14
-      },
-      {
-        "rep": "Steven Arevalo",
-        "counts": [
-          2,
-          2,
-          5,
-          2,
-          0,
-          3,
-          0
-        ],
-        "total": 14
+        "total": 13
       },
       {
         "rep": "Kevin Mahan",
@@ -259,7 +259,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-17T11:14:52.613Z",
+    "updated": "2026-07-18T13:19:00.810Z",
     "year": 2026,
     "months": [
       0,
@@ -339,6 +339,7 @@ const SNAPSHOTS = {
     ]
   }
 };
+
 const BASE = 'https://api.salesrabbit.com';
 const CA_NORM = new Set(['ica', 'sgca']);
 const SR_ALIAS = { 'mike mccarthy': 'michael mccarthy', 'izzy price': 'isabelle price', 'robert mumford-wilson': 'robert wilson' };
