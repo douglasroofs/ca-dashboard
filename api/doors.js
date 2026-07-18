@@ -9,24 +9,24 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-17T11:08:22.574Z",
-    "total": 2687,
+    "updated": "2026-07-18T13:14:33.579Z",
+    "total": 2771,
     "reps": [
       {
         "rep": "Andrew Funk",
-        "doors": 549
+        "doors": 552
       },
       {
         "rep": "Thurmond shaw",
-        "doors": 449
+        "doors": 464
       },
       {
         "rep": "Aiden Glonek",
-        "doors": 363
+        "doors": 397
       },
       {
         "rep": "Ethan Wiley",
-        "doors": 321
+        "doors": 343
       },
       {
         "rep": "Jason Cresswell",
@@ -34,11 +34,11 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Carol Wright",
-        "doors": 209
+        "doors": 207
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 151
+        "doors": 163
       },
       {
         "rep": "Izzy Price",
@@ -117,8 +117,8 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-17T11:08:24.599Z",
-    "total": 2180,
+    "updated": "2026-07-18T13:14:35.679Z",
+    "total": 2258,
     "reps": [
       {
         "rep": "Andrew Harris",
@@ -126,7 +126,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Dalton Barr",
-        "doors": 365
+        "doors": 410
       },
       {
         "rep": "Felipe Osorio",
@@ -134,7 +134,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Carter Massengill",
-        "doors": 223
+        "doors": 225
       },
       {
         "rep": "Kylea White",
@@ -146,11 +146,11 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 128
+        "doors": 143
       },
       {
         "rep": "Logan Burbic",
-        "doors": 121
+        "doors": 138
       },
       {
         "rep": "Joshua Baca",
@@ -162,7 +162,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Brandon Simmons",
-        "doors": 21
+        "doors": 20
       },
       {
         "rep": "Justin Coghill",
@@ -205,6 +205,7 @@ const SNAPSHOTS = {
     ]
   }
 };
+
 const BASE = 'https://api.salesrabbit.com';
 const EXCLUDE_NORM = new Set(['closed', 'donotknock', 'driveby']);
 const SR_ALIAS = { 'mike mccarthy': 'michael mccarthy', 'izzy price': 'isabelle price', 'robert mumford-wilson': 'robert wilson' };
