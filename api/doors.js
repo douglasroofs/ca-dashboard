@@ -9,52 +9,52 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-18T13:14:33.579Z",
-    "total": 2771,
+    "updated": "2026-07-22T11:03:57.792Z",
+    "total": 3625,
     "reps": [
       {
         "rep": "Andrew Funk",
-        "doors": 552
+        "doors": 628
       },
       {
         "rep": "Thurmond shaw",
-        "doors": 464
-      },
-      {
-        "rep": "Aiden Glonek",
-        "doors": 397
+        "doors": 628
       },
       {
         "rep": "Ethan Wiley",
-        "doors": 343
+        "doors": 506
+      },
+      {
+        "rep": "Aiden Glonek",
+        "doors": 471
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 217
+        "doors": 315
       },
       {
         "rep": "Carol Wright",
-        "doors": 207
+        "doors": 279
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 163
-      },
-      {
-        "rep": "Izzy Price",
-        "doors": 127
+        "doors": 229
       },
       {
         "rep": "Christian Brown",
-        "doors": 106
+        "doors": 161
+      },
+      {
+        "rep": "Izzy Price",
+        "doors": 157
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 77
+        "doors": 101
       },
       {
         "rep": "David Kerns",
-        "doors": 70
+        "doors": 100
       },
       {
         "rep": "Andrew  Prickel",
@@ -65,12 +65,12 @@ const SNAPSHOTS = {
         "doors": 13
       },
       {
-        "rep": "George Bechara",
-        "doors": 4
+        "rep": "Jack Obert",
+        "doors": 5
       },
       {
-        "rep": "Jack Obert",
-        "doors": 3
+        "rep": "George Bechara",
+        "doors": 4
       }
     ],
     "allowedReps": [
@@ -117,36 +117,36 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-18T13:14:35.679Z",
-    "total": 2258,
+    "updated": "2026-07-22T11:04:00.851Z",
+    "total": 2934,
     "reps": [
       {
         "rep": "Andrew Harris",
-        "doors": 517
-      },
-      {
-        "rep": "Dalton Barr",
-        "doors": 410
-      },
-      {
-        "rep": "Felipe Osorio",
-        "doors": 282
-      },
-      {
-        "rep": "Carter Massengill",
-        "doors": 225
+        "doors": 582
       },
       {
         "rep": "Kylea White",
-        "doors": 215
+        "doors": 557
+      },
+      {
+        "rep": "Dalton Barr",
+        "doors": 532
+      },
+      {
+        "rep": "Carter Massengill",
+        "doors": 317
+      },
+      {
+        "rep": "Felipe Osorio",
+        "doors": 304
       },
       {
         "rep": "JR Zaguehi",
-        "doors": 160
+        "doors": 177
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 143
+        "doors": 146
       },
       {
         "rep": "Logan Burbic",
@@ -154,7 +154,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Joshua Baca",
-        "doors": 85
+        "doors": 97
       },
       {
         "rep": "JT Dillon",
@@ -162,7 +162,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Brandon Simmons",
-        "doors": 20
+        "doors": 21
       },
       {
         "rep": "Justin Coghill",
@@ -184,7 +184,8 @@ const SNAPSHOTS = {
       "marcus schanewolf",
       "felipe osorio",
       "jt dillon",
-      "kylea white"
+      "kylea white",
+      "dustian white"
     ],
     "roster": [
       "Justin Coghill",
@@ -201,7 +202,8 @@ const SNAPSHOTS = {
       "marcus schanewolf",
       "Felipe Osorio",
       "JT Dillon",
-      "Kylea White"
+      "Kylea White",
+      "Dustian White"
     ]
   }
 };
