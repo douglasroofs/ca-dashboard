@@ -9,24 +9,12 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-22T11:03:57.792Z",
-    "total": 3625,
+    "updated": "2026-07-23T15:05:16.437Z",
+    "total": 1855,
     "reps": [
       {
         "rep": "Andrew Funk",
-        "doors": 628
-      },
-      {
-        "rep": "Thurmond shaw",
-        "doors": 628
-      },
-      {
-        "rep": "Ethan Wiley",
-        "doors": 506
-      },
-      {
-        "rep": "Aiden Glonek",
-        "doors": 471
+        "doors": 646
       },
       {
         "rep": "Jason Cresswell",
@@ -34,15 +22,11 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Carol Wright",
-        "doors": 279
-      },
-      {
-        "rep": "Mike Mccarthy",
-        "doors": 229
+        "doors": 307
       },
       {
         "rep": "Christian Brown",
-        "doors": 161
+        "doors": 176
       },
       {
         "rep": "Izzy Price",
@@ -50,7 +34,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 101
+        "doors": 103
       },
       {
         "rep": "David Kerns",
@@ -58,7 +42,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Andrew  Prickel",
-        "doors": 28
+        "doors": 29
       },
       {
         "rep": "Kelly Alston",
@@ -77,7 +61,6 @@ const SNAPSHOTS = {
       "steven arevalo",
       "marc mitchell",
       "andrew funk",
-      "michael mccarthy",
       "george bechara",
       "isabelle price",
       "jack obert",
@@ -88,17 +71,13 @@ const SNAPSHOTS = {
       "christian brown",
       "kelly alston",
       "david kerns",
-      "aiden glonek",
-      "ethan wiley",
       "carol wright",
-      "thurmond shaw",
       "jason cresswell"
     ],
     "roster": [
       "Steven Arevalo",
       "Marc Mitchell",
       "Andrew Funk",
-      "Mike Mccarthy",
       "George Bechara",
       "Izzy Price",
       "Jack Obert",
@@ -109,52 +88,49 @@ const SNAPSHOTS = {
       "Christian Brown",
       "Kelly Alston",
       "David Kerns",
-      "Aiden Glonek",
-      "Ethan Wiley",
       "Carol Wright",
-      "Thurmond shaw",
       "Jason Cresswell"
     ]
   },
   "richmond": {
-    "updated": "2026-07-22T11:04:00.851Z",
-    "total": 2934,
+    "updated": "2026-07-23T15:05:19.658Z",
+    "total": 3119,
     "reps": [
       {
-        "rep": "Andrew Harris",
-        "doors": 582
+        "rep": "Kylea White",
+        "doors": 621
       },
       {
-        "rep": "Kylea White",
-        "doors": 557
+        "rep": "Andrew Harris",
+        "doors": 604
       },
       {
         "rep": "Dalton Barr",
-        "doors": 532
+        "doors": 559
       },
       {
         "rep": "Carter Massengill",
-        "doors": 317
+        "doors": 357
       },
       {
         "rep": "Felipe Osorio",
-        "doors": 304
+        "doors": 308
       },
       {
         "rep": "JR Zaguehi",
-        "doors": 177
+        "doors": 178
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 146
+        "doors": 151
       },
       {
         "rep": "Logan Burbic",
-        "doors": 138
+        "doors": 146
       },
       {
         "rep": "Joshua Baca",
-        "doors": 97
+        "doors": 108
       },
       {
         "rep": "JT Dillon",
@@ -162,11 +138,15 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Brandon Simmons",
-        "doors": 21
+        "doors": 22
       },
       {
         "rep": "Justin Coghill",
         "doors": 9
+      },
+      {
+        "rep": "Dustian White",
+        "doors": 2
       }
     ],
     "allowedReps": [
