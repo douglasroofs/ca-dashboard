@@ -4,7 +4,7 @@
 // Date, contract = by Contract Signed Date, YTD. Session/token-bound reports -> refreshed daily.
 const DATA = {
   herndon: {
-    updated: "2026-07-22",
+    updated: "2026-07-23",
     leapCA: {
       "Adam Mulvaney": [
         0,
@@ -55,7 +55,7 @@ const DATA = {
         0,
         2,
         12,
-        11,
+        14,
         0,
         0,
         0,
@@ -83,7 +83,7 @@ const DATA = {
         0,
         0,
         0,
-        1,
+        2,
         0,
         0,
         0,
@@ -148,12 +148,12 @@ const DATA = {
       ],
       "Harvey Shoemaker": [
         0,
-        1,
+        0,
         1,
         0,
         0,
-        7,
-        7,
+        8,
+        8,
         0,
         0,
         0,
@@ -263,7 +263,7 @@ const DATA = {
     contract: {"Adam Mulvaney":213730.97,"Alfred Duncan":500008.43,"Andrew Funk":152352.64,"Andrew Prickel":1075202.82,"Christian Brown":177979.98,"David Kerns":249726.65,"George Bechara":219618.24,"Haley Barry":2892567.97,"Harvey Shoemaker":335756.78,"Isabelle Price":170788.89,"Jack Obert":362013.04,"James Moffett":71421.37,"Kelly Alston":25032.86,"Kevin Mahan":271267.19,"Kyle Higginbotham":20275.6,"Marc Mitchell":165609.48,"Michael McCarthy":446669.28,"Mike Mendez":6323.57,"Mike Schoultz":25955,"Nick  Seward":172213.17,"Robert Wilson":317432.43,"Steven Arevalo":240164.12}
   },
   richmond: {
-    updated: "2026-07-22",
+    updated: "2026-07-23",
     leapCA: {
       "Brandon Simmons": [
         0,
@@ -279,6 +279,20 @@ const DATA = {
         0,
         0
       ],
+      "Joshua Baca": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        12,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
       "Travis Kizzar": [
         0,
         0,
@@ -287,20 +301,6 @@ const DATA = {
         0,
         10,
         11,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "Joshua Baca": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        12,
-        4,
         0,
         0,
         0,
