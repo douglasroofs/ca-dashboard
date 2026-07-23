@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-22T11:07:56.830Z",
+    "updated": "2026-07-23T15:10:17.148Z",
     "year": 2026,
     "months": [
       0,
@@ -23,6 +23,19 @@ const SNAPSHOTS = {
     ],
     "reps": [
       {
+        "rep": "Andrew Funk",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          6,
+          14,
+          16
+        ],
+        "total": 36
+      },
+      {
         "rep": "Harvey Shoemaker",
         "counts": [
           0,
@@ -30,21 +43,8 @@ const SNAPSHOTS = {
           1,
           2,
           5,
-          17,
-          8
-        ],
-        "total": 34
-      },
-      {
-        "rep": "Andrew Funk",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          5,
-          14,
-          15
+          16,
+          9
         ],
         "total": 34
       },
@@ -56,10 +56,10 @@ const SNAPSHOTS = {
           11,
           8,
           5,
-          7,
+          6,
           2
         ],
-        "total": 33
+        "total": 32
       },
       {
         "rep": "Andrew  Prickel",
@@ -68,11 +68,11 @@ const SNAPSHOTS = {
           0,
           3,
           3,
-          6,
+          5,
           1,
           13
         ],
-        "total": 26
+        "total": 25
       },
       {
         "rep": "Jack Obert",
@@ -82,23 +82,10 @@ const SNAPSHOTS = {
           3,
           5,
           8,
-          7,
+          6,
           3
         ],
-        "total": 26
-      },
-      {
-        "rep": "Mike Mccarthy",
-        "counts": [
-          1,
-          0,
-          4,
-          0,
-          8,
-          6,
-          5
-        ],
-        "total": 24
+        "total": 25
       },
       {
         "rep": "Christian Brown",
@@ -107,16 +94,16 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          5,
+          4,
           7,
           7
         ],
-        "total": 24
+        "total": 23
       },
       {
         "rep": "Marc Mitchell",
         "counts": [
-          5,
+          4,
           2,
           4,
           5,
@@ -124,7 +111,7 @@ const SNAPSHOTS = {
           1,
           0
         ],
-        "total": 21
+        "total": 20
       },
       {
         "rep": "Carol Wright",
@@ -171,12 +158,12 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          2,
+          3,
           0,
           3,
           0
         ],
-        "total": 14
+        "total": 15
       },
       {
         "rep": "Kevin Mahan",
@@ -194,7 +181,7 @@ const SNAPSHOTS = {
       {
         "rep": "Robert Mumford-Wilson",
         "counts": [
-          4,
+          3,
           0,
           0,
           3,
@@ -202,46 +189,7 @@ const SNAPSHOTS = {
           0,
           0
         ],
-        "total": 8
-      },
-      {
-        "rep": "Aiden Glonek",
-        "counts": [
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          2
-        ],
-        "total": 3
-      },
-      {
-        "rep": "Thurmond shaw",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          2
-        ],
-        "total": 2
-      },
-      {
-        "rep": "Ethan Wiley",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1
-        ],
-        "total": 1
+        "total": 7
       },
       {
         "rep": "Jason Cresswell",
@@ -272,7 +220,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-22T11:08:51.346Z",
+    "updated": "2026-07-23T15:11:12.128Z",
     "year": 2026,
     "months": [
       0,
@@ -288,14 +236,14 @@ const SNAPSHOTS = {
         "rep": "Joshua Baca",
         "counts": [
           0,
-          3,
+          2,
           13,
           13,
           6,
-          19,
-          7
+          20,
+          8
         ],
-        "total": 61
+        "total": 62
       },
       {
         "rep": "Travis Kizzar",
@@ -319,9 +267,9 @@ const SNAPSHOTS = {
           5,
           6,
           8,
-          2
+          3
         ],
-        "total": 35
+        "total": 36
       },
       {
         "rep": "Brandon Simmons",
