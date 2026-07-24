@@ -9,20 +9,20 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-23T15:05:16.437Z",
-    "total": 1855,
+    "updated": "2026-07-24T13:51:24.077Z",
+    "total": 1983,
     "reps": [
       {
         "rep": "Andrew Funk",
-        "doors": 646
+        "doors": 662
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 315
+        "doors": 372
       },
       {
         "rep": "Carol Wright",
-        "doors": 307
+        "doors": 359
       },
       {
         "rep": "Christian Brown",
@@ -34,15 +34,15 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 103
+        "doors": 106
       },
       {
         "rep": "David Kerns",
-        "doors": 100
+        "doors": 99
       },
       {
         "rep": "Andrew  Prickel",
-        "doors": 29
+        "doors": 30
       },
       {
         "rep": "Kelly Alston",
@@ -93,44 +93,44 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-23T15:05:19.658Z",
-    "total": 3119,
+    "updated": "2026-07-24T13:51:27.249Z",
+    "total": 3246,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 621
+        "doors": 653
       },
       {
         "rep": "Andrew Harris",
-        "doors": 604
+        "doors": 621
       },
       {
         "rep": "Dalton Barr",
-        "doors": 559
+        "doors": 560
       },
       {
         "rep": "Carter Massengill",
-        "doors": 357
+        "doors": 377
       },
       {
         "rep": "Felipe Osorio",
-        "doors": 308
+        "doors": 326
       },
       {
         "rep": "JR Zaguehi",
-        "doors": 178
-      },
-      {
-        "rep": "Travis Kizzar",
-        "doors": 151
+        "doors": 192
       },
       {
         "rep": "Logan Burbic",
-        "doors": 146
+        "doors": 162
+      },
+      {
+        "rep": "Travis Kizzar",
+        "doors": 152
       },
       {
         "rep": "Joshua Baca",
-        "doors": 108
+        "doors": 115
       },
       {
         "rep": "JT Dillon",
@@ -138,7 +138,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Brandon Simmons",
-        "doors": 22
+        "doors": 23
       },
       {
         "rep": "Justin Coghill",
