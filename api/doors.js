@@ -1,4 +1,4 @@
-// api/doors.js Ã¢ÂÂ doors knocked per rep this month, from Sales Rabbit.
+// api/doors.js ÃÂ¢ÃÂÃÂ doors knocked per rep this month, from Sales Rabbit.
 //
 // A "door" = a KNOCK EVENT: a SalesRabbit lead status-history entry (each disposition a rep
 // records), status NOT in {Closed, Do Not Knock, Drive By}, event dated this month, credited to
@@ -201,6 +201,7 @@ function monthStart() { const n = new Date(); return new Date(n.getFullYear(), n
 function norm(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/\s+/g, ' '); }
 function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
+function teamLabel(t) { const n = norm(t); if (n.indexOf('mccarthy') > -1) return 'mccarthy'; if (n.indexOf('jack') > -1) return 'jack'; if (n.indexOf('inbound') > -1) return 'inbound'; if (n.indexOf('retail') > -1) return 'retail'; if ((n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('storm') > -1) return 'selfgen'; return 'other'; }
 function teamAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('mccarthy') > -1; }
 
 async function compute(office) {
@@ -216,6 +217,7 @@ async function compute(office) {
   const allowedReps = new Set(allowedUsers.map((u) => repKey(u.name)));
   const roster = allowedUsers.map((u) => u.name);
   const display = {}; allowedUsers.forEach((u) => { display[repKey(u.name)] = u.name; });
+  const teamByRep = {}; allowedUsers.forEach((u) => { teamByRep[repKey(u.name)] = teamLabel(u.team); });
 
   const start = monthStart();
   const hdr = { 'If-Status-Modified-Since': start.toISOString() };
@@ -243,8 +245,8 @@ async function compute(office) {
     }
     if (fresh === 0) break;
   }
-  const reps = Object.keys(counts).map((k) => ({ rep: display[k] || k, doors: counts[k] })).sort((a, b) => b.doors - a.doors);
-  return { updated: new Date().toISOString(), total, reps, allowedReps: Array.from(allowedReps), roster, eventsScanned, leadsScanned: seenLead.size, office };
+  const reps = Object.keys(counts).map((k) => ({ rep: display[k] || k, doors: counts[k], team: teamByRep[k] || 'other' })).sort((a, b) => b.doors - a.doors);
+  return { updated: new Date().toISOString(), total, reps, teamByRep, allowedReps: Array.from(allowedReps), roster, eventsScanned, leadsScanned: seenLead.size, office };
 }
 
 module.exports = async (req, res) => {
