@@ -1,16 +1,16 @@
-// api/ca-history.js ÃÂ¢ÃÂÃÂ monthly CA counts (ICA + SGCA) per rep, from Sales Rabbit status history.
+// api/ca-history.js ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ monthly CA counts (ICA + SGCA) per rep, from Sales Rabbit status history.
 //
 // A CA = a distinct lead that reached ICA or SGCA in a given month, credited to the rep who set
 // it (changedByUserId), scoped to the office's Storm team. Counted from /leadStatusHistories events.
 //
 // ?office=herndon|richmond   Storm scope: Herndon = DC Self Gen, Richmond = Richmond Storm.
-// ?live=1                    current month only (fast) ÃÂ¢ÃÂÃÂ dashboard CA cards.
-// ?live=1&scope=year         full Jan..now grid (heavy) ÃÂ¢ÃÂÃÂ daily task builds the snapshot.
-// default (no live)          serve the stored year SNAPSHOT ÃÂ¢ÃÂÃÂ CA-by-month grid.
+// ?live=1                    current month only (fast) ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ dashboard CA cards.
+// ?live=1&scope=year         full Jan..now grid (heavy) ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ daily task builds the snapshot.
+// default (no live)          serve the stored year SNAPSHOT ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ CA-by-month grid.
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-24T13:52:23.982Z",
+    "updated": "2026-07-24T15:53:46.723Z",
     "year": 2026,
     "months": [
       0,
@@ -73,6 +73,19 @@ const SNAPSHOTS = {
           14
         ],
         "total": 26
+      },
+      {
+        "rep": "Mike Mccarthy",
+        "counts": [
+          1,
+          0,
+          4,
+          0,
+          8,
+          6,
+          6
+        ],
+        "total": 25
       },
       {
         "rep": "Jack Obert",
@@ -158,12 +171,12 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          3,
+          4,
           0,
           3,
           0
         ],
-        "total": 15
+        "total": 16
       },
       {
         "rep": "Kevin Mahan",
@@ -190,6 +203,45 @@ const SNAPSHOTS = {
           0
         ],
         "total": 8
+      },
+      {
+        "rep": "Aiden Glonek",
+        "counts": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          3
+        ],
+        "total": 4
+      },
+      {
+        "rep": "Ethan Wiley",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "total": 1
+      },
+      {
+        "rep": "Thurmond shaw",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "total": 1
       },
       {
         "rep": "Jason Cresswell",
@@ -220,7 +272,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-24T13:53:17.772Z",
+    "updated": "2026-07-24T15:55:21.482Z",
     "year": 2026,
     "months": [
       0,
@@ -300,7 +352,6 @@ const SNAPSHOTS = {
     ]
   }
 };
-
 const BASE = 'https://api.salesrabbit.com';
 const CA_NORM = new Set(['ica', 'sgca']);
 const SR_ALIAS = { 'mike mccarthy': 'michael mccarthy', 'izzy price': 'isabelle price', 'robert mumford-wilson': 'robert wilson' };
