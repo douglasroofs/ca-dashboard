@@ -1,4 +1,4 @@
-// api/range.js ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
+// api/range.js ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ doors + CAs per rep for an ARBITRARY date range, live from Sales Rabbit.
 //
 // Purely additive: does NOT touch doors.js / ca-history.js / leap-extra.js or their snapshots.
 // The MTD tabs keep using those snapshots by default; this endpoint is only hit when a user
@@ -25,6 +25,7 @@ function pick(o, keys) { for (const k of keys) { if (o && o[k] != null) return o
 function norm(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/\s+/g, ' '); }
 function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
+function teamLabel(t) { const n = norm(t); if (n.indexOf('mccarthy') > -1) return 'mccarthy'; if (n.indexOf('jack') > -1) return 'jack'; if (n.indexOf('inbound') > -1) return 'inbound'; if (n.indexOf('retail') > -1) return 'retail'; if ((n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('storm') > -1) return 'selfgen'; return 'other'; }
 function teamAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('mccarthy') > -1; }
 function stormAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('inbound') > -1 || n.indexOf('mccarthy') > -1; }
 
@@ -59,6 +60,7 @@ async function compute(office, start, end, attr) {
   const roster = doorsUsers.map((u) => u.name);
   const caById = {}; live.filter((u) => stormAllowed(u.team, office)).forEach((u) => { caById[u.id] = repKey(u.name); });
   const display = {}; live.forEach((u) => { display[repKey(u.name)] = u.name; });
+  const teamByRep = {}; live.forEach((u) => { teamByRep[repKey(u.name)] = teamLabel(u.team); });
 
   const owners = (attr === 'owner') ? await leadOwners(start) : null;
   const hdr = { 'If-Status-Modified-Since': start.toISOString() };
@@ -96,9 +98,9 @@ async function compute(office, start, end, attr) {
   Object.keys(doors).forEach((k) => { keys[k] = 1; });
   Object.keys(cas).forEach((k) => { keys[k] = 1; });
   const reps = Object.keys(keys)
-    .map((k) => ({ rep: display[k] || k, doors: doors[k] || 0, cas: cas[k] || 0 }))
+    .map((k) => ({ rep: display[k] || k, doors: doors[k] || 0, cas: cas[k] || 0, team: teamByRep[k] || 'other' }))
     .sort((a, b) => (b.doors - a.doors) || (b.cas - a.cas));
-  return { office, totals: { doors: doorsTotal, cas: caTotal }, reps, allowedReps, roster, byStatus, byStatusRep, eventsScanned, pages, leadsScanned: seenLead.size, updated: new Date().toISOString() };
+  return { office, totals: { doors: doorsTotal, cas: caTotal }, reps, teamByRep, allowedReps, roster, byStatus, byStatusRep, eventsScanned, pages, leadsScanned: seenLead.size, updated: new Date().toISOString() };
 }
 
 module.exports = async (req, res) => {
