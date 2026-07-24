@@ -1,4 +1,4 @@
-// api/doors.js â doors knocked per rep this month, from Sales Rabbit.
+// api/doors.js Ã¢ÂÂ doors knocked per rep this month, from Sales Rabbit.
 //
 // A "door" = a KNOCK EVENT: a SalesRabbit lead status-history entry (each disposition a rep
 // records), status NOT in {Closed, Do Not Knock, Drive By}, event dated this month, credited to
@@ -201,7 +201,7 @@ function monthStart() { const n = new Date(); return new Date(n.getFullYear(), n
 function norm(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/\s+/g, ' '); }
 function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
-function teamAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1; }
+function teamAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('mccarthy') > -1; }
 
 async function compute(office) {
   const usersRes = await srGet('/users');
