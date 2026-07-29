@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-24T15:53:46.723Z",
+    "updated": "2026-07-29T13:34:14.940Z",
     "year": 2026,
     "months": [
       0,
@@ -29,11 +29,11 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          6,
           14,
-          17
+          25
         ],
-        "total": 35
+        "total": 45
       },
       {
         "rep": "Harvey Shoemaker",
@@ -43,10 +43,10 @@ const SNAPSHOTS = {
           1,
           2,
           5,
-          16,
-          9
+          17,
+          11
         ],
-        "total": 34
+        "total": 37
       },
       {
         "rep": "David Kerns",
@@ -56,10 +56,36 @@ const SNAPSHOTS = {
           11,
           8,
           5,
-          6,
+          7,
           2
         ],
-        "total": 32
+        "total": 33
+      },
+      {
+        "rep": "Jack Obert",
+        "counts": [
+          0,
+          0,
+          3,
+          5,
+          8,
+          7,
+          4
+        ],
+        "total": 27
+      },
+      {
+        "rep": "Mike Mccarthy",
+        "counts": [
+          1,
+          0,
+          3,
+          0,
+          8,
+          6,
+          8
+        ],
+        "total": 26
       },
       {
         "rep": "Andrew  Prickel",
@@ -75,56 +101,17 @@ const SNAPSHOTS = {
         "total": 26
       },
       {
-        "rep": "Mike Mccarthy",
-        "counts": [
-          1,
-          0,
-          4,
-          0,
-          8,
-          6,
-          6
-        ],
-        "total": 25
-      },
-      {
-        "rep": "Jack Obert",
-        "counts": [
-          0,
-          0,
-          3,
-          5,
-          8,
-          6,
-          3
-        ],
-        "total": 25
-      },
-      {
-        "rep": "Marc Mitchell",
-        "counts": [
-          5,
-          2,
-          4,
-          5,
-          5,
-          1,
-          0
-        ],
-        "total": 22
-      },
-      {
         "rep": "Christian Brown",
         "counts": [
           1,
           0,
           1,
           3,
-          3,
-          6,
-          7
+          4,
+          7,
+          8
         ],
-        "total": 21
+        "total": 24
       },
       {
         "rep": "Carol Wright",
@@ -135,9 +122,22 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          14
+          17
         ],
-        "total": 18
+        "total": 21
+      },
+      {
+        "rep": "Marc Mitchell",
+        "counts": [
+          5,
+          2,
+          4,
+          5,
+          4,
+          1,
+          0
+        ],
+        "total": 21
       },
       {
         "rep": "Izzy Price",
@@ -159,11 +159,11 @@ const SNAPSHOTS = {
           0,
           2,
           5,
-          3,
+          2,
           4,
           1
         ],
-        "total": 17
+        "total": 16
       },
       {
         "rep": "Steven Arevalo",
@@ -171,12 +171,12 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          4,
+          2,
           0,
-          3,
+          4,
           0
         ],
-        "total": 16
+        "total": 15
       },
       {
         "rep": "Kevin Mahan",
@@ -272,7 +272,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-07-24T15:55:21.482Z",
+    "updated": "2026-07-29T13:35:10.841Z",
     "year": 2026,
     "months": [
       0,
@@ -342,16 +342,30 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          3,
+          4,
           6,
           7,
           0
         ],
-        "total": 20
+        "total": 21
+      },
+      {
+        "rep": "Carter Massengill",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "total": 2
       }
     ]
   }
 };
+
 const BASE = 'https://api.salesrabbit.com';
 const CA_NORM = new Set(['ica', 'sgca']);
 const SR_ALIAS = { 'mike mccarthy': 'michael mccarthy', 'izzy price': 'isabelle price', 'robert mumford-wilson': 'robert wilson' };
