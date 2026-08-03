@@ -9,82 +9,57 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-07-29T13:31:48.403Z",
-    "total": 4578,
+    "updated": "2026-08-03T21:40:07.282Z",
+    "total": 363,
     "reps": [
       {
         "rep": "Thurmond shaw",
-        "doors": 776,
+        "doors": 96,
         "team": "mccarthy"
       },
       {
-        "rep": "Andrew Funk",
-        "doors": 744,
-        "team": "selfgen"
+        "rep": "Jason Cresswell",
+        "doors": 72,
+        "team": "jack"
       },
       {
         "rep": "Aiden Glonek",
-        "doors": 687,
+        "doors": 70,
         "team": "mccarthy"
       },
       {
-        "rep": "Ethan Wiley",
-        "doors": 521,
+        "rep": "Pedro Polio",
+        "doors": 30,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Mike Mccarthy",
+        "doors": 27,
         "team": "mccarthy"
       },
       {
         "rep": "Carol Wright",
-        "doors": 416,
+        "doors": 23,
         "team": "jack"
       },
       {
-        "rep": "Jason Cresswell",
-        "doors": 392,
-        "team": "jack"
+        "rep": "Andrew Funk",
+        "doors": 20,
+        "team": "selfgen"
       },
       {
-        "rep": "Mike Mccarthy",
-        "doors": 272,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Christian Brown",
-        "doors": 228,
+        "rep": "Harvey Shoemaker",
+        "doors": 17,
         "team": "selfgen"
       },
       {
         "rep": "David Kerns",
-        "doors": 201,
+        "doors": 7,
         "team": "jack"
-      },
-      {
-        "rep": "Izzy Price",
-        "doors": 157,
-        "team": "jack"
-      },
-      {
-        "rep": "Harvey Shoemaker",
-        "doors": 130,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Andrew  Prickel",
-        "doors": 31,
-        "team": "inbound"
-      },
-      {
-        "rep": "Kelly Alston",
-        "doors": 13,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Jack Obert",
-        "doors": 6,
-        "team": "selfgen"
       },
       {
         "rep": "George Bechara",
-        "doors": 4,
+        "doors": 1,
         "team": "selfgen"
       }
     ],
@@ -107,7 +82,10 @@ const SNAPSHOTS = {
       "ethan wiley",
       "carol wright",
       "thurmond shaw",
-      "jason cresswell"
+      "jason cresswell",
+      "wayne jefferson",
+      "charles davis",
+      "pedro polio"
     ],
     "roster": [
       "Steven Arevalo",
@@ -128,77 +106,50 @@ const SNAPSHOTS = {
       "Ethan Wiley",
       "Carol Wright",
       "Thurmond shaw",
-      "Jason Cresswell"
+      "Jason Cresswell",
+      "Wayne Jefferson",
+      "Charles Davis",
+      "Pedro Polio"
     ]
   },
   "richmond": {
-    "updated": "2026-07-29T13:31:52.780Z",
-    "total": 3688,
+    "updated": "2026-08-03T21:40:08.248Z",
+    "total": 306,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 848,
+        "doors": 126,
         "team": "retail"
       },
       {
         "rep": "Andrew Harris",
-        "doors": 658,
+        "doors": 53,
         "team": "retail"
       },
       {
         "rep": "Dalton Barr",
-        "doors": 593,
+        "doors": 53,
         "team": "retail"
       },
       {
-        "rep": "Carter Massengill",
-        "doors": 477,
+        "rep": "Dustian White",
+        "doors": 38,
         "team": "retail"
       },
       {
         "rep": "Felipe Osorio",
-        "doors": 369,
+        "doors": 24,
         "team": "retail"
       },
       {
-        "rep": "JR Zaguehi",
-        "doors": 195,
+        "rep": "Carter Massengill",
+        "doors": 10,
         "team": "retail"
-      },
-      {
-        "rep": "Logan Burbic",
-        "doors": 182,
-        "team": "selfgen"
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 162,
+        "doors": 2,
         "team": "selfgen"
-      },
-      {
-        "rep": "Joshua Baca",
-        "doors": 115,
-        "team": "selfgen"
-      },
-      {
-        "rep": "JT Dillon",
-        "doors": 54,
-        "team": "retail"
-      },
-      {
-        "rep": "Brandon Simmons",
-        "doors": 23,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Justin Coghill",
-        "doors": 9,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Dustian White",
-        "doors": 3,
-        "team": "retail"
       }
     ],
     "allowedReps": [
@@ -208,14 +159,11 @@ const SNAPSHOTS = {
       "joshua baca",
       "logan burbic",
       "carter massengill",
-      "pedro ramirez",
       "andrew harris",
       "jr zaguehi",
       "dalton barr",
-      "cristina saunders",
       "marcus schanewolf",
       "felipe osorio",
-      "jt dillon",
       "kylea white",
       "dustian white"
     ],
@@ -226,14 +174,11 @@ const SNAPSHOTS = {
       "Joshua Baca",
       "Logan Burbic",
       "Carter Massengill",
-      "Pedro Ramirez",
       "Andrew Harris",
       "JR Zaguehi",
       "Dalton Barr",
-      "Cristina Saunders",
       "marcus schanewolf",
       "Felipe Osorio",
-      "JT Dillon",
       "Kylea White",
       "Dustian White"
     ]
