@@ -175,5 +175,17 @@ function draw(){
 }
 function card(v,l,c,sub){return '<div class="card"><div class="label">'+l+'</div><div class="value '+(c||'')+'">'+v+'</div>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>';}
 </script>
+
+<style id="dark-theme">
+:root{--ink:#e6edf3;--dim:#8b949e;--line:#30363d;--blue:#58a6ff;--bg:#0d1117;--good:#3fb950;--warn:#d29922;--bad:#f85149}
+html,body{background:#0d1117;color:#e6edf3}
+header,.rangebar,.card,table,.err,.rangebar button.ghost{background:#161b22 !important;border-color:#30363d !important;color:#e6edf3}
+th{background:#0d1117 !important;color:#8b949e !important;border-bottom-color:#30363d !important}
+td,tr,thead,tbody{border-color:#30363d !important}
+.rangebar button.ghost{color:#e6edf3 !important}
+.muted,.note,.sub,.label,.dim{color:#8b949e !important}
+input,select{background:#0d1117 !important;color:#e6edf3 !important;border-color:#30363d !important}
+*:not(.hi):not(.credit):not(.alert):not([class*="value"]):not([class*="num"]){border-color:#30363d}
+</style>
 </body>
 </html>
