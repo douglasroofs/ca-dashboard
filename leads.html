@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Douglas Roofing - Leads &amp; Appointments</title>
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--line:#30363d;--txt:#e6edf3;--dim:#8b949e;
+        --sold:#3fb950;--pending:#d29922;--drip:#58a6ff;--dead:#8b949e;--alert:#f85149;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  h1{font-size:18px;margin:0;font-weight:650}
+  nav a{color:var(--dim);text-decoration:none;margin-right:14px;font-size:13px}
+  nav a:hover,nav a.on{color:var(--txt)}
+  .wrap{padding:20px 24px;max-width:1400px}
+  .stamp{color:var(--dim);font-size:12px;margin-left:auto}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px}
+  .kpi .n{font-size:26px;font-weight:680}
+  .kpi .l{color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  .kpi.alert{border-color:var(--alert)}
+  .kpi.alert .n{color:var(--alert)}
+  section{margin-bottom:28px}
+  h2{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin:0 0 10px}
+  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  th{color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right}
+  .sold{color:var(--sold)}.pending{color:var(--pending)}.drip{color:var(--drip)}.dead{color:var(--dead)}.bad{color:var(--alert);font-weight:650}
+  .bar{height:6px;background:#21262d;border-radius:3px;overflow:hidden;min-width:80px}
+  .bar i{display:block;height:100%;background:var(--alert)}
+  .pill{display:inline-block;padding:1px 7px;border-radius:10px;font-size:11px;border:1px solid var(--line)}
+  input[type=search]{background:var(--panel);border:1px solid var(--line);color:var(--txt);padding:7px 10px;border-radius:6px;width:260px;margin-bottom:8px}
+  .muted{color:var(--dim)}
+  .err{color:var(--alert);padding:12px;border:1px solid var(--alert);border-radius:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Leads &amp; Appointments</h1>
+  <nav>
+    <a href="/revenue.html">Herndon</a>
+    <a href="/richmond.html">Richmond</a>
+    <a href="/ca-bonus.html">CA Bonus</a>
+    <a href="/leads.html" class="on">Leads</a>
+  </nav>
+  <span class="stamp" id="stamp"></span>
+</header>
+<div class="wrap" id="root"><p class="muted">Loading...</p></div>
+<script>
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+var pct=function(a,b){return b?Math.round(a*100/b)+'%':'0%';};
+function rowsOf(o){return Object.keys(o||{}).map(function(k){return [k,o[k]];}).sort(function(a,b){return b[1]-a[1];});}
+
+fetch('/api/appointments?office=herndon&t='+Date.now(),{cache:'no-store'})
+  .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+  .then(render)
+  .catch(function(e){document.getElementById('root').innerHTML='<div class="err">Could not load appointments: '+esc(e.message)+'</div>';});
+
+function render(d){
+  var t=d.totals, reps=d.reps||[], H=[];
+  document.getElementById('stamp').textContent='Updated '+new Date(d.updated).toLocaleString()+' - '+d.year;
+
+  H.push('<div class="kpis">');
+  H.push(kpi(t.total,'Appointments'));
+  H.push(kpi(t.sold,'Sold','sold'));
+  H.push(kpi(t.pending,'Pending / Claim','pending'));
+  H.push(kpi(t.drip,'Drip','drip'));
+  H.push(kpi(t.dead,'Dead','dead'));
+  H.push('<div class="kpi alert"><div class="n">'+t.unresulted+'</div><div class="l">Unresulted - '+pct(t.unresulted,t.total)+'</div></div>');
+  H.push('</div>');
+
+  // Unresulted leaderboard - the manager action list
+  var byUn=reps.slice().sort(function(a,b){return (b.unresulted/b.total)-(a.unresulted/a.total);});
+  H.push('<section><h2>Not resulting leads - worst first</h2><table><tr><th>Rep</th><th class="num">Appts</th><th class="num">Unresulted</th><th class="num">Rate</th><th>&nbsp;</th></tr>');
+  byUn.forEach(function(r){
+    var p=r.total?Math.round(r.unresulted*100/r.total):0;
+    H.push('<tr><td>'+esc(r.rep)+'</td><td class="num">'+r.total+'</td><td class="num '+(p>=50?'bad':'')+'">'+r.unresulted+'</td><td class="num '+(p>=50?'bad':'')+'">'+p+'%</td>'+
+           '<td><div class="bar"><i style="width:'+p+'%"></i></div></td></tr>');
+  });
+  H.push('</table></section>');
+
+  // Per rep outcomes
+  H.push('<section><h2>Outcomes by rep</h2><table><tr><th>Rep</th><th class="num">Appts</th><th class="num">Sold</th><th class="num">Pending</th><th class="num">Drip</th><th class="num">Dead</th><th class="num">Unresulted</th><th class="num">Close %</th></tr>');
+  reps.forEach(function(r){
+    var resulted=r.total-r.unresulted;
+    H.push('<tr><td>'+esc(r.rep)+'</td><td class="num">'+r.total+'</td>'+
+      '<td class="num sold">'+r.sold+'</td><td class="num pending">'+r.pending+'</td>'+
+      '<td class="num drip">'+r.drip+'</td><td class="num dead">'+r.dead+'</td>'+
+      '<td class="num '+(r.unresulted?'bad':'')+'">'+r.unresulted+'</td>'+
+      '<td class="num">'+pct(r.sold,resulted)+'</td></tr>');
+  });
+  H.push('</table><p class="muted">Close % is Sold divided by resulted appointments, so unresulted ones do not flatter it.</p></section>');
+
+  // Referral source
+  H.push('<section><h2>Where appointments came from</h2><table><tr><th>Referral source</th><th class="num">Appts</th><th class="num">Share</th></tr>');
+  rowsOf(d.sources).forEach(function(p){
+    H.push('<tr><td>'+esc(p[0])+'</td><td class="num">'+p[1]+'</td><td class="num">'+pct(p[1],t.total)+'</td></tr>');
+  });
+  H.push('</table><p class="muted">Ad spend is not wired up yet, so cost per appointment and cost per job are not shown.</p></section>');
+
+  // Job stages - the lagging insurance side
+  H.push('<section><h2>Job stage - lagging pipeline</h2><table><tr><th>Stage</th><th class="num">Jobs</th></tr>');
+  rowsOf(d.stages).forEach(function(p){H.push('<tr><td>'+esc(p[0])+'</td><td class="num">'+p[1]+'</td></tr>');});
+  H.push('</table></section>');
+
+  // Recent appointments
+  H.push('<section><h2>Recent appointments - last 45 days</h2>');
+  H.push('<input type="search" id="q" placeholder="Filter by rep, customer, result...">');
+  H.push('<table id="recent"><tr><th>Date</th><th>Rep</th><th>Customer</th><th>Result</th><th>Stage</th><th>Source</th></tr>');
+  (d.recent||[]).forEach(function(r){
+    var lab=r.result||'UNRESULTED';
+    H.push('<tr><td>'+esc((r.date||'').slice(0,10))+'</td><td>'+esc(r.rep)+'</td><td>'+esc(r.customer)+'</td>'+
+      '<td class="'+(r.bucket==='unresulted'?'bad':r.bucket)+'">'+esc(lab)+'</td>'+
+      '<td>'+esc(r.stage)+'</td><td><span class="pill">'+esc(r.source)+'</span></td></tr>');
+  });
+  H.push('</table></section>');
+
+  document.getElementById('root').innerHTML=H.join('');
+
+  var q=document.getElementById('q');
+  if(q){q.addEventListener('input',function(){
+    var v=q.value.toLowerCase();
+    var rows=document.querySelectorAll('#recent tr');
+    for(var i=1;i<rows.length;i++){
+      rows[i].style.display = rows[i].textContent.toLowerCase().indexOf(v)>-1 ? '' : 'none';
+    }
+  });}
+}
+function kpi(n,l,c){return '<div class="kpi"><div class="n '+(c||'')+'">'+n+'</div><div class="l">'+l+'</div></div>';}
+</script>
+</body>
+</html>
