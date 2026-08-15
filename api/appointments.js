@@ -6,16 +6,20 @@
 //   f_3 Job Current Stage        | f_4 Referral Source  | f_5 Appointment Start Date
 //   f_6 Customer Full Name
 //
+// REP NAMES: f_0 is aggregated with group_concat, so multi-attendee appointments arrive
+// as 'Marc Mitchell ,Marc Mitchell'. Names are split on comma, trimmed, whitespace
+// collapsed and de-duplicated before bucketing. Without this, 14 apparent reps appear
+// where there are really 10, and each affected rep's counts are split across two rows.
+//
 // WHY A SNAPSHOT AND NOT LIVE: reporting-api.jobprogress.com authenticates with the
 // rb_auth_token SSO cookie. The JobProgress public-API OAuth token used by revenue.js
-// returns 401 there (verified), so a server cannot reach DataBuilder. The public API's
-// /appointments endpoint IS reachable server-side but returns raw records: `result` is an
-// unresolved questionnaire array and `result_option_ids` are bare ids with no lookup
-// endpoint, and `user` is the appointment owner rather than the sales rep. Resolving that
-// would be guesswork, so this snapshot uses DataBuilder values that match Leap's own
-// reporting. Refresh by re-running the browser pull.
+// returns 401 there (verified 2026-08-14), so a server cannot reach DataBuilder. The
+// public API's /appointments endpoint IS reachable server-side but returns raw records:
+// `result` is an unresolved questionnaire array, `result_option_ids` are bare ids with no
+// lookup endpoint, `user` is the appointment owner rather than the sales rep, and the
+// date query params are ignored. Refresh by re-running the browser pull.
 //
-// BUCKETS (approved by Kyle 2026-08-14):
+// BUCKETS (approved 2026-08-14):
 //   sold    = CA Signed, Retail Sale, Repair Sold
 //   pending = Claim Filed, Damage NO CA
 //   drip    = NO Damage, Repair Not Sold, Retail Pitch Miss, Pitch Miss, No Demo
@@ -24,7 +28,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-08-15T11:28:04.014Z",
+    "updated": "2026-08-15T11:34:37.368Z",
     "year": 2026,
     "totals": {
       "total": 495,
@@ -38,15 +42,15 @@ const SNAPSHOTS = {
     "reps": [
       {
         "rep": "Andrew Prickel",
-        "total": 150,
+        "total": 151,
         "sold": 40,
         "pending": 13,
         "drip": 45,
         "dead": 5,
-        "unresulted": 47,
+        "unresulted": 48,
         "other": 0,
         "results": {
-          "(unresulted)": 47,
+          "(unresulted)": 48,
           "Retail Sale": 18,
           "NO Damage": 8,
           "No Demo": 11,
@@ -128,15 +132,15 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Steven Arevalo",
-        "total": 44,
+        "total": 48,
         "sold": 1,
         "pending": 0,
         "drip": 0,
         "dead": 0,
-        "unresulted": 43,
+        "unresulted": 47,
         "other": 0,
         "results": {
-          "(unresulted)": 43,
+          "(unresulted)": 47,
           "Retail Sale": 1
         }
       },
@@ -157,15 +161,15 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Adam Mulvaney",
-        "total": 21,
+        "total": 23,
         "sold": 4,
         "pending": 0,
         "drip": 4,
         "dead": 0,
-        "unresulted": 13,
+        "unresulted": 15,
         "other": 0,
         "results": {
-          "(unresulted)": 13,
+          "(unresulted)": 15,
           "CA Signed": 1,
           "Repair Sold": 3,
           "Repair Not Sold": 3,
@@ -174,16 +178,16 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Marc Mitchell",
-        "total": 16,
+        "total": 17,
         "sold": 0,
         "pending": 0,
         "drip": 1,
         "dead": 1,
-        "unresulted": 14,
+        "unresulted": 15,
         "other": 0,
         "results": {
+          "(unresulted)": 15,
           "Customer Canceled Appointment": 1,
-          "(unresulted)": 14,
           "Repair Not Sold": 1
         }
       },
@@ -201,19 +205,6 @@ const SNAPSHOTS = {
         }
       },
       {
-        "rep": "Steven Arevalo,Steven Arevalo",
-        "total": 4,
-        "sold": 0,
-        "pending": 0,
-        "drip": 0,
-        "dead": 0,
-        "unresulted": 4,
-        "other": 0,
-        "results": {
-          "(unresulted)": 4
-        }
-      },
-      {
         "rep": "Robert Wilson",
         "total": 3,
         "sold": 0,
@@ -224,45 +215,6 @@ const SNAPSHOTS = {
         "other": 0,
         "results": {
           "(unresulted)": 3
-        }
-      },
-      {
-        "rep": "Adam Mulvaney,Adam Mulvaney",
-        "total": 2,
-        "sold": 0,
-        "pending": 0,
-        "drip": 0,
-        "dead": 0,
-        "unresulted": 2,
-        "other": 0,
-        "results": {
-          "(unresulted)": 2
-        }
-      },
-      {
-        "rep": "Marc Mitchell ,Marc Mitchell",
-        "total": 1,
-        "sold": 0,
-        "pending": 0,
-        "drip": 0,
-        "dead": 0,
-        "unresulted": 1,
-        "other": 0,
-        "results": {
-          "(unresulted)": 1
-        }
-      },
-      {
-        "rep": "Andrew Prickel ,Andrew Prickel",
-        "total": 1,
-        "sold": 0,
-        "pending": 0,
-        "drip": 0,
-        "dead": 0,
-        "unresulted": 1,
-        "other": 0,
-        "results": {
-          "(unresulted)": 1
         }
       }
     ],
@@ -320,7 +272,7 @@ const SNAPSHOTS = {
     },
     "recent": [
       {
-        "rep": "Steven Arevalo,Steven Arevalo",
+        "rep": "Steven Arevalo",
         "customer": "Kurt Burkhardt",
         "date": "2026-08-10 14:30:00",
         "result": "",
@@ -347,7 +299,7 @@ const SNAPSHOTS = {
         "source": "Zapier"
       },
       {
-        "rep": "Marc Mitchell ,Marc Mitchell",
+        "rep": "Marc Mitchell",
         "customer": "Armelle Franklin",
         "date": "2026-08-07 18:00:00",
         "result": "",
@@ -356,7 +308,7 @@ const SNAPSHOTS = {
         "source": "(none)"
       },
       {
-        "rep": "Steven Arevalo,Steven Arevalo",
+        "rep": "Steven Arevalo",
         "customer": "Suneth De Alwis",
         "date": "2026-08-07 16:00:00",
         "result": "",
@@ -365,7 +317,7 @@ const SNAPSHOTS = {
         "source": "(none)"
       },
       {
-        "rep": "Steven Arevalo,Steven Arevalo",
+        "rep": "Steven Arevalo",
         "customer": "Eleanor Pascale",
         "date": "2026-08-07 16:00:00",
         "result": "",
@@ -374,7 +326,7 @@ const SNAPSHOTS = {
         "source": "(none)"
       },
       {
-        "rep": "Andrew Prickel ,Andrew Prickel",
+        "rep": "Andrew Prickel",
         "customer": "Josh Solomon",
         "date": "2026-08-07 14:00:00",
         "result": "",
@@ -383,7 +335,7 @@ const SNAPSHOTS = {
         "source": "(none)"
       },
       {
-        "rep": "Steven Arevalo,Steven Arevalo",
+        "rep": "Steven Arevalo",
         "customer": "Shane Keenan",
         "date": "2026-08-07 13:00:00",
         "result": "",
