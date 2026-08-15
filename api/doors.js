@@ -9,18 +9,18 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-08-14T02:04:57.061Z",
-    "total": 2137,
+    "updated": "2026-08-15T21:46:29.421Z",
+    "total": 2185,
     "reps": [
       {
         "rep": "Thurmond shaw",
-        "doors": 421,
+        "doors": 507,
         "team": "mccarthy"
       },
       {
         "rep": "Pedro Polio",
-        "doors": 265,
-        "team": "selfgen"
+        "doors": 284,
+        "team": "mccarthy"
       },
       {
         "rep": "Jason Cresswell",
@@ -29,13 +29,13 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Carol Wright",
-        "doors": 175,
+        "doors": 239,
         "team": "jack"
       },
       {
         "rep": "Wayne Jefferson",
-        "doors": 168,
-        "team": "selfgen"
+        "doors": 182,
+        "team": "mccarthy"
       },
       {
         "rep": "Harvey Shoemaker",
@@ -44,7 +44,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Andrew Funk",
-        "doors": 160,
+        "doors": 161,
         "team": "selfgen"
       },
       {
@@ -53,9 +53,9 @@ const SNAPSHOTS = {
         "team": "selfgen"
       },
       {
-        "rep": "Aiden Glonek",
-        "doors": 121,
-        "team": "mccarthy"
+        "rep": "David Kerns",
+        "doors": 83,
+        "team": "jack"
       },
       {
         "rep": "Ethan Wiley",
@@ -63,19 +63,9 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
-        "rep": "David Kerns",
-        "doors": 81,
-        "team": "jack"
-      },
-      {
         "rep": "Mike Mccarthy",
-        "doors": 65,
+        "doors": 66,
         "team": "mccarthy"
-      },
-      {
-        "rep": "Charles Davis",
-        "doors": 18,
-        "team": "selfgen"
       },
       {
         "rep": "George Bechara",
@@ -96,15 +86,12 @@ const SNAPSHOTS = {
       "robert wilson",
       "andrew prickel",
       "christian brown",
-      "kelly alston",
       "david kerns",
-      "aiden glonek",
       "ethan wiley",
       "carol wright",
       "thurmond shaw",
       "jason cresswell",
       "wayne jefferson",
-      "charles davis",
       "pedro polio"
     ],
     "roster": [
@@ -120,30 +107,32 @@ const SNAPSHOTS = {
       "Robert Mumford-Wilson",
       "Andrew  Prickel",
       "Christian Brown",
-      "Kelly Alston",
       "David Kerns",
-      "Aiden Glonek",
       "Ethan Wiley",
       "Carol Wright",
       "Thurmond shaw",
       "Jason Cresswell",
       "Wayne Jefferson",
-      "Charles Davis",
       "Pedro Polio"
     ]
   },
   "richmond": {
-    "updated": "2026-08-14T02:04:59.146Z",
-    "total": 1984,
+    "updated": "2026-08-15T21:46:31.501Z",
+    "total": 2228,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 608,
+        "doors": 746,
         "team": "retail"
       },
       {
         "rep": "Dalton Barr",
-        "doors": 292,
+        "doors": 320,
+        "team": "retail"
+      },
+      {
+        "rep": "Felipe Osorio",
+        "doors": 271,
         "team": "retail"
       },
       {
@@ -152,13 +141,8 @@ const SNAPSHOTS = {
         "team": "retail"
       },
       {
-        "rep": "Felipe Osorio",
-        "doors": 232,
-        "team": "retail"
-      },
-      {
         "rep": "Carter Massengill",
-        "doors": 181,
+        "doors": 184,
         "team": "retail"
       },
       {
@@ -173,7 +157,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 58,
+        "doors": 81,
         "team": "selfgen"
       },
       {
@@ -183,7 +167,12 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Joshua Baca",
-        "doors": 14,
+        "doors": 26,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Justin Coghill",
+        "doors": 1,
         "team": "selfgen"
       }
     ],
