@@ -112,14 +112,20 @@ function repName(row) {
   return row.full_name || row.name || [row.first_name, row.last_name].filter(Boolean).join(' ').trim() || 'Unassigned';
 }
 
-async function fetchTotal(dateType, month, s0, e0) {
-  const j = await apiGet(`${REPORT}/total?date_range_type[]=${dateType}&${durationParams(month, s0, e0)}&with_inactive=0`);
+// with_inactive: 0 = currently-active users only (what Leap's report defaults to),
+// 1 = include terminated/deactivated users. Jobs sold by a rep who has since been
+// deactivated still count as company revenue, so the dashboard needs BOTH: the
+// active-only total for rep production, and the with-inactive total as the truth
+// figure the headline reconciles against. Before this was parameterised, every
+// call was hardcoded to 0 and revenue from departed reps was invisible.
+async function fetchTotal(dateType, month, s0, e0, withInactive = 0) {
+  const j = await apiGet(`${REPORT}/total?date_range_type[]=${dateType}&${durationParams(month, s0, e0)}&with_inactive=${withInactive ? 1 : 0}`);
   return j.data || j;
 }
-async function fetchRows(dateType, month, s0, e0) {
+async function fetchRows(dateType, month, s0, e0, withInactive = 1) {
   const rows = [];
   for (let page = 1; page <= 50; page++) {
-    const j = await apiGet(`${REPORT}?date_range_type[]=${dateType}&${durationParams(month, s0, e0)}&limit=100&page=${page}&sort_field=full_name&sort_order=asc&with_inactive=0`);
+    const j = await apiGet(`${REPORT}?date_range_type[]=${dateType}&${durationParams(month, s0, e0)}&limit=100&page=${page}&sort_field=full_name&sort_order=asc&with_inactive=${withInactive ? 1 : 0}`);
     const data = j.data || j.rows || [];
     rows.push(...data);
     const pag = (j.meta && j.meta.pagination) || j.pagination || {};
@@ -171,11 +177,16 @@ module.exports = async (req, res) => {
     }
 
     await getToken(); // authenticate once before firing parallel report calls
-    const [apprTotal, signTotal, apprRows, signRows] = await Promise.all([
-      fetchTotal('job_awarded_date', month, qs, qe),
-      fetchTotal('contract_signed_date', month, qs, qe),
-      fetchRows('job_awarded_date', month, qs, qe),
-      fetchRows('contract_signed_date', month, qs, qe),
+    // Rows are pulled WITH inactive users so every dollar in companyAll is
+    // attributable to a named rep row; totals are pulled both ways so the client
+    // can show the active/inactive split without guessing.
+    const [apprTotal, signTotal, apprTotalAll, signTotalAll, apprRows, signRows] = await Promise.all([
+      fetchTotal('job_awarded_date', month, qs, qe, 0),
+      fetchTotal('contract_signed_date', month, qs, qe, 0),
+      fetchTotal('job_awarded_date', month, qs, qe, 1),
+      fetchTotal('contract_signed_date', month, qs, qe, 1),
+      fetchRows('job_awarded_date', month, qs, qe, 1),
+      fetchRows('contract_signed_date', month, qs, qe, 1),
     ]);
 
     const apprByRep = {}; apprRows.forEach((r) => { apprByRep[repName(r)] = dollars(r); });
@@ -186,10 +197,23 @@ module.exports = async (req, res) => {
       .filter((r) => r.approved_amount || r.contract_amount)
       .sort((a, b) => b.contract_amount - a.contract_amount);
 
+    const company = { approved_amount: dollars(apprTotal), contract_amount: dollars(signTotal) };
+    const companyAll = { approved_amount: dollars(apprTotalAll), contract_amount: dollars(signTotalAll) };
+    const round2 = (n) => Math.round(n * 100) / 100;
+
     res.status(200).json({
       updated: new Date().toISOString(),
       duration: (qs && qe) ? (qs + '..' + qe) : (month || 'MTD'),
-      company: { approved_amount: dollars(apprTotal), contract_amount: dollars(signTotal) },
+      // company = active users only (kept for back-compat with anything reading it).
+      company,
+      // companyAll = Leap's own report total including deactivated users. This is the
+      // figure the dashboard headline reconciles to.
+      companyAll,
+      // The active/inactive delta, so a stale roster can never silently swallow revenue.
+      inactive: {
+        approved_amount: round2(companyAll.approved_amount - company.approved_amount),
+        contract_amount: round2(companyAll.contract_amount - company.contract_amount),
+      },
       reps,
     });
   } catch (err) {
