@@ -59,21 +59,48 @@ async function switchCompany(token, companyId) {
   if (!r.ok) throw new Error('switch_company ' + r.status);
 }
 
-async function pullReport(token, dateType, duration, s0, e0) {
+function dateQuery(duration, s0, e0) {
   var okd = function (x) { return typeof x === 'string' && x.length === 10 && !isNaN(Date.parse(x)); };
-  var dq = (okd(s0) && okd(e0)) ? ('&duration=DUR&start_date=' + s0 + '&end_date=' + e0) : ('&duration=' + encodeURIComponent(duration));
-  var url = BASE + '/reports/sales_performance_summary_report?date_range_type[]=' + encodeURIComponent(dateType) + dq + '&limit=200&page=1';
-  var r = await fetch(url, { headers: { 'Accept': 'application/json', 'platform': 'web', 'Authorization': 'Bearer ' + token } });
-  if (!r.ok) throw new Error('report ' + dateType + ' ' + r.status);
-  var j = await r.json();
-  var rows = (j && j.data) || [];
+  return (okd(s0) && okd(e0)) ? ('&duration=DUR&start_date=' + s0 + '&end_date=' + e0) : ('&duration=' + encodeURIComponent(duration));
+}
+function HDRS(token) { return { 'Accept': 'application/json', 'platform': 'web', 'Authorization': 'Bearer ' + token }; }
+
+// Rows are pulled WITH inactive users by default: a rep who has since been deactivated
+// still sold the job, and the previous single-page limit=200 call silently truncated
+// anything past 200 rows. Now paginated.
+async function pullReport(token, dateType, duration, s0, e0, withInactive) {
+  var dq = dateQuery(duration, s0, e0);
+  var wi = '&with_inactive=' + (withInactive === 0 ? 0 : 1);
   var out = {};
-  rows.forEach(function (row) {
-    var name = String(row.full_name || '').replace(/\s+/g, ' ').trim();
-    var v = Math.round((Number(row.contract_amount) || 0) * 100) / 100;
-    if (name) out[name] = v;
-  });
+  for (var page = 1; page <= 25; page++) {
+    var url = BASE + '/reports/sales_performance_summary_report?date_range_type[]=' + encodeURIComponent(dateType) + dq + wi + '&limit=100&page=' + page;
+    var r = await fetch(url, { headers: HDRS(token) });
+    if (!r.ok) throw new Error('report ' + dateType + ' ' + r.status);
+    var j = await r.json();
+    var rows = (j && j.data) || [];
+    rows.forEach(function (row) {
+      var name = String(row.full_name || '').replace(/\s+/g, ' ').trim();
+      var v = Math.round((Number(row.contract_amount) || 0) * 100) / 100;
+      if (name) out[name] = v;
+    });
+    var pag = (j && j.meta && j.meta.pagination) || (j && j.pagination) || {};
+    var totalPages = pag.total_pages || (rows.length < 100 ? page : page + 1);
+    if (page >= totalPages || rows.length === 0) break;
+  }
   return out;
+}
+
+// The company-level total straight off the same report. Richmond had no equivalent,
+// so its headline was only ever the sum of the rows that survived filtering, with
+// nothing to reconcile against.
+async function pullTotal(token, dateType, duration, s0, e0, withInactive) {
+  var url = BASE + '/reports/sales_performance_summary_report/total?date_range_type[]=' + encodeURIComponent(dateType) +
+    dateQuery(duration, s0, e0) + '&with_inactive=' + (withInactive ? 1 : 0);
+  var r = await fetch(url, { headers: HDRS(token) });
+  if (!r.ok) throw new Error('total ' + dateType + ' ' + r.status);
+  var j = await r.json();
+  var t = (j && j.data) || j || {};
+  return Math.round((Number(t.contract_amount) || 0) * 100) / 100;
 }
 
 module.exports = async (req, res) => {
@@ -87,8 +114,20 @@ module.exports = async (req, res) => {
 
     var token = await jpLogin();
     await switchCompany(token, RICHMOND_COMPANY);
-    var approved = await pullReport(token, 'job_awarded_date', duration, qs, qe);
-    var contract = await pullReport(token, 'contract_signed_date', duration, qs, qe);
+    var approved = await pullReport(token, 'job_awarded_date', duration, qs, qe, 1);
+    var contract = await pullReport(token, 'contract_signed_date', duration, qs, qe, 1);
+    // Non-fatal: the /total endpoint is new to this file and unverified against the
+    // Richmond company. If it fails, fall back to no company anchor -- the client then
+    // sums the rep rows as before -- rather than letting the outer catch blank the page.
+    var totals = null, totalsErr = null;
+    try {
+      totals = await Promise.all([
+        pullTotal(token, 'job_awarded_date', duration, qs, qe, 0),
+        pullTotal(token, 'contract_signed_date', duration, qs, qe, 0),
+        pullTotal(token, 'job_awarded_date', duration, qs, qe, 1),
+        pullTotal(token, 'contract_signed_date', duration, qs, qe, 1),
+      ]);
+    } catch (te) { totalsErr = String((te && te.message) || te); }
 
     var names = {};
     Object.keys(approved).forEach(function (n) { names[n] = 1; });
@@ -98,8 +137,27 @@ module.exports = async (req, res) => {
     }).filter(function (r) { return r.approved > 0 || r.contract > 0; })
       .sort(function (a, b) { return (b.approved - a.approved) || (b.contract - a.contract); });
 
+    var round2 = function (n) { return Math.round(n * 100) / 100; };
+    var payload = {
+      updated: new Date().toISOString(),
+      duration: (qs && qe) ? (qs + '..' + qe) : duration,
+      office: 'richmond',
+      reps: reps,
+    };
+    if (totals) {
+      // Same shape as /api/revenue so both offices reconcile the same way.
+      payload.company = { approved_amount: totals[0], contract_amount: totals[1] };
+      payload.companyAll = { approved_amount: totals[2], contract_amount: totals[3] };
+      payload.inactive = {
+        approved_amount: round2(payload.companyAll.approved_amount - payload.company.approved_amount),
+        contract_amount: round2(payload.companyAll.contract_amount - payload.company.contract_amount),
+      };
+    } else if (totalsErr) {
+      payload.totalsError = totalsErr;
+    }
+
     res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
-    res.status(200).json({ updated: new Date().toISOString(), duration: (qs && qe) ? (qs + '..' + qe) : duration, office: 'richmond', reps: reps });
+    res.status(200).json(payload);
   } catch (e) {
     res.status(200).json({ updated: new Date().toISOString(), duration: 'MTD', office: 'richmond', reps: [], error: String((e && e.message) || e) });
   }
