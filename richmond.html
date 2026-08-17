@@ -89,14 +89,30 @@ var le=res0[0], rev=res0[1], ca=res0[2][0], dr=res0[2][1];
     Object.keys(revMap).forEach(function(k){if(!map[k])map[k]={rep:revMap[k].rep,doors:0,cas:caMap[k]||0};});
     Object.keys(map).forEach(function(k){var rv=revMap[k]||{};map[k].approved=rv.approved||0;map[k].contract=rv.contract||0;});
     var _curM=_mIdx;var _lc=(le&&le.leapCA)||{};var _leapCur={};Object.keys(_lc).forEach(function(rp){_leapCur[norm(rp)]=(_lc[rp]||[])[_curM]||0;});Object.keys(map).forEach(function(k){map[k].leapCa=_leapNA?null:(_leapCur[k]||0);});
-    var rows=Object.keys(map).map(function(k){return map[k]}).filter(function(o){var n=norm(o.rep);return !(n.indexOf('haley')>-1||n.indexOf('solomon')>-1||n==='adam mulvaney'||n==='unassigned');}).sort(function(a,b){return (b.approved-a.approved)||(b.doors-a.doors)});
+    var allowSet={};(dr.allowedReps||[]).forEach(function(n){allowSet[norm(n)]=1;});
+    var haveRoster=(dr.allowedReps||[]).length>0;
+    // No name blocklist any more. Richmond dropped haley/solomon/adam mulvaney/unassigned
+    // outright and the headline was the sum of whatever survived, so that revenue was
+    // invisible. Off-roster reps now render, tagged, and stay in the total.
+    var rows=Object.keys(map).map(function(k){return map[k]});
+    rows.forEach(function(r){r.off=haveRoster&&!allowSet[norm(r.rep)];});
+    rows.sort(function(a,b){return ((a.off?1:0)-(b.off?1:0))||(b.approved-a.approved)||(b.doors-a.doors)});
     var tD=0,tC=0,tAp=0,tCn=0,tLeap=0;rows.forEach(function(r){tD+=r.doors||0;tC+=r.cas||0;tAp+=r.approved||0;tCn+=r.contract||0;tLeap+=r.leapCa||0;});
+    // Headline anchors on Leap's own company total (including deactivated users) so it
+    // reconciles with a report run in Leap instead of being a sum of the visible rows.
+    var cAll=(rev&&(rev.companyAll||rev.company))||null;
+    var headAp=cAll?(+cAll.approved_amount||0):tAp;
+    var headCn=cAll?(+cAll.contract_amount||0):tCn;
     document.getElementById('cDr').textContent=tD;
     document.getElementById('cCa').textContent=tC+' / '+(_leapNA?'\u2014':tLeap);
-    document.getElementById('cAp').textContent=fmt(tAp);
-    document.getElementById('cCn').textContent=tCn>0?fmt(tCn):'—';
-    var body=rows.map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+' / '+(_leapNA?'—':(r.leapCa||0))+'</td><td class="num">'+(_leapNA?((r.cas||0)>0?Math.round((r.doors||0)/(r.cas||1)):'—'):((r.leapCa||0)>0?Math.round((r.doors||0)/(r.leapCa||1)):'—'))+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num">'+(r.contract>0?fmt(r.contract):'—')+'</td></tr>'}).join('');
-    document.getElementById('tw').innerHTML='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs (SR/Leap)</th><th class="num">Doors/CA</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td></td><td>Total</td><td class="num">'+tD+'</td><td class="num">'+tC+' / '+(_leapNA?'—':tLeap)+'</td><td class="num">'+(_leapNA?(tC>0?Math.round(tD/tC):'—'):(tLeap>0?Math.round(tD/tLeap):'—'))+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+(tCn>0?fmt(tCn):'—')+'</td></tr></tfoot></table>';
+    document.getElementById('cAp').textContent=fmt(headAp);
+    document.getElementById('cCn').textContent=headCn>0?fmt(headCn):'\u2014';
+    var notes='';
+    var gAp=Math.round((headAp-tAp)*100)/100,gCn=Math.round((headCn-tCn)*100)/100;
+    if(Math.abs(gAp)>1||Math.abs(gCn)>1)notes+='<div class="state" style="color:#b45309">Unattributed to any rep: '+fmt(gAp)+' approved / '+fmt(gCn)+' contract signed. Headline totals come from Leap; the difference is revenue Leap reports at company level but not against a rep row.</div>';
+    if(rev&&rev.inactive&&((+rev.inactive.approved_amount)||(+rev.inactive.contract_amount)))notes+='<div class="state" style="color:#6b7888">Includes deactivated Leap users: '+fmt(rev.inactive.approved_amount)+' approved / '+fmt(rev.inactive.contract_amount)+' contract signed.</div>';
+    var body=rows.map(function(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+(r.off?' <span style="color:#6b7888;font-size:11px;font-weight:400">not on SR roster</span>':'')+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+' / '+(_leapNA?'—':(r.leapCa||0))+'</td><td class="num">'+(_leapNA?((r.cas||0)>0?Math.round((r.doors||0)/(r.cas||1)):'—'):((r.leapCa||0)>0?Math.round((r.doors||0)/(r.leapCa||1)):'—'))+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num">'+(r.contract>0?fmt(r.contract):'—')+'</td></tr>'}).join('');
+    document.getElementById('tw').innerHTML=notes+'<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs (SR/Leap)</th><th class="num">Doors/CA</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td></td><td>Total</td><td class="num">'+tD+'</td><td class="num">'+tC+' / '+(_leapNA?'—':tLeap)+'</td><td class="num">'+(_leapNA?(tC>0?Math.round(tD/tC):'—'):(tLeap>0?Math.round(tD/tLeap):'—'))+'</td><td class="num">'+fmt(tAp)+'</td><td class="num">'+(tCn>0?fmt(tCn):'—')+'</td></tr></tfoot></table>';
   }).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false;if(ud){ud.disabled=false;ud.textContent='Update doors now';}});
 }
 document.getElementById('rf').addEventListener('click',function(){load();});

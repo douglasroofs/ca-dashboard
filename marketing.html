@@ -42,6 +42,29 @@
   .muted{color:var(--dim);font-size:12px}
   .err{color:var(--bad);background:#fff;border:1px solid var(--bad);border-radius:12px;padding:12px}
   input[type=search]{border:1px solid #dfe4ec;border-radius:8px;padding:7px 10px;font-size:13px;width:250px;margin-bottom:8px;font-family:inherit}
+  /* --- appointment calendar --- */
+  .lg{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--dim);margin:0 0 10px;align-items:center}
+  .lg i{font-style:normal;font-weight:700;font-size:9px;letter-spacing:.05em;padding:1px 5px;border-radius:4px;background:rgba(127,127,127,.14)}
+  .cal{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .mo{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(127,127,127,.04)}
+  .mo .mh{padding:8px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);border-bottom:1px solid var(--line);display:flex}
+  .mo .mh b{margin-left:auto;color:var(--ink);font-weight:650;letter-spacing:0;text-transform:none}
+  .dow,.grid{display:grid;grid-template-columns:repeat(7,1fr)}
+  .dow div{padding:5px 4px;text-align:center;font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em}
+  .dy{min-height:78px;border-top:1px solid var(--line);border-left:1px solid var(--line);padding:3px 4px}
+  .grid .dy:nth-child(7n+1){border-left:none}
+  .dy.out{opacity:.3}
+  .dy .dn{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums}
+  .dy.has .dn{color:var(--ink);font-weight:680}
+  /* accents use inset box-shadow, not border, so the dark-theme border override can't flatten them */
+  .ap{font-size:11px;line-height:1.3;margin-top:3px;padding:2px 5px 3px 7px;border-radius:5px;background:rgba(127,127,127,.11);box-shadow:inset 3px 0 0 var(--dim)}
+  .ap .tg{font-size:9px;font-weight:700;letter-spacing:.05em;color:var(--dim)}
+  .ap b{display:block;font-weight:620;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ap em{font-style:normal;color:var(--dim);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ap.ca{box-shadow:inset 3px 0 0 var(--good)} .ap.ca .tg{color:var(--good)}
+  .ap.rt{box-shadow:inset 3px 0 0 var(--blue)} .ap.rt .tg{color:var(--blue)}
+  .ap.un{box-shadow:inset 3px 0 0 var(--bad)}  .ap.un .tg{color:var(--bad)}
+  .ap.nr{box-shadow:inset 3px 0 0 var(--warn)} .ap.nr .tg{color:var(--warn)}
 </style>
 </head>
 <body>
@@ -131,6 +154,8 @@ function draw(){
   H.push('<div class="card alert"><div class="label">Unresulted</div><div class="value">'+T.un+'</div><div class="sub">'+pct(T.un,T.set)+' of set</div></div>');
   H.push('</div>');
 
+  H.push(calSection(recs,f,t,isCA,isRT,notRan));
+
   H.push('<section><h2>Ad spend - Google LSA</h2><div class="cards">');
   H.push('<div class="card hi"><div class="label">Spend in range</div><div class="value">'+money(spend)+'</div><div class="sub">2 LSA accounts combined</div></div>');
   H.push('<div class="card credit"><div class="label">Pending credit</div><div class="value">'+money(D.spend.pendingCredit)+'</div><div class="sub">expected back for disputed leads</div></div>');
@@ -174,6 +199,62 @@ function draw(){
   });
 }
 function card(v,l,c,sub){return '<div class="card"><div class="label">'+l+'</div><div class="value '+(c||'')+'">'+v+'</div>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>';}
+
+// Month-grid calendar of the appointments already filtered to the selected range.
+// Every appointment shows customer, rep and result. Result is carried by a short text
+// tag as well as the colour accent, so it still reads without relying on colour.
+var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function apClass(r,isCA,isRT,notRan){
+  if(!r.res) return ['un','UNRESULTED'];
+  if(isCA[r.res]) return ['ca','CA SIGNED'];
+  if(isRT[r.res]) return ['rt',r.res.toUpperCase()];
+  if(notRan[r.res]) return ['nr',/cancel/i.test(r.res)?'CANCELED':'NO ANSWER'];
+  return ['ot',r.res.toUpperCase()];
+}
+function calSection(recs,f,t,isCA,isRT,notRan){
+  var byDay={};
+  recs.forEach(function(r){(byDay[r.d]=byDay[r.d]||[]).push(r);});
+  Object.keys(byDay).forEach(function(k){byDay[k].sort(function(a,b){return (a.rep||'').localeCompare(b.rep||'')||(a.cust||'').localeCompare(b.cust||'');});});
+  var s=new Date(f+'T12:00:00'), e=new Date(t+'T12:00:00');
+  var months=[], cur=new Date(s.getFullYear(),s.getMonth(),1), capped=0;
+  while(cur<=e){ if(months.length>=14){capped=1;break;} months.push(new Date(cur)); cur.setMonth(cur.getMonth()+1); }
+  var H=['<section><h2>Calendar</h2>'];
+  H.push('<div class="lg"><span><i class="tg" style="color:var(--good)">CA SIGNED</i></span>'+
+         '<span><i class="tg" style="color:var(--blue)">RETAIL / REPAIR</i></span>'+
+         '<span><i class="tg" style="color:var(--warn)">CANCELED / NO ANSWER</i></span>'+
+         '<span><i class="tg" style="color:var(--bad)">UNRESULTED</i></span>'+
+         '<span>'+recs.length+' appointments '+esc(f)+' to '+esc(t)+'</span></div>');
+  if(capped) H.push('<div class="muted" style="margin-bottom:8px">Range spans more than 14 months - showing the first 14. Narrow the range to see the rest.</div>');
+  H.push('<div class="cal">');
+  months.forEach(function(m){
+    var y=m.getFullYear(), mo=m.getMonth();
+    var first=new Date(y,mo,1), last=new Date(y,mo+1,0);
+    var count=0;
+    for(var d=1;d<=last.getDate();d++){var k=y+'-'+p2(mo+1)+'-'+p2(d); if(byDay[k]&&k>=f&&k<=t)count+=byDay[k].length;}
+    H.push('<div class="mo"><div class="mh">'+MON[mo]+' '+y+'<b>'+count+(count===1?' appt':' appts')+'</b></div>');
+    H.push('<div class="dow">'+DOW.map(function(x){return '<div>'+x+'</div>';}).join('')+'</div><div class="grid">');
+    for(var i=0;i<first.getDay();i++) H.push('<div class="dy out"></div>');
+    for(var day=1;day<=last.getDate();day++){
+      var key=y+'-'+p2(mo+1)+'-'+p2(day);
+      var inRange=key>=f&&key<=t;
+      var list=(inRange&&byDay[key])||[];
+      H.push('<div class="dy'+(inRange?'':' out')+(list.length?' has':'')+'"><div class="dn">'+day+'</div>');
+      list.forEach(function(r){
+        var c=apClass(r,isCA,isRT,notRan);
+        H.push('<div class="ap '+c[0]+'" title="'+esc(r.cust+' - '+r.rep+' - '+(r.res||'unresulted')+(r.stage?' - '+r.stage:'')+(r.src?' - source: '+r.src:''))+'">'+
+               '<span class="tg">'+esc(c[1])+'</span><b>'+esc(r.cust||'(no customer)')+'</b><em>'+esc(r.rep||'(no rep)')+'</em></div>');
+      });
+      H.push('</div>');
+    }
+    var tail=(7-((first.getDay()+last.getDate())%7))%7;
+    for(var j=0;j<tail;j++) H.push('<div class="dy out"></div>');
+    H.push('</div></div>');
+  });
+  H.push('</div></section>');
+  return H.join('');
+}
+function p2(n){return (n<10?'0':'')+n;}
 </script>
 
 <style id="dark-theme">
