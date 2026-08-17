@@ -1,4 +1,4 @@
-:// api/doors.js ÃÂ¢ÃÂÃÂ doors knocked per rep this month, from Sales Rabbit.
+// api/doors.js ÃÂ¢ÃÂÃÂ doors knocked per rep this month, from Sales Rabbit.
 //
 // A "door" = a KNOCK EVENT: a SalesRabbit lead status-history entry (each disposition a rep
 // records), status NOT in {Closed, Do Not Knock, Drive By}, event dated this month, credited to
