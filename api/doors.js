@@ -1,4 +1,4 @@
-// api/doors.js ÃÂ¢ÃÂÃÂ doors knocked per rep this month, from Sales Rabbit.
+:// api/doors.js ÃÂ¢ÃÂÃÂ doors knocked per rep this month, from Sales Rabbit.
 //
 // A "door" = a KNOCK EVENT: a SalesRabbit lead status-history entry (each disposition a rep
 // records), status NOT in {Closed, Do Not Knock, Drive By}, event dated this month, credited to
@@ -9,8 +9,8 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-08-15T21:46:29.421Z",
-    "total": 2185,
+    "updated": "2026-08-17T14:30:12.560Z",
+    "total": 2188,
     "reps": [
       {
         "rep": "Thurmond shaw",
@@ -34,7 +34,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Wayne Jefferson",
-        "doors": 182,
+        "doors": 181,
         "team": "mccarthy"
       },
       {
@@ -44,7 +44,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Andrew Funk",
-        "doors": 161,
+        "doors": 162,
         "team": "selfgen"
       },
       {
@@ -54,7 +54,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "David Kerns",
-        "doors": 83,
+        "doors": 84,
         "team": "jack"
       },
       {
@@ -64,7 +64,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 66,
+        "doors": 68,
         "team": "mccarthy"
       },
       {
@@ -117,12 +117,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-08-15T21:46:31.501Z",
-    "total": 2228,
+    "updated": "2026-08-17T14:30:14.990Z",
+    "total": 2169,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 746,
+        "doors": 822,
         "team": "retail"
       },
       {
@@ -131,28 +131,23 @@ const SNAPSHOTS = {
         "team": "retail"
       },
       {
+        "rep": "Andrew Harris",
+        "doors": 274,
+        "team": "retail"
+      },
+      {
         "rep": "Felipe Osorio",
         "doors": 271,
         "team": "retail"
       },
       {
-        "rep": "Andrew Harris",
-        "doors": 253,
-        "team": "retail"
-      },
-      {
         "rep": "Carter Massengill",
-        "doors": 184,
+        "doors": 185,
         "team": "retail"
       },
       {
         "rep": "Dustian White",
         "doors": 162,
-        "team": "retail"
-      },
-      {
-        "rep": "Anthony Valvo",
-        "doors": 157,
         "team": "retail"
       },
       {
@@ -189,8 +184,7 @@ const SNAPSHOTS = {
       "marcus schanewolf",
       "felipe osorio",
       "kylea white",
-      "dustian white",
-      "anthony valvo"
+      "dustian white"
     ],
     "roster": [
       "Justin Coghill",
@@ -205,8 +199,7 @@ const SNAPSHOTS = {
       "marcus schanewolf",
       "Felipe Osorio",
       "Kylea White",
-      "Dustian White",
-      "Anthony Valvo"
+      "Dustian White"
     ]
   }
 };
