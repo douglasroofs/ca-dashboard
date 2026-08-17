@@ -1,78 +1,64 @@
-// api/leap-probe.js - TEMPORARY diagnostic v3, delete after validation.
-// v1: LEAP_ACCESS_TOKEN authorizes against Leap v3.
-// v2: /jobs carries all three dates + structured reps; money is at
-//     /jobs/{id}/financial_summary (total_job_price, payments, owed).
-// v3: WHICH rep does Leap call the Customer Rep? A job returns several.
-//     That choice is the whole $10.35M vs $6.49M gap.
-// Employee names are shown (already public on /api/revenue). Customer PII is masked.
-const V3 = 'https://api.jobprogress.com/api/v3';
-const PII = /email|phone|address|street|zip|lat|lng|note|description/i;
-function maskObj(o) { var out = {}; Object.keys(o).slice(0, 40).forEach(function (k) { out[k] = mask(k, o[k]); }); return out; }
-function mask(k, v) {
-  if (v == null) return null;
-  if (Array.isArray(v)) return v.slice(0, 5).map(function (x) { return x && typeof x === 'object' ? maskObj(x) : x; });
-  if (typeof v === 'object') return maskObj(v);
-  if (typeof v !== 'string') return v;
-  return PII.test(k) ? '<str ' + v.length + '>' : v.slice(0, 60);
-}
-function repLite(u) {
-  if (!u) return null;
-  return { id: u.id, name: [u.first_name, u.last_name].filter(Boolean).join(' '), company_id: u.company_id, active: u.active, group: u.group && u.group.name, role: u.role && u.role[0] && u.role[0].name };
-}
-function hdr(t) { return { Authorization: 'Bearer ' + t, Accept: 'application/json' }; }
-async function g(t, p) {
-  var r = await fetch(V3 + p, { headers: hdr(t) });
+// api/leap-probe.js - TEMPORARY diagnostic v4, delete after the real fix ships.
+// Gating question for killing the password login: does the stored API token
+// reach the v1 REPORT endpoints, or only api/v3? revenue.js needs
+// /reports/job_listing, which lives on v1.
+// ?sum=1 also aggregates the year one-row-per-job, which is the correct,
+// non-double-counted company figure (Haley's upgrades net out by construction).
+const V1 = 'https://jobprogress.com/api/public/api/v1';
+const ENVS = ['LEAP_ACCESS_TOKEN', 'RICH_LEAP_API_KEY', 'LEAP_API_TOKEN'];
+const JL = '/reports/job_listing?date_range_type[]=contract_signed_date&duration=YTD&include_lost_jobs=1&includes[]=customer&includes[]=customer.rep&limit=100&with_archived=0&with_inactive=1&page=';
+function hdr(t) { return { Authorization: 'Bearer ' + t, Accept: 'application/json', platform: 'web' }; }
+async function g(t, u) {
+  var r = await fetch(V1 + u, { headers: hdr(t) });
   var x = await r.text(); var j = null;
   try { j = JSON.parse(x); } catch (_) {}
-  return { status: r.status, ok: r.ok, json: j, raw: j ? null : x.slice(0, 200) };
+  return { status: r.status, ok: r.ok, json: j, raw: j ? null : x.slice(0, 160) };
+}
+function fdOf(r) { var f = r.financial_details; if (!f) return {}; return Array.isArray(f) ? (f[0] || {}) : (f.data || f); }
+function repOf(r) {
+  var c = r.customer && (r.customer.data || r.customer);
+  var p = c && c.rep && (c.rep.data || c.rep);
+  return p ? ((p.first_name || '') + ' ' + (p.last_name || '')).replace(/\s+/g, ' ').trim() : '(none)';
 }
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   try {
     var q = new URL(req.url, 'http://x').searchParams;
-    var envName = q.get('env') || 'LEAP_ACCESS_TOKEN';
-    var t = process.env[envName];
-    if (!t) { res.status(200).json({ error: 'env ' + envName + ' not set' }); return; }
-    var out = { env: envName, page: q.get('page') || '20' };
+    var out = { base: V1, auth: [] };
+    var tok = null, env = null;
+    for (var i = 0; i < ENVS.length; i++) {
+      var n = ENVS[i], t = process.env[n];
+      if (!t) { out.auth.push({ env: n, present: false }); continue; }
+      var r0 = await g(t, JL + '1');
+      out.auth.push({ env: n, status: r0.status, ok: r0.ok, note: r0.ok ? null : (r0.raw || '').slice(0, 100) });
+      if (r0.ok && !tok) { tok = t; env = n; }
+    }
+    out.workingEnvVar = env;
+    if (!tok || q.get('sum') !== '1') { res.status(200).json(out); return; }
 
-    var page = await g(t, '/jobs?limit=100&includes[]=reps&includes[]=customer&page=' + out.page);
-    var rows = (page.json && page.json.data) || [];
-    var cands = rows.filter(function (r) { return r.contract_signed_date && r.reps && r.reps.data && r.reps.data.length; });
-    out.counts = { rows: rows.length, signedWithReps: cands.length };
-
-    // Show several jobs at once so a pattern is visible, not a single anecdote.
-    out.jobs = cands.slice(0, 4).map(function (jb) {
-      var cust = jb.customer && (jb.customer.data || jb.customer);
-      var custRepish = {};
-      if (cust) {
-        Object.keys(cust).forEach(function (k) {
-          if (/rep|canvass|sales|owner|assign|estimator/i.test(k)) custRepish[k] = mask(k, cust[k]);
-        });
-      }
-      return {
-        id: jb.id, number: jb.number, division_id: jb.division_id,
-        contract_signed_date: jb.contract_signed_date, awarded_date: jb.awarded_date,
-        reps: (jb.reps.data || []).map(repLite),
-        customerId: cust && cust.id,
-        customerRepFields: custRepish,
-        customerKeys: cust ? Object.keys(cust) : null,
-      };
+    var rows = [];
+    for (var p = 1; p <= 8; p++) {
+      var r = await g(tok, JL + p);
+      var d = (r.json && r.json.data) || [];
+      rows = rows.concat(d);
+      var pg = (r.json && r.json.meta && r.json.meta.pagination) || {};
+      if (p >= (pg.total_pages || 1) || !d.length) break;
+    }
+    var tot = 0, recv = 0, pend = 0, byRep = {};
+    rows.forEach(function (x) {
+      var f = fdOf(x);
+      var a = Number(f.total_job_amount) || 0;
+      tot += a; recv += Number(f.total_received_payemnt) || 0; pend += Number(f.pending_payment) || 0;
+      var k = repOf(x);
+      if (!byRep[k]) byRep[k] = { amt: 0, n: 0 };
+      byRep[k].amt += a; byRep[k].n++;
     });
-
-    // Pull one customer record on its own - the list include may be trimmed.
-    var cid = out.jobs[0] && out.jobs[0].customerId;
-    if (cid) {
-      var c1 = await g(t, '/customers/' + cid + '?includes[]=rep&includes[]=reps&includes[]=sales_rep');
-      var cb = c1.json && (c1.json.data || c1.json);
-      out.customerDirect = { status: c1.status, keys: cb ? Object.keys(cb) : null, repFields: cb ? Object.keys(cb).filter(function (k) { return /rep|canvass|sales|owner|assign/i.test(k); }).reduce(function (a, k) { a[k] = mask(k, cb[k]); return a; }, {}) : null };
-    }
-
-    // And the money, for the same first job.
-    var jid = out.jobs[0] && out.jobs[0].id;
-    if (jid) {
-      var fs = await g(t, '/jobs/' + jid + '/financial_summary');
-      out.financialSummary = fs.json ? (fs.json.data || fs.json) : fs.raw;
-    }
+    out.jobs = rows.length;
+    out.totalJobAmount = Math.round(tot);
+    out.paymentsReceived = Math.round(recv);
+    out.pendingPayment = Math.round(pend);
+    out.byRep = Object.keys(byRep).sort(function (a, b) { return byRep[b].amt - byRep[a].amt; })
+      .map(function (k) { return { rep: k, amount: Math.round(byRep[k].amt), jobs: byRep[k].n }; });
     res.status(200).json(out);
   } catch (e) { res.status(200).json({ error: String((e && e.message) || e) }); }
 };
