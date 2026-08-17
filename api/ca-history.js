@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-08-15T21:49:38.995Z",
+    "updated": "2026-08-17T14:33:20.808Z",
     "year": 2026,
     "months": [
       0,
@@ -30,12 +30,12 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          6,
+          5,
           14,
           27,
           7
         ],
-        "total": 54
+        "total": 53
       },
       {
         "rep": "David Kerns",
@@ -45,11 +45,11 @@ const SNAPSHOTS = {
           11,
           8,
           5,
-          7,
+          6,
           2,
           5
         ],
-        "total": 38
+        "total": 37
       },
       {
         "rep": "Mike Mccarthy",
@@ -87,25 +87,11 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          3,
           19,
           7
         ],
-        "total": 30
-      },
-      {
-        "rep": "Andrew  Prickel",
-        "counts": [
-          0,
-          0,
-          3,
-          3,
-          6,
-          1,
-          14,
-          0
-        ],
-        "total": 27
+        "total": 29
       },
       {
         "rep": "Christian Brown",
@@ -131,6 +117,20 @@ const SNAPSHOTS = {
           8,
           6,
           4,
+          0
+        ],
+        "total": 26
+      },
+      {
+        "rep": "Andrew  Prickel",
+        "counts": [
+          0,
+          0,
+          3,
+          3,
+          5,
+          1,
+          14,
           0
         ],
         "total": 26
@@ -208,7 +208,7 @@ const SNAPSHOTS = {
       {
         "rep": "Robert Mumford-Wilson",
         "counts": [
-          4,
+          3,
           0,
           0,
           3,
@@ -217,7 +217,7 @@ const SNAPSHOTS = {
           0,
           0
         ],
-        "total": 8
+        "total": 7
       },
       {
         "rep": "Ethan Wiley",
@@ -264,7 +264,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-08-15T21:51:08.343Z",
+    "updated": "2026-08-17T14:34:39.913Z",
     "year": 2026,
     "months": [
       0,
@@ -281,11 +281,11 @@ const SNAPSHOTS = {
         "rep": "Joshua Baca",
         "counts": [
           0,
-          3,
+          2,
           13,
           13,
           6,
-          19,
+          20,
           9,
           6
         ],
