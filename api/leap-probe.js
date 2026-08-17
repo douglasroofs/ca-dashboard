@@ -1,55 +1,63 @@
-// api/leap-probe.js - TEMPORARY diagnostic, delete after validation.
-// Does the documented Leap v3 API return job-level rows with rep, division,
-// amount and dates? If yes, we stop pulling pre-aggregated reports (and stop
-// logging in as support@ on every request, which steals the human session).
+// api/leap-probe.js - TEMPORARY diagnostic v2, delete after validation.
+// v1 proved: LEAP_ACCESS_TOKEN authorizes against Leap v3, and /jobs carries
+// contract_signed_date, awarded_date, completion_date and division_id.
+// v2 answers: where is the contract AMOUNT, and what does the rep relation look like?
 // Never prints a token. Masks customer PII because /api/* is unauthenticated.
 const V3 = 'https://api.jobprogress.com/api/v3';
-const CANDS = ['LEAP_API_TOKEN', 'LEAP_ACCESS_TOKEN', 'RICH_LEAP_API_KEY', 'herndon', 'Richmond', 'JP_API_TOKEN'];
-const PII = /email|phone|address|street|zip|lat|lng|name/i;
+const PII = /email|phone|address|street|zip|lat|lng|first_name|last_name|company_name|property_name|note|description/i;
+function maskObj(o) { var out = {}; Object.keys(o).slice(0, 30).forEach(function (k) { out[k] = mask(k, o[k]); }); return out; }
 function mask(k, v) {
   if (v == null) return null;
-  if (Array.isArray(v)) return { arr: v.length, keys: v[0] && typeof v[0] === 'object' ? Object.keys(v[0]).slice(0, 20) : typeof v[0] };
-  if (typeof v === 'object') { var o = {}; Object.keys(v).slice(0, 25).forEach(function (a) { o[a] = mask(a, v[a]); }); return o; }
+  if (Array.isArray(v)) return v.slice(0, 3).map(function (x) { return x && typeof x === 'object' ? maskObj(x) : x; });
+  if (typeof v === 'object') return maskObj(v);
   if (typeof v !== 'string') return v;
   return PII.test(k) ? '<str ' + v.length + '>' : v.slice(0, 60);
 }
 function hdr(t) { return { Authorization: 'Bearer ' + t, Accept: 'application/json' }; }
+async function g(t, p) {
+  var r = await fetch(V3 + p, { headers: hdr(t) });
+  var x = await r.text(); var j = null;
+  try { j = JSON.parse(x); } catch (_) {}
+  return { status: r.status, ok: r.ok, json: j, raw: j ? null : x.slice(0, 200) };
+}
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   try {
-    var shape = new URL(req.url, 'http://x').searchParams.get('shape') === '1';
-    var auth = [], tok = null, env = null;
-    for (var i = 0; i < CANDS.length; i++) {
-      var n = CANDS[i], t = process.env[n];
-      if (!t) { auth.push({ env: n, present: false }); continue; }
-      try {
-        var r0 = await fetch(V3 + '/jobs?limit=1', { headers: hdr(t) });
-        auth.push({ env: n, present: true, status: r0.status, ok: r0.ok });
-        if (r0.ok && !tok) { tok = t; env = n; }
-      } catch (e) { auth.push({ env: n, present: true, err: String(e.message).slice(0, 80) }); }
+    var q = new URL(req.url, 'http://x').searchParams;
+    var envName = q.get('env') || 'LEAP_ACCESS_TOKEN';
+    var t = process.env[envName];
+    if (!t) { res.status(200).json({ error: 'env ' + envName + ' not set' }); return; }
+    var out = { env: envName };
+
+    var page = await g(t, '/jobs?limit=100&includes[]=reps&includes[]=division&page=' + (q.get('page') || '1'));
+    var rows = (page.json && page.json.data) || [];
+    var pg = page.json && page.json.meta && page.json.meta.pagination;
+    out.listStatus = page.status;
+    out.totalJobs = pg && pg.total;
+    var withRep = rows.filter(function (r) { var d = r.reps && r.reps.data; return d && d.length; });
+    var signed = rows.filter(function (r) { return r.contract_signed_date; });
+    out.counts = { rows: rows.length, withReps: withRep.length, withSignedDate: signed.length };
+
+    var pick = withRep[0] || signed[0] || rows[0] || null;
+    if (pick) {
+      out.pickedJob = {
+        id: pick.id, number: pick.number, division_id: pick.division_id,
+        contract_signed_date: pick.contract_signed_date, awarded_date: pick.awarded_date,
+        completion_date: pick.completion_date, current_stage: mask('current_stage', pick.current_stage),
+        reps: mask('reps', pick.reps), division: mask('division', pick.division),
+      };
+      var fs = await g(t, '/jobs/' + pick.id + '/financial_summary');
+      var fsBody = fs.json ? (fs.json.data || fs.json) : null;
+      out.financialSummary = { status: fs.status, keys: fsBody ? Object.keys(fsBody) : null, body: fsBody ? mask('fs', fsBody) : fs.raw };
     }
-    if (!tok || !shape) {
-      res.status(200).json({ base: V3, auth: auth, workingEnvVar: env, next: tok ? 'call /api/leap-probe?shape=1' : 'Leap Settings -> Developer, add token to Vercel as LEAP_API_TOKEN' });
-      return;
+
+    var tries = ['financial_summary', 'financials', 'amount', 'worksheet', 'estimates'];
+    out.includeTests = [];
+    for (var i = 0; i < tries.length; i++) {
+      var r2 = await g(t, '/jobs?limit=1&includes[]=' + tries[i]);
+      var row = (r2.json && r2.json.data && r2.json.data[0]) || null;
+      out.includeTests.push({ include: tries[i], status: r2.status, present: row ? Object.keys(row).indexOf(tries[i]) > -1 : null });
     }
-    var r = await fetch(V3 + '/jobs?limit=3&includes[]=customer&includes[]=division&includes[]=reps', { headers: hdr(tok) });
-    var j = await r.json().catch(function () { return null; });
-    var rows = (j && (j.data || j.jobs)) || [];
-    var row = rows[0] || null;
-    var keys = row ? Object.keys(row) : [];
-    var sample = null;
-    if (row) { sample = {}; keys.forEach(function (k) { sample[k] = mask(k, row[k]); }); }
-    res.status(200).json({
-      workingEnvVar: env, status: r.status, rowCount: rows.length,
-      meta: (j && (j.meta || j.pagination)) || null,
-      fieldNames: keys,
-      need: {
-        rep: keys.filter(function (k) { return /rep|sales|estimator/i.test(k); }),
-        division: keys.filter(function (k) { return /division|office|branch/i.test(k); }),
-        amount: keys.filter(function (k) { return /amount|total|price/i.test(k); }),
-        date: keys.filter(function (k) { return /date/i.test(k); }),
-      },
-      sample: sample,
-    });
+    res.status(200).json(out);
   } catch (e) { res.status(200).json({ error: String((e && e.message) || e) }); }
 };
