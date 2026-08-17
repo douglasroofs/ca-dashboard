@@ -61,52 +61,88 @@ var ca={updated:j.updated,reps:(j.reps||[]).map(function(x){return {rep:x.rep,co
 var dr={updated:j.updated,total:(j.totals&&j.totals.doors)||0,reps:(j.reps||[]).map(function(x){return {rep:x.rep,doors:x.doors||0}}),roster:(j.roster||[]),allowedReps:(j.allowedReps||[])};
 return [ca,dr];
 })}
+// Resolve p, but give up after ms and resolve `fallback` instead. Needed because
+// /api/range does a full SalesRabbit event scan and times out on long ranges --
+// without this the whole page sat on "Loading..." forever while the revenue tiles
+// silently kept showing the PREVIOUS range's numbers.
+function withTimeout(p,ms,fallback){return new Promise(function(resolve){var done=false;var t=setTimeout(function(){if(done)return;done=true;resolve(fallback)},ms);p.then(function(v){if(done)return;done=true;clearTimeout(t);resolve(v)},function(){if(done)return;done=true;clearTimeout(t);resolve(fallback)})})}
+var ALIAS={'mike mccarthy':'michael mccarthy','izzy price':'isabelle price','robert mumford-wilson':'robert wilson'};
+function dkey(n){var x=norm(n);return ALIAS[x]||x}
 function load(rg){
 CUR=rg||null;
 var b=document.getElementById('rf');b.disabled=true;
 document.getElementById('tw').innerHTML='<div class="state">Loading...</div>';
 var _mIdx=CUR?fullMonthIdx(CUR):(new Date()).getMonth();
 var _leapNA=!!(CUR&&_mIdx<0);
-document.getElementById('rangeNote').textContent=CUR?(CUR.start+' \u2192 '+CUR.end+(_leapNA?'  \u00b7  Leap CAs are monthly \u2014 showing SR CAs':'')):'Month to date';
-Promise.all([
+document.getElementById('rangeNote').textContent=CUR?(CUR.start+' → '+CUR.end+(_leapNA?'  ·  Leap CAs are monthly — showing SR CAs':'')):'Month to date';
+var S={rev:null,le:{leapCA:{}},ca:{reps:[]},dr:{reps:[],roster:[],allowedReps:[],teamByRep:{},total:0},srState:'loading',mIdx:_mIdx,leapNA:_leapNA};
+// Phase 1 -- Leap revenue. Fast and range-accurate, so paint it immediately
+// instead of blocking behind the SalesRabbit scan.
+var pRev=Promise.all([
 fetch('/api/leap-extra?office=herndon',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{}}}),
-fetch('/api/revenue'+(CUR?('?start='+CUR.start+'&end='+CUR.end):''),{cache:'no-store'}).then(function(r){return r.json()}),
-srcs(CUR)
-]).then(function(res0){
-var res=[res0[0],res0[1],res0[2][0],res0[2][1]];
-var le=res[0], rev=res[1], ca=res[2], dr=res[3];
-if(rev.error)throw new Error(rev.error);
+fetch('/api/revenue'+(CUR?('?start='+CUR.start+'&end='+CUR.end):''),{cache:'no-store'}).then(function(r){return r.json()})
+]).then(function(a){S.le=a[0]||{leapCA:{}};S.rev=a[1];if(S.rev&&S.rev.error)throw new Error(S.rev.error);render(S);});
+// Phase 2 -- SalesRabbit doors/CAs. Fills in the door columns when it lands.
+var pSR=withTimeout(srcs(CUR),30000,null).then(function(v){
+if(!v){S.srState='timeout'}else{S.ca=v[0]||{reps:[]};S.dr=v[1]||S.dr;S.srState='ok'}
+if(S.rev)render(S);
+},function(){S.srState='timeout';if(S.rev)render(S);});
+pRev.catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'});
+Promise.all([pRev.catch(function(){}),pSR.catch(function(){})]).then(function(){b.disabled=false;});
+}
+function render(S){
+var rev=S.rev,ca=S.ca||{reps:[]},dr=S.dr||{},le=S.le||{};
+var _leapNA=S.leapNA,_curM=S.mIdx;
 document.getElementById('upd').textContent='Updated '+new Date(rev.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
 if(ca.updated)document.getElementById('caUpd').textContent='SR / Leap CAs · as of '+new Date(ca.updated).toLocaleDateString('en-US',{month:'short',day:'numeric'});
-var ALIAS={'mike mccarthy':'michael mccarthy','izzy price':'isabelle price','robert mumford-wilson':'robert wilson'};
-function dkey(n){var x=norm(n);return ALIAS[x]||x}
 var map={};
-(rev.reps||[]).forEach(function(r){map[norm(r.rep)]={rep:r.rep,approved:r.approved_amount||0,contract:r.contract_amount||0,cas:0,doors:0}});
+// dkey (not norm) so the alias table applies to Leap names too -- otherwise
+// "Mike McCarthy" from Leap and "Michael McCarthy" from SalesRabbit became two
+// separate rows and the revenue never merged onto the rep with the doors.
+(rev.reps||[]).forEach(function(r){map[dkey(r.rep)]={rep:r.rep,approved:r.approved_amount||0,contract:r.contract_amount||0,cas:0,doors:0}});
 (ca.reps||[]).forEach(function(c){var cc=(c.counts&&c.counts.length)?c.counts[c.counts.length-1]:0;var k=dkey(c.rep);if(map[k]){map[k].cas=cc}else{map[k]={rep:c.rep,approved:0,contract:0,cas:cc,doors:0}}});
 (dr.reps||[]).forEach(function(d){var k=dkey(d.rep);if(map[k]){map[k].doors=d.doors}else{map[k]={rep:d.rep,approved:0,contract:0,cas:0,doors:d.doors}}});
 (dr.roster||[]).forEach(function(nm){var k=dkey(nm);if(!map[k]){map[k]={rep:nm,approved:0,contract:0,cas:0,doors:0}}});
-var _curM=_mIdx;var _lc=(le&&le.leapCA)||{};var _leapCur={};if(!_leapNA){Object.keys(_lc).forEach(function(rp){_leapCur[dkey(rp)]=(_lc[rp]||[])[_curM]||0;});}Object.keys(map).forEach(function(k){map[k].leapCa=_leapNA?null:(_leapCur[k]||0);});
+var _lc=(le&&le.leapCA)||{};var _leapCur={};if(!_leapNA){Object.keys(_lc).forEach(function(rp){_leapCur[dkey(rp)]=(_lc[rp]||[])[_curM]||0;});}Object.keys(map).forEach(function(k){map[k].leapCa=_leapNA?null:(_leapCur[k]||0);});
 var rowsArr=Object.keys(map).map(function(k){return map[k]});
-rowsArr=rowsArr.filter(function(r){var n=norm(r.rep);return !(n.indexOf('haley')>-1||n.indexOf('solomon')>-1||n==='adam mulvaney'||n==='unassigned')});
-var TEAMS=[['selfgen','Self-Gen'],['jack',"Jack's Team"],['mccarthy',"McCarthy's Team"],['inbound','Inbound'],['retail','Retail'],['other','Other']];
+// Nothing is dropped here any more. The old code hard-filtered Haley Barry,
+// "solomon", Adam Mulvaney and "unassigned" by name, then dropped everyone
+// missing from the SalesRabbit roster -- and because the headline was the sum of
+// the surviving rows, that revenue vanished from the dashboard entirely. Those
+// reps now land in the Unassigned / Inactive group and stay in the total.
 var teamByRep=(dr&&dr.teamByRep)||{};
+var haveTeams=Object.keys(teamByRep).length>0;
 var allowSet=new Set(dr.allowedReps||[]);
-if(allowSet.size){rowsArr=rowsArr.filter(function(r){var k=dkey(r.rep);return allowSet.has(k)||(teamByRep[k]!==undefined)})}
-rowsArr.forEach(function(r){r.team=teamByRep[dkey(r.rep)]||'other';});
+rowsArr.forEach(function(r){var k=dkey(r.rep);
+if(!haveTeams){r.team='all';return}
+r.team=(teamByRep[k]!==undefined)?teamByRep[k]:(allowSet.has(k)?'other':'unassigned');});
+var TEAMS=haveTeams?[['selfgen','Self-Gen'],['jack',"Jack's Team"],['mccarthy',"McCarthy's Team"],['inbound','Inbound'],['retail','Retail'],['other','Other'],['unassigned','Unassigned / Inactive — not on the SalesRabbit roster']]:[['all','All Reps']];
 function tot(a){var t={d:0,c:0,ap:0,cn:0,lp:0};a.forEach(function(r){t.d+=(r.doors||0);t.c+=(r.cas||0);t.ap+=(r.approved||0);t.cn+=(r.contract||0);t.lp+=(r.leapCa||0)});return t}
-function ratio(d,l,c){if(_leapNA)return c>0?Math.round(d/c):'\u2014';return l>0?Math.round(d/l):'\u2014';}
-function rowH(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(r.doors||0)+'</td><td class="num">'+(r.cas||0)+' / '+(_leapNA?'\u2014':(r.leapCa||0))+'</td><td class="num">'+ratio(r.doors||0,r.leapCa||0,r.cas||0)+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract)+'</td></tr>';}
-function foot(t){return '<tr><td></td><td>Total</td><td class="num">'+t.d+'</td><td class="num">'+t.c+' / '+(_leapNA?'\u2014':t.lp)+'</td><td class="num">'+ratio(t.d,t.lp,t.c)+'</td><td class="num">'+fmt(t.ap)+'</td><td class="num">'+fmt(t.cn)+'</td></tr>';}
+function ratio(d,l,c){if(_leapNA)return c>0?Math.round(d/c):'—';return l>0?Math.round(d/l):'—';}
+function rowH(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(S.srState==='ok'?(r.doors||0):'—')+'</td><td class="num">'+(S.srState==='ok'?(r.cas||0):'—')+' / '+(_leapNA?'—':(r.leapCa||0))+'</td><td class="num">'+(S.srState==='ok'?ratio(r.doors||0,r.leapCa||0,r.cas||0):'—')+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract)+'</td></tr>';}
+function foot(t){return '<tr><td></td><td>Total</td><td class="num">'+(S.srState==='ok'?t.d:'—')+'</td><td class="num">'+(S.srState==='ok'?t.c:'—')+' / '+(_leapNA?'—':t.lp)+'</td><td class="num">'+(S.srState==='ok'?ratio(t.d,t.lp,t.c):'—')+'</td><td class="num">'+fmt(t.ap)+'</td><td class="num">'+fmt(t.cn)+'</td></tr>';}
 var THEAD='<table><thead><tr><th class="rank">#</th><th>Rep</th><th class="num">Doors</th><th class="num">CAs (SR/Leap)</th><th class="num">Doors/CA</th><th class="num">Approved</th><th class="num">Contract Signed</th></tr></thead><tbody>';
 var off=tot(rowsArr);
-document.getElementById('cDr').textContent=off.d;
-document.getElementById('cCa').textContent=off.c+' / '+(_leapNA?'\u2014':off.lp);
-document.getElementById('cAp').textContent=fmt(off.ap);
-document.getElementById('cCn').textContent=fmt(off.cn);
+// Headline = Leap's own company total INCLUDING deactivated users, not the sum of
+// the rendered rows. companyAll comes straight off the same report endpoint Leap's
+// Sales Performance Report uses, so it reconciles with a report run there.
+var cAll=rev.companyAll||rev.company||null;
+var headAp=cAll?(+cAll.approved_amount||0):off.ap;
+var headCn=cAll?(+cAll.contract_amount||0):off.cn;
+document.getElementById('cDr').textContent=(S.srState==='ok')?off.d:(S.srState==='timeout'?'—':'...');
+document.getElementById('cCa').textContent=(S.srState==='ok')?(off.c+' / '+(_leapNA?'—':off.lp)):(S.srState==='timeout'?'—':'...');
+document.getElementById('cAp').textContent=fmt(headAp);
+document.getElementById('cCn').textContent=fmt(headCn);
 var html='';
-TEAMS.forEach(function(p){var g=rowsArr.filter(function(r){return r.team===p[0];});if(!g.length)return;g.sort(function(x,y){return (y.contract-x.contract)||(y.approved-x.approved)||(y.doors-x.doors)});var t=tot(g);html+='<h2 style="margin-top:26px">'+p[1]+' <span style="color:#6b7888;font-weight:400">('+g.length+' reps \u00b7 by Contract Signed)</span></h2>'+THEAD+g.map(rowH).join('')+'</tbody><tfoot>'+foot(t)+'</tfoot></table>';});
+if(S.srState==='loading'){html+='<div class="state" style="color:#6b7888">Revenue is live. Loading doors and CAs from SalesRabbit...</div>'}
+else if(S.srState==='timeout'){html+='<div class="state" style="color:#b45309">Doors and CAs unavailable for this range — the SalesRabbit scan timed out. Revenue figures below are correct for the selected range.</div>'}
+// Attribution check: every dollar in the headline should appear in a row below.
+// If it does not, say so out loud rather than quietly under-reporting.
+var gapAp=Math.round((headAp-off.ap)*100)/100, gapCn=Math.round((headCn-off.cn)*100)/100;
+if(Math.abs(gapAp)>1||Math.abs(gapCn)>1){html+='<div class="state" style="color:#b45309">Unattributed to any rep: '+fmt(gapAp)+' approved / '+fmt(gapCn)+' contract signed. Headline totals come from Leap; the difference is revenue Leap reports at company level but not against a rep row.</div>'}
+if(rev.inactive&&((+rev.inactive.approved_amount)||(+rev.inactive.contract_amount))){html+='<div class="state" style="color:#6b7888">Includes deactivated Leap users: '+fmt(rev.inactive.approved_amount)+' approved / '+fmt(rev.inactive.contract_amount)+' contract signed.</div>'}
+TEAMS.forEach(function(p){var g=rowsArr.filter(function(r){return r.team===p[0];});if(!g.length)return;g.sort(function(x,y){return (y.contract-x.contract)||(y.approved-x.approved)||(y.doors-x.doors)});var t=tot(g);var note=(p[0]==='unassigned')?' · inactive reps, house accounts and names Leap reports that SalesRabbit does not':'';html+='<h2 style="margin-top:26px">'+p[1]+' <span style="color:#6b7888;font-weight:400">('+g.length+' reps · by Contract Signed'+note+')</span></h2>'+THEAD+g.map(rowH).join('')+'</tbody><tfoot>'+foot(t)+'</tfoot></table>';});
 document.getElementById('tw').innerHTML=html||'<div class="state">No activity in this period</div>';
-}).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false;});
 }
 document.getElementById('rf').addEventListener('click',function(){load(CUR);});
 document.getElementById('apply').addEventListener('click',function(){var s=document.getElementById('dFrom').value,e=document.getElementById('dTo').value;if(!s||!e){alert('Pick both a start and end date.');return}if(e<s){alert('End date is before start date.');return}load({start:s,end:e});});
