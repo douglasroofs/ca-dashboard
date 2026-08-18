@@ -1,164 +1,164 @@
-// api/rich-revenue.js
-// Live Richmond revenue from JobProgress "Sales Performance" summary report.
-// Fully server-side: logs in with stored JP creds (JP_USERNAME/JP_PASSWORD +
-// JP_CLIENT_ID/JP_CLIENT_SECRET), switches to the Richmond company (6026), and
-// reads the same report the Herndon dashboard uses (field: contract_amount).
-// No dependency on any browser login.
-// Response: { updated, duration, office, reps:[{rep, approved, contract}] }
+// api/rich-revenue.js - Richmond revenue, computed from JOB-LEVEL data.
+// Mirrors api/revenue.js. See that file for why the per-rep Sales Performance
+// Summary report is not usable: it credits upgrade sellers a second time on
+// jobs that already belong to the base rep. /reports/job_listing returns ONE
+// ROW PER JOB with the customer rep attached, so that cannot happen.
+//
+// Company 6026 (Richmond) is bound with switch_company after login.
+// Response keeps the old field names (reps[].approved / .contract) so
+// richmond.html needs no changes.
+//
+// ?month=YYYY-MM | ?start=&end= | ?duration=YTD | default MTD | ?debug=1
+const V1 = 'https://jobprogress.com/api/public/api/v1';
+const CO = process.env.JP_RICHMOND_COMPANY_ID || '6026';
 
-const BASE = 'https://www.jobprogress.com/api/public/api/v1';
-const RICHMOND_COMPANY = 6026;
-const BROWSER_HEADERS = {
-  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
-  'Origin': 'https://www.jobprogress.com',
-  'Referer': 'https://www.jobprogress.com/app/'
-};
-
-function findToken(obj) {
-  var found = null;
-  (function walk(o) {
-    if (found || !o || typeof o !== 'object') return;
-    var keys = Object.keys(o);
-    for (var i = 0; i < keys.length; i++) {
-      var k = keys[i], v = o[k];
-      if (typeof v === 'string' && v.length > 20 && /^(token|access_token|auth_token|jwt|api_token)$/i.test(k)) { found = v; return; }
-      if (v && typeof v === 'object') walk(v);
-    }
-  })(obj);
-  return found;
-}
-
-async function jpLogin() {
-  var r = await fetch(BASE + '/login', {
+async function login() {
+  const u = process.env.JP_USERNAME, p = process.env.JP_PASSWORD;
+  const ci = process.env.JP_CLIENT_ID, cs = process.env.JP_CLIENT_SECRET;
+  if (!u || !p) throw new Error('JP_USERNAME / JP_PASSWORD not set in Vercel');
+  if (!ci || !cs) throw new Error('JP_CLIENT_ID / JP_CLIENT_SECRET not set in Vercel');
+  const r = await fetch(V1 + '/login', {
     method: 'POST',
-    redirect: 'follow',
-    headers: Object.assign({ 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json', 'platform': 'web' }, BROWSER_HEADERS),
-    body: new URLSearchParams({
-      username: process.env.JP_USERNAME || '',
-      password: process.env.JP_PASSWORD || '',
-      grant_type: 'password',
-      client_id: process.env.JP_CLIENT_ID || '',
-      client_secret: process.env.JP_CLIENT_SECRET || '',
-      platform: 'web',
-      end_existing_sessions: 'false'
-    }).toString()
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: new URLSearchParams({ username: u, password: p, grant_type: 'password', client_id: ci, client_secret: cs, end_existing_sessions: '0' }).toString(),
   });
-  var j = await r.json().catch(function () { return {}; });
-  if (!r.ok) throw new Error('login ' + r.status + ' ' + (j && j.error && j.error.message ? j.error.message : ''));
-  var tok = findToken(j);
-  if (!tok) throw new Error('token not found; keys=' + Object.keys(j || {}).join(','));
-  return tok;
+  if (!r.ok) throw new Error('login -> ' + r.status);
+  const d = await r.json();
+  const t = (d && d.token && d.token.access_token) || (d && d.access_token);
+  if (!t) throw new Error('login ok but no access_token');
+  return t;
 }
-
-async function switchCompany(token, companyId) {
-  var r = await fetch(BASE + '/users/switch_company', {
+async function bindCompany(t) {
+  const r = await fetch(V1 + '/users/switch_company', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'platform': 'web', 'Authorization': 'Bearer ' + token },
-    body: JSON.stringify({ company_id: companyId })
+    headers: { Authorization: 'Bearer ' + t, 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json', platform: 'web' },
+    body: new URLSearchParams({ company_id: CO }).toString(),
   });
-  if (!r.ok) throw new Error('switch_company ' + r.status);
+  if (!r.ok) throw new Error('switch_company -> ' + r.status);
+  return t;
 }
-
-function dateQuery(duration, s0, e0) {
-  var okd = function (x) { return typeof x === 'string' && x.length === 10 && !isNaN(Date.parse(x)); };
-  return (okd(s0) && okd(e0)) ? ('&duration=DUR&start_date=' + s0 + '&end_date=' + e0) : ('&duration=' + encodeURIComponent(duration));
+let cachedToken = null, tokenPromise = null;
+function getToken() {
+  if (cachedToken) return Promise.resolve(cachedToken);
+  if (!tokenPromise) tokenPromise = (async () => { cachedToken = await bindCompany(await login()); return cachedToken; })();
+  return tokenPromise;
 }
-function HDRS(token) { return { 'Accept': 'application/json', 'platform': 'web', 'Authorization': 'Bearer ' + token }; }
+function resetToken() { cachedToken = null; tokenPromise = null; }
+const HDR = (t) => ({ Authorization: 'Bearer ' + t, Accept: 'application/json', platform: 'web' });
 
-// Rows are pulled WITH inactive users by default: a rep who has since been deactivated
-// still sold the job, and the previous single-page limit=200 call silently truncated
-// anything past 200 rows. Now paginated.
-async function pullReport(token, dateType, duration, s0, e0, withInactive) {
-  var dq = dateQuery(duration, s0, e0);
-  var wi = '&with_inactive=' + (withInactive === 0 ? 0 : 1);
-  var out = {};
-  for (var page = 1; page <= 25; page++) {
-    var url = BASE + '/reports/sales_performance_summary_report?date_range_type[]=' + encodeURIComponent(dateType) + dq + wi + '&limit=100&page=' + page;
-    var r = await fetch(url, { headers: HDRS(token) });
-    if (!r.ok) throw new Error('report ' + dateType + ' ' + r.status);
-    var j = await r.json();
-    var rows = (j && j.data) || [];
-    rows.forEach(function (row) {
-      var name = String(row.full_name || '').replace(/\s+/g, ' ').trim();
-      var v = Math.round((Number(row.contract_amount) || 0) * 100) / 100;
-      if (name) out[name] = v;
-    });
-    var pag = (j && j.meta && j.meta.pagination) || (j && j.pagination) || {};
-    var totalPages = pag.total_pages || (rows.length < 100 ? page : page + 1);
-    if (page >= totalPages || rows.length === 0) break;
+// Leap allows one session per account. Anything else that logs in as the same
+// user - the Herndon endpoint, or a human in the Leap UI - invalidates this
+// token mid-flight. Retry once with a fresh login instead of failing the page.
+async function get(path) {
+  let t = await getToken();
+  let r = await fetch(V1 + path, { headers: HDR(t) });
+  if (r.status === 401 || r.status === 403) {
+    resetToken();
+    t = await getToken();
+    r = await fetch(V1 + path, { headers: HDR(t) });
   }
-  return out;
+  if (!r.ok) throw new Error('GET ' + path.split('?')[0] + ' -> ' + r.status);
+  return r.json();
 }
 
-// The company-level total straight off the same report. Richmond had no equivalent,
-// so its headline was only ever the sum of the rows that survived filtering, with
-// nothing to reconcile against.
-async function pullTotal(token, dateType, duration, s0, e0, withInactive) {
-  var url = BASE + '/reports/sales_performance_summary_report/total?date_range_type[]=' + encodeURIComponent(dateType) +
-    dateQuery(duration, s0, e0) + '&with_inactive=' + (withInactive ? 1 : 0);
-  var r = await fetch(url, { headers: HDRS(token) });
-  if (!r.ok) throw new Error('total ' + dateType + ' ' + r.status);
-  var j = await r.json();
-  var t = (j && j.data) || j || {};
-  return Math.round((Number(t.contract_amount) || 0) * 100) / 100;
+function durationQuery(month, s0, e0, dur) {
+  const ok = (x) => typeof x === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(x) && !isNaN(Date.parse(x));
+  if (ok(s0) && ok(e0)) return 'duration=DUR&start_date=' + s0 + '&end_date=' + e0;
+  if (month && /^\d{4}-\d{2}$/.test(month)) {
+    const y = +month.slice(0, 4), m = +month.slice(5, 7), pad = (n) => String(n).padStart(2, '0');
+    return 'duration=DUR&start_date=' + y + '-' + pad(m) + '-01&end_date=' + y + '-' + pad(m) + '-' + pad(new Date(y, m, 0).getDate());
+  }
+  return 'duration=' + (dur === 'YTD' ? 'YTD' : 'MTD');
 }
+const JL_OPTS = 'include_lost_jobs=1&includes[]=customer&includes[]=customer.rep&limit=100&with_archived=0&with_inactive=1';
+function jlUrl(dateType, dq, page) {
+  return '/reports/job_listing?date_range_type[]=' + dateType + '&' + dq + '&' + JL_OPTS + '&page=' + page;
+}
+async function pullJobs(dateType, dq) {
+  const first = await get(jlUrl(dateType, dq, 1));
+  const rows = (first.data || []).slice();
+  const pg = (first.meta && first.meta.pagination) || {};
+  const totalPages = Math.min(pg.total_pages || 1, 25);
+  if (totalPages > 1) {
+    const ps = [];
+    for (let p = 2; p <= totalPages; p++) ps.push(get(jlUrl(dateType, dq, p)));
+    (await Promise.all(ps)).forEach((j) => { (j.data || []).forEach((x) => rows.push(x)); });
+  }
+  return rows;
+}
+function fin(row) {
+  const f = row && row.financial_details;
+  if (!f) return {};
+  return Array.isArray(f) ? (f[0] || {}) : (f.data || f);
+}
+function amountOf(row) { return Number(fin(row).total_job_amount) || 0; }
+function repOf(row) {
+  const c = row && row.customer && (row.customer.data || row.customer);
+  const p = c && c.rep && (c.rep.data || c.rep);
+  if (!p) return 'Unassigned';
+  return [p.first_name, p.last_name].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim() || 'Unassigned';
+}
+const round2 = (n) => Math.round(n * 100) / 100;
 
 module.exports = async (req, res) => {
   try {
-    var q = (req.url.split('?')[1] || '');
-    var duration = 'MTD';
-    q.split('&').forEach(function (kv) { var p = kv.split('='); if (p[0] === 'duration' && p[1]) duration = decodeURIComponent(p[1]).toUpperCase(); });
-    if (duration !== 'YTD' && duration !== 'MTD') duration = 'MTD';
-    var qs = null, qe = null;
-    q.split('&').forEach(function (kv) { var p = kv.split('='); if (p[0] === 'start' && p[1]) qs = decodeURIComponent(p[1]); if (p[0] === 'end' && p[1]) qe = decodeURIComponent(p[1]); });
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cache-Control', 'no-store');
+    const url = new URL(req.url, 'http://localhost');
+    const month = url.searchParams.get('month');
+    const qs = url.searchParams.get('start'), qe = url.searchParams.get('end');
+    const dur = (url.searchParams.get('duration') || '').toUpperCase();
+    const dq = durationQuery(month, qs, qe, dur);
 
-    var token = await jpLogin();
-    await switchCompany(token, RICHMOND_COMPANY);
-    var approved = await pullReport(token, 'job_awarded_date', duration, qs, qe, 1);
-    var contract = await pullReport(token, 'contract_signed_date', duration, qs, qe, 1);
-    // Non-fatal: the /total endpoint is new to this file and unverified against the
-    // Richmond company. If it fails, fall back to no company anchor -- the client then
-    // sums the rep rows as before -- rather than letting the outer catch blank the page.
-    var totals = null, totalsErr = null;
-    try {
-      totals = await Promise.all([
-        pullTotal(token, 'job_awarded_date', duration, qs, qe, 0),
-        pullTotal(token, 'contract_signed_date', duration, qs, qe, 0),
-        pullTotal(token, 'job_awarded_date', duration, qs, qe, 1),
-        pullTotal(token, 'contract_signed_date', duration, qs, qe, 1),
-      ]);
-    } catch (te) { totalsErr = String((te && te.message) || te); }
+    const [apprRows, signRows] = await Promise.all([
+      pullJobs('job_awarded_date', dq),
+      pullJobs('contract_signed_date', dq),
+    ]);
 
-    var names = {};
-    Object.keys(approved).forEach(function (n) { names[n] = 1; });
-    Object.keys(contract).forEach(function (n) { names[n] = 1; });
-    var reps = Object.keys(names).map(function (n) {
-      return { rep: n, approved: approved[n] || 0, contract: contract[n] || 0 };
-    }).filter(function (r) { return r.approved > 0 || r.contract > 0; })
-      .sort(function (a, b) { return (b.approved - a.approved) || (b.contract - a.contract); });
-
-    var round2 = function (n) { return Math.round(n * 100) / 100; };
-    var payload = {
-      updated: new Date().toISOString(),
-      duration: (qs && qe) ? (qs + '..' + qe) : duration,
-      office: 'richmond',
-      reps: reps,
-    };
-    if (totals) {
-      // Same shape as /api/revenue so both offices reconcile the same way.
-      payload.company = { approved_amount: totals[0], contract_amount: totals[1] };
-      payload.companyAll = { approved_amount: totals[2], contract_amount: totals[3] };
-      payload.inactive = {
-        approved_amount: round2(payload.companyAll.approved_amount - payload.company.approved_amount),
-        contract_amount: round2(payload.companyAll.contract_amount - payload.company.contract_amount),
-      };
-    } else if (totalsErr) {
-      payload.totalsError = totalsErr;
+    if (url.searchParams.get('debug') === '1') {
+      const s = signRows[0] || {};
+      res.status(200).json({ company: CO, approvedJobs: apprRows.length, signedJobs: signRows.length, sampleRep: repOf(s), sampleKeys: Object.keys(s) });
+      return;
     }
 
-    res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
-    res.status(200).json(payload);
+    const byRep = {};
+    const bump = (row, field) => {
+      const k = repOf(row);
+      if (!byRep[k]) byRep[k] = { rep: k, approved: 0, contract: 0, approved_jobs: 0, contract_jobs: 0 };
+      byRep[k][field] += amountOf(row);
+      byRep[k][field === 'approved' ? 'approved_jobs' : 'contract_jobs'] += 1;
+    };
+    apprRows.forEach((r) => bump(r, 'approved'));
+    signRows.forEach((r) => bump(r, 'contract'));
+
+    const reps = Object.keys(byRep).map((k) => {
+      const r = byRep[k];
+      r.approved = round2(r.approved);
+      r.contract = round2(r.contract);
+      return r;
+    }).filter((r) => r.approved || r.contract)
+      .sort((a, b) => b.contract - a.contract || b.approved - a.approved);
+
+    const approved_amount = round2(apprRows.reduce((a, r) => a + amountOf(r), 0));
+    const contract_amount = round2(signRows.reduce((a, r) => a + amountOf(r), 0));
+    const received = round2(signRows.reduce((a, r) => a + (Number(fin(r).total_received_payemnt) || 0), 0));
+    const pending = round2(signRows.reduce((a, r) => a + (Number(fin(r).pending_payment) || 0), 0));
+    const company = { approved_amount, contract_amount };
+
+    res.status(200).json({
+      updated: new Date().toISOString(),
+      duration: (qs && qe) ? (qs + '..' + qe) : (month || (dur === 'YTD' ? 'YTD' : 'MTD')),
+      office: 'richmond',
+      basis: 'job_listing - one row per job, credited to the customer rep',
+      company,
+      companyAll: company,
+      inactive: { approved_amount: 0, contract_amount: 0 },
+      jobs: { approved: apprRows.length, contract: signRows.length },
+      cash: { received, pending },
+      reps,
+    });
   } catch (e) {
-    res.status(200).json({ updated: new Date().toISOString(), duration: 'MTD', office: 'richmond', reps: [], error: String((e && e.message) || e) });
+    res.status(200).json({ updated: new Date().toISOString(), office: 'richmond', reps: [], error: String((e && e.message) || e) });
   }
 };
+module.exports.config = { maxDuration: 60 };
