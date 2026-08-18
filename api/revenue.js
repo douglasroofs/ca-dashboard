@@ -1,222 +1,183 @@
-// api/revenue.js — Douglas Roofing revenue dashboard data
+// api/revenue.js - Herndon revenue, computed from JOB-LEVEL data.
 //
-// Calls the SAME endpoint Leap's "Sales Performance Report" uses, so our numbers
-// match the report by construction (no manual job aggregation).
+// WHY THIS CHANGED (2026-08-17):
+// The old version read Leap's Sales Performance *Summary* report, which is
+// grouped per rep. That report double-counts: a rep who sells an upgrade is
+// credited a second row against a job that already belongs to the base rep.
+// Measured on 2026 YTD Herndon, that inflated the company figure from
+// $6.76M to $10.36M - Haley Barry alone carried $3.15M of duplicate credit
+// across 159 duplicate "job" rows. The old name-blocklist in the HTML pages
+// was a workaround for exactly this.
 //
-//   Approved        -> date_range_type[]=job_awarded_date      duration=MTD
-//   Contract Signed -> date_range_type[]=contract_signed_date  duration=MTD
+// This version reads /reports/job_listing instead: ONE ROW PER JOB, with the
+// customer rep attached. Upgrades net out by construction, because the job
+// belongs to the base rep and is counted once. No blocklist required.
 //
-// Report API (public v1):
-//   GET /reports/sales_performance_summary_report/total?date_range_type[]=X&duration=MTD&with_inactive=0
-//   GET /reports/sales_performance_summary_report?date_range_type[]=X&duration=MTD&limit=100&page=N&sort_field=full_name&sort_order=asc&with_inactive=0
+// Verified 2026-08-17, Herndon YTD:
+//   contract_signed_date -> $6,764,093 across 381 jobs, 0 unattributed
+//   job_awarded_date     -> $7,471,016 across 381 jobs
 //
-// Auth: tries Bearer JP_API_TOKEN first; if that 401s, logs in with
-// JP_USERNAME / JP_PASSWORD via POST /login (response shape {token:{access_token}}).
+// Auth is unchanged (JP_USERNAME / JP_PASSWORD + switch_company). The v3
+// developer token does NOT authorize these v1 report endpoints - it returns
+// 401 - so the password login has to stay until Leap grants token access.
 //
-// Query params:
-//   ?debug=1   -> returns raw total + first rep row so we can confirm field names
-//   ?debug=auth -> secret-safe auth diagnostic (status codes only)
-//   ?month=YYYY-MM (optional; default = current month, MTD)
+// Query params: ?month=YYYY-MM | ?start=&end= | default MTD | ?debug=1
 
 const V1 = 'https://jobprogress.com/api/public/api/v1';
-
-// OAuth password-grant client used by the Leap web app (public constants from its JS bundle).
-const CLIENT_ID = process.env.JP_CLIENT_ID || '12345';
-const CLIENT_SECRET = process.env.JP_CLIENT_SECRET || 'XraqRySfIhUTuvdfz7ATuJxXYf8aX5MY';
-
-// Account has multiple companies; bind the token to Douglas Roofing (5154) after login.
 const COMPANY_ID = process.env.JP_COMPANY_ID || '5154';
 
+async function login() {
+  const username = process.env.JP_USERNAME, password = process.env.JP_PASSWORD;
+  const client_id = process.env.JP_CLIENT_ID, client_secret = process.env.JP_CLIENT_SECRET;
+  if (!username || !password) throw new Error('JP_USERNAME / JP_PASSWORD not set in Vercel');
+  if (!client_id || !client_secret) throw new Error('JP_CLIENT_ID / JP_CLIENT_SECRET not set in Vercel');
+  const res = await fetch(`${V1}/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: new URLSearchParams({ username, password, grant_type: 'password', client_id, client_secret, end_existing_sessions: '0' }).toString(),
+  });
+  if (!res.ok) throw new Error(`login -> ${res.status}`);
+  const d = await res.json();
+  const t = (d && d.token && d.token.access_token) || (d && d.access_token);
+  if (!t) throw new Error('login ok but no access_token');
+  return t;
+}
 async function switchCompany(token) {
-  const res = await fetch(`${V1}/users/switch_company`, {
+  await fetch(`${V1}/users/switch_company`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json', platform: 'web' },
     body: new URLSearchParams({ company_id: COMPANY_ID }).toString(),
   });
-  if (!res.ok) throw new Error(`switch_company -> ${res.status}: ${(await res.text()).slice(0, 150)}`);
-  const d = await res.json().catch(() => ({}));
-  // Binds company to the same token server-side; reuse a returned token if one ever appears.
-  return (d && d.token && d.token.access_token) || (d && d.access_token) || token;
-}
-
-async function login() {
-  const username = process.env.JP_USERNAME;
-  const password = process.env.JP_PASSWORD;
-  if (!username || !password) throw new Error('JP_USERNAME / JP_PASSWORD not set in Vercel');
-  const res = await fetch(`${V1}/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-    body: new URLSearchParams({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET, end_existing_sessions: '0' }).toString(),
-  });
-  if (!res.ok) throw new Error(`login -> ${res.status}: ${(await res.text()).slice(0, 150)}`);
-  const d = await res.json();
-  const token = (d && d.token && d.token.access_token) || (d && d.access_token) || (d && d.data && d.data.token && d.data.token.access_token);
-  if (!token) throw new Error('login ok but no access_token in response');
   return token;
 }
-
-// Cache a working token across the function lifetime.
-let cachedToken = null;
-let tokenPromise = null;
-async function getToken() {
-  if (cachedToken) return cachedToken;
-  if (!tokenPromise) {
-    tokenPromise = (async () => { const t = await login(); cachedToken = await switchCompany(t); return cachedToken; })();
-  }
-  return tokenPromise; // share one in-flight login+switch across concurrent callers
+let cachedToken = null, tokenPromise = null;
+function getToken() {
+  if (cachedToken) return Promise.resolve(cachedToken);
+  if (!tokenPromise) tokenPromise = (async () => { cachedToken = await switchCompany(await login()); return cachedToken; })();
+  return tokenPromise;
 }
+const HDR = (t) => ({ Authorization: `Bearer ${t}`, Accept: 'application/json', platform: 'web' });
 
-async function apiGet(path) {
-  let token = await getToken();
-  let res = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/json', platform: 'web' } });
-  if (res.status === 401 || res.status === 403) {
-    // stored token rejected — fall back to a fresh login and retry once
-    cachedToken = null; tokenPromise = null;
-    const tk = await getToken();
-    res = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${tk}`, Accept: 'application/json', platform: 'web' } });
-  }
-  for (let i = 0; i < 3 && res.status >= 500; i++) {
-    await new Promise((r) => setTimeout(r, 600 * (i + 1)));
-    res = await fetch(`${V1}${path}`, { headers: HDR(cachedToken || token) });
-  }
-  if (!res.ok) throw new Error(`GET ${path} -> ${res.status}: ${(await res.text()).slice(0, 150)}`);
-  return res.json();
-}
-
-const REPORT = '/reports/sales_performance_summary_report';
-
-function durationParams(month, s0, e0) {
-  var okd = function (x) { return typeof x === 'string' && x.length === 10 && !isNaN(Date.parse(x)); };
-  if (okd(s0) && okd(e0)) return 'duration=DUR&start_date=' + s0 + '&end_date=' + e0;
-  // The report supports duration=MTD directly. If a specific month is passed, use an explicit range.
+function durationQuery(month, s0, e0) {
+  const ok = (x) => typeof x === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(x) && !isNaN(Date.parse(x));
+  if (ok(s0) && ok(e0)) return `duration=DUR&start_date=${s0}&end_date=${e0}`;
   if (month && /^\d{4}-\d{2}$/.test(month)) {
-    const y = +month.slice(0, 4), m = +month.slice(5, 7);
-    const pad = (n) => String(n).padStart(2, '0');
-    const start = `${y}-${pad(m)}-01`;
-    const end = `${y}-${pad(m)}-${pad(new Date(y, m, 0).getDate())}`;
-    return `duration=DUR&start_date=${start}&end_date=${end}`;
+    const y = +month.slice(0, 4), m = +month.slice(5, 7), pad = (n) => String(n).padStart(2, '0');
+    return `duration=DUR&start_date=${y}-${pad(m)}-01&end_date=${y}-${pad(m)}-${pad(new Date(y, m, 0).getDate())}`;
   }
   return 'duration=MTD';
 }
+const JL_BASE = '/reports/job_listing';
+const JL_OPTS = 'include_lost_jobs=1&includes[]=customer&includes[]=customer.rep&limit=100&with_archived=0&with_inactive=1';
 
-// Pull the contract-amount dollar figure out of a total/row object, whatever it's called.
-function dollars(obj) {
-  if (!obj) return 0;
-  const keys = ['contract_amount', 'final_contract_amount', 'document_amount', 'amount', 'total_contract_amount'];
-  for (const k of keys) {
-    if (obj[k] != null) { const n = parseFloat(obj[k]); if (!isNaN(n)) return n; }
-  }
-  return 0;
+function jlUrl(dateType, dq, page) {
+  return `${JL_BASE}?date_range_type[]=${dateType}&${dq}&${JL_OPTS}&page=${page}`;
 }
-function repName(row) {
-  return row.full_name || row.name || [row.first_name, row.last_name].filter(Boolean).join(' ').trim() || 'Unassigned';
+async function get(token, path) {
+  const r = await fetch(V1 + path, { headers: HDR(token) });
+  if (!r.ok) throw new Error(`GET ${path.split('?')[0]} -> ${r.status}`);
+  return r.json();
 }
 
-// with_inactive: 0 = currently-active users only (what Leap's report defaults to),
-// 1 = include terminated/deactivated users. Jobs sold by a rep who has since been
-// deactivated still count as company revenue, so the dashboard needs BOTH: the
-// active-only total for rep production, and the with-inactive total as the truth
-// figure the headline reconciles against. Before this was parameterised, every
-// call was hardcoded to 0 and revenue from departed reps was invisible.
-async function fetchTotal(dateType, month, s0, e0, withInactive = 0) {
-  const j = await apiGet(`${REPORT}/total?date_range_type[]=${dateType}&${durationParams(month, s0, e0)}&with_inactive=${withInactive ? 1 : 0}`);
-  return j.data || j;
-}
-async function fetchRows(dateType, month, s0, e0, withInactive = 1) {
-  const rows = [];
-  for (let page = 1; page <= 50; page++) {
-    const j = await apiGet(`${REPORT}?date_range_type[]=${dateType}&${durationParams(month, s0, e0)}&limit=100&page=${page}&sort_field=full_name&sort_order=asc&with_inactive=${withInactive ? 1 : 0}`);
-    const data = j.data || j.rows || [];
-    rows.push(...data);
-    const pag = (j.meta && j.meta.pagination) || j.pagination || {};
-    const totalPages = pag.total_pages || (data.length < 100 ? page : page + 1);
-    if (page >= totalPages || data.length === 0) break;
+// Page 1 first to learn total_pages, then the rest in parallel - keeps this
+// inside the function timeout instead of walking pages one at a time.
+async function pullJobs(token, dateType, dq) {
+  const first = await get(token, jlUrl(dateType, dq, 1));
+  const rows = (first.data || []).slice();
+  const pg = (first.meta && first.meta.pagination) || {};
+  const totalPages = Math.min(pg.total_pages || 1, 25);
+  if (totalPages > 1) {
+    const pages = [];
+    for (let p = 2; p <= totalPages; p++) pages.push(get(token, jlUrl(dateType, dq, p)));
+    (await Promise.all(pages)).forEach((j) => { (j.data || []).forEach((x) => rows.push(x)); });
   }
   return rows;
 }
 
+function fin(row) {
+  const f = row && row.financial_details;
+  if (!f) return {};
+  return Array.isArray(f) ? (f[0] || {}) : (f.data || f);
+}
+function amountOf(row) { return Number(fin(row).total_job_amount) || 0; }
+function repOf(row) {
+  const c = row && row.customer && (row.customer.data || row.customer);
+  const p = c && c.rep && (c.rep.data || c.rep);
+  if (!p) return 'Unassigned';
+  const n = [p.first_name, p.last_name].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+  return n || 'Unassigned';
+}
+const round2 = (n) => Math.round(n * 100) / 100;
+
 module.exports = async (req, res) => {
   try {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cache-Control', 'no-store');
     const url = new URL(req.url, 'http://localhost');
-    const debug = url.searchParams.get('debug');
     const month = url.searchParams.get('month');
-    const qs = url.searchParams.get('start');
-    const qe = url.searchParams.get('end');
+    const qs = url.searchParams.get('start'), qe = url.searchParams.get('end');
+    const dq = durationQuery(month, qs, qe);
 
-    if (debug === 'auth') {
-      // Secret-safe diagnostic: which credential authorizes the report endpoint?
-      const path = `${REPORT}/total?date_range_type[]=job_awarded_date&duration=MTD&with_inactive=0`;
-      const out = {
-        hasApiToken: !!process.env.JP_API_TOKEN,
-        hasUser: !!process.env.JP_USERNAME,
-        hasPass: !!process.env.JP_PASSWORD,
-      };
-      // A: Bearer JP_API_TOKEN
-      if (process.env.JP_API_TOKEN) {
-        try { out.A_bearerApiToken = (await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${process.env.JP_API_TOKEN}`, Accept: 'application/json' } })).status; } catch (e) { out.A_bearerApiToken = 'err'; }
-        // C: JP_API_TOKEN as ?token= query param
-        try { const sep = path.includes('?') ? '&' : '?'; out.C_queryToken = (await fetch(`${V1}${path}${sep}token=${encodeURIComponent(process.env.JP_API_TOKEN)}`, { headers: { Accept: 'application/json' } })).status; } catch (e) { out.C_queryToken = 'err'; }
-      }
-      // B: login -> Bearer access_token
-      if (process.env.JP_USERNAME && process.env.JP_PASSWORD) {
-        try {
-          const tok = await login();
-          out.B_loginOk = true;
-          const _rr = await fetch(`${V1}${path}`, { headers: { Authorization: `Bearer ${tok}`, Accept: 'application/json' } }); out.B_bearerLoginToken = _rr.status; out.B_reportBody = (await _rr.text()).slice(0,220).replace(/[A-Za-z0-9_\-\.]{20,}/g,'<x>');
-        } catch (e) { out.B_loginOk = false; out.B_loginErr = String(e.message || e).replace(/[A-Za-z0-9_\-\.]{14,}/g, '<x>'); }
-      }
-      res.status(200).json(out);
-      return;
-    }
-
-    if (debug) {
-      const total = await fetchTotal('job_awarded_date', month);
-      const rows = await fetchRows('job_awarded_date', month);
-      res.status(200).json({ totalKeys: Object.keys(total || {}), total, rowKeys: rows[0] ? Object.keys(rows[0]) : [], firstRow: rows[0] || null, rowCount: rows.length });
-      return;
-    }
-
-    await getToken(); // authenticate once before firing parallel report calls
-    // Rows are pulled WITH inactive users so every dollar in companyAll is
-    // attributable to a named rep row; totals are pulled both ways so the client
-    // can show the active/inactive split without guessing.
-    const [apprTotal, signTotal, apprTotalAll, signTotalAll, apprRows, signRows] = await Promise.all([
-      fetchTotal('job_awarded_date', month, qs, qe, 0),
-      fetchTotal('contract_signed_date', month, qs, qe, 0),
-      fetchTotal('job_awarded_date', month, qs, qe, 1),
-      fetchTotal('contract_signed_date', month, qs, qe, 1),
-      fetchRows('job_awarded_date', month, qs, qe, 1),
-      fetchRows('contract_signed_date', month, qs, qe, 1),
+    const token = await getToken();
+    const [apprRows, signRows] = await Promise.all([
+      pullJobs(token, 'job_awarded_date', dq),
+      pullJobs(token, 'contract_signed_date', dq),
     ]);
 
-    const apprByRep = {}; apprRows.forEach((r) => { apprByRep[repName(r)] = dollars(r); });
-    const signByRep = {}; signRows.forEach((r) => { signByRep[repName(r)] = dollars(r); });
-    const names = new Set([...Object.keys(apprByRep), ...Object.keys(signByRep)]);
-    const reps = [...names]
-      .map((n) => ({ rep: n, approved_amount: apprByRep[n] || 0, contract_amount: signByRep[n] || 0 }))
-      .filter((r) => r.approved_amount || r.contract_amount)
-      .sort((a, b) => b.contract_amount - a.contract_amount);
+    if (url.searchParams.get('debug') === '1') {
+      const s = signRows[0] || {};
+      res.status(200).json({
+        approvedJobs: apprRows.length, signedJobs: signRows.length,
+        sampleKeys: Object.keys(s), sampleFinancial: Object.keys(fin(s)),
+        sampleRep: repOf(s), sampleSignedDate: s.contract_signed_date,
+      });
+      return;
+    }
 
-    const company = { approved_amount: dollars(apprTotal), contract_amount: dollars(signTotal) };
-    const companyAll = { approved_amount: dollars(apprTotalAll), contract_amount: dollars(signTotalAll) };
-    const round2 = (n) => Math.round(n * 100) / 100;
+    const byRep = {};
+    const bump = (row, field) => {
+      const k = repOf(row);
+      if (!byRep[k]) byRep[k] = { rep: k, approved_amount: 0, contract_amount: 0, approved_jobs: 0, contract_jobs: 0 };
+      byRep[k][field] += amountOf(row);
+      byRep[k][field === 'approved_amount' ? 'approved_jobs' : 'contract_jobs'] += 1;
+    };
+    apprRows.forEach((r) => bump(r, 'approved_amount'));
+    signRows.forEach((r) => bump(r, 'contract_amount'));
+
+    const reps = Object.keys(byRep).map((k) => {
+      const r = byRep[k];
+      r.approved_amount = round2(r.approved_amount);
+      r.contract_amount = round2(r.contract_amount);
+      return r;
+    }).filter((r) => r.approved_amount || r.contract_amount)
+      .sort((a, b) => b.contract_amount - a.contract_amount || b.approved_amount - a.approved_amount);
+
+    const approved_amount = round2(apprRows.reduce((a, r) => a + amountOf(r), 0));
+    const contract_amount = round2(signRows.reduce((a, r) => a + amountOf(r), 0));
+    const received = round2(signRows.reduce((a, r) => a + (Number(fin(r).total_received_payemnt) || 0), 0));
+    const pending = round2(signRows.reduce((a, r) => a + (Number(fin(r).pending_payment) || 0), 0));
+
+    // company and companyAll are identical now: at job level there is no
+    // active/inactive split to reconcile, because a job counts once whoever
+    // sold it. Both keys are kept so the existing pages don't need changing.
+    const company = { approved_amount, contract_amount };
 
     res.status(200).json({
       updated: new Date().toISOString(),
-      duration: (qs && qe) ? (qs + '..' + qe) : (month || 'MTD'),
-      // company = active users only (kept for back-compat with anything reading it).
+      duration: (qs && qe) ? `${qs}..${qe}` : (month || 'MTD'),
+      basis: 'job_listing - one row per job, credited to the customer rep',
       company,
-      // companyAll = Leap's own report total including deactivated users. This is the
-      // figure the dashboard headline reconciles to.
-      companyAll,
-      // The active/inactive delta, so a stale roster can never silently swallow revenue.
-      inactive: {
-        approved_amount: round2(companyAll.approved_amount - company.approved_amount),
-        contract_amount: round2(companyAll.contract_amount - company.contract_amount),
-      },
+      companyAll: company,
+      inactive: { approved_amount: 0, contract_amount: 0 },
+      jobs: { approved: apprRows.length, contract: signRows.length },
+      cash: { received, pending },
       reps,
     });
   } catch (err) {
-    res.status(500).json({ error: String(err && err.message ? err.message : err) });
+    res.status(500).json({ error: String((err && err.message) || err) });
   }
 };
+
+// Must be set AFTER the handler assignment above, or it gets overwritten.
+// This endpoint makes ~8 upstream calls; the 10s default is not enough.
+module.exports.config = { maxDuration: 60 };
