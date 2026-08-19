@@ -270,3 +270,106 @@ input,select{background:#0d1117 !important;color:#e6edf3 !important;border-color
 </style>
 </body>
 </html>
+
+<style id="cal-enhance">
+/* --- calendar readability + today --- */
+.dy{min-height:104px}
+.ap{font-size:11px;padding:3px 6px 4px 8px;margin-top:4px;border-radius:6px;line-height:1.35}
+.ap b{font-weight:650}
+.ap .tg{font-size:9px}
+/* Unresulted is the common case, so calm it down - it was shouting on every card */
+.ap.un{opacity:.7}
+.dy.today{background:rgba(88,166,255,.12) !important;box-shadow:inset 0 0 0 2px var(--blue)}
+.dy.today .dn{color:var(--blue);font-weight:800}
+.dy.today .dn::after{content:" · TODAY";font-size:9px;letter-spacing:.06em;font-weight:700}
+#upcoming{margin:0 0 22px}
+#upcoming .hd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
+#upcoming td.dt{white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
+#upcoming .none{color:var(--dim);font-size:13px}
+</style>
+<script>
+/* Appended enhancement layer. Does not touch draw() - it re-applies after each
+   render via MutationObserver, the same pattern ca-bonus.html uses.
+   1. highlights today's cell in the calendar
+   2. adds an Upcoming panel from records dated after today (api/marketing now
+      returns +90 days, so future bookings are in the payload) */
+(function () {
+  var MON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  function p2(n) { return (n < 10 ? '0' : '') + n; }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function todayStr() { return (window.D && window.D.today) || new Date().toISOString().slice(0, 10); }
+  function pretty(d) {
+    var p = String(d).split('-');
+    if (p.length !== 3) return d;
+    var dt = new Date(+p[0], +p[1] - 1, +p[2]);
+    return dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+
+  function markToday() {
+    var t = todayStr();
+    var mos = document.querySelectorAll('.cal .mo');
+    for (var i = 0; i < mos.length; i++) {
+      var h = mos[i].querySelector('.mh');
+      if (!h) continue;
+      var txt = (h.textContent || '').trim();
+      var mi = -1;
+      for (var m = 0; m < 12; m++) { if (txt.indexOf(MON[m]) === 0) { mi = m; break; } }
+      var ym = txt.match(/(\d{4})/);
+      if (mi < 0 || !ym) continue;
+      var cells = mos[i].querySelectorAll('.grid .dy');
+      for (var c = 0; c < cells.length; c++) {
+        var dn = cells[c].querySelector('.dn');
+        if (!dn || cells[c].className.indexOf('out') > -1) continue;
+        var day = parseInt(dn.textContent, 10);
+        if (!day) continue;
+        var key = ym[1] + '-' + p2(mi + 1) + '-' + p2(day);
+        if (key === t) cells[c].className += ' today';
+      }
+    }
+  }
+
+  function upcoming() {
+    var root = document.getElementById('root');
+    if (!root || !window.D || !window.D.records) return;
+    var t = todayStr();
+    var rows = window.D.records.filter(function (r) { return r.d > t; })
+      .sort(function (a, b) { return a.d < b.d ? -1 : a.d > b.d ? 1 : String(a.time || '').localeCompare(String(b.time || '')); });
+    var host = document.getElementById('upcoming');
+    if (!host) {
+      host = document.createElement('section');
+      host.id = 'upcoming';
+      root.insertBefore(host, root.firstChild);
+    }
+    if (!rows.length) {
+      host.innerHTML = '<div class="hd"><h2>Upcoming</h2></div><div class="none">Nothing booked after today.</div>';
+      return;
+    }
+    var byDay = {};
+    rows.forEach(function (r) { (byDay[r.d] = byDay[r.d] || []).push(r); });
+    var days = Object.keys(byDay).sort();
+    var h = ['<div class="hd"><h2>Upcoming</h2><span class="muted">' + rows.length + ' booked after today, across ' + days.length + (days.length === 1 ? ' day' : ' days') + '</span></div>'];
+    h.push('<table><tr><th>Date</th><th>Time</th><th>Customer</th><th>Rep</th><th>Source</th></tr>');
+    rows.slice(0, 60).forEach(function (r) {
+      h.push('<tr><td class="dt">' + esc(pretty(r.d)) + '</td><td class="dt">' + esc(r.time || '') + '</td><td>' + esc(r.cust) + '</td><td>' + esc(r.rep) + '</td><td>' + esc(r.src || '') + '</td></tr>');
+    });
+    h.push('</table>');
+    if (rows.length > 60) h.push('<div class="none">Showing the first 60 of ' + rows.length + '.</div>');
+    host.innerHTML = h.join('');
+  }
+
+  var busy = false;
+  function enhance() {
+    if (busy) return;
+    busy = true;
+    try { markToday(); upcoming(); } catch (e) {}
+    setTimeout(function () { busy = false; }, 60);
+  }
+  var root = document.getElementById('root');
+  if (root && window.MutationObserver) {
+    new MutationObserver(function () { enhance(); }).observe(root, { childList: true });
+  }
+  setTimeout(enhance, 700);
+  setTimeout(enhance, 1800);
+  setTimeout(enhance, 3500);
+})();
+</script>
