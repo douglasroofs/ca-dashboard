@@ -108,9 +108,12 @@ function init(){
 }
 function setMTD(){var n=new Date();document.getElementById('dFrom').value=iso(new Date(n.getFullYear(),n.getMonth(),1));document.getElementById('dTo').value=iso(n);}
 
-// spend for range: sum whole months, prorate partial months by day count
-function spendFor(from,to){
-  var by=D.spend.byMonth||{},total=0;
+// Cost for a range. Whole months count in full, partial months prorate by day
+// count. Runs over each source separately so the breakdown and the total stay
+// consistent - the total is the sum of what is displayed, never a second
+// calculation that could drift from it.
+function spendOf(by,from,to){
+  var total=0; by=by||{};
   Object.keys(by).forEach(function(m){
     var y=+m.slice(0,4),mo=+m.slice(5,7)-1;
     var mStart=new Date(y,mo,1), mEnd=new Date(y,mo+1,0);
@@ -121,6 +124,16 @@ function spendFor(from,to){
   });
   return total;
 }
+function costsFor(from,to){
+  var C=D.costs||{};
+  var lsa=spendOf((C.lsa&&C.lsa.byMonth)||(D.spend&&D.spend.byMonth),from,to);
+  var fb=spendOf(C.facebook&&C.facebook.byMonth,from,to);
+  var ag=spendOf(C.agency&&C.agency.byMonth,from,to);
+  return {lsa:lsa, facebook:fb, agency:ag, total:lsa+fb+ag,
+          fbLive:!!(C.facebook&&C.facebook.live), fbNote:(C.facebook&&C.facebook.note)||''};
+}
+// kept so anything else calling spendFor still works
+function spendFor(from,to){ return costsFor(from,to).total; }
 function draw(){
   var f=document.getElementById('dFrom').value, t=document.getElementById('dTo').value;
   if(!f||!t)return;
@@ -142,7 +155,7 @@ function draw(){
     results[r.res||'(unresulted)']=(results[r.res||'(unresulted)']||0)+1;
     src[r.src]=(src[r.src]||0)+1;
   });
-  var spend=spendFor(from,to), signed=T.ca+T.rt;
+  var C=costsFor(from,to), spend=C.total, signed=T.ca+T.rt;
   document.getElementById('note').textContent=recs.length+' appointments in range';
 
   var H=[];
@@ -156,12 +169,23 @@ function draw(){
 
   H.push(calSection(recs,f,t,isCA,isRT,notRan));
 
-  H.push('<section><h2>Ad spend - Google LSA</h2><div class="cards">');
-  H.push('<div class="card hi"><div class="label">Spend in range</div><div class="value">'+money(spend)+'</div><div class="sub">2 LSA accounts combined</div></div>');
-  H.push('<div class="card credit"><div class="label">Pending credit</div><div class="value">'+money(D.spend.pendingCredit)+'</div><div class="sub">expected back for disputed leads</div></div>');
-  H.push('<div class="card"><div class="label">Cost per appt ran</div><div class="value">'+(T.ran?money(spend/T.ran):'-')+'</div></div>');
-  H.push('<div class="card"><div class="label">Cost per signed</div><div class="value">'+(signed?money(spend/signed):'-')+'</div><div class="sub">'+signed+' CA + retail</div></div>');
-  H.push('</div></section>');
+  H.push('<section><h2>Marketing cost <span class="muted" style="font-size:12px;font-weight:400">'+(C.fbLive?'Facebook live from Meta':'Facebook not connected yet')+'</span></h2><div class="cards">');
+  H.push('<div class="card hi"><div class="label">Total marketing cost</div><div class="value">'+money(C.total)+'</div><div class="sub">LSA + Facebook + retainer, in range</div></div>');
+  H.push('<div class="card"><div class="label">Cost per appt ran</div><div class="value">'+(T.ran?money(C.total/T.ran):'-')+'</div><div class="sub">'+T.ran+' ran</div></div>');
+  H.push('<div class="card"><div class="label">Cost per signed</div><div class="value">'+(signed?money(C.total/signed):'-')+'</div><div class="sub">'+signed+' CA + retail</div></div>');
+  H.push('<div class="card credit"><div class="label">Pending credit</div><div class="value">'+money((D.spend&&D.spend.pendingCredit)||0)+'</div><div class="sub">expected back for disputed leads</div></div>');
+  H.push('</div>');
+  H.push('<table style="margin-top:14px"><tr><th>Source</th><th class="num">Cost in range</th><th class="num">Share</th><th>Where it comes from</th></tr>');
+  [['Google LSA',C.lsa,'manual - LSA billing console, 2 accounts'],
+   ['Facebook ads',C.facebook,C.fbLive?'live - Meta Marketing API':('not connected - '+(C.fbNote||'add META_ACCESS_TOKEN in Vercel'))],
+   ['Marketing company',C.agency,'retainer schedule, prorated by day']]
+  .forEach(function(r){
+    H.push('<tr><td>'+esc(r[0])+'</td><td class="num">'+money(r[1])+'</td><td class="num">'+(C.total?Math.round(r[1]/C.total*100)+'%':'-')+'</td><td class="muted">'+esc(r[2])+'</td></tr>');
+  });
+  H.push('<tr><td><b>Total</b></td><td class="num"><b>'+money(C.total)+'</b></td><td class="num">100%</td><td></td></tr>');
+  H.push('</table>');
+  H.push('<div class="note">Cost per appointment used to divide by Google LSA alone, so it read low. It now uses every marketing dollar. The retainer is effective-dated in api/marketing.js - when the fee changes, add a dated row rather than editing the current one, so closed months keep the cost they actually had.</div>');
+  H.push('</section>');
 
   H.push('<section><h2>By rep</h2><table><tr><th>Rep</th><th class="num">Set</th><th class="num">Ran</th><th class="num">Run %</th><th class="num">CA</th><th class="num">Retail</th><th class="num">Signed %</th><th class="num">Unresulted</th></tr>');
   Object.keys(reps).map(function(k){return reps[k];}).sort(function(a,b){return b.set-a.set;}).forEach(function(r){
