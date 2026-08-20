@@ -40,11 +40,11 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 <div class="card d"><div class="label">Doors Knocked</div><div class="value" id="cDr">-</div><div class="sub">Pins this month</div></div>
 <div class="card k"><div class="label">CAs</div><div class="value" id="cCa">-</div><div class="sub">SR / Leap CAs this month</div></div>
 <div class="card a"><div class="label">Approved Revenue</div><div class="value" id="cAp">-</div><div class="sub">Job awarded date (MTD)</div></div>
-<div class="card c"><div class="label">Contract Signed Revenue</div><div class="value" id="cCn">-</div><div class="sub">Pending contract-signed report</div></div>
+<div class="card c"><div class="label">Contract Signed Revenue</div><div class="value" id="cCn">-</div><div class="sub">Contract signed date (MTD)</div></div>
 </div>
 <h2>Rep Leaderboard <span>(Richmond Storm + Retail, by Approved $)</span></h2>
 <div id="tw"><div class="state">Loading...</div></div>
-<div class="note">Doors = Sales Rabbit pins this month (Storm + Retail). CAs = ICA + SGCA set this month. Approved = Leap "Sales Rep Revenue MTD" (job sub-total by awarded date). Contract Signed needs a sibling Leap report (same report filtered by contract-signed date).</div>
+<div class="note">Doors = Sales Rabbit pins this month (Storm + Retail). CAs = ICA + SGCA set this month. Approved and Contract Signed both come from Leap's job listing report - one row per job, credited to the customer rep - so upgrade sales are not double-counted. Approved is by job awarded date, Contract Signed by contract signed date.</div>
 </div>
 <script>
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
