@@ -1,35 +1,44 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Douglas Roofing - YTD</title><style>
-body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f6f9;color:#0f2438}
-header{background:#0f2438;color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#0d1117;color:#e6edf3}
+header{background:#161b22;border-bottom:1px solid #30363d;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 header h1{font-size:17px;margin:0;font-weight:600}
-header h1 span{color:#8aa0b6;font-weight:400;font-size:13px}
+header h1 span{color:#8b949e;font-weight:400;font-size:13px}
 .hd{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.meta{font-size:12px;color:#aebfd2}
-.toggle{display:inline-flex;background:#1c3450;border-radius:8px;overflow:hidden}
-.toggle button{background:transparent;color:#aebfd2;border:none;padding:7px 14px;font-size:13px;cursor:pointer}
+.meta{font-size:12px;color:#8b949e}
+.toggle{display:inline-flex;background:#0d1117;border:1px solid #30363d;border-radius:8px;overflow:hidden}
+.toggle button{background:transparent;color:#8b949e;border:none;padding:7px 14px;font-size:13px;cursor:pointer}
 .toggle button.on{background:#1f6feb;color:#fff}
 .wrap{max-width:1280px;margin:0 auto;padding:22px}
 button#rf{background:#1f6feb;color:#fff;border:none;padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer}
-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e9f0;border-radius:12px;overflow:hidden}
-th,td{text-align:left;padding:9px 11px;font-size:13px;border-bottom:1px solid #eef1f6;white-space:nowrap}
-th{background:#fafbfc;color:#6b7888;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+table{width:100%;border-collapse:collapse;background:#161b22;border:1px solid #30363d;border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:9px 11px;font-size:13px;border-bottom:1px solid #30363d;white-space:nowrap}
+th{background:#0d1117;color:#8b949e;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
 .num{text-align:right;font-variant-numeric:tabular-nums}
-.rank{color:#9aa6b4;width:24px}
+.rank{color:#8b949e;width:24px}
 .rep{font-weight:500}
-.leap{color:#b8860b}
-.tot{font-weight:700;background:#f3f7ff}
-th.tot{background:#e9f1ff}
-.rev{background:#f2fbf4}
-th.rev{background:#e6f7ea;color:#1a7f37}
-tbody tr:hover{background:#fafcff}
-tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
-.state{padding:30px;text-align:center;color:#6b7888}
-.note{color:#6b7888;font-size:12px;margin:10px 2px 0}
-.legend{font-size:12px;color:#6b7888;margin:2px 2px 10px}.legend b{color:#0f2438}.legend .leap{color:#b8860b}
-.nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 8px}.nav a{color:#aebfd2;text-decoration:none;font-size:13px;padding:5px 10px;border-radius:6px}.nav a.on{background:#1f6feb;color:#fff}.nav a:hover{color:#fff}
+.leap{color:#d29922}
+.tot,th.tot{background:#132039}
+.rev,th.rev{background:#10231a}
+th.rev{color:#3fb950}
+tfoot td{font-weight:700;background:#0d1117;border-top:2px solid #30363d}
+.state{padding:30px;text-align:center;color:#8b949e}
+.note{color:#8b949e;font-size:12px;margin:10px 2px 0}
+.legend{font-size:12px;color:#8b949e;margin:2px 2px 10px}.legend b{color:#e6edf3}.legend .leap{color:#d29922}
+.nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 8px}.nav a{color:#8b949e;text-decoration:none;font-size:13px;padding:5px 10px;border-radius:6px}.nav a.on{color:#e6edf3}.nav a:hover{color:#fff}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0 18px}
+@media(max-width:780px){.cards{grid-template-columns:1fr}}
+.ycard{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:16px 18px}
+.ycard .label{font-size:12px;color:#8b949e;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.ycard .value{font-size:26px;font-weight:700}
+.ycard .sub{font-size:11px;color:#8b949e;margin-top:6px}
+.yk{border-top:3px solid #d29922}.ya{border-top:3px solid #1f6feb}.yc{border-top:3px solid #3fb950}
+.banner{border-radius:10px;padding:10px 14px;font-size:12.5px;margin-bottom:14px;line-height:1.5}
+.warn{background:rgba(210,153,34,.10);border:1px solid rgba(210,153,34,.5);color:#e3b341}
+.ok{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.35);color:#7ee787}
 </style></head><body>
 <header>
-<h1>Douglas Roofing - YTD <span>(SalesRabbit vs Leap + Revenue YTD)</span></h1><nav class="nav"><a href="/revenue.html">Herndon</a><a href="/richmond.html">Richmond</a><a href="/ca-bonus.html" class="on">CA Bonus</a><a href="/marketing.html">Marketing</a></nav>
+<h1>Douglas Roofing - YTD <span>(SalesRabbit vs Leap CAs + Revenue YTD)</span></h1>
+<nav class="nav"><a href="/revenue.html">Herndon</a><a href="/richmond.html">Richmond</a><a href="/ca-bonus.html" class="on">CA Bonus</a><a href="/marketing.html">Marketing</a></nav>
 <div class="hd">
 <div class="toggle"><button data-office="herndon" class="on">Herndon</button><button data-office="richmond">Richmond</button></div>
 <span class="meta" id="upd"></span>
@@ -37,69 +46,103 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 </div>
 </header>
 <div class="wrap">
-<div class="legend">Each month cell shows <b>SalesRabbit</b> / <span class="leap">Leap</span> CAs. <b>Approved</b> / <b>Contract</b> = Sales Performance revenue YTD (by job-awarded / contract-signed date).</div>
+<div id="banner"></div>
+<div id="cards"></div>
+<div class="legend">Each month cell shows <b>SalesRabbit</b> / <span class="leap">Leap</span> CAs. <b>Approved</b> / <b>Contract</b> are <b>live</b> job-level revenue YTD, credited to the customer rep.</div>
 <div id="tw"><div class="state">Loading...</div></div>
-<div class="note">SalesRabbit CA = ICA/SGCA pins set that month. Leap CA = documents named "CA" created that month (CA COUNT report). Goal: reconcile SR vs Leap month over month.</div>
+<div class="note">SalesRabbit CA = ICA/SGCA pins set that month. Leap CA = documents named "CA" created that month. Revenue is pulled live from Leap's job listing - one row per job - so upgrade sales are not double-counted and nobody is excluded by name.</div>
 </div>
 <script>
+/* Rebuilt 2026-08-20.
+   - Revenue columns now come LIVE from /api/revenue and /api/rich-revenue
+     (job-level, customer-rep attributed) instead of the leap-extra snapshot.
+   - The hardcoded name blocklist (haley / solomon / adam mulvaney / unassigned)
+     is GONE. It was hiding $3.1M of contract revenue on this page. Haley nets
+     out on her own now because she is not the customer rep on any job.
+   - CA history still comes from snapshots, so the page states their age up top
+     rather than presenting three-day-old counts as current. */
 var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var ALIAS={'mike mccarthy':'michael mccarthy','izzy price':'isabelle price','robert mumford-wilson':'robert wilson'};
 var office='herndon';
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function norm(s){return String(s==null?'':s).trim().toLowerCase().replace(/\s+/g,' ')}
 function dkey(n){var x=norm(n);return ALIAS[x]||x}
-function fmt(n){n=Number(n)||0;return n?('$'+Math.round(n).toLocaleString('en-US')):'-'}
+function money(n){n=Number(n)||0;return n?('$'+Math.round(n).toLocaleString('en-US')):'-'}
+function p2(n){return (n<10?'0':'')+n}
+function ageHrs(iso){var t=Date.parse(iso);return isNaN(t)?null:Math.round((Date.now()-t)/36e5)}
+function ageText(iso){var h=ageHrs(iso);if(h===null)return 'unknown';if(h<24)return h+'h ago';return Math.round(h/24)+'d ago';}
+function revUrl(){
+  if(office==='richmond')return '/api/rich-revenue?duration=YTD&t='+Date.now();
+  var n=new Date();
+  return '/api/revenue?start='+n.getFullYear()+'-01-01&end='+n.getFullYear()+'-'+p2(n.getMonth()+1)+'-'+p2(n.getDate())+'&t='+Date.now();
+}
 function load(){
-var b=document.getElementById('rf');b.disabled=true;
-document.getElementById('tw').innerHTML='<div class="state">Loading grid...</div>';
-Promise.all([
-fetch('/api/ca-history?office='+office+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}),
-fetch('/api/leap-extra?office='+office+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{},approved:{},contract:{}}})
-]).then(function(res){
-var d=res[0], lx=res[1]||{};
-if(d.error)throw new Error(d.error);
-document.getElementById('upd').textContent='Updated '+new Date(d.updated||Date.now()).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-var months=d.months||[];
-var map={};
-function ensure(name){var k=dkey(name);if(!map[k])map[k]={rep:name,sr:new Array(12).fill(0),leap:new Array(12).fill(0),approved:0,contract:0};return map[k];}
-(d.reps||[]).forEach(function(r){var o=ensure(r.rep);o.rep=r.rep;(r.counts||[]).forEach(function(c,idx){o.sr[months[idx]]=c;});});
-var lc=lx.leapCA||{};Object.keys(lc).forEach(function(name){var o=ensure(name);var arr=lc[name]||[];for(var m=0;m<12;m++)o.leap[m]=arr[m]||0;});
-var ap=lx.approved||{};Object.keys(ap).forEach(function(name){ensure(name).approved=ap[name];});
-var cn=lx.contract||{};Object.keys(cn).forEach(function(name){ensure(name).contract=cn[name];});
-var rows=Object.keys(map).map(function(k){var o=map[k];o.srYTD=months.reduce(function(a,m){return a+o.sr[m]},0);o.leapYTD=months.reduce(function(a,m){return a+o.leap[m]},0);return o;});
-rows=rows.filter(function(o){var n=norm(o.rep);return !(n.indexOf('haley')>-1||n.indexOf('solomon')>-1||n==='adam mulvaney'||n==='unassigned');});rows.sort(function(a,b){return (b.srYTD-a.srYTD)||(b.leapYTD-a.leapYTD)});
-var head='<tr><th class="rank">#</th><th class="rep">Rep</th>'+months.map(function(m){return '<th class="num">'+MONTHS[m]+'</th>'}).join('')+'<th class="num tot">YTD</th><th class="num rev">Approved</th><th class="num rev">Contract</th></tr>';
-var cT=months.map(function(){return {sr:0,leap:0}});var gSR=0,gL=0,gAp=0,gCn=0;
-var body=rows.map(function(o,i){
-months.forEach(function(m,idx){cT[idx].sr+=o.sr[m];cT[idx].leap+=o.leap[m];});gSR+=o.srYTD;gL+=o.leapYTD;gAp+=o.approved;gCn+=o.contract;
-var cells=months.map(function(m){return '<td class="num">'+o.sr[m]+' / <span class="leap">'+o.leap[m]+'</span></td>'}).join('');
-return '<tr><td class="rank">'+(i+1)+'</td><td class="rep">'+esc(o.rep)+'</td>'+cells+'<td class="num tot">'+o.srYTD+' / <span class="leap">'+o.leapYTD+'</span></td><td class="num rev">'+fmt(o.approved)+'</td><td class="num rev">'+fmt(o.contract)+'</td></tr>';
-}).join('');
-var foot='<tr><td></td><td class="rep">Team total</td>'+cT.map(function(c){return '<td class="num">'+c.sr+' / <span class="leap">'+c.leap+'</span></td>'}).join('')+'<td class="num tot">'+gSR+' / <span class="leap">'+gL+'</span></td><td class="num rev">'+fmt(gAp)+'</td><td class="num rev">'+fmt(gCn)+'</td></tr>';
-document.getElementById('tw').innerHTML='<table><thead>'+head+'</thead><tbody>'+body+'</tbody><tfoot>'+foot+'</tfoot></table>';
-}).catch(function(e){document.getElementById('tw').innerHTML='<div class="state" style="color:#b42318">Could not load: '+esc(String(e.message||e))+'</div>'}).then(function(){b.disabled=false});
+  var b=document.getElementById('rf');b.disabled=true;
+  document.getElementById('tw').innerHTML='<div class="state">Loading grid...</div>';
+  Promise.all([
+    fetch('/api/ca-history?office='+office+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],months:[]}}),
+    fetch('/api/leap-extra?office='+office+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{}}}),
+    fetch(revUrl(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],error:'revenue unavailable'}})
+  ]).then(function(res){
+    var ca=res[0]||{}, lx=res[1]||{}, rev=res[2]||{};
+    render(ca,lx,rev);
+  }).catch(function(e){
+    document.getElementById('tw').innerHTML='<div class="state" style="color:#f85149">Could not load: '+esc(String(e.message||e))+'</div>';
+  }).then(function(){b.disabled=false});
+}
+function render(d,lx,rev){
+  document.getElementById('upd').textContent='Revenue live '+new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  var months=d.months||[];
+  var map={};
+  function ensure(name){var k=dkey(name);if(!map[k])map[k]={rep:name,sr:new Array(12).fill(0),leap:new Array(12).fill(0),approved:0,contract:0};return map[k];}
+  (d.reps||[]).forEach(function(r){var o=ensure(r.rep);o.rep=r.rep;(r.counts||[]).forEach(function(c,idx){if(months[idx]!==undefined)o.sr[months[idx]]=c;});});
+  var lc=lx.leapCA||{};
+  Object.keys(lc).forEach(function(name){var o=ensure(name);var arr=lc[name]||[];for(var m=0;m<12;m++)o.leap[m]=arr[m]||0;});
+  // Live revenue. /api/revenue uses approved_amount/contract_amount,
+  // /api/rich-revenue uses approved/contract. Accept either.
+  (rev.reps||[]).forEach(function(r){
+    var o=ensure(r.rep);
+    o.approved=Number(r.approved_amount!==undefined?r.approved_amount:r.approved)||0;
+    o.contract=Number(r.contract_amount!==undefined?r.contract_amount:r.contract)||0;
+  });
+  var rows=Object.keys(map).map(function(k){var o=map[k];
+    o.srYTD=months.reduce(function(a,m){return a+o.sr[m]},0);
+    o.leapYTD=months.reduce(function(a,m){return a+o.leap[m]},0);
+    return o;});
+  // No name filter. Anyone with activity or revenue appears.
+  rows=rows.filter(function(o){return o.srYTD||o.leapYTD||o.approved||o.contract;});
+  rows.sort(function(a,b){return (b.contract-a.contract)||(b.srYTD-a.srYTD)});
+
+  var head='<tr><th class="rank">#</th><th class="rep">Rep</th>'+months.map(function(m){return '<th class="num">'+MONTHS[m]+'</th>'}).join('')+'<th class="num tot">CA YTD</th><th class="num rev">Approved</th><th class="num rev">Contract</th></tr>';
+  var cT=months.map(function(){return {sr:0,leap:0}});var gSR=0,gL=0;
+  var body=rows.map(function(o,i){
+    months.forEach(function(m,idx){cT[idx].sr+=o.sr[m];cT[idx].leap+=o.leap[m];});
+    gSR+=o.srYTD;gL+=o.leapYTD;
+    var cells=months.map(function(m){return '<td class="num">'+o.sr[m]+' / <span class="leap">'+o.leap[m]+'</span></td>'}).join('');
+    return '<tr><td class="rank">'+(i+1)+'</td><td class="rep">'+esc(o.rep)+'</td>'+cells+'<td class="num tot">'+o.srYTD+' / <span class="leap">'+o.leapYTD+'</span></td><td class="num rev">'+money(o.approved)+'</td><td class="num rev">'+money(o.contract)+'</td></tr>';
+  }).join('');
+  // Company totals come from the endpoint, not the sum of rendered rows, so the
+  // page can never quietly under-report by dropping someone.
+  var co=(rev.companyAll||rev.company||{});
+  var gAp=Number(co.approved_amount)||0, gCn=Number(co.contract_amount)||0;
+  var foot='<tr><td></td><td class="rep">Team total</td>'+cT.map(function(c){return '<td class="num">'+c.sr+' / <span class="leap">'+c.leap+'</span></td>'}).join('')+'<td class="num tot">'+gSR+' / <span class="leap">'+gL+'</span></td><td class="num rev">'+money(gAp)+'</td><td class="num rev">'+money(gCn)+'</td></tr>';
+  document.getElementById('tw').innerHTML='<table><thead>'+head+'</thead><tbody>'+body+'</tbody><tfoot>'+foot+'</tfoot></table>';
+
+  document.getElementById('cards').innerHTML=
+    '<div class="ycard yk"><div class="label">CAs YTD</div><div class="value">'+gSR+' / <span class="leap">'+gL+'</span></div><div class="sub">SalesRabbit / Leap</div></div>'+
+    '<div class="ycard ya"><div class="label">Approved Revenue</div><div class="value">'+money(gAp)+'</div><div class="sub">Job awarded date · YTD · live</div></div>'+
+    '<div class="ycard yc"><div class="label">Contract Signed</div><div class="value">'+money(gCn)+'</div><div class="sub">Contract signed date · YTD · live</div></div>';
+
+  var srAge=ageHrs(d.updated), stale=(srAge===null||srAge>36);
+  var bits=['Revenue: <b>live</b> from Leap job listing, '+(rev.jobs?(rev.jobs.contract+' jobs'):'job level')+'.',
+            'SalesRabbit CAs: snapshot from <b>'+ageText(d.updated)+'</b>.',
+            'Leap CAs: snapshot dated <b>'+esc(String(lx.updated||'unknown'))+'</b>.'];
+  if(rev.error)bits.unshift('<b>Revenue failed to load:</b> '+esc(String(rev.error)));
+  document.getElementById('banner').innerHTML='<div class="banner '+(stale||rev.error?'warn':'ok')+'">'+bits.join(' &nbsp;·&nbsp; ')+
+    (stale?'<br>The CA columns are not live - they refresh from a scheduled job that has not run. Revenue above is current.':'')+'</div>';
 }
 [].slice.call(document.querySelectorAll('.toggle button')).forEach(function(btn){btn.addEventListener('click',function(){office=btn.getAttribute('data-office');[].slice.call(document.querySelectorAll('.toggle button')).forEach(function(x){x.classList.remove('on')});btn.classList.add('on');load();});});
 document.getElementById('rf').addEventListener('click',load);
 load();
 </script>
-<style>.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0 18px}@media(max-width:780px){.cards{grid-template-columns:1fr}}.ycard{background:#fff;border:1px solid #e5e9f0;border-radius:12px;padding:16px 18px}.ycard .label{font-size:12px;color:#6b7888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}.ycard .value{font-size:26px;font-weight:700;color:#0f2438}.ycard .sub{font-size:11px;color:#6b7888;margin-top:6px}.yk{border-top:3px solid #b8860b}.ya{border-top:3px solid #1f6feb}.yc{border-top:3px solid #1a7f37}</style><script>(function(){function buildCards(){var tw=document.getElementById("tw");if(!tw)return;var foot=tw.querySelector("tfoot tr");if(!foot){var trs=tw.querySelectorAll("tr");foot=trs[trs.length-1];}if(!foot)return;var tds=foot.querySelectorAll("td");if(tds.length<3)return;var ca=(tds[tds.length-3].textContent||"").trim();var ap=(tds[tds.length-2].textContent||"").trim();var cn=(tds[tds.length-1].textContent||"").trim();if(!/\d/.test(ca))return;var host=document.getElementById("__ytdCards");if(!host){host=document.createElement("div");host.id="__ytdCards";host.className="cards";tw.parentNode.insertBefore(host,tw);}host.innerHTML="<div class=\"ycard yk\"><div class=\"label\">CAs YTD</div><div class=\"value\">"+ca+"</div><div class=\"sub\">SR / Leap</div></div>"+"<div class=\"ycard ya\"><div class=\"label\">Approved Revenue</div><div class=\"value\">"+ap+"</div><div class=\"sub\">Job awarded \u00b7 YTD</div></div>"+"<div class=\"ycard yc\"><div class=\"label\">Contract Signed</div><div class=\"value\">"+cn+"</div><div class=\"sub\">Contract signed \u00b7 YTD</div></div>";}var tw=document.getElementById("tw");if(tw){new MutationObserver(function(){buildCards();}).observe(tw,{childList:true,subtree:true});}buildCards();setTimeout(buildCards,500);setTimeout(buildCards,1500);})();</script>
-<style id="dark-theme">
-html,body{background:#0d1117 !important;color:#e6edf3 !important}
-header,.hd{background:#161b22 !important;border-bottom:1px solid #30363d !important}
-.card,table,.rangebar,.rangebar button.ghost,tfoot td{background:#161b22 !important;border-color:#30363d !important;color:#e6edf3 !important}
-th{background:#0d1117 !important;color:#8b949e !important;border-color:#30363d !important}
-td,tr,thead,tbody{border-color:#30363d !important}
-.rangebar button.ghost{color:#e6edf3 !important}
-.note,.sub,.meta,.label,.dim,.muted{color:#8b949e !important}
-input,select{background:#0d1117 !important;color:#e6edf3 !important;border-color:#30363d !important}
-.nav a{color:#8b949e !important}
-.nav a.on{background:transparent !important;color:#e6edf3 !important}
-</style>
-
-<style id="dark-theme-2">
-.tot,.num.tot{background:#132039 !important;color:#e6edf3 !important}
-th.tot{background:#132039 !important;color:#8b949e !important}
-.rev,.num.rev{background:#10231a !important;color:#e6edf3 !important}
-</style>
 </body></html>
