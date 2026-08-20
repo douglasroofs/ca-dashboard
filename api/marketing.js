@@ -55,7 +55,13 @@ const SPEND = {
 // are set. Anything in byMonth below is a manual override and WINS over the
 // API for that month - use it to pin a month the API reports differently, or
 // to backfill months from before the token existed.
-const FACEBOOK = { currency: 'USD', byMonth: {} };
+// Two ad accounts, both Herndon revenue. Same shape as SPEND above: figures
+// are the COMBINED total for both accounts for that month.
+const FACEBOOK = {
+  currency: 'USD',
+  accounts: ['2356347398190484', '272377932099924 Douglas Roofing Inc'],
+  byMonth: {},
+};
 
 // --- Marketing company retainer. Effective-dated: each row applies from its
 // month forward until the next row starts. To change the fee, ADD a row.
@@ -90,38 +96,64 @@ function agencyByMonth(startISO, endISO) {
 
 // Meta Marketing API. Failure here must never take the page down - marketing
 // numbers still render, Facebook just reports as unavailable and says why.
+// META_AD_ACCOUNT_ID takes a COMMA-SEPARATED list. Douglas runs two ad
+// accounts (2356347398190484 and 272377932099924) and both are marketing
+// cost, so they are summed per month - the same way the two Google LSA
+// accounts are already combined. One account failing does not discard the
+// other: partial results are kept and the failure is reported.
 async function metaSpend(startISO, endISO) {
   const token = process.env.META_ACCESS_TOKEN;
-  let acct = process.env.META_AD_ACCOUNT_ID || '';
-  if (!token || !acct) {
+  const raw = process.env.META_AD_ACCOUNT_ID || '';
+  const accts = raw.split(/[,\s]+/).map((s) => s.trim()).filter(Boolean)
+    .map((s) => (/^act_/.test(s) ? s : 'act_' + s));
+  if (!token || !accts.length) {
     return { byMonth: {}, live: false, reason: 'META_ACCESS_TOKEN / META_AD_ACCOUNT_ID not set in Vercel' };
   }
-  if (!/^act_/.test(acct)) acct = 'act_' + acct.replace(/^act_/, '');
   const ver = process.env.META_API_VERSION || 'v21.0';
-  const qs = new URLSearchParams({
-    fields: 'spend',
-    level: 'account',
-    time_increment: 'monthly',
-    time_range: JSON.stringify({ since: startISO, until: endISO }),
-    limit: '200',
-    access_token: token,
-  });
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), 9000);
-  try {
+
+  async function one(acct) {
+    const qs = new URLSearchParams({
+      fields: 'spend',
+      level: 'account',
+      time_increment: 'monthly',
+      time_range: JSON.stringify({ since: startISO, until: endISO }),
+      limit: '200',
+      access_token: token,
+    });
     const r = await fetch('https://graph.facebook.com/' + ver + '/' + acct + '/insights?' + qs.toString(), { signal: ctl.signal });
     const j = await r.json().catch(() => null);
-    if (!r.ok) {
-      const em = (j && j.error && j.error.message) || ('HTTP ' + r.status);
-      return { byMonth: {}, live: false, reason: 'Meta API: ' + String(em).slice(0, 160) };
-    }
-    const byMonth = {};
+    if (!r.ok) throw new Error((j && j.error && j.error.message) || ('HTTP ' + r.status));
+    const by = {};
     ((j && j.data) || []).forEach((row) => {
       const key = String(row.date_start || '').slice(0, 7);
       const amt = Number(row.spend);
-      if (MONTH_RE.test(key) && !isNaN(amt)) byMonth[key] = Math.round(amt * 100) / 100;
+      if (MONTH_RE.test(key) && !isNaN(amt)) by[key] = (by[key] || 0) + amt;
     });
-    return { byMonth, live: true, account: acct, reason: '' };
+    return by;
+  }
+
+  try {
+    const settled = await Promise.all(accts.map((a) => one(a).then(
+      (by) => ({ ok: true, acct: a, by }),
+      (e) => ({ ok: false, acct: a, err: String((e && e.message) || e).slice(0, 120) })
+    )));
+    const byMonth = {};
+    settled.filter((s) => s.ok).forEach((s) => {
+      Object.keys(s.by).forEach((m) => { byMonth[m] = Math.round(((byMonth[m] || 0) + s.by[m]) * 100) / 100; });
+    });
+    const failed = settled.filter((s) => !s.ok);
+    const okCount = settled.length - failed.length;
+    return {
+      byMonth,
+      live: okCount > 0,
+      accounts: accts,
+      // Say so out loud when only some accounts reported - a silently partial
+      // total is worse than no total at all.
+      reason: failed.length ? ('Meta API: ' + failed.map((f) => f.acct + ' -> ' + f.err).join('; ') + (okCount ? ' (total is PARTIAL - ' + okCount + ' of ' + accts.length + ' accounts)' : '')) : '',
+      partial: failed.length > 0 && okCount > 0,
+    };
   } catch (e) {
     const msg = (e && e.name === 'AbortError') ? 'Meta API timed out after 9s' : String((e && e.message) || e).slice(0, 160);
     return { byMonth: {}, live: false, reason: msg };
@@ -251,7 +283,7 @@ module.exports = async (req, res) => {
     const fbByMonth = Object.assign({}, meta.byMonth, FACEBOOK.byMonth);
     const costs = {
       lsa: { label: 'Google LSA', byMonth: SPEND.byMonth, source: 'manual - LSA billing console', accounts: SPEND.accounts, pendingCredit: SPEND.pendingCredit, partialMonth: SPEND.partialMonth },
-      facebook: { label: 'Facebook ads', byMonth: fbByMonth, source: meta.live ? 'live - Meta Marketing API' : 'manual', live: meta.live, note: meta.reason, overrides: Object.keys(FACEBOOK.byMonth) },
+      facebook: { label: 'Facebook ads', byMonth: fbByMonth, source: meta.live ? 'live - Meta Marketing API' : 'manual - Ads Manager', live: meta.live, partial: !!meta.partial, note: meta.reason, accounts: meta.accounts || FACEBOOK.accounts, overrides: Object.keys(FACEBOOK.byMonth) },
       agency: { label: 'Marketing company', byMonth: agencyByMonth(start, end), source: 'retainer schedule', schedule: AGENCY, current: agencyFor(new Date().toISOString().slice(0, 7)) },
     };
 
