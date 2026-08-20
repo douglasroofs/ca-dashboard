@@ -163,7 +163,7 @@ var allowSet=new Set(dr.allowedReps||[]);
 rowsArr.forEach(function(r){var k=dkey(r.rep);
 if(!haveTeams){r.team='all';return}
 r.team=(teamByRep[k]!==undefined)?teamByRep[k]:(allowSet.has(k)?'other':'unassigned');});
-var TEAMS=haveTeams?[['selfgen','Self-Gen'],['jack',"Jack's Team"],['mccarthy',"McCarthy's Team"],['inbound','Inbound'],['retail','Retail'],['other','Other'],['unassigned','Unassigned / Inactive — not on the SalesRabbit roster']]:[['all','All Reps']];
+var TEAMS=haveTeams?[['selfgen','Self-Gen'],['jack',"Jack's Team"],['mccarthy',"McCarthy's Team"],['inbound','Inbound'],['retail','Retail'],['other','Other'],['noteam','No team set in SalesRabbit'],['unassigned','Unassigned / Inactive — not on the SalesRabbit roster']]:[['all','All Reps']];
 function tot(a){var t={d:0,c:0,ap:0,cn:0,lp:0};a.forEach(function(r){t.d+=(r.doors||0);t.c+=(r.cas||0);t.ap+=(r.approved||0);t.cn+=(r.contract||0);t.lp+=(r.leapCa||0)});return t}
 function ratio(d,l,c){if(_leapNA)return c>0?Math.round(d/c):'—';return l>0?Math.round(d/l):'—';}
 function rowH(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(S.srState==='ok'?(r.doors||0):'—')+'</td><td class="num">'+(S.srState==='ok'?(r.cas||0):'—')+' / '+(_leapNA?'—':(r.leapCa||0))+'</td><td class="num">'+(S.srState==='ok'?ratio(r.doors||0,r.leapCa||0,r.cas||0):'—')+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract)+'</td></tr>';}
