@@ -119,7 +119,9 @@ function spendOf(by,from,to){
     var mStart=new Date(y,mo,1), mEnd=new Date(y,mo+1,0);
     var s=new Date(Math.max(mStart,from)), e=new Date(Math.min(mEnd,to));
     if(e<s)return;
-    var daysIn=Math.round((e-s)/86400000)+1, daysM=mEnd.getDate();
+    // floor, not round: the range end carries 23:59:59, so round() charged an
+    // extra day whenever the range stopped mid-month - a one-day range billed two.
+    var daysIn=Math.floor((e-s)/86400000)+1, daysM=mEnd.getDate();
     total += by[m]*(daysIn/daysM);
   });
   return total;
