@@ -21,7 +21,10 @@
 // developer token does NOT authorize these v1 report endpoints - it returns
 // 401 - so the password login has to stay until Leap grants token access.
 //
-// Query params: ?month=YYYY-MM | ?start=&end= | default MTD | ?debug=1
+// 2026-08-20: restored the 401/403 retry that the rewrite dropped, and added
+// ?duration=YTD so this matches api/rich-revenue.js.
+//
+// Query params: ?month=YYYY-MM | ?start=&end= | ?duration=YTD | default MTD | ?debug=1
 
 const V1 = 'https://jobprogress.com/api/public/api/v1';
 const COMPANY_ID = process.env.JP_COMPANY_ID || '5154';
@@ -56,16 +59,17 @@ function getToken() {
   if (!tokenPromise) tokenPromise = (async () => { cachedToken = await switchCompany(await login()); return cachedToken; })();
   return tokenPromise;
 }
+function resetToken() { cachedToken = null; tokenPromise = null; }
 const HDR = (t) => ({ Authorization: `Bearer ${t}`, Accept: 'application/json', platform: 'web' });
 
-function durationQuery(month, s0, e0) {
+function durationQuery(month, s0, e0, dur) {
   const ok = (x) => typeof x === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(x) && !isNaN(Date.parse(x));
   if (ok(s0) && ok(e0)) return `duration=DUR&start_date=${s0}&end_date=${e0}`;
   if (month && /^\d{4}-\d{2}$/.test(month)) {
     const y = +month.slice(0, 4), m = +month.slice(5, 7), pad = (n) => String(n).padStart(2, '0');
     return `duration=DUR&start_date=${y}-${pad(m)}-01&end_date=${y}-${pad(m)}-${pad(new Date(y, m, 0).getDate())}`;
   }
-  return 'duration=MTD';
+  return `duration=${dur === 'YTD' ? 'YTD' : 'MTD'}`;
 }
 const JL_BASE = '/reports/job_listing';
 const JL_OPTS = 'include_lost_jobs=1&includes[]=customer&includes[]=customer.rep&limit=100&with_archived=0&with_inactive=1';
@@ -73,22 +77,32 @@ const JL_OPTS = 'include_lost_jobs=1&includes[]=customer&includes[]=customer.rep
 function jlUrl(dateType, dq, page) {
   return `${JL_BASE}?date_range_type[]=${dateType}&${dq}&${JL_OPTS}&page=${page}`;
 }
-async function get(token, path) {
-  const r = await fetch(V1 + path, { headers: HDR(token) });
+// Leap allows ONE session per account. Anything else that logs in as the same
+// user - the Richmond endpoint, the marketing endpoint, or a human opening
+// Leap in a browser - invalidates this token mid-flight. Retry once with a
+// fresh login instead of failing the whole page.
+async function get(path) {
+  let t = await getToken();
+  let r = await fetch(V1 + path, { headers: HDR(t) });
+  if (r.status === 401 || r.status === 403) {
+    resetToken();
+    t = await getToken();
+    r = await fetch(V1 + path, { headers: HDR(t) });
+  }
   if (!r.ok) throw new Error(`GET ${path.split('?')[0]} -> ${r.status}`);
   return r.json();
 }
 
 // Page 1 first to learn total_pages, then the rest in parallel - keeps this
 // inside the function timeout instead of walking pages one at a time.
-async function pullJobs(token, dateType, dq) {
-  const first = await get(token, jlUrl(dateType, dq, 1));
+async function pullJobs(dateType, dq) {
+  const first = await get(jlUrl(dateType, dq, 1));
   const rows = (first.data || []).slice();
   const pg = (first.meta && first.meta.pagination) || {};
   const totalPages = Math.min(pg.total_pages || 1, 25);
   if (totalPages > 1) {
     const pages = [];
-    for (let p = 2; p <= totalPages; p++) pages.push(get(token, jlUrl(dateType, dq, p)));
+    for (let p = 2; p <= totalPages; p++) pages.push(get(jlUrl(dateType, dq, p)));
     (await Promise.all(pages)).forEach((j) => { (j.data || []).forEach((x) => rows.push(x)); });
   }
   return rows;
@@ -116,12 +130,12 @@ module.exports = async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     const month = url.searchParams.get('month');
     const qs = url.searchParams.get('start'), qe = url.searchParams.get('end');
-    const dq = durationQuery(month, qs, qe);
+    const dur = (url.searchParams.get('duration') || '').toUpperCase();
+    const dq = durationQuery(month, qs, qe, dur);
 
-    const token = await getToken();
     const [apprRows, signRows] = await Promise.all([
-      pullJobs(token, 'job_awarded_date', dq),
-      pullJobs(token, 'contract_signed_date', dq),
+      pullJobs('job_awarded_date', dq),
+      pullJobs('contract_signed_date', dq),
     ]);
 
     if (url.searchParams.get('debug') === '1') {
@@ -164,7 +178,7 @@ module.exports = async (req, res) => {
 
     res.status(200).json({
       updated: new Date().toISOString(),
-      duration: (qs && qe) ? `${qs}..${qe}` : (month || 'MTD'),
+      duration: (qs && qe) ? `${qs}..${qe}` : (month || (dur === 'YTD' ? 'YTD' : 'MTD')),
       basis: 'job_listing - one row per job, credited to the customer rep',
       company,
       companyAll: company,
