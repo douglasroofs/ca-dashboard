@@ -114,9 +114,16 @@ function leapPayload(L) {
     note: noteFrom(L),
     lead_source: 'Facebook Lead Ad',
   };
-  if (L.phone) {
-    p.phone = L.phone;
-    p.phones = [{ number: L.phone, label: 'mobile' }];
+    if (L.phone) {
+    // Leap validates phones.N.number as 8-12 DIGITS, so E.164 fails on the "+".
+    // Strip to digits and drop the US country code: "+15550131234" -> "5550131234".
+    // Quo still receives the E.164 form; this shape is only for Leap.
+    const d = String(L.phone).replace(/[^\d]/g, '').replace(/^1(?=\d{10}$)/, '');
+    if (d.length >= 8 && d.length <= 12) {
+      p.phone = d;
+      // Leap's label whitelist is capitalised - lowercase "mobile" is rejected.
+      p.phones = [{ number: d, label: 'Mobile' }];
+    }
   }
   if (L.address || L.city || L.zip) {
     p.address = L.address;
@@ -156,7 +163,31 @@ async function createLeapProspect(payload) {
     const text = await r.text();
     let json = null;
     try { json = JSON.parse(text); } catch (e) { /* Leap sometimes returns HTML on error */ }
-    if (!r.ok) return { ok: false, error: 'Leap ' + r.status, detail: text.slice(0, 400) };
+        if (!r.ok) {
+      // A 412 is Leap rejecting one field, and in practice it is the phone shape.
+      // Losing a real customer over a phone-format quibble is the worst outcome
+      // here, so retry once without the phone fields and carry the number in the
+      // note instead. A prospect with a note beats no prospect at all.
+      if (r.status === 412 && (payload.phones || payload.phone)) {
+        const keptPhone = payload.phone || (payload.phones && payload.phones[0] && payload.phones[0].number) || '';
+        const bare = Object.assign({}, payload);
+        delete bare.phones; delete bare.phone;
+        if (keptPhone) bare.note = (bare.note ? bare.note + '\n' : '') + 'Phone (Leap rejected the phone field): ' + keptPhone;
+        const r2 = await fetch(LEAP_V3 + '/prospects', {
+          method: 'POST',
+          headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(bare),
+        });
+        const t2 = await r2.text();
+        if (r2.ok) {
+          let j2 = null;
+          try { j2 = JSON.parse(t2); } catch (e) { /* ignore */ }
+          return { ok: true, id: (j2 && (j2.id || (j2.data && j2.data.id))) || null, degraded: 'Leap rejected the phone field; prospect created with the number in the note' };
+        }
+      }
+      return { ok: false, error: 'Leap ' + r.status, detail: text.slice(0, 400) };
+    }
+
     const id = json && (json.id || (json.data && json.data.id));
     return { ok: true, id: id || null, raw: json ? undefined : text.slice(0, 200) };
   } catch (e) {
