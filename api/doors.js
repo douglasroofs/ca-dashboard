@@ -217,8 +217,13 @@ function monthStart() { const n = new Date(); return new Date(n.getFullYear(), n
 function norm(s) { return String(s == null ? '' : s).trim().toLowerCase().replace(/\s+/g, ' '); }
 function statusNorm(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function repKey(name) { const n = norm(name); return SR_ALIAS[n] || n; }
-function teamLabel(t) { const n = norm(t); if (n.indexOf('mccarthy') > -1) return 'mccarthy'; if (n.indexOf('jack') > -1) return 'jack'; if (n.indexOf('inbound') > -1) return 'inbound'; if (n.indexOf('retail') > -1) return 'retail'; if ((n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('storm') > -1) return 'selfgen'; return 'other'; }
-function teamAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('mccarthy') > -1; }
+function teamLabel(t) { const n = norm(t); if (!n) return 'noteam'; if (n.indexOf('mccarthy') > -1) return 'mccarthy'; if (n.indexOf('jack') > -1) return 'jack'; if (n.indexOf('inbound') > -1) return 'inbound'; if (n.indexOf('retail') > -1) return 'retail'; if ((n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('storm') > -1) return 'selfgen'; return 'other'; }
+// A blank SalesRabbit team used to fail this test, which silently dropped the
+// rep AND every door they knocked from the company total - they simply were
+// not on the dashboard. Blank now counts as Herndon and surfaces as its own
+// "No team set" group, so the gap is visible here instead of hidden. Richmond
+// stays strict: a rep with no team cannot be assumed to be Richmond's.
+function teamAllowed(t, office) { const n = norm(t); if (office === 'richmond') return n.indexOf('richmond') > -1; return !n || n.indexOf('inbound') > -1 || (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('mccarthy') > -1; }
 
 async function compute(office) {
   const usersRes = await srGet('/users');
