@@ -102,36 +102,37 @@ function noteFrom(L) {
   return bits.join('\n');
 }
 
+// Leap's POST /prospects is application/x-www-form-urlencoded with BRACKETED
+// key names - phones[0][number], address[address], job[description] - not the
+// flat JSON we were sending. JSON got the required fields validated but
+// silently dropped the address, and every phone label we guessed was refused.
+//
+// The published spec lists the only allowed labels: home, cell, phone, office,
+// fax, other - all lowercase. That is why 'Mobile', 'mobile', 'Cell' and 'Home'
+// were each rejected as "invalid". phones is also MANDATORY, so the old idea of
+// falling back to a prospect with the number in a note was never going to work:
+// Leap will not create a prospect without a phone at all.
+//
+// Spec: https://docs.api.jobprogress.com/api/prospect.json
+function leapDigits(phone) {
+  // Leap wants 8-12 DIGITS, so E.164 fails on the "+". Drop the US country
+  // code: "+15550131234" -> "5550131234". Quo still gets the E.164 form.
+  const d = String(phone || '').replace(/[^\d]/g, '').replace(/^1(?=\d{10}$)/, '');
+  return (d.length >= 8 && d.length <= 12) ? d : '';
+}
+
 function leapPayload(L) {
-  // Confirmed working shape: POST /api/v3/prospects with a Bearer token and
-  // first_name / last_name / email. The address and phone fields below are the
-  // conventional Leap names; if Leap ignores any of them the prospect is still
-  // created and the note carries everything, so nothing is lost.
-  const p = {
-    first_name: L.first_name,
-    last_name: L.last_name,
-    email: L.email,
-    note: noteFrom(L),
-    lead_source: 'Facebook Lead Ad',
-  };
-    if (L.phone) {
-    // Leap validates phones.N.number as 8-12 DIGITS, so E.164 fails on the "+".
-    // Strip to digits and drop the US country code: "+15550131234" -> "5550131234".
-    // Quo still receives the E.164 form; this shape is only for Leap.
-    const d = String(L.phone).replace(/[^\d]/g, '').replace(/^1(?=\d{10}$)/, '');
-    if (d.length >= 8 && d.length <= 12) {
-      p.phone = d;
-      // Leap's label whitelist is capitalised - lowercase "mobile" is rejected.
-      p.phones = [{ number: d, label: 'Mobile' }];
-    }
-  }
-  if (L.address || L.city || L.zip) {
-    p.address = L.address;
-    p.city = L.city;
-    p.state = L.state;
-    p.zip = L.zip;
-    p.addresses = [{ address: L.address, city: L.city, state: L.state, zip: L.zip }];
-  }
+  const p = { first_name: L.first_name, last_name: L.last_name };
+  if (L.email) p.email = L.email;
+  const d = leapDigits(L.phone);
+  if (d) p['phones[0][number]'] = d;
+  // address[city] and address[state] are not in the published property list,
+  // but unknown form keys are ignored rather than rejected, and if Leap ever
+  // starts honouring them the city lands in the right place instead of nowhere.
+  if (L.address) p['address[address]'] = L.address;
+  if (L.city) p['address[city]'] = L.city;
+  if (L.state) p['address[state]'] = L.state;
+  if (L.zip) p['address[zip]'] = L.zip;
   return p;
 }
 
@@ -147,72 +148,94 @@ function smsFrom(L, leapOk, leapErr) {
   return lines.join('\n');
 }
 
-// Leap rejects phone shapes we cannot predict: it refused E.164 ("must be
-// between 8 and 12 digits"), then refused label 'mobile', then refused label
-// 'Mobile'. Rather than keep guessing one shape at a time and burning a deploy
-// per guess, try a LADDER of shapes and stop at the first Leap accepts.
-//
-// The last rung has no phone at all and carries the number in the note. That
-// rung cannot fail on phone validation, so a real customer is never lost to a
-// formatting quibble - which is the only outcome that actually matters here.
-//
-// Every attempt is reported back, so when something fails we can see WHY
-// instead of only seeing the first error (the previous version hid the retry's
-// own failure behind the original error, which is why it looked like the retry
-// never ran).
-function phoneVariants(payload) {
-  const num = payload.phone || (payload.phones && payload.phones[0] && payload.phones[0].number) || '';
-  const base = Object.assign({}, payload);
-  delete base.phones; delete base.phone;
-  if (!num) return [{ label: 'no phone on lead', body: base }];
-  const withNote = Object.assign({}, base);
-  withNote.note = (base.note ? base.note + '\n' : '') + 'Phone (Leap rejected the phone field): ' + num;
-  return [
-    { label: 'phones[] with no label', body: Object.assign({}, base, { phone: num, phones: [{ number: num }] }) },
-    { label: "phones[] label 'Cell'", body: Object.assign({}, base, { phone: num, phones: [{ number: num, label: 'Cell' }] }) },
-    { label: "phones[] label 'Home'", body: Object.assign({}, base, { phone: num, phones: [{ number: num, label: 'Home' }] }) },
-    { label: 'flat phone only', body: Object.assign({}, base, { phone: num }) },
-    { label: 'no phone, number in note', body: withNote },
-  ];
+// A trade id is required whenever a job is attached, and we DO want a job:
+// job[description] is the only free-text field on this endpoint, so it is the
+// only place the roof age, the homeowner answer and the campaign can land where
+// a salesperson will actually read them. Look the id up once per warm function.
+let tradeIdPromise = null;
+function roofingTradeId(token) {
+  if (!tradeIdPromise) {
+    tradeIdPromise = fetch(LEAP_V3 + '/company/trades', {
+      headers: { Authorization: 'Bearer ' + token, Accept: 'application/json' },
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => {
+        const rows = (j && (j.data || j)) || [];
+        if (!Array.isArray(rows) || !rows.length) return null;
+        const roof = rows.find((t) => /roof/i.test(String((t && (t.name || t.trade_name)) || '')));
+        return ((roof || rows[0]) || {}).id || null;
+      })
+      .catch(() => null);
+  }
+  return tradeIdPromise;
 }
 
-async function createLeapProspect(payload) {
+function formBody(obj) {
+  const u = new URLSearchParams();
+  Object.keys(obj).forEach((k) => {
+    const v = obj[k];
+    if (v !== undefined && v !== null && v !== '') u.append(k, String(v));
+  });
+  return u.toString();
+}
+
+// Try the richest shape first and fall back, so a lead Leap will not take in
+// full still lands as a bare customer instead of vanishing. Rung 1 is the one
+// the spec says should work; the rest exist because the spec has already been
+// wrong once about this endpoint.
+function leapVariants(payload, tradeId, note) {
+  const cell = Object.assign({}, payload, { 'phones[0][label]': 'cell' });
+  const out = [];
+  if (tradeId && note) {
+    out.push({
+      shape: 'customer + job, label cell',
+      body: Object.assign({}, cell, {
+        'job[trades][]': tradeId,
+        'job[description]': note,
+        'job[same_as_customer_address]': 1,
+      }),
+    });
+  }
+  out.push({ shape: 'customer only, label cell', body: cell });
+  ['phone', 'other'].forEach((lab) => {
+    out.push({ shape: 'customer only, label ' + lab, body: Object.assign({}, payload, { 'phones[0][label]': lab }) });
+  });
+  return out;
+}
+
+async function createLeapProspect(payload, note) {
   const token = process.env.LEAP_ACCESS_TOKEN || process.env.LEAP_API_TOKEN;
   if (!token) return { ok: false, error: 'LEAP_ACCESS_TOKEN not set in Vercel' };
   const attempts = [];
+  let tradeId = null;
   try {
-    for (const variant of phoneVariants(payload)) {
+    tradeId = await roofingTradeId(token);
+    for (const variant of leapVariants(payload, tradeId, note)) {
       const r = await fetch(LEAP_V3 + '/prospects', {
         method: 'POST',
         headers: {
           Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
           Accept: 'application/json',
         },
-        body: JSON.stringify(variant.body),
+        body: formBody(variant.body),
       });
       const text = await r.text();
       let json = null;
       try { json = JSON.parse(text); } catch (e) { /* Leap sometimes returns HTML on error */ }
       if (r.ok) {
         const id = json && (json.id || (json.data && json.data.id));
-        return {
-          ok: true,
-          id: id || null,
-          shape: variant.label,
-          degraded: variant.label.indexOf('note') > -1 ? 'phone is in the note, not the phone field' : undefined,
-          attempts,
-        };
+        return { ok: true, id: id || null, shape: variant.shape, tradeId: tradeId, attempts };
       }
-      attempts.push({ shape: variant.label, status: r.status, detail: text.slice(0, 220) });
-      // Only a 412 means "this shape is wrong, try another". Anything else -
-      // auth, server error, rate limit - will fail identically for every shape,
-      // so stop rather than hammer Leap six times.
+      attempts.push({ shape: variant.shape, status: r.status, detail: text.slice(0, 220) });
+      // Only a 412 means "this shape is wrong, try another". Auth, server and
+      // rate-limit errors fail identically for every shape, so stop rather than
+      // hammer Leap four times over.
       if (r.status !== 412) break;
     }
-    return { ok: false, error: 'Leap rejected every shape', attempts };
+    return { ok: false, error: 'Leap rejected every shape', tradeId: tradeId, attempts };
   } catch (e) {
-    return { ok: false, error: String((e && e.message) || e), attempts };
+    return { ok: false, error: String((e && e.message) || e), tradeId: tradeId, attempts };
   }
 }
 
@@ -278,7 +301,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const leap = await createLeapProspect(payload);
+  const leap = await createLeapProspect(payload, noteFrom(L));
   // The text goes out either way - see the design rule at the top of this file.
   const sms = await sendQuo(smsFrom(L, leap.ok, leap.error));
 
