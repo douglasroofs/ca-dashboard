@@ -55,19 +55,31 @@ const SPEND = {
 // are set. Anything in byMonth below is a manual override and WINS over the
 // API for that month - use it to pin a month the API reports differently, or
 // to backfill months from before the token existed.
-// Two ad accounts, both Herndon revenue. Same shape as SPEND above: figures
-// are the COMBINED total for both accounts for that month.
+// One ad account, Herndon revenue. Same shape as SPEND above: each figure is
+// that month's total charged to the card.
 const FACEBOOK = {
   currency: 'USD',
-  accounts: ['2356347398190484', '272377932099924 Douglas Roofing Inc'],
-  byMonth: {},
+  accounts: ['272377932099924 Douglas Roofing Inc'],
+  // Read BY HAND from Billing > Payment activity on 2026-08-21, because the
+  // Meta API token still does not exist. Only ONE ad account is actually
+  // billed - the earlier two-account guess was wrong. The card on file is
+  // charged $93.00 every 2-3 days, which is a billing THRESHOLD, not a
+  // schedule, so these are actual charges rather than a budget.
+  //   2026-07: only the 27th and 30th could be read before Meta forced a
+  //            re-auth, so this is a FLOOR for July, not the true total.
+  //   2026-08: charges on the 2nd, 4th, 7th, 9th, 12th, 15th, 17th, 20th.
+  // Replace both with exact figures once META_ACCESS_TOKEN is in Vercel.
+  byMonth: { '2026-07': 186, '2026-08': 744 },
 };
 
 // --- Marketing company retainer. Effective-dated: each row applies from its
 // month forward until the next row starts. To change the fee, ADD a row.
 // Do not edit an existing row unless it was entered wrong to begin with.
 const AGENCY = [
-  { from: '2026-01', monthly: 4750, note: 'current retainer' },
+  // Phlash started July 2026. This row previously read 2026-01, which billed
+  // the retainer against six months that never paid it - about $28,500 of
+  // marketing cost the company never actually spent.
+  { from: '2026-07', monthly: 4750, note: 'Phlash retainer, started July 2026' },
 ];
 
 const MONTH_RE = /^\d{4}-\d{2}$/;
