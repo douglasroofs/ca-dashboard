@@ -147,51 +147,72 @@ function smsFrom(L, leapOk, leapErr) {
   return lines.join('\n');
 }
 
+// Leap rejects phone shapes we cannot predict: it refused E.164 ("must be
+// between 8 and 12 digits"), then refused label 'mobile', then refused label
+// 'Mobile'. Rather than keep guessing one shape at a time and burning a deploy
+// per guess, try a LADDER of shapes and stop at the first Leap accepts.
+//
+// The last rung has no phone at all and carries the number in the note. That
+// rung cannot fail on phone validation, so a real customer is never lost to a
+// formatting quibble - which is the only outcome that actually matters here.
+//
+// Every attempt is reported back, so when something fails we can see WHY
+// instead of only seeing the first error (the previous version hid the retry's
+// own failure behind the original error, which is why it looked like the retry
+// never ran).
+function phoneVariants(payload) {
+  const num = payload.phone || (payload.phones && payload.phones[0] && payload.phones[0].number) || '';
+  const base = Object.assign({}, payload);
+  delete base.phones; delete base.phone;
+  if (!num) return [{ label: 'no phone on lead', body: base }];
+  const withNote = Object.assign({}, base);
+  withNote.note = (base.note ? base.note + '\n' : '') + 'Phone (Leap rejected the phone field): ' + num;
+  return [
+    { label: 'phones[] with no label', body: Object.assign({}, base, { phone: num, phones: [{ number: num }] }) },
+    { label: "phones[] label 'Cell'", body: Object.assign({}, base, { phone: num, phones: [{ number: num, label: 'Cell' }] }) },
+    { label: "phones[] label 'Home'", body: Object.assign({}, base, { phone: num, phones: [{ number: num, label: 'Home' }] }) },
+    { label: 'flat phone only', body: Object.assign({}, base, { phone: num }) },
+    { label: 'no phone, number in note', body: withNote },
+  ];
+}
+
 async function createLeapProspect(payload) {
   const token = process.env.LEAP_ACCESS_TOKEN || process.env.LEAP_API_TOKEN;
   if (!token) return { ok: false, error: 'LEAP_ACCESS_TOKEN not set in Vercel' };
+  const attempts = [];
   try {
-    const r = await fetch(LEAP_V3 + '/prospects', {
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + token,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-    const text = await r.text();
-    let json = null;
-    try { json = JSON.parse(text); } catch (e) { /* Leap sometimes returns HTML on error */ }
-        if (!r.ok) {
-      // A 412 is Leap rejecting one field, and in practice it is the phone shape.
-      // Losing a real customer over a phone-format quibble is the worst outcome
-      // here, so retry once without the phone fields and carry the number in the
-      // note instead. A prospect with a note beats no prospect at all.
-      if (r.status === 412 && (payload.phones || payload.phone)) {
-        const keptPhone = payload.phone || (payload.phones && payload.phones[0] && payload.phones[0].number) || '';
-        const bare = Object.assign({}, payload);
-        delete bare.phones; delete bare.phone;
-        if (keptPhone) bare.note = (bare.note ? bare.note + '\n' : '') + 'Phone (Leap rejected the phone field): ' + keptPhone;
-        const r2 = await fetch(LEAP_V3 + '/prospects', {
-          method: 'POST',
-          headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(bare),
-        });
-        const t2 = await r2.text();
-        if (r2.ok) {
-          let j2 = null;
-          try { j2 = JSON.parse(t2); } catch (e) { /* ignore */ }
-          return { ok: true, id: (j2 && (j2.id || (j2.data && j2.data.id))) || null, degraded: 'Leap rejected the phone field; prospect created with the number in the note' };
-        }
+    for (const variant of phoneVariants(payload)) {
+      const r = await fetch(LEAP_V3 + '/prospects', {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + token,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(variant.body),
+      });
+      const text = await r.text();
+      let json = null;
+      try { json = JSON.parse(text); } catch (e) { /* Leap sometimes returns HTML on error */ }
+      if (r.ok) {
+        const id = json && (json.id || (json.data && json.data.id));
+        return {
+          ok: true,
+          id: id || null,
+          shape: variant.label,
+          degraded: variant.label.indexOf('note') > -1 ? 'phone is in the note, not the phone field' : undefined,
+          attempts,
+        };
       }
-      return { ok: false, error: 'Leap ' + r.status, detail: text.slice(0, 400) };
+      attempts.push({ shape: variant.label, status: r.status, detail: text.slice(0, 220) });
+      // Only a 412 means "this shape is wrong, try another". Anything else -
+      // auth, server error, rate limit - will fail identically for every shape,
+      // so stop rather than hammer Leap six times.
+      if (r.status !== 412) break;
     }
-
-    const id = json && (json.id || (json.data && json.data.id));
-    return { ok: true, id: id || null, raw: json ? undefined : text.slice(0, 200) };
+    return { ok: false, error: 'Leap rejected every shape', attempts };
   } catch (e) {
-    return { ok: false, error: String((e && e.message) || e) };
+    return { ok: false, error: String((e && e.message) || e), attempts };
   }
 }
 
