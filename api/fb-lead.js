@@ -136,7 +136,7 @@ function leapPayload(L) {
   return p;
 }
 
-function smsFrom(L, leapOk, leapErr) {
+function smsFrom(L, leapOk, leapErr, assignedTo) {
   const lines = ['NEW FACEBOOK LEAD'];
   lines.push(L.first_name + ' ' + L.last_name);
   if (L.phone) lines.push(L.phone);
@@ -144,8 +144,47 @@ function smsFrom(L, leapOk, leapErr) {
   if (where) lines.push(where);
   if (L.roof_age) lines.push('Roof age: ' + L.roof_age);
   if (L.homeowner) lines.push('Homeowner: ' + L.homeowner);
-  lines.push(leapOk ? 'Added to Leap.' : 'NOT IN LEAP - add manually. (' + (leapErr || 'unknown error') + ')');
+  lines.push(leapOk ? ('Added to Leap' + (assignedTo ? ' - assigned to ' + assignedTo : ' (UNASSIGNED)') + '.') : 'NOT IN LEAP - add manually. (' + (leapErr || 'unknown error') + ')');
   return lines.join('\n');
+}
+
+// WHO OWNS A FACEBOOK LEAD (2026-08-21)
+// Until now we sent no rep_id at all, so Leap assigned these by its own default
+// and nobody's name was on them. That is exactly how 68 leads sat untouched for
+// three months: a lead with no owner is a lead nobody calls. Every Meta lead now
+// goes to one person, who distributes from there.
+//
+// Set LEAD_ASSIGN_REP in Vercel to hand them to someone else - no deploy needed.
+// The name is matched against Leap's own user list, so it must match the rep's
+// name in Leap, not a nickname.
+const ASSIGN_REP = process.env.LEAD_ASSIGN_REP || 'Sean Bennett';
+
+const normName = (s) => String(s || '').toLowerCase().replace(/[^a-z ]/g, '').replace(/\s+/g, ' ').trim();
+
+// Looked up by NAME rather than hard-coded as an id, because an id pasted from a
+// URL is unverifiable in review and silently rots if Leap renumbers. If the name
+// stops matching, this returns null and the lead still lands - just unassigned,
+// and the response says so instead of failing quietly.
+let repIdPromise = null;
+function assignedRepId(token) {
+  if (!repIdPromise) {
+    repIdPromise = fetch(LEAP_V3 + '/company/users?limit=200', {
+      headers: { Authorization: 'Bearer ' + token, Accept: 'application/json' },
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => {
+        const rows = (j && (j.data || j)) || [];
+        if (!Array.isArray(rows)) return null;
+        const want = normName(ASSIGN_REP);
+        const hit = rows.find((u) => {
+          const full = normName([u && u.first_name, u && u.last_name].filter(Boolean).join(' '));
+          return full === want || normName(u && u.name) === want;
+        });
+        return (hit && hit.id) || null;
+      })
+      .catch(() => null);
+  }
+  return repIdPromise;
 }
 
 // A trade id is required whenever a job is attached, and we DO want a job:
@@ -182,20 +221,18 @@ function formBody(obj) {
 // Try the richest shape first and fall back, so a lead Leap will not take in
 // full still lands as a bare customer instead of vanishing. Rung 1 is the one
 // the spec says should work; the rest exist because the spec has already been
-// wrong once about this endpoint.
-function leapVariants(payload, tradeId, note) {
+// wrong once about this endpoint. Note the rep is dropped BEFORE the job is:
+// an assigned lead beats a detailed one, but either beats no lead at all.
+function leapVariants(payload, tradeId, note, repId) {
   const cell = Object.assign({}, payload, { 'phones[0][label]': 'cell' });
+  const job = tradeId && note
+    ? { 'job[trades][]': tradeId, 'job[description]': note, 'job[same_as_customer_address]': 1 }
+    : null;
+  const rep = repId ? { rep_id: repId, 'job[same_as_customer_rep]': 1 } : null;
   const out = [];
-  if (tradeId && note) {
-    out.push({
-      shape: 'customer + job, label cell',
-      body: Object.assign({}, cell, {
-        'job[trades][]': tradeId,
-        'job[description]': note,
-        'job[same_as_customer_address]': 1,
-      }),
-    });
-  }
+  if (job && rep) out.push({ shape: 'job + rep, label cell', body: Object.assign({}, cell, job, rep) });
+  if (job) out.push({ shape: 'job, no rep, label cell', body: Object.assign({}, cell, job) });
+  if (rep) out.push({ shape: 'rep, no job, label cell', body: Object.assign({}, cell, { rep_id: repId }) });
   out.push({ shape: 'customer only, label cell', body: cell });
   ['phone', 'other'].forEach((lab) => {
     out.push({ shape: 'customer only, label ' + lab, body: Object.assign({}, payload, { 'phones[0][label]': lab }) });
@@ -208,9 +245,18 @@ async function createLeapProspect(payload, note) {
   if (!token) return { ok: false, error: 'LEAP_ACCESS_TOKEN not set in Vercel' };
   const attempts = [];
   let tradeId = null;
+  let repId = null;
   try {
-    tradeId = await roofingTradeId(token);
-    for (const variant of leapVariants(payload, tradeId, note)) {
+    const looked = await Promise.all([roofingTradeId(token), assignedRepId(token)]);
+    tradeId = looked[0];
+    repId = looked[1];
+    const meta = {
+      tradeId: tradeId,
+      assignedTo: ASSIGN_REP,
+      repId: repId,
+      repWarning: repId ? undefined : 'No Leap user matches "' + ASSIGN_REP + '" - this lead is UNASSIGNED',
+    };
+    for (const variant of leapVariants(payload, tradeId, note, repId)) {
       const r = await fetch(LEAP_V3 + '/prospects', {
         method: 'POST',
         headers: {
@@ -225,17 +271,17 @@ async function createLeapProspect(payload, note) {
       try { json = JSON.parse(text); } catch (e) { /* Leap sometimes returns HTML on error */ }
       if (r.ok) {
         const id = json && (json.id || (json.data && json.data.id));
-        return { ok: true, id: id || null, shape: variant.shape, tradeId: tradeId, attempts };
+        return Object.assign({ ok: true, id: id || null, shape: variant.shape, attempts }, meta);
       }
       attempts.push({ shape: variant.shape, status: r.status, detail: text.slice(0, 220) });
       // Only a 412 means "this shape is wrong, try another". Auth, server and
       // rate-limit errors fail identically for every shape, so stop rather than
-      // hammer Leap four times over.
+      // hammer Leap five times over.
       if (r.status !== 412) break;
     }
-    return { ok: false, error: 'Leap rejected every shape', tradeId: tradeId, attempts };
+    return Object.assign({ ok: false, error: 'Leap rejected every shape', attempts }, meta);
   } catch (e) {
-    return { ok: false, error: String((e && e.message) || e), tradeId: tradeId, attempts };
+    return { ok: false, error: String((e && e.message) || e), tradeId: tradeId, repId: repId, attempts };
   }
 }
 
@@ -303,7 +349,7 @@ module.exports = async (req, res) => {
 
   const leap = await createLeapProspect(payload, noteFrom(L));
   // The text goes out either way - see the design rule at the top of this file.
-  const sms = await sendQuo(smsFrom(L, leap.ok, leap.error));
+  const sms = await sendQuo(smsFrom(L, leap.ok, leap.error, leap.repId ? leap.assignedTo : 0));
 
   res.status(200).json({
     ok: true,
