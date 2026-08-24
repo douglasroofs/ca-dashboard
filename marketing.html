@@ -112,8 +112,17 @@ function setMTD(){var n=new Date();document.getElementById('dFrom').value=iso(ne
 // count. Runs over each source separately so the breakdown and the total stay
 // consistent - the total is the sum of what is displayed, never a second
 // calculation that could drift from it.
-function spendOf(by,from,to){
+// `partial` names a month whose recorded figure is already spend-TO-DATE
+// rather than a whole month's total - LSA and Facebook are read off a billing
+// console mid-month. Prorating those a SECOND time charges them twice for the
+// same days: on 2026-08-24 this booked August LSA at $9,688 against a real
+// $12,514, understating the month by nearly $3k. A retainer is different - it
+// genuinely does accrue by the day - so it passes no `partial` and still
+// prorates.
+function spendOf(by,from,to,partial){
   var total=0; by=by||{};
+  var now=new Date();
+  var day=function(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);};
   Object.keys(by).forEach(function(m){
     var y=+m.slice(0,4),mo=+m.slice(5,7)-1;
     var mStart=new Date(y,mo,1), mEnd=new Date(y,mo+1,0);
@@ -122,14 +131,25 @@ function spendOf(by,from,to){
     // floor, not round: the range end carries 23:59:59, so round() charged an
     // extra day whenever the range stopped mid-month - a one-day range billed two.
     var daysIn=Math.floor((e-s)/86400000)+1, daysM=mEnd.getDate();
+    if(m===partial && day(to)>=day(now)){
+      // The figure already covers this month up to today, so today's ELAPSED
+      // days are the denominator, not the full 31. A range that covers all of
+      // them takes the number as recorded instead of shaving days off it.
+      var elapsed=new Date(Math.min(mEnd,now)).getDate();
+      total += by[m]*Math.min(1,daysIn/elapsed);
+      return;
+    }
     total += by[m]*(daysIn/daysM);
   });
   return total;
 }
 function costsFor(from,to){
   var C=D.costs||{};
-  var lsa=spendOf((C.lsa&&C.lsa.byMonth)||(D.spend&&D.spend.byMonth),from,to);
-  var fb=spendOf(C.facebook&&C.facebook.byMonth,from,to);
+  // Only the actuals declare a partial month; the retainer deliberately does not.
+  var lsaPart=(C.lsa&&C.lsa.partialMonth)||(D.spend&&D.spend.partialMonth)||null;
+  var fbPart=(C.facebook&&C.facebook.partialMonth)||null;
+  var lsa=spendOf((C.lsa&&C.lsa.byMonth)||(D.spend&&D.spend.byMonth),from,to,lsaPart);
+  var fb=spendOf(C.facebook&&C.facebook.byMonth,from,to,fbPart);
   var ag=spendOf(C.agency&&C.agency.byMonth,from,to);
   return {lsa:lsa, facebook:fb, agency:ag, total:lsa+fb+ag,
           fbLive:!!(C.facebook&&C.facebook.live), fbNote:(C.facebook&&C.facebook.note)||''};
