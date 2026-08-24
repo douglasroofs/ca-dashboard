@@ -201,23 +201,47 @@ async function bind(t) {
   });
   return t;
 }
-let cached = null, pending = null;
+// Leap allows ONE session per account, so a second login silently kills the
+// first login's token. The old retry made that WORSE: on a 401 it nulled the
+// in-flight promise, so every parallel fetch started its own login and each
+// new login invalidated the last one.
+//
+// Two rules fix it:
+//   1. Single-flight - a caller arriving during a login awaits the SAME
+//      promise instead of kicking off another one.
+//   2. Generation guard - a 401 only clears the token it actually used, so a
+//      straggler cannot throw away a good token someone else just fetched.
+let cached = null, pending = null, gen = 0;
 function token() {
-  if (cached) return Promise.resolve(cached);
-  if (!pending) pending = (async () => { cached = await bind(await login()); return cached; })();
+  if (cached) return Promise.resolve({ t: cached, g: gen });
+  if (!pending) {
+    pending = (async () => {
+      try {
+        const t = await bind(await login());
+        cached = t;
+        gen += 1;
+        return { t: t, g: gen };
+      } finally {
+        // Cleared only AFTER cached is set, so the next caller sees the token
+        // rather than racing to fetch another one.
+        pending = null;
+      }
+    })();
+  }
   return pending;
 }
+function invalidate(g) { if (g === gen) cached = null; }
 const HDR = (t) => ({ Authorization: 'Bearer ' + t, Accept: 'application/json', platform: 'web' });
 
 // Leap allows one session per account, so another caller can invalidate this
 // token mid-request. Retry once with a fresh login rather than failing.
 async function get(path) {
-  let t = await token();
-  let r = await fetch(V1 + path, { headers: HDR(t) });
+  let a = await token();
+  let r = await fetch(V1 + path, { headers: HDR(a.t) });
   if (r.status === 401 || r.status === 403) {
-    cached = null; pending = null;
-    t = await token();
-    r = await fetch(V1 + path, { headers: HDR(t) });
+    invalidate(a.g);
+    a = await token();
+    r = await fetch(V1 + path, { headers: HDR(a.t) });
   }
   if (!r.ok) throw new Error('GET ' + path.split('?')[0] + ' -> ' + r.status);
   return r.json();
