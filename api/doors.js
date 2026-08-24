@@ -285,9 +285,38 @@ module.exports = async (req, res) => {
       return;
     }
     res.setHeader('Cache-Control', 'no-store');
-    if (live === '1') { const data = await compute(office); res.status(200).json(data); return; }
-    res.status(200).json(SNAPSHOTS[office] || SNAPSHOTS.herndon);
+    // LIVE BY DEFAULT (2026-08-24). This used to serve a snapshot baked into
+    // this file, refreshed by a "daily task" that never existed - so the numbers
+    // silently froze on 2026-08-17 and drifted 24% low. Herndon read 2,188
+    // against a true 3,165, and five reps who were out knocking showed ZERO
+    // doors. A rep losing credit for a month of work is a much worse outcome
+    // than a page that takes three seconds.
+    //
+    // The snapshot survives only as a fallback for when Sales Rabbit is
+    // unreachable, and every response now says which one you are looking at.
+    // ?snapshot=1 forces the old instant path; ?live=1 is the default and is
+    // kept working so existing links do not break.
+    if (url.searchParams.get('snapshot') === '1' && live !== '1') {
+      res.status(200).json(Object.assign({ source: 'snapshot' }, SNAPSHOTS[office] || SNAPSHOTS.herndon));
+      return;
+    }
+    try {
+      const data = await compute(office);
+      data.source = 'live';
+      res.status(200).json(data);
+    } catch (e) {
+      // Never fail the panel outright - stale numbers beat a blank card, as
+      // long as the card can tell you they are stale.
+      const snap = SNAPSHOTS[office] || SNAPSHOTS.herndon;
+      res.status(200).json(Object.assign({}, snap, {
+        source: 'snapshot-fallback',
+        staleReason: 'Sales Rabbit live pull failed: ' + String((e && e.message) || e),
+      }));
+    }
   } catch (err) {
     res.status(500).json({ error: String(err && err.message ? err.message : err) });
   }
 };
+
+// A live Sales Rabbit pull is ~3s; the 10s default leaves no headroom.
+module.exports.config = { maxDuration: 30 };
