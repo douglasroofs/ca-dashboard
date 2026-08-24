@@ -53,13 +53,37 @@ async function switchCompany(token) {
   });
   return token;
 }
-let cachedToken = null, tokenPromise = null;
+// Leap allows ONE session per account, so a second login silently kills the
+// first login's token. The old retry made that WORSE: on a 401 it nulled the
+// in-flight tokenPromise, so every parallel page-fetch started its own login
+// and each new login invalidated the last one. That is why this endpoint 401'd
+// fast on a warm container and returned a clean 200 on a cold one.
+//
+// Two rules fix it:
+//   1. Single-flight - a caller arriving during a login awaits the SAME
+//      promise instead of kicking off another one.
+//   2. Generation guard - a 401 only clears the token it actually used, so a
+//      straggler cannot throw away a good token someone else just fetched.
+let cachedToken = null, tokenPromise = null, tokenGen = 0;
 function getToken() {
-  if (cachedToken) return Promise.resolve(cachedToken);
-  if (!tokenPromise) tokenPromise = (async () => { cachedToken = await switchCompany(await login()); return cachedToken; })();
+  if (cachedToken) return Promise.resolve({ t: cachedToken, gen: tokenGen });
+  if (!tokenPromise) {
+    tokenPromise = (async () => {
+      try {
+        const t = await switchCompany(await login());
+        cachedToken = t;
+        tokenGen += 1;
+        return { t: t, gen: tokenGen };
+      } finally {
+        // Cleared only AFTER cachedToken is set, so the next caller sees the
+        // token rather than racing to fetch another one.
+        tokenPromise = null;
+      }
+    })();
+  }
   return tokenPromise;
 }
-function resetToken() { cachedToken = null; tokenPromise = null; }
+function invalidate(gen) { if (gen === tokenGen) cachedToken = null; }
 const HDR = (t) => ({ Authorization: `Bearer ${t}`, Accept: 'application/json', platform: 'web' });
 
 function durationQuery(month, s0, e0, dur) {
@@ -82,12 +106,12 @@ function jlUrl(dateType, dq, page) {
 // Leap in a browser - invalidates this token mid-flight. Retry once with a
 // fresh login instead of failing the whole page.
 async function get(path) {
-  let t = await getToken();
-  let r = await fetch(V1 + path, { headers: HDR(t) });
+  let a = await getToken();
+  let r = await fetch(V1 + path, { headers: HDR(a.t) });
   if (r.status === 401 || r.status === 403) {
-    resetToken();
-    t = await getToken();
-    r = await fetch(V1 + path, { headers: HDR(t) });
+    invalidate(a.gen);
+    a = await getToken();
+    r = await fetch(V1 + path, { headers: HDR(a.t) });
   }
   if (!r.ok) throw new Error(`GET ${path.split('?')[0]} -> ${r.status}`);
   return r.json();
