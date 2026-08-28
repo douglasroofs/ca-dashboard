@@ -9,63 +9,93 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-08-17T14:30:12.560Z",
-    "total": 2188,
+    "updated": "2026-08-28T13:48:25.350Z",
+    "total": 3186,
     "reps": [
       {
-        "rep": "Thurmond shaw",
-        "doors": 507,
-        "team": "mccarthy"
-      },
-      {
         "rep": "Pedro Polio",
-        "doors": 284,
+        "doors": 521,
         "team": "mccarthy"
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 261,
+        "doors": 422,
         "team": "jack"
       },
       {
         "rep": "Carol Wright",
-        "doors": 239,
+        "doors": 351,
         "team": "jack"
       },
       {
+        "rep": "Harvey Shoemaker",
+        "doors": 290,
+        "team": "selfgen"
+      },
+      {
         "rep": "Wayne Jefferson",
-        "doors": 181,
+        "doors": 286,
         "team": "mccarthy"
       },
       {
-        "rep": "Harvey Shoemaker",
-        "doors": 164,
+        "rep": "Christian Brown",
+        "doors": 260,
         "team": "selfgen"
+      },
+      {
+        "rep": "Ethan Wiley",
+        "doors": 244,
+        "team": "jack"
+      },
+      {
+        "rep": "Izzy Price",
+        "doors": 222,
+        "team": "jack"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 162,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Christian Brown",
-        "doors": 154,
+        "doors": 183,
         "team": "selfgen"
       },
       {
         "rep": "David Kerns",
-        "doors": 84,
-        "team": "jack"
-      },
-      {
-        "rep": "Ethan Wiley",
-        "doors": 83,
+        "doors": 179,
         "team": "jack"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 68,
+        "doors": 137,
         "team": "mccarthy"
+      },
+      {
+        "rep": "Doug Coffman",
+        "doors": 54,
+        "team": "mccarthy"
+      },
+      {
+        "rep": "Jack Obert",
+        "doors": 31,
+        "team": "selfgen"
+      },
+      {
+        "rep": "liz charles",
+        "doors": 2,
+        "team": "noteam"
+      },
+      {
+        "rep": "Marc Mitchell",
+        "doors": 1,
+        "team": "selfgen"
+      },
+      {
+        "rep": "sean beasy",
+        "doors": 1,
+        "team": "noteam"
+      },
+      {
+        "rep": "Terry Eggleston",
+        "doors": 1,
+        "team": "noteam"
       },
       {
         "rep": "George Bechara",
@@ -74,6 +104,9 @@ const SNAPSHOTS = {
       }
     ],
     "allowedReps": [
+      "kyle higginbotham",
+      "adam mulvaney",
+      "terry eggleston",
       "steven arevalo",
       "marc mitchell",
       "andrew funk",
@@ -85,16 +118,25 @@ const SNAPSHOTS = {
       "kevin mahan",
       "robert wilson",
       "andrew prickel",
+      "mike schoultz",
+      "sean beasy",
+      "nick seward",
       "christian brown",
       "david kerns",
       "ethan wiley",
       "carol wright",
-      "thurmond shaw",
       "jason cresswell",
       "wayne jefferson",
-      "pedro polio"
+      "pedro polio",
+      "liz charles",
+      "doug co",
+      "doug coffman"
     ],
     "roster": [
+      "Kyle Higginbotham",
+      "Adam Mulvaney",
+      "Terry Eggleston",
+      "Kyle Higginbotham",
       "Steven Arevalo",
       "Marc Mitchell",
       "Andrew Funk",
@@ -106,63 +148,68 @@ const SNAPSHOTS = {
       "Kevin Mahan",
       "Robert Mumford-Wilson",
       "Andrew  Prickel",
+      "mike schoultz",
+      "sean beasy",
+      "nick seward",
       "Christian Brown",
       "David Kerns",
       "Ethan Wiley",
       "Carol Wright",
-      "Thurmond shaw",
       "Jason Cresswell",
       "Wayne Jefferson",
-      "Pedro Polio"
+      "Pedro Polio",
+      "liz charles",
+      "Doug Co",
+      "Doug Coffman"
     ]
   },
   "richmond": {
-    "updated": "2026-08-17T14:30:14.990Z",
-    "total": 2169,
+    "updated": "2026-08-28T13:48:29.662Z",
+    "total": 3206,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 822,
-        "team": "retail"
-      },
-      {
-        "rep": "Dalton Barr",
-        "doors": 320,
+        "doors": 1158,
         "team": "retail"
       },
       {
         "rep": "Andrew Harris",
-        "doors": 274,
+        "doors": 558,
+        "team": "retail"
+      },
+      {
+        "rep": "Dalton Barr",
+        "doors": 544,
         "team": "retail"
       },
       {
         "rep": "Felipe Osorio",
-        "doors": 271,
+        "doors": 425,
         "team": "retail"
       },
       {
         "rep": "Carter Massengill",
-        "doors": 185,
-        "team": "retail"
-      },
-      {
-        "rep": "Dustian White",
-        "doors": 162,
+        "doors": 246,
         "team": "retail"
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 81,
+        "doors": 98,
+        "team": "selfgen"
+      },
+      {
+        "rep": "James Washington",
+        "doors": 92,
+        "team": "retail"
+      },
+      {
+        "rep": "Joshua Baca",
+        "doors": 55,
         "team": "selfgen"
       },
       {
         "rep": "Brandon Simmons",
-        "doors": 27,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Joshua Baca",
-        "doors": 26,
+        "doors": 29,
         "team": "selfgen"
       },
       {
@@ -176,30 +223,26 @@ const SNAPSHOTS = {
       "brandon simmons",
       "travis kizzar",
       "joshua baca",
-      "logan burbic",
       "carter massengill",
       "andrew harris",
-      "jr zaguehi",
       "dalton barr",
       "marcus schanewolf",
       "felipe osorio",
       "kylea white",
-      "dustian white"
+      "james washington"
     ],
     "roster": [
       "Justin Coghill",
       "Brandon Simmons",
       "Travis Kizzar",
       "Joshua Baca",
-      "Logan Burbic",
       "Carter Massengill",
       "Andrew Harris",
-      "JR Zaguehi",
       "Dalton Barr",
       "marcus schanewolf",
       "Felipe Osorio",
       "Kylea White",
-      "Dustian White"
+      "James Washington"
     ]
   }
 };
