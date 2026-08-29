@@ -1,4 +1,4 @@
-// api/doors.js ÃÂ¢ÃÂÃÂ doors knocked per rep this month, from Sales Rabbit.
+// api/doors.js -- doors knocked per rep this month, from Sales Rabbit.
 //
 // A "door" = a KNOCK EVENT: a SalesRabbit lead status-history entry (each disposition a rep
 // records), status NOT in {Closed, Do Not Knock, Drive By}, event dated this month, credited to
@@ -9,8 +9,8 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-08-28T13:48:25.350Z",
-    "total": 3186,
+    "updated": "2026-08-29T11:05:56.938Z",
+    "total": 3294,
     "reps": [
       {
         "rep": "Pedro Polio",
@@ -19,23 +19,28 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 422,
+        "doors": 443,
         "team": "jack"
       },
       {
         "rep": "Carol Wright",
-        "doors": 351,
+        "doors": 359,
         "team": "jack"
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 290,
+        "doors": 312,
         "team": "selfgen"
       },
       {
         "rep": "Wayne Jefferson",
-        "doors": 286,
+        "doors": 285,
         "team": "mccarthy"
+      },
+      {
+        "rep": "Ethan Wiley",
+        "doors": 269,
+        "team": "jack"
       },
       {
         "rep": "Christian Brown",
@@ -43,13 +48,13 @@ const SNAPSHOTS = {
         "team": "selfgen"
       },
       {
-        "rep": "Ethan Wiley",
-        "doors": 244,
+        "rep": "Izzy Price",
+        "doors": 222,
         "team": "jack"
       },
       {
-        "rep": "Izzy Price",
-        "doors": 222,
+        "rep": "David Kerns",
+        "doors": 192,
         "team": "jack"
       },
       {
@@ -58,18 +63,13 @@ const SNAPSHOTS = {
         "team": "selfgen"
       },
       {
-        "rep": "David Kerns",
-        "doors": 179,
-        "team": "jack"
-      },
-      {
         "rep": "Mike Mccarthy",
-        "doors": 137,
+        "doors": 140,
         "team": "mccarthy"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 54,
+        "doors": 71,
         "team": "mccarthy"
       },
       {
@@ -164,12 +164,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-08-28T13:48:29.662Z",
-    "total": 3206,
+    "updated": "2026-08-29T11:06:01.963Z",
+    "total": 3231,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 1158,
+        "doors": 1161,
         "team": "retail"
       },
       {
@@ -179,12 +179,12 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Dalton Barr",
-        "doors": 544,
+        "doors": 552,
         "team": "retail"
       },
       {
         "rep": "Felipe Osorio",
-        "doors": 425,
+        "doors": 428,
         "team": "retail"
       },
       {
@@ -194,7 +194,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 98,
+        "doors": 108,
         "team": "selfgen"
       },
       {
@@ -204,7 +204,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Joshua Baca",
-        "doors": 55,
+        "doors": 56,
         "team": "selfgen"
       },
       {
