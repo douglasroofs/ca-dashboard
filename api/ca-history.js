@@ -1,16 +1,16 @@
-// api/ca-history.js ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ monthly CA counts (ICA + SGCA) per rep, from Sales Rabbit status history.
+// api/ca-history.js -- monthly CA counts (ICA + SGCA) per rep, from Sales Rabbit status history.
 //
 // A CA = a distinct lead that reached ICA or SGCA in a given month, credited to the rep who set
 // it (changedByUserId), scoped to the office's Storm team. Counted from /leadStatusHistories events.
 //
 // ?office=herndon|richmond   Storm scope: Herndon = DC Self Gen, Richmond = Richmond Storm.
-// ?live=1                    current month only (fast) ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ dashboard CA cards.
-// ?live=1&scope=year         full Jan..now grid (heavy) ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ daily task builds the snapshot.
-// default (no live)          serve the stored year SNAPSHOT ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ CA-by-month grid.
+// ?live=1                    current month only (fast) -- dashboard CA cards.
+// ?live=1&scope=year         full Jan..now grid (heavy) -- daily task builds the snapshot.
+// default (no live)          serve the stored year SNAPSHOT -- CA-by-month grid.
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-08-28T13:51:42.284Z",
+    "updated": "2026-08-29T11:15:45.856Z",
     "year": 2026,
     "months": [
       0,
@@ -30,12 +30,12 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          8,
+          10,
           14,
           27,
           12
         ],
-        "total": 61
+        "total": 63
       },
       {
         "rep": "David Kerns",
@@ -58,12 +58,12 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          6,
-          16,
+          5,
+          17,
           11,
-          1
+          2
         ],
-        "total": 38
+        "total": 39
       },
       {
         "rep": "Mike Mccarthy",
@@ -72,10 +72,10 @@ const SNAPSHOTS = {
           0,
           3,
           0,
-          9,
+          8,
           6,
           7,
-          11
+          12
         ],
         "total": 37
       },
@@ -89,37 +89,9 @@ const SNAPSHOTS = {
           0,
           4,
           20,
-          9
+          10
         ],
-        "total": 33
-      },
-      {
-        "rep": "Andrew  Prickel",
-        "counts": [
-          0,
-          0,
-          3,
-          3,
-          5,
-          1,
-          14,
-          0
-        ],
-        "total": 26
-      },
-      {
-        "rep": "Christian Brown",
-        "counts": [
-          1,
-          0,
-          1,
-          3,
-          4,
-          6,
-          7,
-          3
-        ],
-        "total": 25
+        "total": 34
       },
       {
         "rep": "Jack Obert",
@@ -129,11 +101,39 @@ const SNAPSHOTS = {
           3,
           5,
           8,
-          5,
+          7,
           4,
           0
         ],
-        "total": 25
+        "total": 27
+      },
+      {
+        "rep": "Andrew  Prickel",
+        "counts": [
+          0,
+          0,
+          3,
+          3,
+          6,
+          1,
+          14,
+          0
+        ],
+        "total": 27
+      },
+      {
+        "rep": "Christian Brown",
+        "counts": [
+          1,
+          0,
+          1,
+          3,
+          4,
+          7,
+          7,
+          3
+        ],
+        "total": 26
       },
       {
         "rep": "Marc Mitchell",
@@ -150,30 +150,30 @@ const SNAPSHOTS = {
         "total": 22
       },
       {
-        "rep": "Izzy Price",
-        "counts": [
-          2,
-          0,
-          5,
-          2,
-          6,
-          3,
-          1,
-          0
-        ],
-        "total": 19
-      },
-      {
         "rep": "George Bechara",
         "counts": [
           2,
           0,
           2,
           5,
-          3,
+          4,
           4,
           1,
           1
+        ],
+        "total": 19
+      },
+      {
+        "rep": "Izzy Price",
+        "counts": [
+          2,
+          0,
+          5,
+          2,
+          5,
+          3,
+          1,
+          0
         ],
         "total": 18
       },
@@ -183,9 +183,9 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          3,
+          2,
           0,
-          3,
+          4,
           0,
           0
         ],
@@ -257,9 +257,9 @@ const SNAPSHOTS = {
           0,
           0,
           3,
-          1
+          2
         ],
-        "total": 4
+        "total": 5
       },
       {
         "rep": "Terry Eggleston",
@@ -334,7 +334,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-08-28T13:53:07.119Z",
+    "updated": "2026-08-29T11:17:11.542Z",
     "year": 2026,
     "months": [
       0,
@@ -357,9 +357,9 @@ const SNAPSHOTS = {
           6,
           18,
           9,
-          12
+          11
         ],
-        "total": 73
+        "total": 72
       },
       {
         "rep": "Travis Kizzar",
@@ -371,9 +371,9 @@ const SNAPSHOTS = {
           6,
           9,
           11,
-          11
+          12
         ],
-        "total": 53
+        "total": 54
       },
       {
         "rep": "Brandon Simmons",
