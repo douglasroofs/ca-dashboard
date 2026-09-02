@@ -112,17 +112,26 @@ function setMTD(){var n=new Date();document.getElementById('dFrom').value=iso(ne
 // count. Runs over each source separately so the breakdown and the total stay
 // consistent - the total is the sum of what is displayed, never a second
 // calculation that could drift from it.
-// `partial` names a month whose recorded figure is already spend-TO-DATE
-// rather than a whole month's total - LSA and Facebook are read off a billing
-// console mid-month. Prorating those a SECOND time charges them twice for the
-// same days: on 2026-08-24 this booked August LSA at $9,688 against a real
-// $12,514, understating the month by nearly $3k. A retainer is different - it
-// genuinely does accrue by the day - so it passes no `partial` and still
-// prorates.
+// ---- Cost helpers -------------------------------------------------------
+var dayKey=function(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);};
+var monthKey=function(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);};
+
+// `partial` names a month whose recorded figure is already spend-TO-DATE rather
+// than a whole month's total - LSA and Facebook are read off a billing console
+// mid-month. Prorating those a SECOND time charges them twice for the same days.
+// A retainer is different - it genuinely accrues by the day - so it passes no
+// `partial` and still prorates.
+//
+// The flag EXPIRES. While its month is still running the denominator is the days
+// elapsed so far, which is right. Once that month CLOSES the figure is simply
+// incomplete, and spreading it over a full month under-reports for ever - a
+// 20-day number wearing a 31-day label. That happened to August 2026: $12,514
+// covering the 1st to the 20th kept being read as the whole month. No arithmetic
+// recovers the missing days, so the figure is used as recorded and the staleness
+// is raised as a WARNING rather than quietly absorbed.
 function spendOf(by,from,to,partial){
   var total=0; by=by||{};
   var now=new Date();
-  var day=function(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);};
   Object.keys(by).forEach(function(m){
     var y=+m.slice(0,4),mo=+m.slice(5,7)-1;
     var mStart=new Date(y,mo,1), mEnd=new Date(y,mo+1,0);
@@ -131,10 +140,9 @@ function spendOf(by,from,to,partial){
     // floor, not round: the range end carries 23:59:59, so round() charged an
     // extra day whenever the range stopped mid-month - a one-day range billed two.
     var daysIn=Math.floor((e-s)/86400000)+1, daysM=mEnd.getDate();
-    if(m===partial && day(to)>=day(now)){
-      // The figure already covers this month up to today, so today's ELAPSED
-      // days are the denominator, not the full 31. A range that covers all of
-      // them takes the number as recorded instead of shaving days off it.
+    if(m===partial && dayKey(to)>=dayKey(now)){
+      // Denominator is days ELAPSED, not the whole month. For a month that has
+      // already closed those are the same, so the recorded figure is taken as-is.
       var elapsed=new Date(Math.min(mEnd,now)).getDate();
       total += by[m]*Math.min(1,daysIn/elapsed);
       return;
@@ -143,15 +151,43 @@ function spendOf(by,from,to,partial){
   });
   return total;
 }
+
+// A partial month that has already closed was never finalised - someone has to
+// paste the real total in. Say so instead of letting it under-report in silence.
+function stalePartial(partial){ return !!partial && partial < monthKey(new Date()); }
+
+// The other way a source goes quiet: the current month is absent from the data
+// entirely, so it reads as zero spend rather than as missing data.
+function missingThisMonth(by,to){
+  var now=new Date();
+  if(dayKey(to) < dayKey(now)) return false;
+  return !by || by[monthKey(now)]===undefined;
+}
+
+function warnHtml(C){
+  if(!C.warn||!C.warn.length) return '';
+  return '<div style="border-left:4px solid #d97706;background:rgba(217,119,6,0.10);padding:10px 12px;border-radius:6px;margin:0 0 12px">'
+    + '<div style="font-weight:600;font-size:13px;margin-bottom:4px">Cost data needs attention</div>'
+    + '<div style="font-size:12px;line-height:1.6;opacity:.9">'
+    + C.warn.map(function(w){return '&bull; '+w;}).join('<br>') + '</div></div>';
+}
+
 function costsFor(from,to){
   var C=D.costs||{};
   // Only the actuals declare a partial month; the retainer deliberately does not.
   var lsaPart=(C.lsa&&C.lsa.partialMonth)||(D.spend&&D.spend.partialMonth)||null;
   var fbPart=(C.facebook&&C.facebook.partialMonth)||null;
-  var lsa=spendOf((C.lsa&&C.lsa.byMonth)||(D.spend&&D.spend.byMonth),from,to,lsaPart);
-  var fb=spendOf(C.facebook&&C.facebook.byMonth,from,to,fbPart);
+  var lsaBy=(C.lsa&&C.lsa.byMonth)||(D.spend&&D.spend.byMonth);
+  var fbBy=C.facebook&&C.facebook.byMonth;
+  var lsa=spendOf(lsaBy,from,to,lsaPart);
+  var fb=spendOf(fbBy,from,to,fbPart);
   var ag=spendOf(C.agency&&C.agency.byMonth,from,to);
-  return {lsa:lsa, facebook:fb, agency:ag, total:lsa+fb+ag,
+  var warn=[];
+  if(stalePartial(lsaPart)) warn.push('Google LSA '+lsaPart+' was recorded part-way through the month and never finalised - that month is understated.');
+  if(stalePartial(fbPart)) warn.push('Facebook '+fbPart+' was recorded part-way through the month and never finalised - that month is understated.');
+  if(missingThisMonth(lsaBy,to)) warn.push('No Google LSA spend recorded for '+monthKey(new Date())+' yet.');
+  if(missingThisMonth(fbBy,to)) warn.push('No Facebook spend recorded for '+monthKey(new Date())+' yet.');
+  return {lsa:lsa, facebook:fb, agency:ag, total:lsa+fb+ag, warn:warn,
           fbLive:!!(C.facebook&&C.facebook.live), fbNote:(C.facebook&&C.facebook.note)||''};
 }
 // kept so anything else calling spendFor still works
@@ -191,7 +227,7 @@ function draw(){
 
   H.push(calSection(recs,f,t,isCA,isRT,notRan));
 
-  H.push('<section><h2>Marketing cost <span class="muted" style="font-size:12px;font-weight:400">'+(C.fbLive?'Facebook live from Meta':'Facebook not connected yet')+'</span></h2><div class="cards">');
+  H.push('<section><h2>Marketing cost <span class="muted" style="font-size:12px;font-weight:400">'+(C.fbLive?'Facebook live from Meta':'Facebook not connected yet')+'</span></h2>' + warnHtml(C) + '<div class="cards">');
   H.push('<div class="card hi"><div class="label">Total marketing cost</div><div class="value">'+money(C.total)+'</div><div class="sub">LSA + Facebook + retainer, in range</div></div>');
   H.push('<div class="card"><div class="label">Cost per appt ran</div><div class="value">'+(T.ran?money(C.total/T.ran):'-')+'</div><div class="sub">'+T.ran+' ran</div></div>');
   H.push('<div class="card"><div class="label">Cost per signed</div><div class="value">'+(signed?money(C.total/signed):'-')+'</div><div class="sub">'+signed+' CA + retail</div></div>');
