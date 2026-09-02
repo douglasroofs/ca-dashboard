@@ -203,14 +203,16 @@ function draw(){
 
   var T={set:0,ran:0,ca:0,rt:0,un:0}, reps={}, results={}, src={};
   recs.forEach(function(r){
-    if(!reps[r.rep])reps[r.rep]={rep:r.rep,set:0,ran:0,ca:0,rt:0,un:0};
+    if(!reps[r.rep])reps[r.rep]={rep:r.rep,set:0,ran:0,ca:0,rt:0,un:0,byRes:{}};
     var R=reps[r.rep];
     T.set++;R.set++;
     if(!notRan[r.res]){T.ran++;R.ran++;}
     if(isCA[r.res]){T.ca++;R.ca++;}
     if(isRT[r.res]){T.rt++;R.rt++;}
     if(!r.res){T.un++;R.un++;}
-    results[r.res||'(unresulted)']=(results[r.res||'(unresulted)']||0)+1;
+    var rk=r.res||'(unresulted)';
+    results[rk]=(results[rk]||0)+1;
+    R.byRes[rk]=(R.byRes[rk]||0)+1;
     src[r.src]=(src[r.src]||0)+1;
   });
   var C=costsFor(from,to), spend=C.total, signed=T.ca+T.rt;
@@ -245,13 +247,32 @@ function draw(){
   H.push('<div class="note">Cost per appointment used to divide by Google LSA alone, so it read low. It now uses every marketing dollar. The retainer is effective-dated in api/marketing.js - when the fee changes, add a dated row rather than editing the current one, so closed months keep the cost they actually had.</div>');
   H.push('</section>');
 
-  H.push('<section><h2>By rep</h2><table><tr><th>Rep</th><th class="num">Set</th><th class="num">Ran</th><th class="num">Run %</th><th class="num">CA</th><th class="num">Retail</th><th class="num">Signed %</th><th class="num">Unresulted</th></tr>');
+  // BY REP - one column per RESULT REASON, not the CA/Retail rollup.
+  // The CA filter in Leap does not pull reliably, so a derived 'signed' figure
+  // inherits that error silently and looks authoritative while doing it. Tallying
+  // the raw result reasons shows what was actually recorded and lets the reader
+  // group it themselves.
+  //
+  // Columns are built FROM THE DATA and ordered by overall frequency, so a new
+  // result reason shows up on its own without anyone editing this file. Zeroes
+  // render blank - with a dozen sparse columns a grid of noughts is unreadable.
+  var resCols=Object.keys(results).filter(function(k){return k!=='(unresulted)';})
+    .sort(function(a,b){return results[b]-results[a];});
+  var shortCol=function(x){ return x.length>14 ? x.slice(0,13)+'\u2026' : x; };
+  H.push('<section><h2>By rep <span class="muted" style="font-size:12px;font-weight:400">result reasons exactly as recorded in Leap</span></h2>');
+  H.push('<div style="overflow-x:auto"><table><tr><th>Rep</th><th class="num">Set</th><th class="num">Ran</th><th class="num">Run %</th>'
+    + resCols.map(function(k){return '<th class="num" title="'+esc(k)+'">'+esc(shortCol(k))+'</th>';}).join('')
+    + '<th class="num">Unresulted</th></tr>');
   Object.keys(reps).map(function(k){return reps[k];}).sort(function(a,b){return b.set-a.set;}).forEach(function(r){
-    H.push('<tr><td>'+esc(r.rep)+'</td><td class="num">'+r.set+'</td><td class="num">'+r.ran+'</td><td class="num">'+pct(r.ran,r.set)+'</td>'+
-      '<td class="num ca">'+r.ca+'</td><td class="num rt">'+r.rt+'</td><td class="num">'+pct(r.ca+r.rt,r.ran)+'</td>'+
-      '<td class="num '+(r.un?'bad':'')+'">'+r.un+' <span class="muted">'+pct(r.un,r.set)+'</span></td></tr>');
+    H.push('<tr><td>'+esc(r.rep)+'</td><td class="num">'+r.set+'</td><td class="num">'+r.ran+'</td><td class="num">'+pct(r.ran,r.set)+'</td>'
+      + resCols.map(function(k){var v=r.byRes[k]||0; return '<td class="num">'+(v||'')+'</td>';}).join('')
+      + '<td class="num '+(r.un?'bad':'')+'">'+r.un+' <span class="muted">'+pct(r.un,r.set)+'</span></td></tr>');
   });
-  H.push('</table></section>');
+  // Column totals, so this table reconciles against the Results section below.
+  H.push('<tr style="border-top:2px solid rgba(128,128,128,.45);font-weight:600"><td>All reps</td><td class="num">'+T.set+'</td><td class="num">'+T.ran+'</td><td class="num">'+pct(T.ran,T.set)+'</td>'
+    + resCols.map(function(k){return '<td class="num">'+(results[k]||0)+'</td>';}).join('')
+    + '<td class="num">'+T.un+'</td></tr>');
+  H.push('</table></div></section>');
 
   H.push('<section><h2>Results</h2><table><tr><th>Result</th><th class="num">Count</th><th class="num">Share</th></tr>');
   Object.keys(results).sort(function(a,b){return results[b]-results[a];}).forEach(function(k){
