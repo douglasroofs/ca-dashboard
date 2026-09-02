@@ -174,7 +174,15 @@ async function metaSpend(startISO, endISO) {
   }
 }
 
-const NOT_RAN = ['Customer Canceled Appointment', 'No Answer/No Appointment Actually Set'];
+// 'No Demo' joined this list on 2026-09-02 at Kyle's direction: if no demo
+// happened the appointment did not really run, so counting it flattered the run
+// rate and deflated cost per appointment ran. On 2026 YTD that is 73 of 841
+// appointments - the run rate moves 96% -> 87%.
+//
+// This is the SINGLE definition of "ran". marketing.html reads it from the API
+// response rather than keeping its own copy, so the Ran column in By rep and the
+// Cost per appt ran card can never drift apart.
+const NOT_RAN = ['Customer Canceled Appointment', 'No Answer/No Appointment Actually Set', 'No Demo'];
 const CA_RESULTS = ['CA Signed'];
 const RETAIL_RESULTS = ['Retail Sale', 'Repair Sold'];
 
