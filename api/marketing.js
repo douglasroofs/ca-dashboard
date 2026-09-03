@@ -40,15 +40,19 @@ const V1 = 'https://jobprogress.com/api/public/api/v1';
 const CO = process.env.JP_COMPANY_ID || '5154';
 const MARKETING_DIVISION = 7399;
 
-// --- MANUAL: Google Local Services spend. Two accounts, both Herndon revenue.
-// Only Jun-Aug are exposed on the billing card; earlier months need
-// "View transactions and documents". August is partial.
+// --- MANUAL: Google Local Services spend. Read from the MCC report
+// (Aug 1-31, 2026, Cost column) on 2026-09-03. Three accounts from August on:
+// 477-447-4205 and 819-103-9280 (tracked since June) plus 552-749-0839, added
+// for August, so Jun/Jul do not include it and are slightly understated by
+// comparison. 168-374-3174 exists but spent $0.00 in August.
+//   2026-08: 477-447-4205 $17,208.52 + 819-103-9280 $3,908.32 + 552-749-0839 $876.86
+// August is FINAL. partialMonth is null until September is read mid-month.
 const SPEND = {
   currency: 'USD',
-  partialMonth: '2026-08',
+  partialMonth: null,
   pendingCredit: 3484.78,
-  accounts: ['477-447-4205 NOVA', '819-103-9280 MD-labelled'],
-  byMonth: { '2026-06': 21867.14, '2026-07': 22428.70, '2026-08': 12514.29 },
+  accounts: ['477-447-4205 NOVA', '819-103-9280 MD-labelled', '552-749-0839 (added Aug 2026)'],
+  byMonth: { '2026-06': 21867.14, '2026-07': 22428.70, '2026-08': 21993.70 },
 };
 
 // --- Facebook / Meta ads. Live from the Meta Marketing API when the env vars
@@ -60,16 +64,14 @@ const SPEND = {
 const FACEBOOK = {
   currency: 'USD',
   accounts: ['272377932099924 Douglas Roofing Inc'],
-  // Read BY HAND from Billing > Payment activity on 2026-08-21, because the
-  // Meta API token still does not exist. Only ONE ad account is actually
-  // billed - the earlier two-account guess was wrong. The card on file is
-  // charged $93.00 every 2-3 days, which is a billing THRESHOLD, not a
-  // schedule, so these are actual charges rather than a budget.
-  //   2026-07: only the 27th and 30th could be read before Meta forced a
-  //            re-auth, so this is a FLOOR for July, not the true total.
-  //   2026-08: charges on the 2nd, 4th, 7th, 9th, 12th, 15th, 17th, 20th.
-  // Replace both with exact figures once META_ACCESS_TOKEN is in Vercel.
-  byMonth: { '2026-07': 186, '2026-08': 744 },
+  // Read BY HAND because the Meta API token still does not exist.
+  //   2026-07: from Billing > Payment activity on 2026-08-21; only the 27th and
+  //            30th could be read before Meta forced a re-auth, so a FLOOR.
+  //   2026-08: Ads Manager, Campaigns, Aug 1-31 2026, Amount spent, read
+  //            2026-09-03. One campaign live (Alfred Duncan - Maryland,
+  //            $1,102.93, 13 form leads); the other four were off at $0.00. FINAL.
+  // Replace July with an exact figure once META_ACCESS_TOKEN is in Vercel.
+  byMonth: { '2026-07': 186, '2026-08': 1102.93 },
 };
 
 // --- Marketing company retainer. Effective-dated: each row applies from its
