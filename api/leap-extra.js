@@ -4,7 +4,7 @@
 // Date, contract = by Contract Signed Date, YTD. Session/token-bound reports -> refreshed daily.
 const DATA = {
   herndon: {
-    updated: "2026-08-28",
+    updated: "2026-09-05",
     leapCA: {
   "Adam Mulvaney": [
     0,
@@ -57,7 +57,7 @@ const DATA = {
     12,
     23,
     9,
-    0,
+    6,
     0,
     0,
     0
@@ -65,13 +65,13 @@ const DATA = {
   "Andrew Prickel": [
     0,
     0,
-    1,
+    2,
     0,
     2,
-    13,
-    14,
+    12,
+    15,
     5,
-    0,
+    1,
     0,
     0,
     0
@@ -84,8 +84,8 @@ const DATA = {
     0,
     0,
     10,
-    9,
-    0,
+    11,
+    1,
     0,
     0,
     0
@@ -118,6 +118,20 @@ const DATA = {
     0,
     0
   ],
+  "Doug Coffman": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+  ],
   "Ethan Wiley": [
     0,
     0,
@@ -126,7 +140,7 @@ const DATA = {
     0,
     0,
     3,
-    2,
+    3,
     0,
     0,
     0,
@@ -141,7 +155,7 @@ const DATA = {
     5,
     1,
     1,
-    0,
+    1,
     0,
     0,
     0
@@ -154,7 +168,7 @@ const DATA = {
     0,
     7,
     10,
-    2,
+    3,
     0,
     0,
     0,
@@ -169,7 +183,7 @@ const DATA = {
     0,
     1,
     1,
-    0,
+    1,
     0,
     0,
     0
@@ -182,7 +196,7 @@ const DATA = {
     1,
     4,
     5,
-    5,
+    4,
     0,
     0,
     0,
@@ -204,12 +218,12 @@ const DATA = {
   ],
   "Kevin Mahan": [
     1,
-    3,
+    2,
     0,
     0,
     1,
     4,
-    5,
+    6,
     1,
     0,
     0,
@@ -238,8 +252,8 @@ const DATA = {
     0,
     6,
     6,
-    11,
-    0,
+    15,
+    1,
     0,
     0,
     0
