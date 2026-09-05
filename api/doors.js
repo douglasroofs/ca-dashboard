@@ -9,78 +9,48 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-08-29T11:05:56.938Z",
-    "total": 3294,
+    "updated": "2026-09-05T15:11:37.984Z",
+    "total": 487,
     "reps": [
       {
-        "rep": "Pedro Polio",
-        "doors": 521,
-        "team": "mccarthy"
+        "rep": "Carol Wright",
+        "doors": 140,
+        "team": "jack"
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 443,
-        "team": "jack"
-      },
-      {
-        "rep": "Carol Wright",
-        "doors": 359,
-        "team": "jack"
-      },
-      {
-        "rep": "Harvey Shoemaker",
-        "doors": 312,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Wayne Jefferson",
-        "doors": 285,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Ethan Wiley",
-        "doors": 269,
-        "team": "jack"
-      },
-      {
-        "rep": "Christian Brown",
-        "doors": 260,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Izzy Price",
-        "doors": 222,
+        "doors": 100,
         "team": "jack"
       },
       {
         "rep": "David Kerns",
-        "doors": 192,
+        "doors": 97,
+        "team": "jack"
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 68,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Izzy Price",
+        "doors": 59,
         "team": "jack"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 183,
+        "doors": 13,
         "team": "selfgen"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 140,
+        "doors": 6,
         "team": "mccarthy"
       },
       {
-        "rep": "Doug Coffman",
-        "doors": 71,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Jack Obert",
-        "doors": 31,
-        "team": "selfgen"
-      },
-      {
-        "rep": "liz charles",
+        "rep": "George Bechara",
         "doors": 2,
-        "team": "noteam"
+        "team": "selfgen"
       },
       {
         "rep": "Marc Mitchell",
@@ -88,17 +58,7 @@ const SNAPSHOTS = {
         "team": "selfgen"
       },
       {
-        "rep": "sean beasy",
-        "doors": 1,
-        "team": "noteam"
-      },
-      {
-        "rep": "Terry Eggleston",
-        "doors": 1,
-        "team": "noteam"
-      },
-      {
-        "rep": "George Bechara",
+        "rep": "Christian Brown",
         "doors": 1,
         "team": "selfgen"
       }
@@ -123,11 +83,8 @@ const SNAPSHOTS = {
       "nick seward",
       "christian brown",
       "david kerns",
-      "ethan wiley",
       "carol wright",
       "jason cresswell",
-      "wayne jefferson",
-      "pedro polio",
       "liz charles",
       "doug co",
       "doug coffman"
@@ -153,69 +110,46 @@ const SNAPSHOTS = {
       "nick seward",
       "Christian Brown",
       "David Kerns",
-      "Ethan Wiley",
       "Carol Wright",
       "Jason Cresswell",
-      "Wayne Jefferson",
-      "Pedro Polio",
       "liz charles",
       "Doug Co",
       "Doug Coffman"
     ]
   },
   "richmond": {
-    "updated": "2026-08-29T11:06:01.963Z",
-    "total": 3231,
+    "updated": "2026-09-05T15:11:38.645Z",
+    "total": 545,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 1161,
-        "team": "retail"
-      },
-      {
-        "rep": "Andrew Harris",
-        "doors": 558,
+        "doors": 297,
         "team": "retail"
       },
       {
         "rep": "Dalton Barr",
-        "doors": 552,
+        "doors": 111,
         "team": "retail"
       },
       {
-        "rep": "Felipe Osorio",
-        "doors": 428,
+        "rep": "Andrew Harris",
+        "doors": 48,
         "team": "retail"
       },
       {
         "rep": "Carter Massengill",
-        "doors": 246,
+        "doors": 42,
         "team": "retail"
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 108,
+        "doors": 36,
         "team": "selfgen"
       },
       {
-        "rep": "James Washington",
-        "doors": 92,
+        "rep": "Felipe Osorio",
+        "doors": 11,
         "team": "retail"
-      },
-      {
-        "rep": "Joshua Baca",
-        "doors": 56,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Brandon Simmons",
-        "doors": 29,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Justin Coghill",
-        "doors": 1,
-        "team": "selfgen"
       }
     ],
     "allowedReps": [
