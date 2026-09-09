@@ -47,12 +47,15 @@ const MARKETING_DIVISION = 7399;
 // comparison. 168-374-3174 exists but spent $0.00 in August.
 //   2026-08: 477-447-4205 $17,208.52 + 819-103-9280 $3,908.32 + 552-749-0839 $876.86
 // August is FINAL. partialMonth is null until September is read mid-month.
+//   2026-09: Sep 1-9, 2026, read 2026-09-09 from the MCC Accounts > Performance table:
+//            477-447-4205 $3,383.10 + 819-103-9280 $1,053.65 + 552-749-0839 $171.82 = $4,608.57 (168-374-3174 $0.00).
+//            PARTIAL - replace with the Sep 1-30 figure in early October and set partialMonth back to null.
 const SPEND = {
   currency: 'USD',
-  partialMonth: null,
+  partialMonth: '2026-09',
   pendingCredit: 3484.78,
   accounts: ['477-447-4205 NOVA', '819-103-9280 MD-labelled', '552-749-0839 (added Aug 2026)'],
-  byMonth: { '2026-06': 21867.14, '2026-07': 22428.70, '2026-08': 21993.70 },
+  byMonth: { '2026-06': 21867.14, '2026-07': 22428.70, '2026-08': 21993.70, '2026-09': 4608.57 },
 };
 
 // --- Facebook / Meta ads. Live from the Meta Marketing API when the env vars
@@ -70,8 +73,12 @@ const FACEBOOK = {
   //   2026-08: Ads Manager, Campaigns, Aug 1-31 2026, Amount spent, read
   //            2026-09-03. One campaign live (Alfred Duncan - Maryland,
   //            $1,102.93, 13 form leads); the other four were off at $0.00. FINAL.
+  //   2026-09: Ads Manager, Campaigns, Sep 1-9 2026, Amount spent, read 2026-09-09. Same single live campaign
+  //            (Alfred Duncan - Maryland, $303.32, 4 form leads); the other four still off at $0.00.
+  //            PARTIAL - replace with Sep 1-30 in early October and set partialMonth back to null.
+  partialMonth: '2026-09',
   // Replace July with an exact figure once META_ACCESS_TOKEN is in Vercel.
-  byMonth: { '2026-07': 186, '2026-08': 1102.93 },
+  byMonth: { '2026-07': 186, '2026-08': 1102.93, '2026-09': 303.32 },
 };
 
 // --- Marketing company retainer. Effective-dated: each row applies from its
@@ -329,7 +336,7 @@ module.exports = async (req, res) => {
     const fbByMonth = Object.assign({}, meta.byMonth, FACEBOOK.byMonth);
     const costs = {
       lsa: { label: 'Google LSA', byMonth: SPEND.byMonth, source: 'manual - LSA billing console', accounts: SPEND.accounts, pendingCredit: SPEND.pendingCredit, partialMonth: SPEND.partialMonth },
-      facebook: { label: 'Facebook ads', byMonth: fbByMonth, source: meta.live ? 'live - Meta Marketing API' : 'manual - Ads Manager', live: meta.live, partial: !!meta.partial, note: meta.reason, accounts: meta.accounts || FACEBOOK.accounts, overrides: Object.keys(FACEBOOK.byMonth) },
+      facebook: { label: 'Facebook ads', byMonth: fbByMonth, source: meta.live ? 'live - Meta Marketing API' : 'manual - Ads Manager', live: meta.live, partial: !!meta.partial, note: meta.reason, accounts: meta.accounts || FACEBOOK.accounts, overrides: Object.keys(FACEBOOK.byMonth), partialMonth: FACEBOOK.partialMonth || null },
       agency: { label: 'Marketing company', byMonth: agencyByMonth(start, end), source: 'retainer schedule', schedule: AGENCY, current: agencyFor(new Date().toISOString().slice(0, 7)) },
     };
 
