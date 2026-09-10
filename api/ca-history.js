@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-10T00:06:40.826Z",
+    "updated": "2026-09-10T13:21:55.925Z",
     "year": 2026,
     "months": [
       0,
@@ -31,13 +31,13 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          12,
+          6,
           14,
           27,
           15,
           5
         ],
-        "total": 73
+        "total": 67
       },
       {
         "rep": "Mike Mccarthy",
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-10T00:08:28.079Z",
+    "updated": "2026-09-10T13:23:36.614Z",
     "year": 2026,
     "months": [
       0,
