@@ -75,6 +75,7 @@ module.exports = async (req, res) => {
   const name = (url.searchParams.get('name') || '').trim();
   const numParam = (url.searchParams.get('num') || '').trim();
   const raw = url.searchParams.get('raw') === '1';
+  const quick = url.searchParams.get('quick') === '1';
   if (!name && !numParam) return res.status(400).json({ error: 'pass ?name=Customer Name or ?num=job-number' });
 
   const out = { query: name || numParam, v1: {}, v3: {}, notes: [] };
@@ -113,20 +114,14 @@ module.exports = async (req, res) => {
       financial_details_include: moneyish(unwrap(v1Job.financial_details)),
       top_level_money_fields: moneyish(v1Job, '', {}, 0),
     };
-    // Try every plausible v1 sub-endpoint for job financials and report what answers.
-    const tries = ['financial_summary', 'financial_details', 'financials', 'job_price', 'price_and_profit', 'profit_loss', 'job_costs', 'expenses', 'vendor_bills', 'bills', 'invoices', 'payments', 'change_orders', 'proposals', 'worksheets', 'estimates', 'commissions', 'sale_commissions', 'workflow_history'];
+    // Try plausible v1 sub-endpoints for job financials, in parallel, and report what answers.
+    const tries = ['financial_summary', 'financial_details', 'financials', 'job_price', 'profit_loss', 'expenses', 'vendor_bills', 'invoices', 'change_orders', 'proposals', 'worksheets', 'commissions', 'workflow_history'];
     out.v1.endpoints = {};
-    for (const p of tries) {
-      const r = await getJson(`${V1}/jobs/${id}/${p}`, H1(v1Token));
-      if (r.status === 200) out.v1.endpoints[p] = raw ? r.body : moneyish(r.body);
-      else out.v1.endpoints[p] = `HTTP ${r.status}`;
-      await new Promise((ok) => setTimeout(ok, 120));
-    }
-    // Leap's Financials page also lives at /jobs/{id}/financial_summary in the web app; some builds use ?job_id=
-    for (const p of ['job/financial_summary', 'financial_summary', 'jobs/financial_details', 'job_price_and_profit', 'commissions']) {
-      const r = await getJson(`${V1}/${p}?job_id=${id}`, H1(v1Token));
-      if (r.status === 200) out.v1.endpoints[`${p}?job_id`] = raw ? r.body : moneyish(r.body);
-      await new Promise((ok) => setTimeout(ok, 120));
+    if (!quick) {
+      const results = await Promise.all(tries.map((p) => getJson(`${V1}/jobs/${id}/${p}`, H1(v1Token)).then((r) => [p, r])));
+      for (const [p, r] of results) out.v1.endpoints[p] = r.status === 200 ? (raw ? r.body : moneyish(r.body)) : `HTTP ${r.status}`;
+      const results2 = await Promise.all(['financial_summary', 'job_price_and_profit', 'commissions'].map((p) => getJson(`${V1}/${p}?job_id=${id}`, H1(v1Token)).then((r) => [p, r])));
+      for (const [p, r] of results2) if (r.status === 200) out.v1.endpoints[`${p}?job_id`] = raw ? r.body : moneyish(r.body);
     }
     if (raw) out.v1.raw_job = v1Job;
   }
@@ -152,14 +147,16 @@ module.exports = async (req, res) => {
         insurance_details: { upgrade: ins.upgrade, policy_number: ins.policy_number, acv: ins.acv, rcv: ins.rcv, supplement: ins.supplement, total: ins.total },
         financial_details_include: moneyish(unwrap(j.financial_details)),
       };
-      const fs = await getJson(`${V3}/jobs/${j.id}/financial_summary`, H3(t3));
+      const [fs, vb, wh] = await Promise.all([
+        getJson(`${V3}/jobs/${j.id}/financial_summary`, H3(t3)),
+        getJson(`${V3}/jobs/${j.id}/vendor_bills?includes[]=vendor&limit=100`, H3(t3)),
+        getJson(`${V3}/jobs/${j.id}/workflow_history`, H3(t3)),
+      ]);
       out.v3.financial_summary = fs.status === 200 ? (fs.body.data || fs.body) : `HTTP ${fs.status}`;
-      const vb = await getJson(`${V3}/jobs/${j.id}/vendor_bills?includes[]=vendor&limit=100`, H3(t3));
       if (vb.status === 200) {
         const bills = (vb.body.data || []);
         out.v3.vendor_bills = { count: bills.length, total: bills.reduce((s, b) => s + (num(b.total_amount ?? b.amount ?? b.total) || 0), 0), bills: bills.map((b) => ({ vendor: nameOf(unwrap(b.vendor)) || (b.vendor && b.vendor.display_name), amount: b.total_amount ?? b.amount ?? b.total, date: b.bill_date, number: b.bill_number })) };
       } else out.v3.vendor_bills = `HTTP ${vb.status}`;
-      const wh = await getJson(`${V3}/jobs/${j.id}/workflow_history`, H3(t3));
       out.v3.workflow_history = wh.status === 200 ? (wh.body.data || []).map((s) => ({ stage: s.stage, start: s.start_date, done: s.completed_date })) : `HTTP ${wh.status}`;
       if (raw) out.v3.raw_job = j;
     }
@@ -182,3 +179,4 @@ module.exports = async (req, res) => {
 
   res.status(200).json(out);
 };
+module.exports.config = { maxDuration: 60 };
