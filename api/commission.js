@@ -13,7 +13,9 @@
 //   POST /api/commission                             Leap webhook receiver (jobs / stage_change)
 //
 // Env (Vercel): JP_USERNAME, JP_PASSWORD, JP_CLIENT_ID, JP_CLIENT_SECRET, JP_COMPANY_ID   (Leap v1 login, same as revenue.js)
-//               GOOGLE_SERVICE_ACCOUNT_JSON   full JSON key of a service account the sheet is shared with (Editor)
+//               SHEET_WEBHOOK_URL             Apps Script web-app URL bound to the sheet (preferred writer)
+//               SHEET_WEBHOOK_SECRET          shared secret matching the script's SHARED_SECRET property
+//               GOOGLE_SERVICE_ACCOUNT_JSON   fallback writer: service-account key with Editor on the sheet
 //               COMMISSION_SHEET_ID           spreadsheet id (defaults to Kyle's copy of the Commission Calculator)
 //               COMMISSION_SHEET_TAB          tab name (default "Leap Auto")
 //               COMMISSION_STAGE_CODES        comma-separated stage codes that trigger a row (default Herndon "Review Requested")
@@ -230,6 +232,18 @@ async function ensureTab(tok) {
   await gs(tok, `/values/${tab('A1')}?valueInputOption=USER_ENTERED`, { method: 'PUT', body: JSON.stringify({ values: [HEADER] }) });
 }
 async function writeRows(results) {
+  // Preferred: Apps Script web app on the sheet (no Google Cloud key needed)
+  if (process.env.SHEET_WEBHOOK_URL) {
+    const r = await fetch(process.env.SHEET_WEBHOOK_URL, {
+      method: 'POST', redirect: 'follow',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret: process.env.SHEET_WEBHOOK_SECRET || '', header: HEADER, rows: results.map((x) => x._row) }),
+    });
+    const text = await r.text();
+    let d; try { d = JSON.parse(text); } catch { throw new Error(`Sheet webhook returned non-JSON (${r.status}): ${text.slice(0, 200)}`); }
+    if (!d.ok) throw new Error(`Sheet webhook: ${d.error || 'unknown error'}`);
+    return d.written;
+  }
   const tok = await sheetsToken();
   await ensureTab(tok);
   const existing = await gs(tok, `/values/${tab(`${JOBNUM_COL}2:${JOBNUM_COL}`)}`);
