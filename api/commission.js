@@ -101,31 +101,30 @@ async function findJob(q) {
   return arr[0] || null;
 }
 
-// Pull projected / actual cost rows out of the Profit/Loss worksheet without
-// depending on exact field names (the v1 worksheet shape isn't documented).
+// Profit/Loss worksheet (v1 GET /worksheet/{id}): data.worksheet.details[] of
+// { type:'item', data:{ product_name, description, quantity, unit_cost, line_total_amount (projected),
+//   actual_unit_cost, actual_quantity, category:{name} } }; data.worksheet.total = actual cost total.
 function readWorksheet(ws) {
-  const root = unwrap(ws) || ws || {};
-  let rows = null;
-  const walk = (o, d = 0) => {
-    if (rows || !o || typeof o !== 'object' || d > 4) return;
-    if (Array.isArray(o)) { if (o.length && o.every((x) => x && typeof x === 'object') && o.some((x) => 'description' in x || 'product_name' in x || 'name' in x)) { rows = o; return; } o.forEach((x) => walk(x, d + 1)); return; }
-    for (const v of Object.values(o)) walk(v, d + 1);
-  };
-  walk(root);
-  const out = { rows: [], projected_total: 0, projected_ex_commission: 0, actual_total: 0, found: !!rows };
-  for (const r of rows || []) {
-    const qty = money(r.qty ?? r.quantity) ?? 0, unit = money(r.unit_cost ?? r.cost_per_qty ?? r.unit_price ?? r.price) ?? 0;
-    const aqty = money(r.actual_qty ?? r.actual_quantity) ?? 0, aunit = money(r.actual_unit_cost ?? r.actual_cost_per_qty ?? r.actual_unit_price) ?? 0;
-    const projected = money(r.cost ?? r.total ?? r.line_total) ?? r2(qty * unit);
-    const actual = money(r.actual_cost ?? r.actual_total ?? r.actual_line_total) ?? r2(aqty * aunit);
-    const desc = [r.type, r.name ?? r.product_name, r.description].filter(Boolean).join(' | ');
-    const isCommission = /commission/i.test(String(r.description || '') + ' ' + String(r.name || r.product_name || ''));
+  const root = unwrap(ws) || {};
+  const sheet = root.worksheet || root;
+  const details = Array.isArray(sheet.details) ? sheet.details : null;
+  const out = { rows: [], projected_total: 0, projected_ex_commission: 0, actual_total: 0, found: !!details, leap_actual_total: money(sheet.total) };
+  for (const d of details || []) {
+    const r = d && d.type === 'item' ? d.data : (d && d.data) || d;
+    if (!r || typeof r !== 'object') continue;
+    const projected = money(r.line_total_amount) || r2((money(r.quantity) || 0) * (money(r.unit_cost) || 0)) || 0;
+    const actual = r2((money(r.actual_unit_cost) || 0) * (money(r.actual_quantity) || 0)) || 0;
+    const cat = r.category && r.category.name;
+    const desc = [cat, r.product_name, r.description].filter(Boolean).join(' | ');
+    const isCommission = /commission/i.test(`${r.product_name || ''} ${r.description || ''}`);
     out.rows.push({ desc, projected, actual, isCommission });
-    out.projected_total += projected || 0;
-    if (!isCommission) out.projected_ex_commission += projected || 0;
-    out.actual_total += actual || 0;
+    out.projected_total += projected;
+    if (!isCommission) out.projected_ex_commission += projected;
+    out.actual_total += actual;
   }
   out.projected_total = r2(out.projected_total); out.projected_ex_commission = r2(out.projected_ex_commission); out.actual_total = r2(out.actual_total);
+  // trust Leap's own total for actual cost if it differs (e.g. rows we didn't parse)
+  if (out.leap_actual_total != null && Math.abs(out.leap_actual_total - out.actual_total) > 0.01) out.actual_total = out.leap_actual_total;
   return out;
 }
 
