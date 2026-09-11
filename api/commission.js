@@ -10,12 +10,15 @@
 //   GET  /api/commission?job=...&write=1             compute and write/refresh the sheet row
 //   GET  /api/commission?job=...&debug=1             include raw Leap job + worksheet JSON
 //   GET  /api/commission?sweep=14                    every job that entered the stage in the last 14 days (add &write=1 to write)
+//   GET  /api/commission?sweep=14&rows=1             same, plus the ready-to-write sheet rows (what the Apps Script timer pulls)
 //   POST /api/commission                             Leap webhook receiver (jobs / stage_change)
 //
 // Env (Vercel): JP_USERNAME, JP_PASSWORD, JP_CLIENT_ID, JP_CLIENT_SECRET, JP_COMPANY_ID   (Leap v1 login, same as revenue.js)
-//               SHEET_WEBHOOK_URL             Apps Script web-app URL bound to the sheet (preferred writer)
-//               SHEET_WEBHOOK_SECRET          shared secret matching the script's SHARED_SECRET property
-//               GOOGLE_SERVICE_ACCOUNT_JSON   fallback writer: service-account key with Editor on the sheet
+//               SHEET_WEBHOOK_SECRET          shared secret; every GET must carry ?key=<secret> (the Apps Script
+//                                             timer in the sheet pulls ?sweep=N&rows=1 with it), and the Leap webhook
+//                                             URL should be registered with ?key=<secret> too
+//               SHEET_WEBHOOK_URL             optional: Apps Script web-app URL if pushing rows (needs anonymous access)
+//               GOOGLE_SERVICE_ACCOUNT_JSON   optional: service-account key with Editor on the sheet
 //               COMMISSION_SHEET_ID           spreadsheet id (defaults to Kyle's copy of the Commission Calculator)
 //               COMMISSION_SHEET_TAB          tab name (default "Leap Auto")
 //               COMMISSION_STAGE_CODES        comma-separated stage codes that trigger a row (default Herndon "Review Requested")
@@ -244,6 +247,7 @@ async function writeRows(results) {
     if (!d.ok) throw new Error(`Sheet webhook: ${d.error || 'unknown error'}`);
     return d.written;
   }
+  if (!process.env.GOOGLE_SERVICE_ACCOUNT_JSON) throw new Error('no sheet writer configured — the Apps Script timer in the sheet pulls rows instead; use ?sweep=N&rows=1');
   const tok = await sheetsToken();
   await ensureTab(tok);
   const existing = await gs(tok, `/values/${tab(`${JOBNUM_COL}2:${JOBNUM_COL}`)}`);
@@ -264,6 +268,11 @@ module.exports = async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
   const write = url.searchParams.get('write') === '1';
   const debug = url.searchParams.get('debug') === '1';
+  const wantRows = url.searchParams.get('rows') === '1';
+  // Gate: commission figures are pay data. Require the shared secret when one is configured.
+  const SECRET = process.env.SHEET_WEBHOOK_SECRET || '';
+  const given = url.searchParams.get('key') || req.headers['x-commission-key'] || '';
+  if (SECRET && given !== SECRET) return res.status(401).json({ error: 'missing or wrong key' });
   try {
     let jobs = [];
     if (req.method === 'POST') {
@@ -274,7 +283,8 @@ module.exports = async (req, res) => {
       if (!ids.length) return res.status(200).json({ ok: true, ignored: events.length });
       for (const id of ids) { const j = await findJob(String(id)); if (j) jobs.push(j); }
       const results = []; for (const j of jobs) results.push(await processJob(j));
-      const written = await writeRows(results);
+      // Writing is normally done by the Apps Script timer pulling ?sweep; try a direct write only if one is configured.
+      let written = null; if (process.env.SHEET_WEBHOOK_URL || process.env.GOOGLE_SERVICE_ACCOUNT_JSON) { try { written = await writeRows(results); } catch (e) { written = { error: String(e.message || e) }; } }
       return res.status(200).json({ ok: true, written, flags: results.map((r) => ({ job: r.job_number, flags: r.flags })) });
     }
     const q = (url.searchParams.get('job') || '').trim();
@@ -292,8 +302,8 @@ module.exports = async (req, res) => {
     } else return res.status(400).json({ error: 'pass ?job=<job number | customer name | Leap id>, ?sweep=<days>, or POST a Leap webhook' });
 
     const results = []; for (const j of jobs) results.push(await processJob(j, { debug }));
-    const out = { count: results.length, results: results.map((r) => { const { _row, ...rest } = r; return rest; }) };
-    if (write) out.written = await writeRows(results); else out.note = 'dry run — add &write=1 to write to the sheet';
+    const out = { count: results.length, header: HEADER, results: results.map((r) => { if (wantRows) return r; const { _row, ...rest } = r; return rest; }) };
+    if (write) out.written = await writeRows(results); else if (!wantRows) out.note = 'dry run — add &write=1 to write to the sheet';
     res.status(200).json(out);
   } catch (e) {
     res.status(500).json({ error: String(e && e.message || e) });
