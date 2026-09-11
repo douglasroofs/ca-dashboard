@@ -11,6 +11,7 @@
 //   GET  /api/commission?job=...&debug=1             include raw Leap job + worksheet JSON
 //   GET  /api/commission?sweep=14                    every job that entered the stage in the last 14 days (add &write=1 to write)
 //   GET  /api/commission?sweep=14&rows=1             same, plus the ready-to-write sheet rows (what the Apps Script timer pulls)
+//   add &since=YYYY-MM-DD to ignore jobs whose stage change is older than that date (go-live cutoff)
 //   POST /api/commission                             Leap webhook receiver (jobs / stage_change)
 //
 // Env (Vercel): JP_USERNAME, JP_PASSWORD, JP_CLIENT_ID, JP_CLIENT_SECRET, JP_COMPANY_ID   (Leap v1 login, same as revenue.js)
@@ -289,6 +290,7 @@ module.exports = async (req, res) => {
     }
     const q = (url.searchParams.get('job') || '').trim();
     const sweep = Number(url.searchParams.get('sweep') || 0);
+    const since = (url.searchParams.get('since') || '').trim();
     if (q) { const j = await findJob(q); if (!j) return res.status(404).json({ error: `no Leap job matched "${q}"` }); jobs = [j]; }
     else if (sweep) {
       const end = new Date(), start = new Date(Date.now() - sweep * 86400000);
@@ -299,6 +301,7 @@ module.exports = async (req, res) => {
         const arr = j.data || []; jobs.push(...arr);
         if (arr.length < 100) break;
       }
+      if (since) jobs = jobs.filter((j) => String(j.stage_last_modified || '').slice(0, 10) >= since);
     } else return res.status(400).json({ error: 'pass ?job=<job number | customer name | Leap id>, ?sweep=<days>, or POST a Leap webhook' });
 
     const results = []; for (const j of jobs) results.push(await processJob(j, { debug }));
