@@ -10,7 +10,8 @@
 //   GET  /api/commission?job=...&write=1             compute and write/refresh the sheet row
 //   GET  /api/commission?job=...&debug=1             include raw Leap job + worksheet JSON
 //   GET  /api/commission?sweep=14                    every job that entered the stage in the last 14 days (add &write=1 to write)
-//   GET  /api/commission?sweep=14&rows=1             same, plus the ready-to-write sheet rows (what the Apps Script timer pulls)
+//   GET  /api/commission?sweep=14&rows=1             same, plus the ready-to-write sheet rows
+//   GET  /api/commission?bucket=1&rows=1            every job sitting in the stage right now, any date (what the weekly Apps Script timer pulls)
 //   add &since=YYYY-MM-DD to ignore jobs whose stage change is older than that date (go-live cutoff)
 //   POST /api/commission                             Leap webhook receiver (jobs / stage_change)
 //
@@ -350,8 +351,20 @@ module.exports = async (req, res) => {
     }
     const q = (url.searchParams.get('job') || '').trim();
     const sweep = Number(url.searchParams.get('sweep') || 0);
+    const bucket = url.searchParams.get('bucket') === '1';
     const since = (url.searchParams.get('since') || '').trim();
     if (q) { const j = await findJob(q); if (!j) return res.status(404).json({ error: `no Leap job matched "${q}"` }); jobs = [j]; }
+    else if (bucket) {
+      // every job sitting in the stage RIGHT NOW, regardless of when it got there
+      const stages = STAGE_CODES.map((c) => `stages[]=${c}`).join('&');
+      for (let page = 1; page <= 10; page++) {
+        const j = await leapGet(`/jobs?${stages}&limit=100&page=${page}&${incQS()}`);
+        const arr = (j.data || []).filter((x) => x.current_stage && STAGE_CODES.includes(String(x.current_stage.code)));
+        jobs.push(...arr);
+        if ((j.data || []).length < 100) break;
+      }
+      if (since) jobs = jobs.filter((j) => String(j.stage_last_modified || '').slice(0, 10) >= since);
+    }
     else if (sweep) {
       const end = new Date(), start = new Date(Date.now() - sweep * 86400000);
       const ymd = (d) => d.toISOString().slice(0, 10);
