@@ -1,0 +1,74 @@
+name: Refresh SR snapshots
+
+# Rebuilds the baked-in SNAPSHOTS blocks in api/ca-history.js and api/doors.js from the
+# live Sales Rabbit endpoints on stats.douglasroofs.com, then commits the result to main.
+#
+# api/leap-extra.js is not touched -- it needs a logged-in Leap session.
+
+on:
+  schedule:
+    - cron: '20 5 * * *'   # 05:20 UTC daily = ~1:20am ET
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'Base URL to pull snapshots from'
+        required: false
+        default: 'https://stats.douglasroofs.com'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-snapshots
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Refresh snapshots
+        id: refresh
+        env:
+          BASE_URL: ${{ inputs.base_url || 'https://stats.douglasroofs.com' }}
+          SUMMARY_FILE: ${{ runner.temp }}/refresh-summary.txt
+        run: node scripts/refresh-snapshots.js
+
+      - name: Commit updated snapshots
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- api/ca-history.js api/doors.js; then
+            echo "No snapshot changes."
+            exit 0
+          fi
+          git add api/ca-history.js api/doors.js
+          git commit -m "Refresh SR snapshots"
+          git push origin HEAD:main
+
+      - name: Job summary
+        if: always()
+        env:
+          SUMMARY_FILE: ${{ runner.temp }}/refresh-summary.txt
+        run: |
+          {
+            echo "### Refresh SR snapshots"
+            echo ''
+            if [ -f "$SUMMARY_FILE" ]; then
+              echo '```'
+              cat "$SUMMARY_FILE"
+              echo '```'
+            else
+              echo "_No summary produced -- the refresh step failed before writing one._"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
