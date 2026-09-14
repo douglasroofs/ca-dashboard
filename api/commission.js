@@ -26,6 +26,7 @@
 //               COMMISSION_STAGE_CODES        comma-separated stage codes that trigger a row (default Herndon "Review Requested")
 //               PRECAP_TOLERANCE              fraction, default 0.10 (flag when actual cost is >10% under or over pre cap)
 //               LEAD_TYPE_RATES               JSON, default {"inbound":0.30,"marketing":0.10} matched against the customer's Referred By
+//               FEE_CHECK                     set to 1 to raise CC/ACH FEE MISSING / FEE LOOKS OFF flags (default off; info columns always filled)
 //               FEE_RATES                     optional JSON {"card":0.029,"ach":0.01} — expected processor fee rates used in the CC/ACH flag text
 //
 // Reads Leap. Writes only to the Google Sheet. Never modifies Leap.
@@ -172,6 +173,8 @@ async function readPayments(jobId) {
   return out;
 }
 // Optional expected-fee rates for the flag text, e.g. FEE_RATES={"card":0.029,"ach":0.01}
+// Fee flags are OFF by default (fees are passed to the customer, or already in the P&L). FEE_CHECK=1 turns them on.
+const FEE_CHECK = process.env.FEE_CHECK === '1';
 let FEE_RATES = null;
 try { if (process.env.FEE_RATES) FEE_RATES = JSON.parse(process.env.FEE_RATES); } catch {}
 
@@ -236,10 +239,11 @@ function compute(job, ws, pay = { found: false, card_ach_total: 0, payments: [] 
   if (FEE_RATES && pay.found) expected = r2(pay.payments.reduce((s, p) => s + (p.isCardAch && !p.passover ? p.amount * (p.isCard ? (FEE_RATES.card || 0) : (FEE_RATES.ach || 0)) : 0), 0));
   const how = pay.found ? [pay.card_total ? `card $${pay.card_total.toFixed(2)}` : '', pay.ach_total ? `ACH $${pay.ach_total.toFixed(2)}` : ''].filter(Boolean).join(' + ') : '';
   if (!pay.found) notes.push('payments not readable');
+  else if (!FEE_CHECK) { /* fees are passed to the customer or already sit in the P&L — info columns only */ }
   else if (feeBearing > 0 && !feeLogged) flags.push(`CC/ACH FEE MISSING (${how}${expected ? `, expect ~$${expected.toFixed(2)}` : ''})`);
   else if (feeBearing > 0 && expected && feeLogged && Math.abs(expected - feeLogged) > Math.max(5, expected * 0.25)) flags.push(`FEE LOOKS OFF (logged $${feeLogged.toFixed(2)}, expect ~$${expected.toFixed(2)})`);
   else if (feeLogged && !(cardAch > 0)) notes.push(`fee $${feeLogged.toFixed(2)} logged but no card/ACH payment found`);
-  if (pay.found && pay.passover_total > 0) notes.push(`fee passed to customer on $${pay.passover_total.toFixed(2)}`);
+  if (FEE_CHECK && pay.found && pay.passover_total > 0) notes.push(`fee passed to customer on $${pay.passover_total.toFixed(2)}`);
 
   return {
     row: [
