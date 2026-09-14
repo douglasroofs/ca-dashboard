@@ -25,6 +25,7 @@
 //               COMMISSION_STAGE_CODES        comma-separated stage codes that trigger a row (default Herndon "Review Requested")
 //               PRECAP_TOLERANCE              fraction, default 0.10 (flag when actual cost is >10% under or over pre cap)
 //               LEAD_TYPE_RATES               JSON, default {"inbound":0.30,"marketing":0.10} matched against the customer's Referred By
+//               FEE_RATES                     optional JSON {"card":0.029,"ach":0.01} — expected processor fee rates used in the CC/ACH flag text
 //
 // Reads Leap. Writes only to the Google Sheet. Never modifies Leap.
 
@@ -52,8 +53,6 @@ const HEADER = [
 ];
 // Worksheet rows that look like a card/ACH processing fee (already part of Job Cost when present)
 const FEE_ROW_RE = /processing|merchant|credit\s*card|\bcc\b|\bach\b|e-?check|stripe|leap\s*pay|card\s*fee|transaction\s*fee/i;
-// Leap payment methods that carry a processor fee
-const FEE_METHOD_RE = /credit|card|\bcc\b|\bach\b|e-?che(ck|que)|bank|online|stripe/i;
 const JOBNUM_COL = 'P'; // column holding Job # — used to find an existing row
 
 // ── Leap v1 auth (same as job-reps.js / revenue.js) ─────────────────────────
@@ -142,30 +141,38 @@ function readWorksheet(ws) {
   return out;
 }
 
-// Payments received on the job (v1). Leap exposes these under a couple of
-// paths depending on version; try each and keep the first that answers.
+// Payments received on the job — v1 GET /jobs/payments_history/{id} (what the
+// Financials → Payments "view" modal calls). Rows: { method: "Financing" |
+// "LeapPay - ACH" | "LeapPay - Credit Card" | "Check" | ..., payment: "250.00",
+// canceled: null | timestamp, leap_pay_status, fee_passover_enabled,
+// amount_with_fee, card_brand }. Leap does not expose the processor's fee to
+// the company, only whether it was passed on to the customer.
 async function readPayments(jobId) {
-  const paths = [`/jobs/${jobId}/payments`, `/job_payments?job_id=${jobId}&limit=100`, `/payments?job_id=${jobId}&limit=100`, `/jobs/${jobId}/job_payments`];
-  const out = { found: false, source: null, payments: [], card_ach_total: 0, other_total: 0, raw: null };
-  for (const p of paths) {
-    let j; try { j = await leapGet(p); } catch { continue; }
-    const arr = Array.isArray(j) ? j : (j.data || j.payments || j.job_payments || (j.job && j.job.payments) || null);
-    if (!Array.isArray(arr)) continue;
-    out.found = true; out.source = p; out.raw = j;
-    for (const pay of arr) {
-      const x = unwrap(pay) || pay;
-      const method = String(x.method || x.payment_method || x.type || x.payment_type || (x.payment_method_object && x.payment_method_object.name) || '').trim();
-      const amount = money(x.payment ?? x.amount ?? x.total ?? x.paid_amount) || 0;
-      const fee = money(x.fee ?? x.processing_fee ?? x.transaction_fee ?? x.surcharge);
-      const isCardAch = FEE_METHOD_RE.test(method);
-      out.payments.push({ method, amount, fee, date: x.date || x.payment_date || x.created_at, isCardAch });
-      if (isCardAch) out.card_ach_total += amount; else out.other_total += amount;
-    }
-    break;
+  const out = { found: false, source: null, payments: [], card_ach_total: 0, card_total: 0, ach_total: 0, other_total: 0, passover_total: 0, raw: null };
+  const p = `/jobs/payments_history/${jobId}`;
+  const j = await leapGet(p);
+  const arr = Array.isArray(j) ? j : (j.data || null);
+  if (!Array.isArray(arr)) return out;
+  out.found = true; out.source = p; out.raw = j;
+  for (const x of arr) {
+    if (x.canceled || /fail|cancel|refund/i.test(String(x.leap_pay_status || ''))) continue;
+    const method = String(x.method || '').trim();
+    const amount = money(x.payment) || 0;
+    const withFee = money(x.amount_with_fee);
+    const passover = !!x.fee_passover_enabled && withFee != null && withFee > amount;
+    const isCard = /credit|card|\bcc\b|visa|master|amex|discover/i.test(method) || !!x.card_brand;
+    const isAch = /\bach\b|e-?che(ck|que)|bank/i.test(method);
+    const isCardAch = isCard || isAch;
+    out.payments.push({ method, amount, date: x.date, isCardAch, isCard, isAch, passover, fee: passover ? r2(withFee - amount) : null });
+    if (isCardAch) { out.card_ach_total += amount; if (isCard) out.card_total += amount; else out.ach_total += amount; if (passover) out.passover_total += amount; }
+    else out.other_total += amount;
   }
-  out.card_ach_total = r2(out.card_ach_total); out.other_total = r2(out.other_total);
+  ['card_ach_total', 'card_total', 'ach_total', 'other_total', 'passover_total'].forEach((k) => (out[k] = r2(out[k])));
   return out;
 }
+// Optional expected-fee rates for the flag text, e.g. FEE_RATES={"card":0.029,"ach":0.01}
+let FEE_RATES = null;
+try { if (process.env.FEE_RATES) FEE_RATES = JSON.parse(process.env.FEE_RATES); } catch {}
 
 // ── the sheet's formula chain ───────────────────────────────────────────────
 function compute(job, ws, pay = { found: false, card_ach_total: 0, payments: [] }) {
@@ -222,11 +229,16 @@ function compute(job, ws, pay = { found: false, card_ach_total: 0, payments: [] 
   // processor fee should already be sitting on the P&L worksheet as a cost line
   const cardAch = pay.found ? pay.card_ach_total : null;
   const feeLogged = ws.found ? ws.fee_logged : null;
-  const feeFromLeap = pay.found ? r2(pay.payments.reduce((s, p) => s + (p.isCardAch && p.fee ? p.fee : 0), 0)) : 0;
+  // card/ACH dollars where the company ate the fee (fee not passed on to the customer)
+  const feeBearing = pay.found ? r2(pay.card_ach_total - pay.passover_total) : 0;
+  let expected = null;
+  if (FEE_RATES && pay.found) expected = r2(pay.payments.reduce((s, p) => s + (p.isCardAch && !p.passover ? p.amount * (p.isCard ? (FEE_RATES.card || 0) : (FEE_RATES.ach || 0)) : 0), 0));
+  const how = pay.found ? [pay.card_total ? `card $${pay.card_total.toFixed(2)}` : '', pay.ach_total ? `ACH $${pay.ach_total.toFixed(2)}` : ''].filter(Boolean).join(' + ') : '';
   if (!pay.found) notes.push('payments not readable');
-  else if (cardAch > 0 && !feeLogged) flags.push(`CC/ACH FEE MISSING (paid $${cardAch.toFixed(2)} by card/ACH${feeFromLeap ? `, Leap shows fee $${feeFromLeap.toFixed(2)}` : ''})`);
-  else if (cardAch > 0 && feeFromLeap && feeLogged && Math.abs(feeFromLeap - feeLogged) > 1) flags.push(`FEE MISMATCH (worksheet $${feeLogged.toFixed(2)} vs Leap $${feeFromLeap.toFixed(2)})`);
+  else if (feeBearing > 0 && !feeLogged) flags.push(`CC/ACH FEE MISSING (${how}${expected ? `, expect ~$${expected.toFixed(2)}` : ''})`);
+  else if (feeBearing > 0 && expected && feeLogged && Math.abs(expected - feeLogged) > Math.max(5, expected * 0.25)) flags.push(`FEE LOOKS OFF (logged $${feeLogged.toFixed(2)}, expect ~$${expected.toFixed(2)})`);
   else if (feeLogged && !(cardAch > 0)) notes.push(`fee $${feeLogged.toFixed(2)} logged but no card/ACH payment found`);
+  if (pay.found && pay.passover_total > 0) notes.push(`fee passed to customer on $${pay.passover_total.toFixed(2)}`);
 
   return {
     row: [
