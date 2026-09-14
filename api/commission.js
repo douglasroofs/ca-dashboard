@@ -48,7 +48,12 @@ const HEADER = [
   'Insurance Job Total (ACV)', 'Overhead to Insurance', 'Overhead from Insurance', 'Job Cost', 'Insurance Profit',
   'Upgrades Cost to Insurance Profit', 'True Insurance Profit', 'Storm Rep Commission', 'Add 5% of Upgrade Total', 'Final Storm Rep Commission',
   'Job #', 'Rate Used', 'Rate Source', 'Pre-Cap Cost (Projected, ex-commission)', 'Actual Cost', 'Cost vs Pre-Cap %', 'Flags', 'Stage', 'Stage Date', 'Leap Job ID', 'Updated',
+  'Paid by Card/ACH', 'Processing Fee Logged',
 ];
+// Worksheet rows that look like a card/ACH processing fee (already part of Job Cost when present)
+const FEE_ROW_RE = /processing|merchant|credit\s*card|\bcc\b|\bach\b|e-?check|stripe|leap\s*pay|card\s*fee|transaction\s*fee/i;
+// Leap payment methods that carry a processor fee
+const FEE_METHOD_RE = /credit|card|\bcc\b|\bach\b|e-?che(ck|que)|bank|online|stripe/i;
 const JOBNUM_COL = 'P'; // column holding Job # — used to find an existing row
 
 // ── Leap v1 auth (same as job-reps.js / revenue.js) ─────────────────────────
@@ -114,7 +119,7 @@ function readWorksheet(ws) {
   const root = unwrap(ws) || {};
   const sheet = root.worksheet || root;
   const details = Array.isArray(sheet.details) ? sheet.details : null;
-  const out = { rows: [], projected_total: 0, projected_ex_commission: 0, actual_total: 0, found: !!details, leap_actual_total: money(sheet.total) };
+  const out = { rows: [], projected_total: 0, projected_ex_commission: 0, actual_total: 0, fee_logged: 0, found: !!details, leap_actual_total: money(sheet.total) };
   for (const d of details || []) {
     const r = d && d.type === 'item' ? d.data : (d && d.data) || d;
     if (!r || typeof r !== 'object') continue;
@@ -122,20 +127,48 @@ function readWorksheet(ws) {
     const actual = r2((money(r.actual_unit_cost) || 0) * (money(r.actual_quantity) || 0)) || 0;
     const cat = r.category && r.category.name;
     const desc = [cat, r.product_name, r.description].filter(Boolean).join(' | ');
-    const isCommission = /commission/i.test(`${r.product_name || ''} ${r.description || ''}`);
-    out.rows.push({ desc, projected, actual, isCommission });
+    const label = `${cat || ''} ${r.product_name || ''} ${r.description || ''}`;
+    const isCommission = /commission/i.test(label);
+    const isFee = !isCommission && FEE_ROW_RE.test(label);
+    out.rows.push({ desc, projected, actual, isCommission, isFee });
     out.projected_total += projected;
     if (!isCommission) out.projected_ex_commission += projected;
     out.actual_total += actual;
+    if (isFee) out.fee_logged += actual || projected;
   }
-  out.projected_total = r2(out.projected_total); out.projected_ex_commission = r2(out.projected_ex_commission); out.actual_total = r2(out.actual_total);
+  out.projected_total = r2(out.projected_total); out.projected_ex_commission = r2(out.projected_ex_commission); out.actual_total = r2(out.actual_total); out.fee_logged = r2(out.fee_logged);
   // trust Leap's own total for actual cost if it differs (e.g. rows we didn't parse)
   if (out.leap_actual_total != null && Math.abs(out.leap_actual_total - out.actual_total) > 0.01) out.actual_total = out.leap_actual_total;
   return out;
 }
 
+// Payments received on the job (v1). Leap exposes these under a couple of
+// paths depending on version; try each and keep the first that answers.
+async function readPayments(jobId) {
+  const paths = [`/jobs/${jobId}/payments`, `/job_payments?job_id=${jobId}&limit=100`, `/payments?job_id=${jobId}&limit=100`, `/jobs/${jobId}/job_payments`];
+  const out = { found: false, source: null, payments: [], card_ach_total: 0, other_total: 0, raw: null };
+  for (const p of paths) {
+    let j; try { j = await leapGet(p); } catch { continue; }
+    const arr = Array.isArray(j) ? j : (j.data || j.payments || j.job_payments || (j.job && j.job.payments) || null);
+    if (!Array.isArray(arr)) continue;
+    out.found = true; out.source = p; out.raw = j;
+    for (const pay of arr) {
+      const x = unwrap(pay) || pay;
+      const method = String(x.method || x.payment_method || x.type || x.payment_type || (x.payment_method_object && x.payment_method_object.name) || '').trim();
+      const amount = money(x.payment ?? x.amount ?? x.total ?? x.paid_amount) || 0;
+      const fee = money(x.fee ?? x.processing_fee ?? x.transaction_fee ?? x.surcharge);
+      const isCardAch = FEE_METHOD_RE.test(method);
+      out.payments.push({ method, amount, fee, date: x.date || x.payment_date || x.created_at, isCardAch });
+      if (isCardAch) out.card_ach_total += amount; else out.other_total += amount;
+    }
+    break;
+  }
+  out.card_ach_total = r2(out.card_ach_total); out.other_total = r2(out.other_total);
+  return out;
+}
+
 // ── the sheet's formula chain ───────────────────────────────────────────────
-function compute(job, ws) {
+function compute(job, ws, pay = { found: false, card_ach_total: 0, payments: [] }) {
   const cust = unwrap(job.customer) || {};
   const rep = unwrap(cust.rep) || {};
   const ins = unwrap(job.insurance_details) || {};
@@ -185,11 +218,22 @@ function compute(job, ws) {
     else if (I > P * (1 + PRECAP_TOL)) flags.push(`OVER PRE-CAP (+${variance}%)`);
   } else if (ws.found && !P) flags.push('NO PRE-CAP ROWS');
 
+  // card / ACH processing-fee check: if the customer paid by card or ACH, the
+  // processor fee should already be sitting on the P&L worksheet as a cost line
+  const cardAch = pay.found ? pay.card_ach_total : null;
+  const feeLogged = ws.found ? ws.fee_logged : null;
+  const feeFromLeap = pay.found ? r2(pay.payments.reduce((s, p) => s + (p.isCardAch && p.fee ? p.fee : 0), 0)) : 0;
+  if (!pay.found) notes.push('payments not readable');
+  else if (cardAch > 0 && !feeLogged) flags.push(`CC/ACH FEE MISSING (paid $${cardAch.toFixed(2)} by card/ACH${feeFromLeap ? `, Leap shows fee $${feeFromLeap.toFixed(2)}` : ''})`);
+  else if (cardAch > 0 && feeFromLeap && feeLogged && Math.abs(feeFromLeap - feeLogged) > 1) flags.push(`FEE MISMATCH (worksheet $${feeLogged.toFixed(2)} vs Leap $${feeFromLeap.toFixed(2)})`);
+  else if (feeLogged && !(cardAch > 0)) notes.push(`fee $${feeLogged.toFixed(2)} logged but no card/ACH payment found`);
+
   return {
     row: [
       nameOf(cust) || job.name || '', repName, leadType, D, E, F, G, H, I, J, K, L, M, N, O,
       job.number, rate, rateSource, P, I, variance, flags.join('; ') + (notes.length ? ` [${notes.join(', ')}]` : ''),
       job.current_stage && job.current_stage.name, job.stage_last_modified, job.id, new Date().toISOString(),
+      cardAch, feeLogged,
     ],
     flags, notes,
   };
@@ -198,12 +242,16 @@ function compute(job, ws) {
 async function processJob(job, { debug = false } = {}) {
   const wsId = job.has_profit_loss_worksheet;
   let wsRaw = null;
-  if (wsId) { try { wsRaw = await leapGet(`/worksheet/${wsId}?details_attachment_count=1`); } catch (e) { wsRaw = { error: String(e.message || e) }; } }
+  const [wsFetched, pay] = await Promise.all([
+    wsId ? leapGet(`/worksheet/${wsId}?details_attachment_count=1`).catch((e) => ({ error: String(e.message || e) })) : Promise.resolve(null),
+    readPayments(job.id).catch((e) => ({ found: false, error: String(e.message || e), card_ach_total: 0, payments: [] })),
+  ]);
+  wsRaw = wsFetched;
   const ws = readWorksheet(wsRaw);
-  const result = compute(job, ws);
+  const result = compute(job, ws, pay);
   const labeled = {}; HEADER.forEach((h, i) => (labeled[h] = result.row[i]));
-  const out = { job_number: job.number, leap_job_id: job.id, flags: result.flags, notes: result.notes, values: labeled, worksheet_rows: ws.rows, _row: result.row };
-  if (debug) out.debug = { job, worksheet: wsRaw };
+  const out = { job_number: job.number, leap_job_id: job.id, flags: result.flags, notes: result.notes, values: labeled, worksheet_rows: ws.rows, payments: { source: pay.source, list: pay.payments }, _row: result.row };
+  if (debug) out.debug = { job, worksheet: wsRaw, payments_raw: pay.raw, payments_error: pay.error };
   return out;
 }
 
@@ -304,7 +352,9 @@ module.exports = async (req, res) => {
       if (since) jobs = jobs.filter((j) => String(j.stage_last_modified || '').slice(0, 10) >= since);
     } else return res.status(400).json({ error: 'pass ?job=<job number | customer name | Leap id>, ?sweep=<days>, or POST a Leap webhook' });
 
-    const results = []; for (const j of jobs) results.push(await processJob(j, { debug }));
+    // Process in small parallel batches so a 60-day sweep stays inside the function time limit.
+    const results = []; const BATCH = 6;
+    for (let i = 0; i < jobs.length; i += BATCH) results.push(...await Promise.all(jobs.slice(i, i + BATCH).map((j) => processJob(j, { debug }))));
     const out = { count: results.length, header: HEADER, results: results.map((r) => { if (wantRows) return r; const { _row, ...rest } = r; return rest; }) };
     if (write) out.written = await writeRows(results); else if (!wantRows) out.note = 'dry run — add &write=1 to write to the sheet';
     res.status(200).json(out);
