@@ -9,28 +9,28 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-10T13:20:17.076Z",
-    "total": 902,
+    "updated": "2026-09-14T15:10:47.631Z",
+    "total": 1273,
     "reps": [
       {
+        "rep": "Jason Cresswell",
+        "doors": 268,
+        "team": "jack"
+      },
+      {
         "rep": "Carol Wright",
-        "doors": 204,
+        "doors": 261,
         "team": "jack"
       },
       {
         "rep": "David Kerns",
-        "doors": 161,
+        "doors": 235,
         "team": "jack"
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 159,
+        "doors": 183,
         "team": "selfgen"
-      },
-      {
-        "rep": "Jason Cresswell",
-        "doors": 154,
-        "team": "jack"
       },
       {
         "rep": "Izzy Price",
@@ -39,32 +39,37 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Christian Brown",
-        "doors": 49,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Mike Mccarthy",
-        "doors": 33,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Andrew Funk",
-        "doors": 29,
+        "doors": 68,
         "team": "selfgen"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 21,
+        "doors": 61,
         "team": "mccarthy"
       },
       {
-        "rep": "George Bechara",
-        "doors": 2,
+        "rep": "Mike Mccarthy",
+        "doors": 54,
+        "team": "mccarthy"
+      },
+      {
+        "rep": "Andrew Funk",
+        "doors": 47,
         "team": "selfgen"
       },
       {
         "rep": "Marc Mitchell",
-        "doors": 1,
+        "doors": 3,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Jack Obert",
+        "doors": 2,
+        "team": "selfgen"
+      },
+      {
+        "rep": "George Bechara",
+        "doors": 2,
         "team": "selfgen"
       },
       {
@@ -96,8 +101,11 @@ const SNAPSHOTS = {
       "carol wright",
       "jason cresswell",
       "liz charles",
-      "doug co",
-      "doug coffman"
+      "doug coffman",
+      "paolo castillo",
+      "david bouknight@douglasroofs.com",
+      "dave nulanz",
+      "david n"
     ],
     "roster": [
       "Kyle Higginbotham",
@@ -123,47 +131,45 @@ const SNAPSHOTS = {
       "Carol Wright",
       "Jason Cresswell",
       "liz charles",
-      "Doug Co",
-      "Doug Coffman"
+      "Doug Coffman",
+      "Paolo Castillo",
+      "David Bouknight@douglasroofs.com",
+      "Dave Nulanz",
+      "David N"
     ]
   },
   "richmond": {
-    "updated": "2026-09-10T13:20:21.806Z",
-    "total": 684,
+    "updated": "2026-09-14T15:10:53.873Z",
+    "total": 1174,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 332,
+        "doors": 606,
         "team": "retail"
       },
       {
         "rep": "Dalton Barr",
-        "doors": 167,
+        "doors": 252,
         "team": "retail"
       },
       {
         "rep": "Andrew Harris",
-        "doors": 67,
+        "doors": 151,
         "team": "retail"
       },
       {
         "rep": "Carter Massengill",
-        "doors": 66,
+        "doors": 117,
         "team": "retail"
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 39,
+        "doors": 38,
         "team": "selfgen"
       },
       {
-        "rep": "Felipe Osorio",
-        "doors": 11,
-        "team": "retail"
-      },
-      {
         "rep": "Brandon Simmons",
-        "doors": 2,
+        "doors": 10,
         "team": "selfgen"
       }
     ],
@@ -176,9 +182,7 @@ const SNAPSHOTS = {
       "andrew harris",
       "dalton barr",
       "marcus schanewolf",
-      "felipe osorio",
-      "kylea white",
-      "james washington"
+      "kylea white"
     ],
     "roster": [
       "Justin Coghill",
@@ -189,9 +193,7 @@ const SNAPSHOTS = {
       "Andrew Harris",
       "Dalton Barr",
       "marcus schanewolf",
-      "Felipe Osorio",
-      "Kylea White",
-      "James Washington"
+      "Kylea White"
     ]
   }
 };
