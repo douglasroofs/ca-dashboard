@@ -3,33 +3,33 @@
 // Revenue YTD: Sales Performance summary report (contract_amount field) — approved = by Job Awarded
 // Date, contract = by Contract Signed Date, YTD. Session/token-bound reports -> refreshed daily.
 //
-// REFRESHED 2026-09-09 (leapCA only; approved/contract are no longer read by any page — revenue is
+// REFRESHED 2026-09-14 (leapCA only; approved/contract are no longer read by any page — revenue is
 // live from /api/revenue and /api/rich-revenue — and were left as-is).
 // Herndon: report 3832, Document Created Date 2026-01-01..2026-12-31, Document Name CONTAINS "ca".
-//   304 rows. NOTE: "contains ca" also matches TAMKO warranty Certificates, COCs, Cameron/Caruso/
-//   Ocampo/McCardle etc. — roughly 30 of the 304 rows are not CAs. Kept as-is for continuity with
+//   321 rows. NOTE: "contains ca" also matches TAMKO warranty Certificates, COCs, Cameron/Caruso/
+//   Ocampo/McCardle etc. — roughly 30 of the 321 rows are not CAs. Kept as-is for continuity with
 //   earlier snapshots; tighten the report filter (or switch to EQUAL_TO "CA" like Richmond) to fix.
 // Richmond: report 3950, same date range, Document Name EQUAL_TO "CA". 84 rows (first row is June).
 // Rows with a blank Sales Rep are dropped. "Nick  Seward" (double space in Leap) is normalised.
 const DATA = {
   herndon: {
-    updated: "2026-09-10",
+    updated: "2026-09-14",
     leapCA: {
   "Adam Mulvaney": [0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
   "Aiden Glonek": [0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0],
   "Alfred Duncan": [0, 0, 0, 0, 2, 4, 7, 0, 0, 0, 0, 0],
-  "Andrew Funk": [0, 0, 0, 0, 3, 12, 23, 9, 9, 0, 0, 0],
-  "Andrew Prickel": [0, 0, 1, 0, 2, 13, 13, 5, 3, 0, 0, 0],
-  "Carol Wright": [0, 0, 0, 0, 0, 0, 10, 11, 2, 0, 0, 0],
-  "Christian Brown": [0, 0, 0, 0, 0, 2, 5, 0, 0, 0, 0, 0],
-  "David Kerns": [0, 0, 0, 0, 0, 8, 1, 5, 3, 0, 0, 0],
+  "Andrew Funk": [0, 0, 0, 0, 3, 12, 23, 9, 10, 0, 0, 0],
+  "Andrew Prickel": [0, 0, 1, 0, 2, 10, 19, 4, 4, 0, 0, 0],
+  "Carol Wright": [0, 0, 0, 0, 0, 0, 10, 12, 3, 0, 0, 0],
+  "Christian Brown": [0, 0, 0, 0, 0, 2, 5, 0, 1, 0, 0, 0],
+  "David Kerns": [0, 0, 0, 0, 0, 8, 1, 5, 4, 0, 0, 0],
   "Doug Coffman": [0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0],
   "Ethan Wiley": [0, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0],
   "George Bechara": [0, 0, 0, 0, 2, 5, 1, 1, 2, 0, 0, 0],
-  "Harvey Shoemaker": [0, 1, 2, 0, 0, 6, 9, 3, 1, 0, 0, 0],
+  "Harvey Shoemaker": [0, 1, 2, 0, 0, 6, 9, 5, 2, 0, 0, 0],
   "Isabelle Price": [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
   "Jack Obert": [2, 0, 0, 0, 1, 4, 5, 5, 0, 0, 0, 0],
-  "Jason Cresswell": [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+  "Jason Cresswell": [0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0],
   "Kevin Mahan": [1, 2, 0, 0, 1, 4, 6, 1, 2, 0, 0, 0],
   "Marc Mitchell": [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
   "Michael McCarthy": [0, 0, 2, 1, 0, 6, 6, 15, 2, 0, 0, 0],
@@ -45,10 +45,11 @@ const DATA = {
     contract: {"Adam Mulvaney":213730.97,"Alfred Duncan":500008.43,"Andrew Funk":152352.64,"Andrew Prickel":1075202.82,"Christian Brown":177979.98,"David Kerns":249726.65,"George Bechara":219618.24,"Haley Barry":2892567.97,"Harvey Shoemaker":335756.78,"Isabelle Price":170788.89,"Jack Obert":362013.04,"James Moffett":71421.37,"Kelly Alston":25032.86,"Kevin Mahan":271267.19,"Kyle Higginbotham":20275.6,"Marc Mitchell":165609.48,"Michael McCarthy":446669.28,"Mike Mendez":6323.57,"Mike Schoultz":25955,"Nick  Seward":172213.17,"Robert Wilson":317432.43,"Steven Arevalo":240164.12}
   },
   richmond: {
-    updated: "2026-09-09",
+    updated: "2026-09-14",
     leapCA: {
   "Brandon Simmons": [0, 0, 0, 0, 0, 8, 3, 2, 0, 0, 0, 0],
-  "Joshua Baca": [0, 0, 0, 0, 0, 12, 5, 0, 0, 0, 0, 0],
+  "Bryan Courtney": [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+  "Joshua Baca": [0, 0, 0, 0, 0, 11, 5, 0, 0, 0, 0, 0],
   "Justin Coghill": [0, 0, 0, 0, 0, 6, 1, 0, 0, 0, 0, 0],
   "Logan Burbic": [0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0],
   "Marcus Schanewolf": [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
