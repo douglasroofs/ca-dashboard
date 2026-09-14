@@ -26,6 +26,8 @@
 //               COMMISSION_STAGE_CODES        comma-separated stage codes that trigger a row (default Herndon "Review Requested")
 //               PRECAP_TOLERANCE              fraction, default 0.10 (flag when actual cost is >10% under or over pre cap)
 //               LEAD_TYPE_RATES               JSON, default {"inbound":0.30,"marketing":0.10} matched against the customer's Referred By
+//               MARKETING_DIVISION_RATE       flat rate for jobs in the Marketing division (default 0.30) — beats the rep's own %
+//               MARKETING_DIVISION_MATCH      regex for the division name (default "marketing")
 //               FEE_CHECK                     set to 1 to raise CC/ACH FEE MISSING / FEE LOOKS OFF flags (default off; info columns always filled)
 //               FEE_RATES                     optional JSON {"card":0.029,"ach":0.01} — expected processor fee rates used in the CC/ACH flag text
 //
@@ -45,6 +47,11 @@ const OVERHEAD = 0.10;           // sheet column G
 const UPGRADE_BONUS = 0.05;      // sheet column N
 let LEAD_RATES = { inbound: 0.30, marketing: 0.10 };
 try { if (process.env.LEAD_TYPE_RATES) LEAD_RATES = JSON.parse(process.env.LEAD_TYPE_RATES); } catch {}
+// Division override: every job in the Marketing division pays this flat rate,
+// whatever the rep's own % is. Leap divisions (company 5154): Richmond, Self Gen,
+// Maryland, Marketing.
+const MKT_DIV_RATE = Number(process.env.MARKETING_DIVISION_RATE || 0.30);
+const MKT_DIV_RE = new RegExp(process.env.MARKETING_DIVISION_MATCH || 'marketing', 'i');
 
 const HEADER = [
   'Job Name', "Rep's Name", 'Marketing Commission (Lead Type)', 'Final Total Job Price', 'Upgrade Amount',
@@ -197,11 +204,19 @@ function compute(job, ws, pay = { found: false, card_ach_total: 0, payments: [] 
   const ref = [cust.referred_by_type, cust.referred_by_name, cust.referred_by && (cust.referred_by.name || cust.referred_by.first_name), cust.referred_by_referral && cust.referred_by_referral.name, cust.referred_by_note]
     .filter((x) => x && typeof x === 'string').join(' ').trim();
   let leadType = '', rate = null, rateSource = '';
-  for (const [k, v] of Object.entries(LEAD_RATES)) if (ref && new RegExp(k, 'i').test(ref)) { leadType = k === 'inbound' ? 'Inbound Lead' : k[0].toUpperCase() + k.slice(1); rate = v; rateSource = `lead type "${ref}"`; }
+  // 1) Division beats everything: every job in the Marketing division pays a flat rate.
+  const divName = (unwrap(job.division) || {}).name || '';
+  if (divName && MKT_DIV_RE.test(divName)) {
+    rate = MKT_DIV_RATE; leadType = divName; rateSource = `${divName} division ${r2(MKT_DIV_RATE * 100)}%`;
+  }
+  // 2) else lead type from the customer's Referred By
+  if (rate == null) for (const [k, v] of Object.entries(LEAD_RATES)) if (ref && new RegExp(k, 'i').test(ref)) { leadType = k === 'inbound' ? 'Inbound Lead' : k[0].toUpperCase() + k.slice(1); rate = v; rateSource = `lead type "${ref}"`; }
+  // 3) else the rep's own % from their Leap profile
   if (rate == null) {
     if (repPct != null) { rate = repPct / 100; rateSource = `Leap rep profile ${repPct}%`; }
     else { rate = 0; flags.push('NO REP RATE'); rateSource = 'missing'; }
   }
+  if (!divName) notes.push('no division set');
 
   if (D == null) flags.push('NO JOB PRICE');
   if (!money(ins.upgrade) && ins.upgrade !== '0') notes.push('upgrade blank');
