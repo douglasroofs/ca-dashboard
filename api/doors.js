@@ -9,12 +9,17 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-15T10:14:24.125Z",
-    "total": 1433,
+    "updated": "2026-09-16T10:06:43.255Z",
+    "total": 1554,
     "reps": [
       {
         "rep": "Jason Cresswell",
-        "doors": 324,
+        "doors": 357,
+        "team": "jack"
+      },
+      {
+        "rep": "David Kerns",
+        "doors": 278,
         "team": "jack"
       },
       {
@@ -23,14 +28,19 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
-        "rep": "David Kerns",
-        "doors": 255,
-        "team": "jack"
+        "rep": "Harvey Shoemaker",
+        "doors": 231,
+        "team": "selfgen"
       },
       {
-        "rep": "Harvey Shoemaker",
-        "doors": 220,
+        "rep": "Christian Brown",
+        "doors": 107,
         "team": "selfgen"
+      },
+      {
+        "rep": "Doug Coffman",
+        "doors": 96,
+        "team": "mccarthy"
       },
       {
         "rep": "Izzy Price",
@@ -38,23 +48,13 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
-        "rep": "Christian Brown",
-        "doors": 87,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Doug Coffman",
-        "doors": 74,
-        "team": "mccarthy"
-      },
-      {
         "rep": "Mike Mccarthy",
-        "doors": 59,
+        "doors": 66,
         "team": "mccarthy"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 51,
+        "doors": 55,
         "team": "selfgen"
       },
       {
@@ -81,6 +81,11 @@ const SNAPSHOTS = {
         "rep": "Terry Eggleston",
         "doors": 1,
         "team": "noteam"
+      },
+      {
+        "rep": "Dave Nulanz",
+        "doors": 1,
+        "team": "selfgen"
       }
     ],
     "allowedReps": [
@@ -142,12 +147,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-15T10:14:30.151Z",
-    "total": 1300,
+    "updated": "2026-09-16T10:06:49.457Z",
+    "total": 1435,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 674,
+        "doors": 732,
         "team": "retail"
       },
       {
@@ -157,17 +162,17 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Andrew Harris",
-        "doors": 155,
+        "doors": 178,
         "team": "retail"
       },
       {
         "rep": "Carter Massengill",
-        "doors": 127,
+        "doors": 146,
         "team": "retail"
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 36,
+        "doors": 71,
         "team": "selfgen"
       },
       {
