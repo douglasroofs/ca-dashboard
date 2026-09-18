@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-17T10:07:51.286Z",
+    "updated": "2026-09-18T09:55:00.091Z",
     "year": 2026,
     "months": [
       0,
@@ -32,19 +32,19 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          13,
+          14,
           27,
           15,
-          9
+          11
         ],
-        "total": 68
+        "total": 71
       },
       {
         "rep": "Mike Mccarthy",
         "counts": [
           1,
           0,
-          4,
+          3,
           0,
           9,
           6,
@@ -52,7 +52,7 @@ const SNAPSHOTS = {
           15,
           6
         ],
-        "total": 48
+        "total": 47
       },
       {
         "rep": "David Kerns",
@@ -62,12 +62,12 @@ const SNAPSHOTS = {
           11,
           8,
           5,
-          7,
+          8,
           2,
           6,
           2
         ],
-        "total": 41
+        "total": 42
       },
       {
         "rep": "Harvey Shoemaker",
@@ -76,13 +76,13 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          5,
-          16,
+          6,
+          17,
           11,
           2,
           0
         ],
-        "total": 38
+        "total": 40
       },
       {
         "rep": "Carol Wright",
@@ -93,11 +93,11 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          19,
+          18,
           10,
           4
         ],
-        "total": 37
+        "total": 36
       },
       {
         "rep": "Christian Brown",
@@ -107,12 +107,27 @@ const SNAPSHOTS = {
           1,
           3,
           3,
-          6,
+          7,
           7,
           3,
           4
         ],
-        "total": 28
+        "total": 29
+      },
+      {
+        "rep": "Jack Obert",
+        "counts": [
+          0,
+          0,
+          3,
+          5,
+          8,
+          7,
+          4,
+          0,
+          0
+        ],
+        "total": 27
       },
       {
         "rep": "Andrew  Prickel",
@@ -128,21 +143,6 @@ const SNAPSHOTS = {
           0
         ],
         "total": 26
-      },
-      {
-        "rep": "Jack Obert",
-        "counts": [
-          0,
-          0,
-          3,
-          5,
-          8,
-          5,
-          4,
-          0,
-          0
-        ],
-        "total": 25
       },
       {
         "rep": "Marc Mitchell",
@@ -181,13 +181,13 @@ const SNAPSHOTS = {
           0,
           5,
           2,
-          5,
+          6,
           3,
           1,
           0,
           0
         ],
-        "total": 18
+        "total": 19
       },
       {
         "rep": "Steven Arevalo",
@@ -195,9 +195,9 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          3,
+          2,
           0,
-          3,
+          4,
           0,
           0,
           0
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-17T10:09:36.774Z",
+    "updated": "2026-09-18T09:56:46.668Z",
     "year": 2026,
     "months": [
       0,
@@ -366,8 +366,8 @@ const SNAPSHOTS = {
           6,
           18,
           9,
-          12,
-          0
+          11,
+          1
         ],
         "total": 73
       },
@@ -382,9 +382,9 @@ const SNAPSHOTS = {
           9,
           11,
           13,
-          5
+          6
         ],
-        "total": 60
+        "total": 61
       },
       {
         "rep": "Brandon Simmons",

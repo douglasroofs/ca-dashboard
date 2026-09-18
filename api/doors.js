@@ -9,37 +9,37 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-17T10:09:43.646Z",
-    "total": 1656,
+    "updated": "2026-09-18T09:56:53.627Z",
+    "total": 1860,
     "reps": [
       {
         "rep": "Jason Cresswell",
-        "doors": 390,
+        "doors": 429,
         "team": "jack"
       },
       {
         "rep": "David Kerns",
-        "doors": 273,
+        "doors": 287,
         "team": "jack"
       },
       {
         "rep": "Carol Wright",
-        "doors": 261,
+        "doors": 274,
         "team": "jack"
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 231,
+        "doors": 247,
         "team": "selfgen"
       },
       {
         "rep": "Christian Brown",
-        "doors": 135,
+        "doors": 143,
         "team": "selfgen"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 99,
+        "doors": 102,
         "team": "mccarthy"
       },
       {
@@ -49,27 +49,27 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 68,
+        "doors": 72,
         "team": "mccarthy"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 59,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Paolo Castillo",
-        "doors": 20,
-        "team": "selfgen"
-      },
-      {
-        "rep": "David Bouknight@douglasroofs.com",
-        "doors": 16,
+        "doors": 67,
         "team": "selfgen"
       },
       {
         "rep": "Dave Nulanz",
-        "doors": 8,
+        "doors": 52,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Paolo Castillo",
+        "doors": 51,
+        "team": "selfgen"
+      },
+      {
+        "rep": "David Bouknight@douglasroofs.com",
+        "doors": 40,
         "team": "selfgen"
       },
       {
@@ -152,37 +152,42 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-17T10:09:49.934Z",
-    "total": 1507,
+    "updated": "2026-09-18T09:57:00.051Z",
+    "total": 1563,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 753,
+        "doors": 752,
         "team": "retail"
       },
       {
         "rep": "Dalton Barr",
-        "doors": 321,
+        "doors": 345,
         "team": "retail"
       },
       {
         "rep": "Andrew Harris",
-        "doors": 184,
+        "doors": 205,
         "team": "retail"
       },
       {
         "rep": "Carter Massengill",
-        "doors": 151,
+        "doors": 155,
         "team": "retail"
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 87,
+        "doors": 89,
         "team": "selfgen"
       },
       {
         "rep": "Brandon Simmons",
         "doors": 10,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Joshua Baca",
+        "doors": 6,
         "team": "selfgen"
       },
       {
