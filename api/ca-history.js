@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-18T09:55:00.091Z",
+    "updated": "2026-09-19T09:37:54.459Z",
     "year": 2026,
     "months": [
       0,
@@ -46,13 +46,13 @@ const SNAPSHOTS = {
           0,
           3,
           0,
-          9,
+          8,
           6,
           7,
           15,
-          6
+          9
         ],
-        "total": 47
+        "total": 49
       },
       {
         "rep": "David Kerns",
@@ -62,10 +62,10 @@ const SNAPSHOTS = {
           11,
           8,
           5,
-          8,
+          7,
           2,
           6,
-          2
+          3
         ],
         "total": 42
       },
@@ -76,13 +76,13 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          6,
+          5,
           17,
           11,
           2,
           0
         ],
-        "total": 40
+        "total": 39
       },
       {
         "rep": "Carol Wright",
@@ -93,11 +93,11 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          18,
+          17,
           10,
           4
         ],
-        "total": 36
+        "total": 35
       },
       {
         "rep": "Christian Brown",
@@ -151,13 +151,13 @@ const SNAPSHOTS = {
           2,
           4,
           5,
-          5,
+          4,
           1,
           0,
           0,
           1
         ],
-        "total": 23
+        "total": 22
       },
       {
         "rep": "George Bechara",
@@ -181,13 +181,13 @@ const SNAPSHOTS = {
           0,
           5,
           2,
-          6,
+          5,
           3,
           1,
           0,
           0
         ],
-        "total": 19
+        "total": 18
       },
       {
         "rep": "Steven Arevalo",
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-18T09:56:46.668Z",
+    "updated": "2026-09-19T09:39:40.001Z",
     "year": 2026,
     "months": [
       0,
@@ -364,8 +364,8 @@ const SNAPSHOTS = {
           13,
           13,
           6,
-          18,
-          9,
+          19,
+          8,
           11,
           1
         ],
@@ -407,14 +407,14 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          3,
+          4,
           6,
           7,
           0,
           1,
           1
         ],
-        "total": 22
+        "total": 23
       },
       {
         "rep": "Carter Massengill",

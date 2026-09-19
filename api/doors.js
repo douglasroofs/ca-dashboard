@@ -9,52 +9,57 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-18T09:56:53.627Z",
-    "total": 1860,
+    "updated": "2026-09-19T09:39:47.016Z",
+    "total": 2054,
     "reps": [
       {
         "rep": "Jason Cresswell",
-        "doors": 429,
+        "doors": 471,
         "team": "jack"
       },
       {
         "rep": "David Kerns",
-        "doors": 287,
+        "doors": 308,
         "team": "jack"
       },
       {
         "rep": "Carol Wright",
-        "doors": 274,
+        "doors": 273,
         "team": "jack"
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 247,
-        "team": "selfgen"
+        "doors": 271,
+        "team": "jack"
       },
       {
         "rep": "Christian Brown",
-        "doors": 143,
-        "team": "selfgen"
+        "doors": 184,
+        "team": "mccarthy"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 102,
+        "doors": 123,
         "team": "mccarthy"
       },
       {
         "rep": "Izzy Price",
-        "doors": 88,
+        "doors": 89,
         "team": "jack"
       },
       {
+        "rep": "Paolo Castillo",
+        "doors": 87,
+        "team": "selfgen"
+      },
+      {
         "rep": "Mike Mccarthy",
-        "doors": 72,
+        "doors": 78,
         "team": "mccarthy"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 67,
+        "doors": 66,
         "team": "selfgen"
       },
       {
@@ -63,13 +68,8 @@ const SNAPSHOTS = {
         "team": "selfgen"
       },
       {
-        "rep": "Paolo Castillo",
-        "doors": 51,
-        "team": "selfgen"
-      },
-      {
         "rep": "David Bouknight@douglasroofs.com",
-        "doors": 40,
+        "doors": 44,
         "team": "selfgen"
       },
       {
@@ -78,14 +78,14 @@ const SNAPSHOTS = {
         "team": "selfgen"
       },
       {
-        "rep": "Jack Obert",
-        "doors": 2,
-        "team": "selfgen"
-      },
-      {
         "rep": "George Bechara",
         "doors": 2,
-        "team": "selfgen"
+        "team": "inbound"
+      },
+      {
+        "rep": "Jack Obert",
+        "doors": 2,
+        "team": "jack"
       },
       {
         "rep": "Terry Eggleston",
@@ -144,7 +144,7 @@ const SNAPSHOTS = {
       "David Kerns",
       "Carol Wright",
       "Jason Cresswell",
-      "liz charles",
+      "Liz Charles",
       "Doug Coffman",
       "Paolo Castillo",
       "David Bouknight@douglasroofs.com",
@@ -152,8 +152,8 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-18T09:57:00.051Z",
-    "total": 1563,
+    "updated": "2026-09-19T09:39:53.399Z",
+    "total": 1565,
     "reps": [
       {
         "rep": "Kylea White",
@@ -187,7 +187,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Joshua Baca",
-        "doors": 6,
+        "doors": 8,
         "team": "selfgen"
       },
       {
