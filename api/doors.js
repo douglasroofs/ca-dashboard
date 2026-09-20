@@ -9,22 +9,22 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-19T09:39:47.016Z",
-    "total": 2054,
+    "updated": "2026-09-20T09:55:43.595Z",
+    "total": 2168,
     "reps": [
       {
         "rep": "Jason Cresswell",
-        "doors": 471,
+        "doors": 532,
         "team": "jack"
       },
       {
         "rep": "David Kerns",
-        "doors": 308,
+        "doors": 322,
         "team": "jack"
       },
       {
         "rep": "Carol Wright",
-        "doors": 273,
+        "doors": 276,
         "team": "jack"
       },
       {
@@ -34,13 +34,18 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Christian Brown",
-        "doors": 184,
+        "doors": 185,
         "team": "mccarthy"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 123,
+        "doors": 125,
         "team": "mccarthy"
+      },
+      {
+        "rep": "Paolo Castillo",
+        "doors": 96,
+        "team": "selfgen"
       },
       {
         "rep": "Izzy Price",
@@ -48,28 +53,23 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
-        "rep": "Paolo Castillo",
-        "doors": 87,
-        "team": "selfgen"
-      },
-      {
         "rep": "Mike Mccarthy",
-        "doors": 78,
+        "doors": 79,
         "team": "mccarthy"
       },
       {
         "rep": "Andrew Funk",
+        "doors": 67,
+        "team": "selfgen"
+      },
+      {
+        "rep": "David Bouknight@douglasroofs.com",
         "doors": 66,
         "team": "selfgen"
       },
       {
         "rep": "Dave Nulanz",
         "doors": 52,
-        "team": "selfgen"
-      },
-      {
-        "rep": "David Bouknight@douglasroofs.com",
-        "doors": 44,
         "team": "selfgen"
       },
       {
@@ -152,7 +152,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-19T09:39:53.399Z",
+    "updated": "2026-09-20T09:55:49.905Z",
     "total": 1565,
     "reps": [
       {

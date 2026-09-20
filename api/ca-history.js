@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-19T09:37:54.459Z",
+    "updated": "2026-09-20T09:53:50.210Z",
     "year": 2026,
     "months": [
       0,
@@ -31,13 +31,13 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          5,
           14,
           27,
           15,
           11
         ],
-        "total": 71
+        "total": 72
       },
       {
         "rep": "Mike Mccarthy",
@@ -50,9 +50,9 @@ const SNAPSHOTS = {
           6,
           7,
           15,
-          9
+          10
         ],
-        "total": 49
+        "total": 50
       },
       {
         "rep": "David Kerns",
@@ -78,11 +78,11 @@ const SNAPSHOTS = {
           2,
           5,
           17,
-          11,
+          10,
           2,
           0
         ],
-        "total": 39
+        "total": 38
       },
       {
         "rep": "Carol Wright",
@@ -95,9 +95,9 @@ const SNAPSHOTS = {
           4,
           17,
           10,
-          4
+          5
         ],
-        "total": 35
+        "total": 36
       },
       {
         "rep": "Christian Brown",
@@ -106,13 +106,13 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          3,
+          4,
           7,
           7,
           3,
-          4
+          5
         ],
-        "total": 29
+        "total": 31
       },
       {
         "rep": "Jack Obert",
@@ -166,13 +166,13 @@ const SNAPSHOTS = {
           0,
           2,
           5,
-          3,
+          2,
           4,
           1,
           1,
           2
         ],
-        "total": 20
+        "total": 19
       },
       {
         "rep": "Izzy Price",
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-19T09:39:40.001Z",
+    "updated": "2026-09-20T09:55:36.747Z",
     "year": 2026,
     "months": [
       0,
@@ -366,10 +366,10 @@ const SNAPSHOTS = {
           6,
           19,
           8,
-          11,
+          12,
           1
         ],
-        "total": 73
+        "total": 74
       },
       {
         "rep": "Travis Kizzar",
