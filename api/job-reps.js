@@ -7,15 +7,13 @@
 //
 // 2026-09-21: also hosts the PUNCH OUT board (Vercel Hobby caps api/ at 12 functions,
 // so this lives here instead of its own file).
-//   GET /api/job-reps?punchout=1            -> every open Herndon customer that is punched out: the
-//                                              PUNCH OUT customer flag and/or a job in the Punch Out
-//                                              stage, merged per customer, with age + bucket
-//                                              0-3 / 4-7 / 8-14 / 15+ days
-//   GET /api/job-reps?punchout=1&probe=<job number> -> that job's customer flags / stage (shape check)
-//   GET /api/job-reps?punchout=1&probe=1&paths=/x,/y -> raw Leap GETs for exploration
-// Age = earliest of the Punch Out stage entry date (stage_last_modified) or the night
-// scripts/refresh-punchout.js first saw the customer flagged (data/punchout-ledger.json).
-// Leap does not stamp when a flag was added.
+//   GET /api/job-reps?punchout=1            -> every open Herndon job carrying the PUNCH OUT flag,
+//                                              with an age (days) and bucket 0-3 / 4-7 / 8-14 / 15+
+//   GET /api/job-reps?punchout=1&raw=1      -> same, plus the raw ids the nightly ledger script needs
+//   GET /api/job-reps?punchout=1&probe=1    -> flag / stage catalogue + one sample job (shape discovery)
+// Age = earliest of: a flag-applied date if Leap ever returns one, the date the job entered a
+// "Punch Out" stage (stage_last_modified), or the night scripts/refresh-punchout.js first saw the
+// job flagged (data/punchout-ledger.json). Leap does not stamp when a flag was added.
 
 const V1 = 'https://jobprogress.com/api/public/api/v1';
 const CLIENT_ID = process.env.JP_CLIENT_ID || '12345';
@@ -30,18 +28,16 @@ async function login() {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
     body: new URLSearchParams({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET, end_existing_sessions: '0' }).toString(),
   });
-  if (res.status === 412) throw new Error('Leap is refusing logins right now (412) - usually clears in a few minutes');
   if (!res.ok) throw new Error(`login -> ${res.status}`);
   const d = await res.json();
   return (d && d.token && d.token.access_token) || (d && d.access_token);
 }
 async function switchCompany(token) {
-  const r = await fetch(`${V1}/users/switch_company`, {
+  await fetch(`${V1}/users/switch_company`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json', platform: 'web' },
     body: new URLSearchParams({ company_id: COMPANY_ID }).toString(),
   });
-  if (!r.ok && r.status !== 409) throw new Error(`switch_company -> ${r.status}`);
   return token;
 }
 let cachedToken = null, tokenPromise = null;
@@ -81,56 +77,64 @@ function salesmanOf(job) {
 
 
 // ── PUNCH OUT board ─────────────────────────────────────────────────────────
-// Two sources, merged per customer (a punch-out is really a customer-level thing):
-//   A) customers carrying the PUNCH OUT *customer* flag (id 32538)  -> /customers?flag_ids[]=
-//   B) jobs sitting in the "Punch Out" stage (code 1769622271876028355) -> /jobs?stages[]=
-// Leap stamps a stage change (stage_last_modified) but never says WHEN a flag was applied, so a
-// flag-only customer's age comes from data/punchout-ledger.json: scripts/refresh-punchout.js runs
-// nightly in the Refresh SR snapshots Action and records the first night each customer was seen.
-let LEDGER = { updated: null, customers: {}, resolved: [] };
+let LEDGER = { updated: null, jobs: {} };
 try { LEDGER = require('../data/punchout-ledger.json'); } catch (e) { /* first deploy: no ledger yet */ }
-const FLAG_ID = process.env.PUNCHOUT_FLAG_ID || '32538';
-const STAGE_CODE = process.env.PUNCHOUT_STAGE_CODE || '1769622271876028355';
 const FLAG_RE = /punch\s*out/i;
+const PO_INCLUDES = ['customer', 'customer.rep', 'reps', 'estimators', 'division', 'flags', 'address', 'trades'];
+const poQS = () => PO_INCLUDES.map((x) => `includes[]=${x}`).join('&');
 const unwrap = (x) => (x && x.data !== undefined) ? x.data : x;
 const listOf = (x) => { const u = unwrap(x); return Array.isArray(u) ? u : []; };
 
-// Leap allows ONE session per account: every fresh login silently kills the token every
-// other warm lambda holds, and a login storm ends in Leap answering 412 on /login for a
-// while (seen 2026-09-21). So: retry the SAME token first, re-login at most once per
-// request, and give up cleanly rather than looping.
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function leapGet(token, path) {
-  let last = null, relogged = false;
-  for (let attempt = 0; attempt < 4; attempt++) {
-    if (attempt === 1 || attempt === 2) await sleep(1200 * attempt);
-    if (attempt === 3) {
-      if (relogged) break;
-      relogged = true; cachedToken = null; tokenPromise = null; await sleep(1500); token = await getToken();
-    }
-    const r = await fetch(`${V1}${path}`, { headers: HDR(token) });
-    if (r.ok) return r.json();
-    last = r.status;
-    if (![401, 403, 409, 429, 500, 502, 503].includes(r.status)) break;
+  const r = await fetch(`${V1}${path}`, { headers: HDR(token) });
+  if (r.status === 401 || r.status === 403 || r.status === 409) {
+    cachedToken = null; tokenPromise = null;
+    const t2 = await getToken();
+    const r2 = await fetch(`${V1}${path}`, { headers: HDR(t2) });
+    if (!r2.ok) throw new Error(`Leap ${path.split('?')[0]} -> ${r2.status}`);
+    return r2.json();
   }
-  throw new Error(`Leap ${path.split('?')[0]} -> ${last}`);
-}
-async function leapAll(token, path, maxPages = 10) {
-  const out = [];
-  for (let page = 1; page <= maxPages; page++) {
-    const j = await leapGet(token, `${path}&page=${page}`);
-    const arr = j.data || [];
-    out.push(...arr);
-    const pg = j.meta && j.meta.pagination;
-    if (!arr.length || (pg && pg.current_page >= pg.total_pages) || arr.length < 100) break;
-  }
-  return out;
+  if (!r.ok) throw new Error(`Leap ${path.split('?')[0]} -> ${r.status}`);
+  return r.json();
 }
 async function tryGet(token, path) {
   try { const r = await fetch(`${V1}${path}`, { headers: HDR(token) }); const text = await r.text(); let j = null; try { j = JSON.parse(text); } catch (e) {} return { status: r.status, json: j, text: j ? undefined : text.slice(0, 300) }; }
   catch (e) { return { status: 0, error: String(e.message || e) }; }
 }
 
+// Find the PUNCH OUT flag id in Leap's flag catalogue (several v1 spellings exist).
+async function findFlag(token) {
+  for (const path of ['/flags?for=job&limit=200', '/flags?limit=200', '/jobs/flags?limit=200']) {
+    const r = await tryGet(token, path);
+    const arr = r.json ? listOf(r.json) : [];
+    const hit = arr.find((f) => FLAG_RE.test(String(f.title || f.name || f.label || '')));
+    if (hit) return { id: hit.id, title: hit.title || hit.name || hit.label, source: path };
+    if (arr.length) return { id: null, source: path, titles: arr.map((f) => f.title || f.name || f.label).slice(0, 60) };
+  }
+  return { id: null, source: null };
+}
+
+function flagsOf(job) {
+  const raw = job.flags && (job.flags.data || job.flags);
+  return Array.isArray(raw) ? raw : [];
+}
+function hasPunchOut(job) {
+  return flagsOf(job).some((f) => FLAG_RE.test(String((f && (f.title || f.name || f.label)) || (f && f.flag && (f.flag.title || f.flag.name)) || '')))
+    || FLAG_RE.test(String(job.current_stage && job.current_stage.name || ''));
+}
+// Leap has no "flag applied" timestamp; take the earliest evidence we have.
+function flagDateOf(job) {
+  const dates = [];
+  flagsOf(job).forEach((f) => {
+    const d = f && (f.created_at || f.updated_at || (f.pivot && f.pivot.created_at));
+    if (d && FLAG_RE.test(String((f.title || f.name || f.label) || (f.flag && (f.flag.title || f.flag.name)) || ''))) dates.push({ date: d, source: 'flag' });
+  });
+  if (job.current_stage && FLAG_RE.test(String(job.current_stage.name || '')) && job.stage_last_modified) dates.push({ date: job.stage_last_modified, source: 'stage' });
+  const led = LEDGER.jobs && LEDGER.jobs[String(job.id)];
+  if (led && led.first_seen) dates.push({ date: led.first_seen, source: 'ledger' });
+  dates.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+  return dates[0] || null;
+}
 const nyToday = () => new Date(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date()) + 'T12:00:00Z');
 function ageDays(iso) {
   if (!iso) return null;
@@ -141,108 +145,124 @@ function bucketOf(days) {
   if (days == null) return 'unknown';
   if (days <= 3) return '0-3'; if (days <= 7) return '4-7'; if (days <= 14) return '8-14'; return '15+';
 }
-function addrOf(a) {
-  a = unwrap(a) || {};
+function addrOf(job) {
+  const a = unwrap(job.address) || {};
   const line = [a.address, a.city, a.state_name || (a.state && a.state.code) || a.state].filter(Boolean).join(', ');
   return line || null;
 }
-function custName(c) {
-  c = unwrap(c) || {};
-  return c.full_name || [c.first_name, c.last_name].filter(Boolean).join(' ').trim() || c.company_name || 'Unknown';
+function repFromCustomer(job) {
+  const c = unwrap(job.customer) || {};
+  const p = unwrap(c.rep);
+  return nameOf(p) || salesmanOf(job) || 'Unassigned';
 }
-const clean = (s) => (s == null ? null : String(s).replace(/\s+/g, ' ').trim() || null);
-function jobRow(j) {
-  const est = listOf(j.estimators).map(nameOf).map(clean).filter(Boolean);
-  // Work crew = sub-contractors on the job. Show the company when it isn't just the person's name.
-  const crew = listOf(j.sub_contractors).map((sc) => { const n = clean(nameOf(sc)), co = clean(sc.company_name); return co && co.toLowerCase() !== (n || '').toLowerCase() && !(n || '').toLowerCase().startsWith(co.toLowerCase()) ? `${co} (${n})` : (co || n); }).filter(Boolean);
-  const stage = j.current_stage && j.current_stage.name || null;
-  return {
-    id: j.id, number: j.number, name: clean(j.name), stage, stage_date: j.stage_last_modified || null,
-    in_stage: FLAG_RE.test(String(stage || '')), pm: est.join(', ') || null, crew: crew.join(', ') || null,
-    division: (unwrap(j.division) || {}).name || j.division_code || null, archived: !!j.archived, updated_at: j.updated_at || null,
-  };
+function customerNameOf(job) {
+  const c = unwrap(job.customer) || {};
+  return c.full_name || [c.first_name, c.last_name].filter(Boolean).join(' ').trim() || c.company_name || job.customer_name || 'Unknown';
+}
+function pmOf(job) {
+  // Production side: estimators list is where Herndon assigns the production manager / project lead.
+  const est = listOf(job.estimators);
+  return est.length ? est.map(nameOf).filter(Boolean).join(', ') : null;
+}
+
+async function pullFlagged(token, flag) {
+  const jobs = [];
+  const seen = new Set();
+  const push = (arr) => arr.forEach((j) => { if (j && !seen.has(j.id)) { seen.add(j.id); jobs.push(j); } });
+  // 1) server-side flag filter, when we know the id
+  if (flag && flag.id) {
+    for (const key of ['flag_ids[]', 'flags[]']) {
+      for (let page = 1; page <= 10; page++) {
+        const r = await tryGet(token, `/jobs?${key}=${flag.id}&limit=100&page=${page}&with_archived=0&${poQS()}`);
+        const arr = r.json ? (r.json.data || []) : [];
+        if (!r.json || r.status !== 200) break;
+        push(arr.filter(hasPunchOut));
+        if (arr.length < 100) break;
+      }
+      if (jobs.length) return { jobs, method: key };
+    }
+  }
+  // 2) fallback: walk jobs touched in the last 120 days and keep the flagged ones
+  const end = new Date(), start = new Date(Date.now() - 120 * 86400000);
+  const ymd = (d) => d.toISOString().slice(0, 10);
+  for (let page = 1; page <= 15; page++) {
+    const j = await leapGet(token, `/jobs?date_range_type=job_updated_date&start_date=${ymd(start)}&end_date=${ymd(end)}&limit=100&page=${page}&with_archived=0&${poQS()}`);
+    const arr = j.data || [];
+    push(arr.filter(hasPunchOut));
+    if (arr.length < 100) break;
+  }
+  return { jobs, method: 'scan:job_updated_date:120d' };
 }
 
 async function punchout(req, res, url) {
-  if (url.searchParams.get('probe') === 'login') { // why is Leap refusing the login? (body only, never the credentials)
-    const username = process.env.JP_USERNAME, password = process.env.JP_PASSWORD;
-    const r = await fetch(`${V1}/login`, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-      body: new URLSearchParams({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET, end_existing_sessions: '0' }).toString() });
-    const text = await r.text();
-    return res.status(200).json({ status: r.status, body: text.replace(/"access_token":"[^"]+"/g, '"access_token":"<hidden>"').replace(/"refresh_token":"[^"]+"/g, '"refresh_token":"<hidden>"').slice(0, 600) });
-  }
   const token = await getToken();
   const probe = url.searchParams.get('probe');
   if (probe) {
-    const out = {};
+    const out = { flag: await findFlag(token) };
     const extra = (url.searchParams.get('paths') || '').split(',').map((x) => x.trim()).filter((x) => /^\/[a-z0-9_\/-]+(\?[a-z0-9_=&\[\]%.-]+)?$/i.test(x));
-    for (const p of extra) out[p] = await tryGet(token, p);
-    if (probe !== '1') {
-      const j = await tryGet(token, `/jobs?job_number=${encodeURIComponent(probe)}&limit=1&includes[]=customer&includes[]=customer.flags&includes[]=estimators`);
+    for (const p of ['/flags?for=job&limit=200', '/job_flags', '/jobs/flag', '/flags?type=job', '/company/flags', '/customers/flags', ...extra]) out[p] = await tryGet(token, p);
+    // jobs sitting in the Punch Out STAGE, with their flags -- the likeliest place to see a flag's shape
+    const st = await tryGet(token, `/jobs?stages[]=1769622271876028355&limit=20&${poQS()}`);
+    out.punchOutStageJobs = (st.json && st.json.data || []).map((j) => ({ id: j.id, number: j.number, flags: j.flags, stage: j.current_stage && j.current_stage.name, stage_last_modified: j.stage_last_modified, estimators: listOf(j.estimators).map(nameOf), rep: repFromCustomer(j) }));
+    const s = await tryGet(token, `/jobs?limit=3&with_archived=0&${poQS()}`);
+    const sample = (s.json && s.json.data || [])[0] || null;
+    out.sampleKeys = sample ? Object.keys(sample) : null;
+    out.sampleFlags = sample ? sample.flags : null;
+    out.sampleStage = sample ? { current_stage: sample.current_stage, stage_last_modified: sample.stage_last_modified } : null;
+    out.sampleAddress = sample ? sample.address : null;
+    if (probe === 'scan') {
+      // walk recently-updated jobs under a few include spellings and report any job with a non-empty flag list
+      const found = [];
+      const end = new Date(), start = new Date(Date.now() - 60 * 86400000);
+      const ymd = (d) => d.toISOString().slice(0, 10);
+      for (const inc of ['flags', 'job_flags', 'flag', 'customer.flags']) {
+        for (let page = 1; page <= 4; page++) {
+          const r = await tryGet(token, `/jobs?date_range_type=job_updated_date&start_date=${ymd(start)}&end_date=${ymd(end)}&limit=100&page=${page}&includes[]=${inc}&includes[]=customer`);
+          const arr = (r.json && r.json.data) || [];
+          arr.forEach((j) => {
+            const cands = { flags: j.flags, job_flags: j.job_flags, flag: j.flag, customer_flags: j.customer && j.customer.flags };
+            Object.keys(cands).forEach((k) => { const v = cands[k]; const list = v && (v.data || v); if (Array.isArray(list) && list.length) found.push({ inc, key: k, id: j.id, number: j.number, stage: j.current_stage && j.current_stage.name, value: list.slice(0, 3) }); });
+          });
+          if (arr.length < 100) break;
+        }
+        if (found.length) break;
+      }
+      out.scan = { found: found.slice(0, 15), count: found.length };
+    } else if (probe !== '1') { // probe=<job number> -> that job's flags block
+      const j = await tryGet(token, `/jobs?job_number=${encodeURIComponent(probe)}&limit=1&${poQS()}`);
       const job = (j.json && j.json.data || [])[0] || null;
-      out.job = job ? { id: job.id, number: job.number, customer_flags: (unwrap(job.customer) || {}).flags, current_stage: job.current_stage, stage_last_modified: job.stage_last_modified, keys: Object.keys(job) } : j;
+      out.job = job ? { id: job.id, number: job.number, flags: job.flags, current_stage: job.current_stage, stage_last_modified: job.stage_last_modified, keys: Object.keys(job) } : j;
     }
     return res.status(200).json(out);
   }
-
-  const CUST_INC = ['jobs', 'jobs.sub_contractors', 'rep', 'address', 'flags'].map((x) => `includes[]=${x}`).join('&');
-  const JOB_INC = ['customer', 'customer.rep', 'customer.flags', 'estimators', 'sub_contractors', 'address', 'division'].map((x) => `includes[]=${x}`).join('&');
-  // Sequential on purpose: two concurrent calls on one Leap token have produced 409s.
-  const flagged = await leapAll(token, `/customers?flag_ids[]=${FLAG_ID}&limit=100&${CUST_INC}`);
-  const staged = await leapAll(token, `/jobs?stages[]=${STAGE_CODE}&limit=100&with_archived=0&${JOB_INC}`);
-
-  // Merge per customer.
-  const byCust = new Map();
-  const get = (cid, c) => {
-    if (!byCust.has(cid)) byCust.set(cid, { customer_id: cid, customer: custName(c), rep: clean(nameOf(unwrap((unwrap(c) || {}).rep))) || 'Unassigned', address: addrOf((unwrap(c) || {}).address), flagged: false, in_stage: false, jobs: new Map() });
-    return byCust.get(cid);
-  };
-  flagged.forEach((c) => {
-    const row = get(c.id, c); row.flagged = true;
-    listOf(c.jobs).forEach((j) => { if (!j.archived) row.jobs.set(j.id, jobRow(j)); });
-  });
-  staged.forEach((j) => {
-    const c = unwrap(j.customer) || {}; const cid = j.customer_id || c.id;
-    const row = get(cid, c);
-    const jr = jobRow(j); jr.in_stage = true;
-    if (!row.address) row.address = addrOf(j.address);
-    const prev = row.jobs.get(j.id); row.jobs.set(j.id, Object.assign(prev || {}, jr));
-    if ((unwrap(c.flags) || []).some((f) => FLAG_RE.test(String(f.title || f.name || '')))) row.flagged = true;
-  });
-
-  const rows = [];
-  byCust.forEach((row) => {
-    const jobs = [...row.jobs.values()].sort((a, b) => (b.in_stage - a.in_stage) || String(b.updated_at || '').localeCompare(String(a.updated_at || '')));
-    row.in_stage = jobs.some((j) => j.in_stage);
-    // Earliest evidence of the punch-out: stage entry date, else the night the ledger first saw the customer.
-    const dates = [];
-    jobs.forEach((j) => { if (j.in_stage && j.stage_date) dates.push({ date: j.stage_date, source: 'stage' }); });
-    const led = LEDGER.customers && LEDGER.customers[String(row.customer_id)];
-    if (led && led.first_seen) dates.push({ date: led.first_seen, source: 'ledger' });
-    dates.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
-    const since = dates[0] || null;
-    const days = since ? ageDays(since.date) : null;
-    const primary = jobs[0] || {};
-    rows.push({
-      customer_id: row.customer_id, customer: row.customer, rep: row.rep, address: row.address,
-      source: row.flagged && row.in_stage ? 'both' : (row.flagged ? 'flag' : 'stage'),
-      pm: jobs.map((j) => j.pm).filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(', ') || null,
-      crew: jobs.map((j) => j.crew).filter(Boolean).join(', ').split(', ').filter((v, i, a) => v && a.indexOf(v) === i).join(', ') || null,
-      number: primary.number || null, stage: primary.stage || null, stage_date: primary.stage_date || null, division: primary.division || null,
-      jobs: jobs.map((j) => ({ id: j.id, number: j.number, name: j.name, stage: j.stage, stage_date: j.stage_date, in_stage: j.in_stage, pm: j.pm, crew: j.crew })),
-      since: since ? since.date : null, since_source: since ? since.source : null, first_seen: led ? led.first_seen : null,
+  const flag = await findFlag(token);
+  const { jobs, method } = await pullFlagged(token, flag);
+  const rows = jobs.map((job) => {
+    const fd = flagDateOf(job);
+    const days = fd ? ageDays(fd.date) : null;
+    const led = LEDGER.jobs && LEDGER.jobs[String(job.id)];
+    return {
+      id: job.id, number: job.number, customer: customerNameOf(job), address: addrOf(job),
+      rep: repFromCustomer(job), pm: pmOf(job),
+      division: (unwrap(job.division) || {}).name || null,
+      stage: job.current_stage && job.current_stage.name || null, stage_date: job.stage_last_modified || null,
+      flagged_since: fd ? fd.date : null, flagged_source: fd ? fd.source : null,
+      first_seen: led ? led.first_seen : null,
       days, bucket: bucketOf(days),
-      leap_url: `https://jobprogress.com/app/#/customer-jobs/${row.customer_id}${primary.id ? `/job/${primary.id}/overview` : ''}`,
-    });
-  });
-  rows.sort((a, b) => (b.days == null ? -1 : b.days) - (a.days == null ? -1 : a.days));
+      flags: flagsOf(job).map((f) => (f && (f.title || f.name || f.label)) || (f && f.flag && (f.flag.title || f.flag.name)) || null).filter(Boolean),
+      leap_url: `https://jobprogress.com/app/#/customer-jobs/${job.customer_id || (unwrap(job.customer) || {}).id || ''}/job/${job.id}/overview`,
+    };
+  }).sort((a, b) => (b.days == null ? -1 : b.days) - (a.days == null ? -1 : a.days));
   const buckets = { '0-3': 0, '4-7': 0, '8-14': 0, '15+': 0, unknown: 0 };
   rows.forEach((r) => { buckets[r.bucket] = (buckets[r.bucket] || 0) + 1; });
-  res.status(200).json({
-    updated: new Date().toISOString(), office: 'herndon', flag: { id: FLAG_ID, title: 'PUNCH OUT', for: 'customer' }, stage: { code: STAGE_CODE, name: 'Punch Out' },
-    counts: { flagged: flagged.length, in_stage: staged.length, open: rows.length }, open: rows.length, buckets,
-    ledger_updated: LEDGER.updated || null, resolved: (LEDGER.resolved || []).slice(-60), rows,
-  });
+  const out = {
+    updated: new Date().toISOString(), office: 'herndon', flag: flag && flag.id ? { id: flag.id, title: flag.title } : null,
+    method, open: rows.length, buckets, ledger_updated: LEDGER.updated || null,
+    resolved: (LEDGER.resolved || []).slice(-60),
+    jobs: rows,
+  };
+  if (url.searchParams.get('raw') === '1') out.ids = rows.map((r) => ({ id: r.id, number: r.number, customer: r.customer, rep: r.rep }));
+  res.status(200).json(out);
 }
 
 module.exports = async (req, res) => {
