@@ -182,10 +182,12 @@ function aging(js){
 function byRep(js){
   var m={};
   // A job with two crews counts once for each crew.
-  (js||[]).forEach(function(r){(r.crew?r.crew.split(', '):['No crew assigned']).forEach(function(k){(m[k]=m[k]||{n:0,old:0,sum:0,c:0}).n++;if(r.days>=8)m[k].old++;if(r.days!=null){m[k].sum+=r.days;m[k].c++;}});});
+  // Group by the crew's COMPANY (the person stays in the row-level Crew column).
+  var co=function(k){return k.replace(/\s*\([^)]*\)\s*$/,'');};
+  (js||[]).forEach(function(r){(r.crew?r.crew.split(', ').map(co).filter(function(v,i,a){return a.indexOf(v)===i;}):['No crew assigned']).forEach(function(k){(m[k]=m[k]||{n:0,old:0,sum:0,c:0}).n++;if(r.days>=8)m[k].old++;if(r.days!=null){m[k].sum+=r.days;m[k].c++;}});});
   var keys=Object.keys(m).sort(function(a,b){return m[b].n-m[a].n;});
   if(!keys.length)return '';
-  var h='<h2>By crew</h2><p class="sm" style="margin:-6px 0 10px">Jobs with more than one crew count for each.</p><table><thead><tr><th>Crew</th><th class="num">Open</th><th class="num">8+ days</th><th class="num">Avg age</th></tr></thead><tbody>';
+  var h='<h2>By company crew</h2><p class="sm" style="margin:-6px 0 10px">Jobs with more than one company count for each.</p><table><thead><tr><th>Company</th><th class="num">Open</th><th class="num">8+ days</th><th class="num">Avg age</th></tr></thead><tbody>';
   keys.forEach(function(k){var v=m[k];h+='<tr><td>'+esc(k)+'</td><td class="num">'+v.n+'</td><td class="num'+(v.old?' b3':'')+'">'+(v.old?'<span class="pill b3">'+v.old+'</span>':'0')+'</td><td class="num">'+(v.c?(v.sum/v.c).toFixed(1):'-')+'</td></tr>';});
   return h+'</tbody></table>';
 }
