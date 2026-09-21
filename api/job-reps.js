@@ -35,11 +35,12 @@ async function login() {
   return (d && d.token && d.token.access_token) || (d && d.access_token);
 }
 async function switchCompany(token) {
-  await fetch(`${V1}/users/switch_company`, {
+  const r = await fetch(`${V1}/users/switch_company`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json', platform: 'web' },
     body: new URLSearchParams({ company_id: COMPANY_ID }).toString(),
   });
+  if (!r.ok && r.status !== 409) throw new Error(`switch_company -> ${r.status}`);
   return token;
 }
 let cachedToken = null, tokenPromise = null;
@@ -93,17 +94,20 @@ const FLAG_RE = /punch\s*out/i;
 const unwrap = (x) => (x && x.data !== undefined) ? x.data : x;
 const listOf = (x) => { const u = unwrap(x); return Array.isArray(u) ? u : []; };
 
+// Leap answers 409 sporadically (session conflict when two requests share a token, or a stale
+// warm-lambda token). Retry the same token after a pause, then once more on a fresh login.
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function leapGet(token, path) {
-  const r = await fetch(`${V1}${path}`, { headers: HDR(token) });
-  if (r.status === 401 || r.status === 403 || r.status === 409) {
-    cachedToken = null; tokenPromise = null;
-    const t2 = await getToken();
-    const r2 = await fetch(`${V1}${path}`, { headers: HDR(t2) });
-    if (!r2.ok) throw new Error(`Leap ${path.split('?')[0]} -> ${r2.status}`);
-    return r2.json();
+  let last = null;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    if (attempt === 1) await sleep(800);
+    if (attempt >= 2) { cachedToken = null; tokenPromise = null; await sleep(attempt === 2 ? 500 : 2000); token = await getToken(); }
+    const r = await fetch(`${V1}${path}`, { headers: HDR(token) });
+    if (r.ok) return r.json();
+    last = r.status;
+    if (![401, 403, 409, 429, 500, 502, 503].includes(r.status)) break;
   }
-  if (!r.ok) throw new Error(`Leap ${path.split('?')[0]} -> ${r.status}`);
-  return r.json();
+  throw new Error(`Leap ${path.split('?')[0]} -> ${last}`);
 }
 async function leapAll(token, path, maxPages = 10) {
   const out = [];
@@ -168,10 +172,9 @@ async function punchout(req, res, url) {
 
   const CUST_INC = ['jobs', 'rep', 'address', 'flags'].map((x) => `includes[]=${x}`).join('&');
   const JOB_INC = ['customer', 'customer.rep', 'customer.flags', 'estimators', 'address', 'division'].map((x) => `includes[]=${x}`).join('&');
-  const [flagged, staged] = await Promise.all([
-    leapAll(token, `/customers?flag_ids[]=${FLAG_ID}&limit=100&${CUST_INC}`),
-    leapAll(token, `/jobs?stages[]=${STAGE_CODE}&limit=100&with_archived=0&${JOB_INC}`),
-  ]);
+  // Sequential on purpose: two concurrent calls on one Leap token have produced 409s.
+  const flagged = await leapAll(token, `/customers?flag_ids[]=${FLAG_ID}&limit=100&${CUST_INC}`);
+  const staged = await leapAll(token, `/jobs?stages[]=${STAGE_CODE}&limit=100&with_archived=0&${JOB_INC}`);
 
   // Merge per customer.
   const byCust = new Map();
