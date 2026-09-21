@@ -80,12 +80,21 @@ var BK=['0-3','4-7','8-14','15+'];
 var BCLS={'0-3':'b0','4-7':'b1','8-14':'b2','15+':'b3',unknown:''};
 var fmtD=function(s){if(!s)return '-';var d=new Date(String(s).slice(0,10)+'T12:00:00');return isNaN(d)?esc(s):d.toLocaleDateString('en-US',{month:'short',day:'numeric'});};
 
+var tries=0;
 function load(){
+  tries=0;
   document.getElementById('root').innerHTML='<p class="muted">Loading punch-outs from Leap...</p>';
+  attempt();
+}
+function attempt(){
+  tries++;
   fetch('/api/job-reps?punchout=1&t='+Date.now(),{cache:'no-store'})
    .then(function(r){return r.text().then(function(t){var j;try{j=JSON.parse(t)}catch(e){throw new Error('HTTP '+r.status+' '+t.slice(0,120))}if(!r.ok||j.error)throw new Error(j.error||('HTTP '+r.status));return j;});})
    .then(function(d){D=d;init();})
-   .catch(function(e){document.getElementById('root').innerHTML='<div class="err">Could not load: '+esc(e.message)+'<br><span class="sm">Leap is slow or briefly refused the session. Hit Refresh to try again.</span></div>';});
+   .catch(function(e){
+     if(tries<3){document.getElementById('root').innerHTML='<p class="muted">Leap hiccup ('+esc(e.message)+') - retrying...</p>';setTimeout(attempt,2500);return;}
+     document.getElementById('root').innerHTML='<div class="err">Could not load: '+esc(e.message)+'<br><span class="sm">Leap refused the session three times in a row. Wait a minute and hit Refresh.</span></div>';
+   });
 }
 load();
 
