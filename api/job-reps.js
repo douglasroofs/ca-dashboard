@@ -147,10 +147,12 @@ function custName(c) {
 const clean = (s) => (s == null ? null : String(s).replace(/\s+/g, ' ').trim() || null);
 function jobRow(j) {
   const est = listOf(j.estimators).map(nameOf).map(clean).filter(Boolean);
+  // Work crew = sub-contractors on the job. Show the company when it isn't just the person's name.
+  const crew = listOf(j.sub_contractors).map((sc) => { const n = clean(nameOf(sc)), co = clean(sc.company_name); return co && co.toLowerCase() !== (n || '').toLowerCase() && !(n || '').toLowerCase().startsWith(co.toLowerCase()) ? `${co} (${n})` : (co || n); }).filter(Boolean);
   const stage = j.current_stage && j.current_stage.name || null;
   return {
     id: j.id, number: j.number, name: clean(j.name), stage, stage_date: j.stage_last_modified || null,
-    in_stage: FLAG_RE.test(String(stage || '')), pm: est.join(', ') || null,
+    in_stage: FLAG_RE.test(String(stage || '')), pm: est.join(', ') || null, crew: crew.join(', ') || null,
     division: (unwrap(j.division) || {}).name || j.division_code || null, archived: !!j.archived, updated_at: j.updated_at || null,
   };
 }
@@ -170,8 +172,8 @@ async function punchout(req, res, url) {
     return res.status(200).json(out);
   }
 
-  const CUST_INC = ['jobs', 'rep', 'address', 'flags'].map((x) => `includes[]=${x}`).join('&');
-  const JOB_INC = ['customer', 'customer.rep', 'customer.flags', 'estimators', 'address', 'division'].map((x) => `includes[]=${x}`).join('&');
+  const CUST_INC = ['jobs', 'jobs.sub_contractors', 'rep', 'address', 'flags'].map((x) => `includes[]=${x}`).join('&');
+  const JOB_INC = ['customer', 'customer.rep', 'customer.flags', 'estimators', 'sub_contractors', 'address', 'division'].map((x) => `includes[]=${x}`).join('&');
   // Sequential on purpose: two concurrent calls on one Leap token have produced 409s.
   const flagged = await leapAll(token, `/customers?flag_ids[]=${FLAG_ID}&limit=100&${CUST_INC}`);
   const staged = await leapAll(token, `/jobs?stages[]=${STAGE_CODE}&limit=100&with_archived=0&${JOB_INC}`);
@@ -212,8 +214,9 @@ async function punchout(req, res, url) {
       customer_id: row.customer_id, customer: row.customer, rep: row.rep, address: row.address,
       source: row.flagged && row.in_stage ? 'both' : (row.flagged ? 'flag' : 'stage'),
       pm: jobs.map((j) => j.pm).filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(', ') || null,
+      crew: jobs.map((j) => j.crew).filter(Boolean).join(', ').split(', ').filter((v, i, a) => v && a.indexOf(v) === i).join(', ') || null,
       number: primary.number || null, stage: primary.stage || null, stage_date: primary.stage_date || null, division: primary.division || null,
-      jobs: jobs.map((j) => ({ id: j.id, number: j.number, name: j.name, stage: j.stage, stage_date: j.stage_date, in_stage: j.in_stage, pm: j.pm })),
+      jobs: jobs.map((j) => ({ id: j.id, number: j.number, name: j.name, stage: j.stage, stage_date: j.stage_date, in_stage: j.in_stage, pm: j.pm, crew: j.crew })),
       since: since ? since.date : null, since_source: since ? since.source : null, first_seen: led ? led.first_seen : null,
       days, bucket: bucketOf(days),
       leap_url: `https://jobprogress.com/app/#/customer-jobs/${row.customer_id}${primary.id ? `/job/${primary.id}/overview` : ''}`,
