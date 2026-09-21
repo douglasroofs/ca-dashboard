@@ -77,7 +77,7 @@
     <span class="rl" style="margin-left:6px">Source</span>
     <button id="sFlag">Flag</button>
     <button id="sStage">Stage</button>
-    <input type="search" id="q" placeholder="Search customer, rep, PM, address">
+    <input type="search" id="q" placeholder="Search customer, rep, crew, address">
     <button id="rf" class="primary" style="margin-left:6px">Refresh</button>
     <span class="note" id="note">Leap PUNCH OUT flag or Punch Out stage</span>
   </div>
@@ -124,7 +124,7 @@ function rows(){
     if(S.bucket&&r.bucket!==S.bucket)return false;
     if(S.old&&!(r.days>=8))return false;
     if(S.src&&r.source!==S.src&&r.source!=='both')return false;
-    if(S.q){var h=[r.customer,r.rep,r.pm,r.address,r.stage].concat((r.jobs||[]).map(function(j){return j.number+' '+(j.name||'');})).join(' ').toLowerCase();if(h.indexOf(S.q)<0)return false;}
+    if(S.q){var h=[r.customer,r.rep,r.crew,r.address,r.stage].concat((r.jobs||[]).map(function(j){return j.number+' '+(j.name||'');})).join(' ').toLowerCase();if(h.indexOf(S.q)<0)return false;}
     return true;
   }).sort(function(a,b){
     var k=S.sort,x=a[k],y=b[k];
@@ -153,12 +153,12 @@ function draw(){
   h+='<div class="two"><section><h2>Open punch-outs ('+list.length+')</h2>';
   if(!list.length)h+='<p class="muted">Nothing matches.</p>';
   else{
-    h+='<table><thead><tr>'+th('days','Days','num')+th('customer','Customer')+th('address','Address')+th('rep','Rep')+th('pm','PM')+th('stage','Job / stage')+th('since','Since')+'</tr></thead><tbody>';
+    h+='<table><thead><tr>'+th('days','Days','num')+th('customer','Customer')+th('address','Address')+th('rep','Rep')+th('crew','Crew')+th('stage','Job / stage')+th('since','Since')+'</tr></thead><tbody>';
     list.forEach(function(r){
       var c=BCLS[r.bucket]||'';
       h+='<tr><td class="num '+c+'"><span class="days">'+(r.days==null?'?':r.days)+'</span><br><span class="pill '+c+'">'+esc(r.bucket)+'</span></td>';
       h+='<td><a class="job" href="'+esc(r.leap_url)+'" target="_blank" rel="noopener">'+esc(r.customer)+'</a><br><span class="pill '+(r.source==='flag'?'':r.source==='stage'?'b1':'b2')+'">'+(r.source==='both'?'flag + stage':r.source)+'</span></td>';
-      h+='<td class="sm">'+esc(r.address||'-')+'</td><td>'+esc(r.rep||'-')+'</td><td>'+esc(r.pm||'-')+'</td>';
+      h+='<td class="sm">'+esc(r.address||'-')+'</td><td>'+esc(r.rep||'-')+'</td><td>'+esc(r.crew||'No crew assigned')+'</td>';
       h+='<td class="sm">'+(r.jobs||[]).map(function(j){return esc(j.number)+' <span class="muted">'+esc(j.stage||'')+(j.in_stage?' ('+fmtD(j.stage_date)+')':'')+'</span>';}).join('<br>')+'</td>';
       h+='<td>'+fmtD(r.since)+'<br><span class="src">'+esc(r.since_source==='ledger'?'first seen':r.since_source==='stage'?'entered stage':'no date yet')+'</span></td></tr>';
     });
@@ -181,10 +181,10 @@ function aging(js){
 }
 function byRep(js){
   var m={};
-  (js||[]).forEach(function(r){var k=r.pm||'No PM';(m[k]=m[k]||{n:0,old:0,sum:0,c:0}).n++;if(r.days>=8)m[k].old++;if(r.days!=null){m[k].sum+=r.days;m[k].c++;}});
+  (js||[]).forEach(function(r){var k=r.crew||'No crew assigned';(m[k]=m[k]||{n:0,old:0,sum:0,c:0}).n++;if(r.days>=8)m[k].old++;if(r.days!=null){m[k].sum+=r.days;m[k].c++;}});
   var keys=Object.keys(m).sort(function(a,b){return m[b].n-m[a].n;});
   if(!keys.length)return '';
-  var h='<h2>By production manager</h2><table><thead><tr><th>PM</th><th class="num">Open</th><th class="num">8+ days</th><th class="num">Avg age</th></tr></thead><tbody>';
+  var h='<h2>By crew</h2><table><thead><tr><th>Crew</th><th class="num">Open</th><th class="num">8+ days</th><th class="num">Avg age</th></tr></thead><tbody>';
   keys.forEach(function(k){var v=m[k];h+='<tr><td>'+esc(k)+'</td><td class="num">'+v.n+'</td><td class="num'+(v.old?' b3':'')+'">'+(v.old?'<span class="pill b3">'+v.old+'</span>':'0')+'</td><td class="num">'+(v.c?(v.sum/v.c).toFixed(1):'-')+'</td></tr>';});
   return h+'</tbody></table>';
 }
@@ -195,8 +195,8 @@ function resolved(list){
   var d=list.map(function(r){return r.days;}).filter(function(x){return x!=null;});
   var avg=d.length?(d.reduce(function(a,b){return a+b;},0)/d.length).toFixed(1):'-';
   h+='<p class="sm">Last '+list.length+' resolved, average '+avg+' days to clear.</p>';
-  h+='<table><thead><tr><th>Customer</th><th>PM</th><th>Cleared</th><th class="num">Days</th></tr></thead><tbody>';
-  list.slice(0,25).forEach(function(r){h+='<tr><td>'+esc(r.customer)+'<br><span class="sm">'+esc(r.number||'')+'</span></td><td>'+esc(r.pm||r.rep||'-')+'</td><td>'+fmtD(r.resolved)+'</td><td class="num">'+(r.days==null?'?':r.days)+'</td></tr>';});
+  h+='<table><thead><tr><th>Customer</th><th>Crew</th><th>Cleared</th><th class="num">Days</th></tr></thead><tbody>';
+  list.slice(0,25).forEach(function(r){h+='<tr><td>'+esc(r.customer)+'<br><span class="sm">'+esc(r.number||'')+'</span></td><td>'+esc(r.crew||r.pm||'-')+'</td><td>'+fmtD(r.resolved)+'</td><td class="num">'+(r.days==null?'?':r.days)+'</td></tr>';});
   return h+'</tbody></table>';
 }
 </script>
