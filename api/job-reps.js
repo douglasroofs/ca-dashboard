@@ -30,6 +30,7 @@ async function login() {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
     body: new URLSearchParams({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET, end_existing_sessions: '0' }).toString(),
   });
+  if (res.status === 412) throw new Error('Leap is refusing logins right now (412) - usually clears in a few minutes');
   if (!res.ok) throw new Error(`login -> ${res.status}`);
   const d = await res.json();
   return (d && d.token && d.token.access_token) || (d && d.access_token);
@@ -94,14 +95,19 @@ const FLAG_RE = /punch\s*out/i;
 const unwrap = (x) => (x && x.data !== undefined) ? x.data : x;
 const listOf = (x) => { const u = unwrap(x); return Array.isArray(u) ? u : []; };
 
-// Leap answers 409 sporadically (session conflict when two requests share a token, or a stale
-// warm-lambda token). Retry the same token after a pause, then once more on a fresh login.
+// Leap allows ONE session per account: every fresh login silently kills the token every
+// other warm lambda holds, and a login storm ends in Leap answering 412 on /login for a
+// while (seen 2026-09-21). So: retry the SAME token first, re-login at most once per
+// request, and give up cleanly rather than looping.
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function leapGet(token, path) {
-  let last = null;
+  let last = null, relogged = false;
   for (let attempt = 0; attempt < 4; attempt++) {
-    if (attempt === 1) await sleep(800);
-    if (attempt >= 2) { cachedToken = null; tokenPromise = null; await sleep(attempt === 2 ? 500 : 2000); token = await getToken(); }
+    if (attempt === 1 || attempt === 2) await sleep(1200 * attempt);
+    if (attempt === 3) {
+      if (relogged) break;
+      relogged = true; cachedToken = null; tokenPromise = null; await sleep(1500); token = await getToken();
+    }
     const r = await fetch(`${V1}${path}`, { headers: HDR(token) });
     if (r.ok) return r.json();
     last = r.status;
