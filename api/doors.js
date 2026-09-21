@@ -9,8 +9,8 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-21T16:23:52.469Z",
-    "total": 2205,
+    "updated": "2026-09-21T21:48:25.607Z",
+    "total": 2219,
     "reps": [
       {
         "rep": "Jason Cresswell",
@@ -39,7 +39,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Doug Coffman",
-        "doors": 125,
+        "doors": 136,
         "team": "mccarthy"
       },
       {
@@ -59,7 +59,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Andrew Funk",
-        "doors": 68,
+        "doors": 71,
         "team": "selfgen"
       },
       {
@@ -119,7 +119,8 @@ const SNAPSHOTS = {
       "doug coffman",
       "paolo castillo",
       "david bouknight@douglasroofs.com",
-      "dave nulanz"
+      "dave nulanz",
+      "patrick parsons"
     ],
     "roster": [
       "Kyle Higginbotham",
@@ -148,12 +149,13 @@ const SNAPSHOTS = {
       "Doug Coffman",
       "Paolo Castillo",
       "David Bouknight@douglasroofs.com",
-      "Dave Nulanz"
+      "Dave Nulanz",
+      "Patrick Parsons"
     ]
   },
   "richmond": {
-    "updated": "2026-09-21T16:23:59.318Z",
-    "total": 1566,
+    "updated": "2026-09-21T21:48:37.069Z",
+    "total": 1568,
     "reps": [
       {
         "rep": "Kylea White",
@@ -177,7 +179,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 89,
+        "doors": 91,
         "team": "selfgen"
       },
       {
