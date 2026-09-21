@@ -3,6 +3,8 @@ name: Refresh SR snapshots
 # Rebuilds the baked-in SNAPSHOTS blocks in api/ca-history.js and api/doors.js from the
 # live Sales Rabbit endpoints on stats.douglasroofs.com, then commits the result to main.
 #
+# Also refreshes data/punchout-ledger.json (scripts/refresh-punchout.js) for the Punch Out board.
+#
 # api/leap-extra.js is not touched -- it needs a logged-in Leap session.
 
 on:
@@ -43,16 +45,23 @@ jobs:
           SUMMARY_FILE: ${{ runner.temp }}/refresh-summary.txt
         run: node scripts/refresh-snapshots.js
 
+      - name: Refresh punch-out ledger
+        if: always()
+        env:
+          BASE_URL: ${{ inputs.base_url || 'https://stats.douglasroofs.com' }}
+          SUMMARY_FILE: ${{ runner.temp }}/refresh-summary.txt
+        run: node scripts/refresh-punchout.js
+
       - name: Commit updated snapshots
         if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- api/ca-history.js api/doors.js; then
+          git add api/ca-history.js api/doors.js data/punchout-ledger.json
+          if git diff --cached --quiet; then
             echo "No snapshot changes."
             exit 0
           fi
-          git add api/ca-history.js api/doors.js
           git commit -m "Refresh SR snapshots"
           git push origin HEAD:main
 
