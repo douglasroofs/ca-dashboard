@@ -199,7 +199,11 @@ async function punchout(req, res, url) {
   const probe = url.searchParams.get('probe');
   if (probe) {
     const out = { flag: await findFlag(token) };
-    for (const p of ['/flags?for=job&limit=200', '/jobs/flags', '/stages', '/workflow/stages', '/workflows']) out[p] = await tryGet(token, p);
+    const extra = (url.searchParams.get('paths') || '').split(',').map((x) => x.trim()).filter((x) => /^\/[a-z0-9_\/-]+(\?[a-z0-9_=&\[\]%.-]+)?$/i.test(x));
+    for (const p of ['/flags?for=job&limit=200', '/job_flags', '/jobs/flag', '/flags?type=job', '/company/flags', '/customers/flags', ...extra]) out[p] = await tryGet(token, p);
+    // jobs sitting in the Punch Out STAGE, with their flags -- the likeliest place to see a flag's shape
+    const st = await tryGet(token, `/jobs?stages[]=1769622271876028355&limit=20&${poQS()}`);
+    out.punchOutStageJobs = (st.json && st.json.data || []).map((j) => ({ id: j.id, number: j.number, flags: j.flags, stage: j.current_stage && j.current_stage.name, stage_last_modified: j.stage_last_modified, estimators: listOf(j.estimators).map(nameOf), rep: repFromCustomer(j) }));
     const s = await tryGet(token, `/jobs?limit=3&with_archived=0&${poQS()}`);
     const sample = (s.json && s.json.data || [])[0] || null;
     out.sampleKeys = sample ? Object.keys(sample) : null;
