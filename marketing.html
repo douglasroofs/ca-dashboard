@@ -222,8 +222,8 @@ function draw(){
   H.push('<div class="cards">');
   H.push(card(T.set,'Appointments Set'));
   H.push(card(T.ran,'Ran','', pct(T.ran,T.set)+' of set'));
-  H.push(card(T.ca,'CA Signed','ca', pct(T.ca,T.ran)+' of ran'));
-  H.push(card(T.rt,'Retail / Repair','rt', pct(T.rt,T.ran)+' of ran'));
+  H.push(card(T.ca,'CA Signed','ca', pct(T.ca,T.ran)+' of ran - Leap result: Claim Filed'));
+  H.push(card(T.rt,'Retail / Repair','rt', pct(T.rt,T.ran)+' of ran - Leap result: Retail Sale'));
   H.push('<div class="card alert"><div class="label">Unresulted</div><div class="value">'+T.un+'</div><div class="sub">'+pct(T.un,T.set)+' of set</div></div>');
   H.push('</div>');
 
