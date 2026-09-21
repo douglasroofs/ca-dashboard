@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Douglas Roofing - Punch Out</title>
+<style>
+  :root{--ink:#0f2438;--dim:#6b7888;--line:#e5e9f0;--blue:#1f6feb;--bg:#f6f8fb;
+        --good:#0f8a4a;--warn:#b06f00;--bad:#c2352b;--b0:#0f8a4a;--b1:#1f6feb;--b2:#b06f00;--b3:#c2352b;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{background:#fff;border-bottom:1px solid var(--line);padding:14px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  h1{font-size:17px;margin:0;font-weight:650}
+  .nav a{color:var(--dim);text-decoration:none;margin-right:13px;font-size:13px}
+  .nav a:hover,.nav a.on{color:var(--ink);font-weight:600}
+  .wrap{padding:18px 22px;max-width:1380px}
+  .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:16px}
+  .bar .rl{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px}
+  .bar button{background:#fff;color:var(--blue);border:1px solid #cfe0fb;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;font-family:inherit}
+  .bar button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .bar .note{font-size:12px;color:var(--dim);margin-left:auto}
+  input[type=search]{border:1px solid #dfe4ec;border-radius:8px;padding:6px 10px;font-size:13px;width:220px;font-family:inherit;color:var(--ink)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;cursor:pointer}
+  .card .label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em}
+  .card .value{font-size:25px;font-weight:680;margin-top:3px}
+  .card .sub{font-size:12px;color:var(--dim)}
+  .card.on{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue) inset}
+  .card.b0 .value{color:var(--b0)} .card.b1 .value{color:var(--b1)} .card.b2 .value{color:var(--b2)} .card.b3 .value{color:var(--b3)}
+  section{margin-bottom:22px}
+  h2{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin:0 0 8px}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;vertical-align:top}
+  th{color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;background:#fbfcfe;cursor:pointer;white-space:nowrap;user-select:none}
+  th.sorted:after{content:' \25BE';color:var(--blue)}
+  th.sorted.asc:after{content:' \25B4'}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right}
+  .muted{color:var(--dim);font-size:12px}
+  .err{color:var(--bad);background:#fff;border:1px solid var(--bad);border-radius:12px;padding:12px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:1px 8px;border-radius:999px;background:rgba(127,127,127,.12);color:var(--dim);white-space:nowrap}
+  .pill.b0{background:rgba(15,138,74,.12);color:var(--b0)} .pill.b1{background:rgba(31,111,235,.12);color:var(--b1)}
+  .pill.b2{background:rgba(176,111,0,.12);color:var(--b2)} .pill.b3{background:rgba(194,53,43,.12);color:var(--b3)}
+  .days{font-weight:680;font-size:16px}
+  td.b3 .days{color:var(--b3)} td.b2 .days{color:var(--b2)}
+  a.job{color:var(--ink);text-decoration:none;font-weight:620} a.job:hover{color:var(--blue)}
+  .sm{font-size:12px;color:var(--dim)}
+  .src{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em}
+  .two{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+  @media(max-width:900px){.two{grid-template-columns:1fr}}
+  .warn{background:#fff8e6;border:1px solid #f0d48a;color:#7a4d00;border-radius:12px;padding:10px 12px;font-size:12px;margin-bottom:14px}
+  .stack{display:flex;height:10px;border-radius:6px;overflow:hidden;background:var(--line);margin:8px 0 4px}
+  .stack i{display:block;height:100%}
+</style>
+</head>
+<body>
+<header>
+  <h1>Douglas Roofing - Punch Out</h1>
+  <nav class="nav"><a href="/revenue.html">Herndon</a><a href="/richmond.html">Richmond</a><a href="/ca-bonus.html">CA Bonus</a><a href="/marketing.html">Marketing</a><a href="/punchout.html" class="on">Punch Out</a></nav>
+  <span class="muted" id="stamp" style="margin-left:auto"></span>
+</header>
+<div class="wrap">
+  <div class="bar">
+    <span class="rl">Show</span>
+    <button id="fAll" class="on">All open</button>
+    <button id="fOld">8+ days</button>
+    <span class="rl" style="margin-left:6px">Source</span>
+    <button id="sFlag">Flag</button>
+    <button id="sStage">Stage</button>
+    <input type="search" id="q" placeholder="Search customer, rep, PM, address">
+    <button id="rf" style="margin-left:6px">Refresh</button>
+    <span class="note" id="note">Herndon (NoVA) customers with the Leap PUNCH OUT flag or a job in the Punch Out stage</span>
+  </div>
+  <div id="root"><p class="muted">Loading punch-outs from Leap...</p></div>
+</div>
+<script>
+var D=null, S={bucket:null, old:false, src:null, q:'', sort:'days', asc:false};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+var BK=['0-3','4-7','8-14','15+'];
+var BCLS={'0-3':'b0','4-7':'b1','8-14':'b2','15+':'b3',unknown:''};
+var fmtD=function(s){if(!s)return '-';var d=new Date(String(s).slice(0,10)+'T12:00:00');return isNaN(d)?esc(s):d.toLocaleDateString('en-US',{month:'short',day:'numeric'});};
+
+function load(){
+  document.getElementById('root').innerHTML='<p class="muted">Loading punch-outs from Leap...</p>';
+  fetch('/api/job-reps?punchout=1&t='+Date.now(),{cache:'no-store'})
+   .then(function(r){return r.text().then(function(t){var j;try{j=JSON.parse(t)}catch(e){throw new Error('HTTP '+r.status+' '+t.slice(0,120))}if(!r.ok||j.error)throw new Error(j.error||('HTTP '+r.status));return j;});})
+   .then(function(d){D=d;init();})
+   .catch(function(e){document.getElementById('root').innerHTML='<div class="err">Could not load: '+esc(e.message)+'<br><span class="sm">Leap is slow or briefly refused the session. Hit Refresh to try again.</span></div>';});
+}
+load();
+
+function init(){
+  document.getElementById('stamp').textContent='Updated '+new Date(D.updated).toLocaleString()+(D.ledger_updated?' - ledger '+new Date(D.ledger_updated).toLocaleDateString():' - no ledger yet');
+  document.getElementById('fAll').onclick=function(){S.old=false;S.bucket=null;draw();};
+  document.getElementById('fOld').onclick=function(){S.old=!S.old;S.bucket=null;draw();};
+  document.getElementById('sFlag').onclick=function(){S.src=S.src==='flag'?null:'flag';draw();};
+  document.getElementById('sStage').onclick=function(){S.src=S.src==='stage'?null:'stage';draw();};
+  document.getElementById('q').oninput=function(){S.q=this.value.toLowerCase();draw();};
+  document.getElementById('rf').onclick=load;
+  draw();
+}
+
+function rows(){
+  return (D.rows||[]).filter(function(r){
+    if(S.bucket&&r.bucket!==S.bucket)return false;
+    if(S.old&&!(r.days>=8))return false;
+    if(S.src&&r.source!==S.src&&r.source!=='both')return false;
+    if(S.q){var h=[r.customer,r.rep,r.pm,r.address,r.stage].concat((r.jobs||[]).map(function(j){return j.number+' '+(j.name||'');})).join(' ').toLowerCase();if(h.indexOf(S.q)<0)return false;}
+    return true;
+  }).sort(function(a,b){
+    var k=S.sort,x=a[k],y=b[k];
+    if(k==='days'){x=x==null?-1:x;y=y==null?-1:y;}
+    x=x==null?'':x;y=y==null?'':y;
+    var c=(typeof x==='number'&&typeof y==='number')?x-y:String(x).localeCompare(String(y));
+    return S.asc?c:-c;
+  });
+}
+
+function draw(){
+  document.getElementById('fAll').className=(!S.old&&!S.bucket)?'on':'';
+  document.getElementById('fOld').className=S.old?'on':'';
+  document.getElementById('sFlag').className=S.src==='flag'?'on':'';
+  document.getElementById('sStage').className=S.src==='stage'?'on':'';
+  var b=D.buckets||{}, total=D.open||0, list=rows();
+  var h='', c=D.counts||{};
+  if(!D.ledger_updated)h+='<div class="warn">No ledger yet. Flag-only customers show no age until the nightly refresh (about 1:20am) has seen them once; jobs in the Punch Out stage are dated from when they entered it.</div>';
+  h+='<div class="cards">';
+  h+='<div class="card'+(!S.bucket?' on':'')+'" data-b=""><div class="label">Open punch-outs</div><div class="value">'+total+'</div><div class="sub">'+(c.flagged||0)+' flagged, '+(c.in_stage||0)+' in stage</div></div>';
+  BK.forEach(function(k){h+='<div class="card '+BCLS[k]+(S.bucket===k?' on':'')+'" data-b="'+k+'"><div class="label">'+k+' days</div><div class="value">'+(b[k]||0)+'</div><div class="sub">'+(total?Math.round((b[k]||0)*100/total):0)+'% of open</div></div>';});
+  if(b.unknown)h+='<div class="card'+(S.bucket==='unknown'?' on':'')+'" data-b="unknown"><div class="label">No date yet</div><div class="value">'+b.unknown+'</div><div class="sub">first seen tonight</div></div>';
+  h+='</div>';
+  // stacked aging bar
+  if(total){h+='<div class="stack">';BK.forEach(function(k){var n=b[k]||0;if(n)h+='<i class="'+BCLS[k]+'" style="width:'+(n*100/total)+'%;background:var(--'+BCLS[k]+')" title="'+k+' days: '+n+'"></i>';});h+='</div><div class="sm" style="margin-bottom:14px">'+aging(D.rows)+'</div>';}
+  h+='<div class="two"><section><h2>Open punch-outs ('+list.length+')</h2>';
+  if(!list.length)h+='<p class="muted">Nothing matches.</p>';
+  else{
+    h+='<table><thead><tr>'+th('days','Days','num')+th('customer','Customer')+th('address','Address')+th('rep','Rep')+th('pm','PM')+th('stage','Job / stage')+th('since','Since')+'</tr></thead><tbody>';
+    list.forEach(function(r){
+      var c=BCLS[r.bucket]||'';
+      h+='<tr><td class="num '+c+'"><span class="days">'+(r.days==null?'?':r.days)+'</span><br><span class="pill '+c+'">'+esc(r.bucket)+'</span></td>';
+      h+='<td><a class="job" href="'+esc(r.leap_url)+'" target="_blank" rel="noopener">'+esc(r.customer)+'</a><br><span class="pill '+(r.source==='flag'?'':r.source==='stage'?'b1':'b2')+'">'+(r.source==='both'?'flag + stage':r.source)+'</span></td>';
+      h+='<td class="sm">'+esc(r.address||'-')+'</td><td>'+esc(r.rep||'-')+'</td><td>'+esc(r.pm||'-')+'</td>';
+      h+='<td class="sm">'+(r.jobs||[]).map(function(j){return esc(j.number)+' <span class="muted">'+esc(j.stage||'')+(j.in_stage?' ('+fmtD(j.stage_date)+')':'')+'</span>';}).join('<br>')+'</td>';
+      h+='<td>'+fmtD(r.since)+'<br><span class="src">'+esc(r.since_source==='ledger'?'first seen':r.since_source==='stage'?'entered stage':'no date yet')+'</span></td></tr>';
+    });
+    h+='</tbody></table>';
+  }
+  h+='</section><section>';
+  h+=byRep(D.rows)+resolved(D.resolved);
+  h+='</section></div>';
+  document.getElementById('root').innerHTML=h;
+  Array.prototype.forEach.call(document.querySelectorAll('.card[data-b]'),function(el){el.onclick=function(){var k=el.getAttribute('data-b');S.bucket=(k&&S.bucket!==k)?k:null;S.old=false;draw();};});
+  Array.prototype.forEach.call(document.querySelectorAll('th[data-k]'),function(el){el.onclick=function(){var k=el.getAttribute('data-k');if(S.sort===k)S.asc=!S.asc;else{S.sort=k;S.asc=(k!=='days');}draw();};});
+}
+function th(k,label,cls){return '<th data-k="'+k+'" class="'+(cls||'')+(S.sort===k?' sorted'+(S.asc?' asc':''):'')+'">'+label+'</th>';}
+function aging(js){
+  var d=(js||[]).map(function(r){return r.days;}).filter(function(x){return x!=null;});
+  if(!d.length)return '';
+  d.sort(function(a,b){return a-b;});
+  var avg=d.reduce(function(a,b){return a+b;},0)/d.length, med=d[Math.floor(d.length/2)];
+  return 'Average age '+avg.toFixed(1)+' days, median '+med+', oldest '+d[d.length-1]+'.';
+}
+function byRep(js){
+  var m={};
+  (js||[]).forEach(function(r){var k=r.pm||'No PM';(m[k]=m[k]||{n:0,old:0,sum:0,c:0}).n++;if(r.days>=8)m[k].old++;if(r.days!=null){m[k].sum+=r.days;m[k].c++;}});
+  var keys=Object.keys(m).sort(function(a,b){return m[b].n-m[a].n;});
+  if(!keys.length)return '';
+  var h='<h2>By production manager</h2><table><thead><tr><th>PM</th><th class="num">Open</th><th class="num">8+ days</th><th class="num">Avg age</th></tr></thead><tbody>';
+  keys.forEach(function(k){var v=m[k];h+='<tr><td>'+esc(k)+'</td><td class="num">'+v.n+'</td><td class="num'+(v.old?' b3':'')+'">'+(v.old?'<span class="pill b3">'+v.old+'</span>':'0')+'</td><td class="num">'+(v.c?(v.sum/v.c).toFixed(1):'-')+'</td></tr>';});
+  return h+'</tbody></table>';
+}
+function resolved(list){
+  list=(list||[]).slice().reverse();
+  var h='<h2 style="margin-top:22px">Recently resolved</h2>';
+  if(!list.length)return h+'<p class="muted">Nothing yet - the nightly ledger records a customer here once the flag comes off and no job is left in the Punch Out stage.</p>';
+  var d=list.map(function(r){return r.days;}).filter(function(x){return x!=null;});
+  var avg=d.length?(d.reduce(function(a,b){return a+b;},0)/d.length).toFixed(1):'-';
+  h+='<p class="sm">Last '+list.length+' resolved, average '+avg+' days to clear.</p>';
+  h+='<table><thead><tr><th>Customer</th><th>PM</th><th>Cleared</th><th class="num">Days</th></tr></thead><tbody>';
+  list.slice(0,25).forEach(function(r){h+='<tr><td>'+esc(r.customer)+'<br><span class="sm">'+esc(r.number||'')+'</span></td><td>'+esc(r.pm||r.rep||'-')+'</td><td>'+fmtD(r.resolved)+'</td><td class="num">'+(r.days==null?'?':r.days)+'</td></tr>';});
+  return h+'</tbody></table>';
+}
+</script>
+</body>
+</html>
