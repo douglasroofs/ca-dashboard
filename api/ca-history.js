@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-21T10:51:48.513Z",
+    "updated": "2026-09-21T16:21:53.472Z",
     "year": 2026,
     "months": [
       0,
@@ -31,13 +31,13 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          6,
+          8,
           14,
           27,
           15,
           11
         ],
-        "total": 73
+        "total": 75
       },
       {
         "rep": "Mike Mccarthy",
@@ -106,13 +106,13 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          4,
+          5,
           7,
           7,
           3,
           5
         ],
-        "total": 31
+        "total": 32
       },
       {
         "rep": "Jack Obert",
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-21T10:53:38.097Z",
+    "updated": "2026-09-21T16:23:45.077Z",
     "year": 2026,
     "months": [
       0,
