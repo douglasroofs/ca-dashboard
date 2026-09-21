@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-20T09:53:50.210Z",
+    "updated": "2026-09-21T10:51:48.513Z",
     "year": 2026,
     "months": [
       0,
@@ -31,13 +31,13 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          5,
+          6,
           14,
           27,
           15,
           11
         ],
-        "total": 72
+        "total": 73
       },
       {
         "rep": "Mike Mccarthy",
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-20T09:55:36.747Z",
+    "updated": "2026-09-21T10:53:38.097Z",
     "year": 2026,
     "months": [
       0,
@@ -360,7 +360,7 @@ const SNAPSHOTS = {
         "rep": "Joshua Baca",
         "counts": [
           0,
-          2,
+          3,
           13,
           13,
           6,
@@ -369,7 +369,7 @@ const SNAPSHOTS = {
           12,
           1
         ],
-        "total": 74
+        "total": 75
       },
       {
         "rep": "Travis Kizzar",
