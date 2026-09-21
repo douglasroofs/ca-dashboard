@@ -164,6 +164,13 @@ function jobRow(j) {
 }
 
 async function punchout(req, res, url) {
+  if (url.searchParams.get('probe') === 'login') { // why is Leap refusing the login? (body only, never the credentials)
+    const username = process.env.JP_USERNAME, password = process.env.JP_PASSWORD;
+    const r = await fetch(`${V1}/login`, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+      body: new URLSearchParams({ username, password, grant_type: 'password', client_id: CLIENT_ID, client_secret: CLIENT_SECRET, end_existing_sessions: '0' }).toString() });
+    const text = await r.text();
+    return res.status(200).json({ status: r.status, body: text.replace(/"access_token":"[^"]+"/g, '"access_token":"<hidden>"').replace(/"refresh_token":"[^"]+"/g, '"refresh_token":"<hidden>"').slice(0, 600) });
+  }
   const token = await getToken();
   const probe = url.searchParams.get('probe');
   if (probe) {
