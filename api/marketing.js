@@ -192,8 +192,13 @@ async function metaSpend(startISO, endISO) {
 // response rather than keeping its own copy, so the Ran column in By rep and the
 // Cost per appt ran card can never drift apart.
 const NOT_RAN = ['Customer Canceled Appointment', 'No Answer/No Appointment Actually Set', 'No Demo'];
-const CA_RESULTS = ['CA Signed'];
-const RETAIL_RESULTS = ['Retail Sale', 'Repair Sold'];
+// 2026-09-21, Kyle's direction: the CA Signed card on the marketing page is the Leap
+// appointment result 'Claim Filed' (a claim actually filed), NOT the 'CA Signed' result;
+// Retail / Repair is the 'Retail Sale' result only ('Repair Sold' is not counted).
+// marketing.html reads both lists from the API, so the cards, calendar tags and By-rep
+// columns all follow this one definition.
+const CA_RESULTS = ['Claim Filed'];
+const RETAIL_RESULTS = ['Retail Sale'];
 
 async function login() {
   const u = process.env.JP_USERNAME, p = process.env.JP_PASSWORD;
