@@ -102,8 +102,8 @@ function attempt(){
    .then(function(r){return r.text().then(function(t){var j;try{j=JSON.parse(t)}catch(e){throw new Error('HTTP '+r.status+' '+t.slice(0,120))}if(!r.ok||j.error)throw new Error(j.error||('HTTP '+r.status));return j;});})
    .then(function(d){D=d;init();})
    .catch(function(e){
-     if(tries<3){document.getElementById('root').innerHTML='<div class="state">Leap hiccup ('+esc(e.message)+') - retrying...</div>';setTimeout(attempt,2500);return;}
-     document.getElementById('root').innerHTML='<div class="err">Could not load: '+esc(e.message)+'<br><span class="sm">Leap refused the session three times in a row. Wait a minute and hit Refresh.</span></div>';
+     if(tries<2&&!/412/.test(e.message)){document.getElementById('root').innerHTML='<div class="state">Leap hiccup ('+esc(e.message)+') - retrying...</div>';setTimeout(attempt,8000);return;}
+     document.getElementById('root').innerHTML='<div class="err">Could not load: '+esc(e.message)+'<br><span class="sm">Leap refused the session. Wait a few minutes and hit Refresh - the other dashboard pages share the same Leap login.</span></div>';
    });
 }
 load();
