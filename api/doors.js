@@ -9,7 +9,7 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-22T10:09:07.201Z",
+    "updated": "2026-09-22T11:10:25.460Z",
     "total": 2219,
     "reps": [
       {
@@ -154,7 +154,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-22T10:09:15.750Z",
+    "updated": "2026-09-22T11:10:35.203Z",
     "total": 1569,
     "reps": [
       {
