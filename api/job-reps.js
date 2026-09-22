@@ -174,7 +174,7 @@ function jobRow(j) {
 
 
 // ── CA backfill (2026-09-21) ────────────────────────────────────────────────
-// POST /api/job-reps?punchout=1&backfill=1   body { rows:[{job_number, date}], dry:true|false, limit }
+// POST /api/job-reps?punchout=1&backfill=1   body { rows:[{job_number, date}], dry:true|false, limit, include_lost:false }
 // Sets Leap's Insurance Details "Contingency Contract Signed Date" on jobs that have none, from the
 // date the job entered the Claims Filed stage (DataBuilder Job Workflow Stages Report). Never
 // overwrites an existing date. dry (default true) only reports what it would do.
@@ -188,8 +188,9 @@ function dashAuthed(req) {
   try { const dec = Buffer.from(hdr.slice(6), 'base64').toString('utf8'); return dec.slice(dec.indexOf(':') + 1) === expected; } catch (e) { return false; }
 }
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
-async function leapWrite(token, method, path, form) {
-  const r = await fetch(`${V1}${path}`, { method, headers: Object.assign({ 'Content-Type': 'application/x-www-form-urlencoded' }, HDR(token)), body: new URLSearchParams(form).toString() });
+async function leapWrite(token, method, path, form, enc) {
+  const json = enc === 'json';
+  const r = await fetch(`${V1}${path}`, { method, headers: Object.assign({ 'Content-Type': json ? 'application/json' : 'application/x-www-form-urlencoded' }, HDR(token)), body: json ? JSON.stringify(form) : new URLSearchParams(form).toString() });
   const text = await r.text();
   return { method, path, status: r.status, body: text.slice(0, 200) };
 }
@@ -205,15 +206,16 @@ async function writeContingency(token, job, ins, date) {
   ['insurance_company', 'insurance_number', 'phone', 'fax', 'email', 'adjuster_name', 'adjuster_phone', 'adjuster_email', 'adjuster_phone_ext', 'date_of_loss', 'claim_filed_date', 'policy_number', 'rcv', 'supplement', 'net_claim', 'acv', 'depreciation', 'deductable_amount', 'total', 'upgrade']
     .forEach((k) => { if (ins[k] != null && ins[k] !== '' && ins[k] !== '0000-00-00') keep[k] = String(ins[k]); });
   const flat = Object.assign({}, keep, { contingency_contract_signed_date: date });
-  const nested = { insurance: '1' }; Object.keys(flat).forEach((k) => { nested[`insurance_details[${k}]`] = flat[k]; });
+  // Leap's job update validates customer_id (412 without it); everything else is optional, so send only what changes.
+  const nested = { customer_id: String(job.customer_id || (unwrap(job.customer) || {}).id || ''), insurance: '1' };
+  Object.keys(flat).forEach((k) => { nested[`insurance_details[${k}]`] = flat[k]; });
   const candidates = [
-    ['PUT', `/jobs/${job.id}/insurance_details`, flat],
-    ['POST', `/jobs/${job.id}/insurance_details`, flat],
-    ['PUT', `/jobs/${job.id}`, nested],
+    ['PUT', `/jobs/${job.id}`, nested, 'form'],
+    ['PUT', `/jobs/${job.id}`, { customer_id: nested.customer_id, insurance: 1, insurance_details: flat }, 'json'],
   ];
   const attempts = [];
-  for (const [m, p, f] of candidates) {
-    const a = await leapWrite(token, m, p, f); attempts.push(a);
+  for (const [m, p, f, enc] of candidates) {
+    const a = await leapWrite(token, m, p, f, enc); attempts.push(a);
     if (a.status >= 200 && a.status < 300) {
       await sleep(400);
       const now = await readContingency(token, job.id);
@@ -236,15 +238,18 @@ async function backfill(req, res) {
     const num = String(r.job_number || '').trim(); const date = String(r.date || '').slice(0, 10);
     if (!num || !ISO_DATE.test(date)) { results.push({ job_number: num, date, action: 'skip', reason: 'bad job number or date' }); continue; }
     let job = null;
-    try { const j = await leapGet(token, `/jobs?job_number=${encodeURIComponent(num)}&limit=1&includes[]=insurance_details&includes[]=customer&includes[]=customer.rep`); job = (j.data || [])[0] || null; }
+    // Lost and archived jobs are hidden from /jobs by default; the stage report still lists them.
+    try { const j = await leapGet(token, `/jobs?job_number=${encodeURIComponent(num)}&limit=1&include_lost_jobs=1&with_archived=1&include_projects=1&includes[]=insurance_details&includes[]=customer&includes[]=customer.rep`); job = (j.data || [])[0] || null; }
     catch (e) { results.push({ job_number: num, date, action: 'error', reason: String(e.message || e) }); continue; }
     if (!job) { results.push({ job_number: num, date, action: 'skip', reason: 'job not found' }); continue; }
     const ins = unwrap(job.insurance_details) || {};
     const ex = ins.contingency_contract_signed_date;
     const existing = ex && ex !== '0000-00-00' ? String(ex).slice(0, 10) : null;
     const c = unwrap(job.customer) || {};
-    const base = { job_number: num, job_id: job.id, customer: custName(c), rep: clean(nameOf(unwrap(c.rep))), stage: job.current_stage && job.current_stage.name || null, insurance_job: !!job.insurance, existing, date };
+    const lost = job.job_lost_date ? String(job.job_lost_date).slice(0, 10) : null;
+    const base = { job_number: num, job_id: job.id, customer: custName(c), rep: clean(nameOf(unwrap(c.rep))), stage: job.current_stage && job.current_stage.name || null, insurance_job: !!job.insurance, lost, archived: !!job.archived, existing, date };
     if (existing) { results.push(Object.assign(base, { action: 'skip', reason: 'already has a date' })); continue; }
+    if ((lost || job.archived) && body.include_lost !== true) { results.push(Object.assign(base, { action: 'skip', reason: lost ? 'lost job' : 'archived job' })); continue; }
     if (dry) { results.push(Object.assign(base, { action: 'would-write' })); continue; }
     try { const w = await writeContingency(token, job, ins, date); results.push(Object.assign(base, { action: w.ok ? 'written' : 'failed', verified: w.verified, attempts: w.attempts })); }
     catch (e) { results.push(Object.assign(base, { action: 'error', reason: String(e.message || e) })); }
