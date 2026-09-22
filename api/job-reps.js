@@ -93,6 +93,8 @@ try { LEDGER = require('../data/punchout-ledger.json'); } catch (e) { /* first d
 const FLAG_ID = process.env.PUNCHOUT_FLAG_ID || '32538';
 const STAGE_CODE = process.env.PUNCHOUT_STAGE_CODE || '1769622271876028355';
 const FLAG_RE = /punch\s*out/i;
+// In-house company crew shown on the board. Override with PUNCHOUT_COMPANY_CREW="Doug Rimel,Nick Seward,Mike Mendez".
+const COMPANY_CREW = (process.env.PUNCHOUT_COMPANY_CREW || 'Doug Rimel,Nick Seward,Mike Mendez').split(',').map((x) => x.trim()).filter(Boolean).map((x) => new RegExp('^' + x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+') + '$', 'i'));
 const unwrap = (x) => (x && x.data !== undefined) ? x.data : x;
 const listOf = (x) => { const u = unwrap(x); return Array.isArray(u) ? u : []; };
 
@@ -157,8 +159,9 @@ function jobRow(j) {
   const est = listOf(j.estimators).map(nameOf).map(clean).filter(Boolean);
   // Work crew = sub-contractors on the job. Show the company when it isn't just the person's name.
   const crew = listOf(j.sub_contractors).map((sc) => { const n = clean(nameOf(sc)), co = clean(sc.company_name); return co && co.toLowerCase() !== (n || '').toLowerCase() && !(n || '').toLowerCase().startsWith(co.toLowerCase()) ? `${co} (${n})` : (co || n); }).filter(Boolean);
-  // Company crew = Leap's "Company Crew" job field (job reps): Doug, Nick, Mike. Separate from Labor / Sub(s).
-  const company_crew = listOf(j.reps).map(nameOf).map(clean).filter(Boolean);
+  // Company crew = Leap's "Company Crew" job field (job reps). Leap also lists salesmen there on some
+  // jobs, so keep only the in-house crew (Doug, Nick, Mike) - Kyle 2026-09-21. Separate from Labor / Sub(s).
+  const company_crew = listOf(j.reps).map(nameOf).map(clean).filter((n) => n && COMPANY_CREW.some((re) => re.test(n)));
   const stage = j.current_stage && j.current_stage.name || null;
   return {
     id: j.id, number: j.number, name: clean(j.name), stage, stage_date: j.stage_last_modified || null,
