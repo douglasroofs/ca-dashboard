@@ -214,8 +214,15 @@ async function writeContingency(token, job, ins, date) {
     ['PUT', `/jobs/${job.id}`, { customer_id: nested.customer_id, insurance: 1, insurance_details: flat }, 'json'],
   ];
   const attempts = [];
+  let relogged = false;
   for (const [m, p, f, enc] of candidates) {
-    const a = await leapWrite(token, m, p, f, enc); attempts.push(a);
+    let a = await leapWrite(token, m, p, f, enc); attempts.push(a);
+    // The dashboard shares its Leap login with Kyle's web session: a web sign-in pauses this token
+    // (409 session_paused). Re-login once, which in turn pauses the web session.
+    if ((a.status === 409 || a.status === 401) && !relogged) {
+      relogged = true; cachedToken = null; tokenPromise = null; await sleep(1500); token = await getToken();
+      a = await leapWrite(token, m, p, f, enc); attempts.push(a);
+    }
     if (a.status >= 200 && a.status < 300) {
       await sleep(400);
       const now = await readContingency(token, job.id);
