@@ -1,104 +1,126 @@
 {
-  "updated": "2026-09-21T16:24:03.290Z",
+  "updated": "2026-09-22T10:09:27.420Z",
   "customers": {
     "6477299": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Rita Smith",
       "rep": "Jack Obert",
       "pm": null,
       "number": "2501-6477299-01",
-      "source": "flag"
+      "source": "flag",
+      "crew": "Trendy Build (Walter Diaz), A&J remodeling (Santos Siding), Amilicar, Alfredo",
+      "company_crew": "Nick Seward"
     },
     "6858547": {
       "first_seen": "2026-02-25",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Anness Mccardle",
       "rep": "Nick Seward",
       "pm": "Haley Barry",
       "number": "2504-6858547-01",
-      "source": "stage"
+      "source": "stage",
+      "crew": "Trendy Build (Walter Diaz)",
+      "company_crew": "Nick Seward"
     },
     "7033328": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Hsieh Lewis",
       "rep": "Kevin Mahan",
       "pm": "Haley Barry",
       "number": "2505-7033328-01",
-      "source": "flag"
+      "source": "flag",
+      "crew": "Trendy Build (Walter Diaz)",
+      "company_crew": "Doug Rimel, Nick Seward"
     },
     "7509320": {
       "first_seen": "2026-08-18",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Treciana Warren",
       "rep": "Alfred Duncan",
       "pm": "Haley Barry",
       "number": "2508-7509320-01",
-      "source": "stage"
+      "source": "stage",
+      "crew": "Trendy Build (Walter Diaz)",
+      "company_crew": "Nick Seward"
     },
     "7761033": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Denise Ross",
       "rep": "George Bechara",
       "pm": null,
       "number": "2510-7761033-01",
-      "source": "flag"
+      "source": "flag",
+      "crew": "Trendy Build (Walter Diaz), Alfredo",
+      "company_crew": "Doug Rimel, Nick Seward, Mike Mendez"
     },
     "8372906": {
       "first_seen": "2026-06-08",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Mike Harrington",
       "rep": "Jack Obert",
       "pm": "Haley Barry",
       "number": "2603-8372906-01",
-      "source": "stage"
+      "source": "stage",
+      "crew": "Trendy Build (Walter Diaz), Pablo Remodeling Services (Fernando Fernando)",
+      "company_crew": "Mike Mendez"
     },
     "8489614": {
       "first_seen": "2026-06-18",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Heidi Hammel",
       "rep": "David Kerns",
       "pm": "Haley Barry",
       "number": "2604-8489614-01",
-      "source": "stage"
+      "source": "stage",
+      "crew": "Trendy Build (Walter Diaz), Amilicar, Alfredo",
+      "company_crew": "Doug Rimel"
     },
     "8521211": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Elizabeth Severn",
       "rep": "Harvey Shoemaker",
       "pm": "Haley Barry",
       "number": "2604-8521211-01",
-      "source": "flag"
+      "source": "flag",
+      "crew": "Trendy Build (Walter Diaz)",
+      "company_crew": "Doug Rimel"
     },
     "8740027": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Grant Williams",
       "rep": "Alfred Duncan",
       "pm": null,
       "number": "2606-8740027-01",
-      "source": "flag"
+      "source": "flag",
+      "crew": "Pablo Remodeling Services (Fernando Perez)",
+      "company_crew": "Doug Rimel"
     },
     "8764657": {
       "first_seen": "2026-09-09",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Linda Halim",
       "rep": "Steven Arevalo",
       "pm": "Paul Brost",
       "number": "2606-8764657-01",
-      "source": "both"
+      "source": "both",
+      "crew": "A&J remodeling (Santos Siding), Trendy Build (Walter Diaz)",
+      "company_crew": "Mike Mendez"
     },
     "8851531": {
       "first_seen": "2026-08-27",
-      "last_seen": "2026-09-21",
+      "last_seen": "2026-09-22",
       "customer": "Roger Ours",
       "rep": "Andrew Prickel",
       "pm": null,
       "number": "2607-8851531-01",
-      "source": "stage"
+      "source": "stage",
+      "crew": "Trendy Build (Walter Diaz)",
+      "company_crew": "Nick Seward"
     }
   },
   "resolved": []
