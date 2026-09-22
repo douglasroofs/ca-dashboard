@@ -8,6 +8,7 @@
 // 2026-09-21: also hosts the PUNCH OUT board (Vercel Hobby caps api/ at 12 functions,
 // so this lives here instead of its own file).
 //   GET /api/job-reps?punchout=1            -> every open Herndon customer that is punched out: the
+//                                              (crew = Labor/Sub(s); company_crew = Company Crew job field)
 //                                              PUNCH OUT customer flag and/or a job in the Punch Out
 //                                              stage, merged per customer, with age + bucket
 //                                              0-3 / 4-7 / 8-14 / 15+ days
@@ -151,14 +152,18 @@ function custName(c) {
   return c.full_name || [c.first_name, c.last_name].filter(Boolean).join(' ').trim() || c.company_name || 'Unknown';
 }
 const clean = (s) => (s == null ? null : String(s).replace(/\s+/g, ' ').trim() || null);
+const uniqList = (arr) => arr.filter(Boolean).join(', ').split(', ').filter((v, i, a) => v && a.indexOf(v) === i).join(', ') || null;
 function jobRow(j) {
   const est = listOf(j.estimators).map(nameOf).map(clean).filter(Boolean);
   // Work crew = sub-contractors on the job. Show the company when it isn't just the person's name.
   const crew = listOf(j.sub_contractors).map((sc) => { const n = clean(nameOf(sc)), co = clean(sc.company_name); return co && co.toLowerCase() !== (n || '').toLowerCase() && !(n || '').toLowerCase().startsWith(co.toLowerCase()) ? `${co} (${n})` : (co || n); }).filter(Boolean);
+  // Company crew = Leap's "Company Crew" job field (job reps): Doug, Nick, Mike. Separate from Labor / Sub(s).
+  const company_crew = listOf(j.reps).map(nameOf).map(clean).filter(Boolean);
   const stage = j.current_stage && j.current_stage.name || null;
   return {
     id: j.id, number: j.number, name: clean(j.name), stage, stage_date: j.stage_last_modified || null,
     in_stage: FLAG_RE.test(String(stage || '')), pm: est.join(', ') || null, crew: crew.join(', ') || null,
+    company_crew: company_crew.join(', ') || null,
     division: (unwrap(j.division) || {}).name || j.division_code || null, archived: !!j.archived, updated_at: j.updated_at || null,
   };
 }
@@ -185,8 +190,8 @@ async function punchout(req, res, url) {
     return res.status(200).json(out);
   }
 
-  const CUST_INC = ['jobs', 'jobs.sub_contractors', 'rep', 'address', 'flags'].map((x) => `includes[]=${x}`).join('&');
-  const JOB_INC = ['customer', 'customer.rep', 'customer.flags', 'estimators', 'sub_contractors', 'address', 'division'].map((x) => `includes[]=${x}`).join('&');
+  const CUST_INC = ['jobs', 'jobs.sub_contractors', 'jobs.reps', 'rep', 'address', 'flags'].map((x) => `includes[]=${x}`).join('&');
+  const JOB_INC = ['customer', 'customer.rep', 'customer.flags', 'estimators', 'sub_contractors', 'reps', 'address', 'division'].map((x) => `includes[]=${x}`).join('&');
   // Sequential on purpose: two concurrent calls on one Leap token have produced 409s.
   const flagged = await leapAll(token, `/customers?flag_ids[]=${FLAG_ID}&limit=100&${CUST_INC}`);
   const staged = await leapAll(token, `/jobs?stages[]=${STAGE_CODE}&limit=100&with_archived=0&${JOB_INC}`);
@@ -227,9 +232,9 @@ async function punchout(req, res, url) {
       customer_id: row.customer_id, customer: row.customer, rep: row.rep, address: row.address,
       source: row.flagged && row.in_stage ? 'both' : (row.flagged ? 'flag' : 'stage'),
       pm: jobs.map((j) => j.pm).filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(', ') || null,
-      crew: jobs.map((j) => j.crew).filter(Boolean).join(', ').split(', ').filter((v, i, a) => v && a.indexOf(v) === i).join(', ') || null,
+      crew: uniqList(jobs.map((j) => j.crew)), company_crew: uniqList(jobs.map((j) => j.company_crew)),
       number: primary.number || null, stage: primary.stage || null, stage_date: primary.stage_date || null, division: primary.division || null,
-      jobs: jobs.map((j) => ({ id: j.id, number: j.number, name: j.name, stage: j.stage, stage_date: j.stage_date, in_stage: j.in_stage, pm: j.pm, crew: j.crew })),
+      jobs: jobs.map((j) => ({ id: j.id, number: j.number, name: j.name, stage: j.stage, stage_date: j.stage_date, in_stage: j.in_stage, pm: j.pm, crew: j.crew, company_crew: j.company_crew })),
       since: since ? since.date : null, since_source: since ? since.source : null, first_seen: led ? led.first_seen : null,
       days, bucket: bucketOf(days),
       leap_url: `https://jobprogress.com/app/#/customer-jobs/${row.customer_id}${primary.id ? `/job/${primary.id}/overview` : ''}`,
