@@ -55,11 +55,11 @@ async function main() {
     // Stage entry date beats "first night seen" when it is earlier.
     const evidence = r.since_source === 'stage' && r.since ? String(r.since).slice(0, 10) : today;
     if (!cur) {
-      ledger.customers[id] = { first_seen: evidence, last_seen: today, customer: r.customer, rep: r.rep, crew: r.crew, number: r.number, source: r.source };
+      ledger.customers[id] = { first_seen: evidence, last_seen: today, customer: r.customer, rep: r.rep, crew: r.crew, company_crew: r.company_crew, number: r.number, source: r.source };
       added.push(`${r.customer} (${r.source}, since ${evidence})`);
     } else {
       if (evidence < cur.first_seen) cur.first_seen = evidence;
-      Object.assign(cur, { last_seen: today, customer: r.customer, rep: r.rep, crew: r.crew, number: r.number, source: r.source });
+      Object.assign(cur, { last_seen: today, customer: r.customer, rep: r.rep, crew: r.crew, company_crew: r.company_crew, number: r.number, source: r.source });
     }
   }
   for (const id of Object.keys(ledger.customers)) {
