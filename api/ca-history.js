@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-22T11:12:10.324Z",
+    "updated": "2026-09-23T10:07:33.287Z",
     "year": 2026,
     "months": [
       0,
@@ -122,12 +122,12 @@ const SNAPSHOTS = {
           3,
           5,
           8,
-          7,
+          6,
           4,
           0,
           0
         ],
-        "total": 27
+        "total": 26
       },
       {
         "rep": "Andrew  Prickel",
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-22T11:14:02.522Z",
+    "updated": "2026-09-23T10:09:24.951Z",
     "year": 2026,
     "months": [
       0,
