@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-23T13:30:07.282Z",
+    "updated": "2026-09-24T10:12:59.683Z",
     "year": 2026,
     "months": [
       0,
@@ -31,13 +31,13 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          8,
+          6,
           14,
           27,
           15,
-          11
+          12
         ],
-        "total": 75
+        "total": 74
       },
       {
         "rep": "Mike Mccarthy",
@@ -93,11 +93,11 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          17,
+          18,
           10,
           5
         ],
-        "total": 36
+        "total": 37
       },
       {
         "rep": "Christian Brown",
@@ -106,13 +106,13 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          5,
+          4,
           7,
           7,
           3,
           5
         ],
-        "total": 32
+        "total": 31
       },
       {
         "rep": "Jack Obert",
@@ -197,12 +197,12 @@ const SNAPSHOTS = {
           5,
           2,
           0,
-          4,
+          3,
           0,
           0,
           0
         ],
-        "total": 15
+        "total": 14
       },
       {
         "rep": "Kyle Higginbotham",
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-23T13:32:13.222Z",
+    "updated": "2026-09-24T10:14:52.320Z",
     "year": 2026,
     "months": [
       0,
@@ -364,12 +364,12 @@ const SNAPSHOTS = {
           13,
           13,
           6,
-          19,
+          18,
           8,
           12,
           1
         ],
-        "total": 75
+        "total": 74
       },
       {
         "rep": "Travis Kizzar",

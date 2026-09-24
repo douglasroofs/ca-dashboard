@@ -9,27 +9,27 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-23T13:28:21.109Z",
-    "total": 2222,
+    "updated": "2026-09-24T10:15:01.567Z",
+    "total": 2323,
     "reps": [
       {
         "rep": "Jason Cresswell",
-        "doors": 532,
+        "doors": 529,
         "team": "jack"
       },
       {
         "rep": "David Kerns",
-        "doors": 322,
+        "doors": 358,
         "team": "jack"
       },
       {
         "rep": "Carol Wright",
-        "doors": 275,
+        "doors": 283,
         "team": "jack"
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 275,
+        "doors": 277,
         "team": "jack"
       },
       {
@@ -39,12 +39,12 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Doug Coffman",
-        "doors": 138,
+        "doors": 156,
         "team": "mccarthy"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 96,
+        "doors": 132,
         "team": "selfgen"
       },
       {
@@ -54,12 +54,12 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 79,
+        "doors": 80,
         "team": "mccarthy"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 72,
+        "doors": 75,
         "team": "selfgen"
       },
       {
@@ -154,17 +154,17 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-23T13:28:30.900Z",
+    "updated": "2026-09-24T10:15:10.491Z",
     "total": 1569,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 752,
+        "doors": 751,
         "team": "retail"
       },
       {
         "rep": "Dalton Barr",
-        "doors": 345,
+        "doors": 346,
         "team": "retail"
       },
       {
