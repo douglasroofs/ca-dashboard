@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-24T13:30:19.376Z",
+    "updated": "2026-09-25T10:19:05.541Z",
     "year": 2026,
     "months": [
       0,
@@ -48,11 +48,11 @@ const SNAPSHOTS = {
           0,
           8,
           6,
-          7,
+          8,
           15,
-          10
+          11
         ],
-        "total": 50
+        "total": 52
       },
       {
         "rep": "David Kerns",
@@ -62,12 +62,12 @@ const SNAPSHOTS = {
           11,
           8,
           5,
-          7,
+          6,
           2,
           6,
           3
         ],
-        "total": 42
+        "total": 41
       },
       {
         "rep": "Harvey Shoemaker",
@@ -80,9 +80,9 @@ const SNAPSHOTS = {
           17,
           10,
           2,
-          0
+          1
         ],
-        "total": 38
+        "total": 39
       },
       {
         "rep": "Carol Wright",
@@ -252,7 +252,7 @@ const SNAPSHOTS = {
       {
         "rep": "Robert Mumford-Wilson",
         "counts": [
-          4,
+          3,
           0,
           0,
           3,
@@ -262,7 +262,7 @@ const SNAPSHOTS = {
           0,
           0
         ],
-        "total": 8
+        "total": 7
       },
       {
         "rep": "Jason Cresswell",
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-24T13:32:17.601Z",
+    "updated": "2026-09-25T10:21:06.874Z",
     "year": 2026,
     "months": [
       0,
@@ -364,12 +364,12 @@ const SNAPSHOTS = {
           13,
           13,
           6,
-          18,
+          20,
           8,
           12,
           1
         ],
-        "total": 74
+        "total": 76
       },
       {
         "rep": "Travis Kizzar",
