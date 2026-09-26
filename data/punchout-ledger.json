@@ -1,9 +1,9 @@
 {
-  "updated": "2026-09-25T10:21:36.804Z",
+  "updated": "2026-09-26T10:01:21.459Z",
   "customers": {
     "5886795": {
       "first_seen": "2026-09-23",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Ashley Slifka",
       "rep": "Mike Mendez",
       "crew": "Trendy Build (Walter Diaz), A&J remodeling (Santos Siding)",
@@ -13,7 +13,7 @@
     },
     "6477299": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Rita Smith",
       "rep": "Jack Obert",
       "pm": null,
@@ -24,7 +24,7 @@
     },
     "7033328": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Hsieh Lewis",
       "rep": "Kevin Mahan",
       "pm": "Haley Barry",
@@ -35,7 +35,7 @@
     },
     "7509320": {
       "first_seen": "2026-08-18",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Treciana Warren",
       "rep": "Alfred Duncan",
       "pm": "Haley Barry",
@@ -46,7 +46,7 @@
     },
     "7761033": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Denise Ross",
       "rep": "George Bechara",
       "pm": null,
@@ -57,7 +57,7 @@
     },
     "8372906": {
       "first_seen": "2026-06-08",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Mike Harrington",
       "rep": "Jack Obert",
       "pm": "Haley Barry",
@@ -68,7 +68,7 @@
     },
     "8521211": {
       "first_seen": "2026-09-15",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Elizabeth Severn",
       "rep": "Harvey Shoemaker",
       "pm": "Haley Barry",
@@ -79,7 +79,7 @@
     },
     "8722109": {
       "first_seen": "2026-09-17",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Ismaheel Ajibola",
       "rep": "Alfred Duncan",
       "crew": "Trendy Build (Walter Diaz)",
@@ -89,7 +89,7 @@
     },
     "8764657": {
       "first_seen": "2026-09-09",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Linda Halim",
       "rep": "Steven Arevalo",
       "pm": "Paul Brost",
@@ -100,7 +100,7 @@
     },
     "8851531": {
       "first_seen": "2026-08-27",
-      "last_seen": "2026-09-25",
+      "last_seen": "2026-09-26",
       "customer": "Roger Ours",
       "rep": "Andrew Prickel",
       "pm": null,

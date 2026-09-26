@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-25T10:19:05.541Z",
+    "updated": "2026-09-26T09:59:00.681Z",
     "year": 2026,
     "months": [
       0,
@@ -92,12 +92,12 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          3,
           18,
           10,
           5
         ],
-        "total": 37
+        "total": 36
       },
       {
         "rep": "Christian Brown",
@@ -195,14 +195,14 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          2,
+          3,
           0,
           3,
           0,
           0,
           0
         ],
-        "total": 14
+        "total": 15
       },
       {
         "rep": "Kyle Higginbotham",
@@ -260,9 +260,9 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          0
+          1
         ],
-        "total": 7
+        "total": 8
       },
       {
         "rep": "Jason Cresswell",
@@ -342,7 +342,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-25T10:21:06.874Z",
+    "updated": "2026-09-26T10:00:52.901Z",
     "year": 2026,
     "months": [
       0,
@@ -360,7 +360,7 @@ const SNAPSHOTS = {
         "rep": "Joshua Baca",
         "counts": [
           0,
-          3,
+          2,
           13,
           13,
           6,
@@ -369,7 +369,7 @@ const SNAPSHOTS = {
           12,
           1
         ],
-        "total": 76
+        "total": 75
       },
       {
         "rep": "Travis Kizzar",

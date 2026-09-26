@@ -9,12 +9,12 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-25T10:21:16.942Z",
-    "total": 2500,
+    "updated": "2026-09-26T10:01:02.288Z",
+    "total": 2603,
     "reps": [
       {
         "rep": "Jason Cresswell",
-        "doors": 569,
+        "doors": 604,
         "team": "jack"
       },
       {
@@ -23,33 +23,33 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
+        "rep": "Carol Wright",
+        "doors": 308,
+        "team": "jack"
+      },
+      {
         "rep": "Harvey Shoemaker",
         "doors": 300,
         "team": "jack"
       },
       {
-        "rep": "Carol Wright",
-        "doors": 283,
-        "team": "jack"
-      },
-      {
         "rep": "Christian Brown",
-        "doors": 246,
+        "doors": 251,
         "team": "mccarthy"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 182,
+        "doors": 193,
         "team": "mccarthy"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 146,
+        "doors": 153,
         "team": "selfgen"
       },
       {
         "rep": "David Bouknight@douglasroofs.com",
-        "doors": 93,
+        "doors": 99,
         "team": "selfgen"
       },
       {
@@ -58,14 +58,14 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
-        "rep": "Mike Mccarthy",
-        "doors": 81,
-        "team": "mccarthy"
+        "rep": "Andrew Funk",
+        "doors": 86,
+        "team": "selfgen"
       },
       {
-        "rep": "Andrew Funk",
-        "doors": 76,
-        "team": "selfgen"
+        "rep": "Mike Mccarthy",
+        "doors": 83,
+        "team": "mccarthy"
       },
       {
         "rep": "Dave Nulanz",
@@ -75,6 +75,11 @@ const SNAPSHOTS = {
       {
         "rep": "Marc Mitchell",
         "doors": 3,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Robert Mumford-Wilson",
+        "doors": 2,
         "team": "selfgen"
       },
       {
@@ -154,12 +159,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-25T10:21:26.267Z",
-    "total": 1570,
+    "updated": "2026-09-26T10:01:10.876Z",
+    "total": 1573,
     "reps": [
       {
         "rep": "Kylea White",
-        "doors": 751,
+        "doors": 749,
         "team": "retail"
       },
       {
@@ -179,7 +184,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 94,
+        "doors": 99,
         "team": "selfgen"
       },
       {
