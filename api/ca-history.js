@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-26T09:59:00.681Z",
+    "updated": "2026-09-27T10:38:35.860Z",
     "year": 2026,
     "months": [
       0,
@@ -35,9 +35,9 @@ const SNAPSHOTS = {
           14,
           27,
           15,
-          12
+          13
         ],
-        "total": 74
+        "total": 75
       },
       {
         "rep": "Mike Mccarthy",
@@ -48,11 +48,11 @@ const SNAPSHOTS = {
           0,
           8,
           6,
-          8,
+          7,
           15,
           11
         ],
-        "total": 52
+        "total": 51
       },
       {
         "rep": "David Kerns",
@@ -65,9 +65,9 @@ const SNAPSHOTS = {
           6,
           2,
           6,
-          3
+          4
         ],
-        "total": 41
+        "total": 42
       },
       {
         "rep": "Harvey Shoemaker",
@@ -77,12 +77,12 @@ const SNAPSHOTS = {
           1,
           2,
           5,
-          17,
+          16,
           10,
           2,
           1
         ],
-        "total": 39
+        "total": 38
       },
       {
         "rep": "Carol Wright",
@@ -92,12 +92,12 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          3,
+          4,
           18,
           10,
           5
         ],
-        "total": 36
+        "total": 37
       },
       {
         "rep": "Christian Brown",
@@ -107,10 +107,10 @@ const SNAPSHOTS = {
           1,
           3,
           4,
-          7,
+          6,
           7,
           3,
-          5
+          6
         ],
         "total": 31
       },
@@ -310,6 +310,21 @@ const SNAPSHOTS = {
         "total": 4
       },
       {
+        "rep": "Doug Coffman",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "total": 1
+      },
+      {
         "rep": "sean beasy",
         "counts": [
           0,
@@ -342,7 +357,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-26T10:00:52.901Z",
+    "updated": "2026-09-27T10:40:26.387Z",
     "year": 2026,
     "months": [
       0,
