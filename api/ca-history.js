@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-28T11:49:30.035Z",
+    "updated": "2026-09-29T11:27:30.026Z",
     "year": 2026,
     "months": [
       0,
@@ -35,9 +35,9 @@ const SNAPSHOTS = {
           14,
           27,
           15,
-          13
+          14
         ],
-        "total": 75
+        "total": 76
       },
       {
         "rep": "Mike Mccarthy",
@@ -80,9 +80,9 @@ const SNAPSHOTS = {
           16,
           10,
           2,
-          1
+          2
         ],
-        "total": 38
+        "total": 39
       },
       {
         "rep": "Carol Wright",
@@ -93,11 +93,11 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          18,
+          17,
           10,
           5
         ],
-        "total": 37
+        "total": 36
       },
       {
         "rep": "Christian Brown",
@@ -106,13 +106,13 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          4,
+          3,
           6,
           7,
           3,
           6
         ],
-        "total": 31
+        "total": 30
       },
       {
         "rep": "Jack Obert",
@@ -357,7 +357,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-28T11:51:22.088Z",
+    "updated": "2026-09-29T11:29:20.221Z",
     "year": 2026,
     "months": [
       0,
@@ -397,9 +397,9 @@ const SNAPSHOTS = {
           9,
           11,
           13,
-          6
+          7
         ],
-        "total": 61
+        "total": 62
       },
       {
         "rep": "Brandon Simmons",

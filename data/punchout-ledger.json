@@ -1,9 +1,9 @@
 {
-  "updated": "2026-09-28T11:52:55.018Z",
+  "updated": "2026-09-29T11:29:47.731Z",
   "customers": {
     "5886795": {
       "first_seen": "2026-09-23",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-09-29",
       "customer": "Ashley Slifka",
       "rep": "Mike Mendez",
       "crew": "Trendy Build (Walter Diaz), A&J remodeling (Santos Siding)",
@@ -13,7 +13,7 @@
     },
     "6477299": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-09-29",
       "customer": "Rita Smith",
       "rep": "Jack Obert",
       "pm": null,
@@ -24,7 +24,7 @@
     },
     "7033328": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-09-29",
       "customer": "Hsieh Lewis",
       "rep": "Kevin Mahan",
       "pm": "Haley Barry",
@@ -35,7 +35,7 @@
     },
     "7761033": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-09-29",
       "customer": "Denise Ross",
       "rep": "George Bechara",
       "pm": null,
@@ -44,20 +44,9 @@
       "crew": "Trendy Build (Walter Diaz), Alfredo",
       "company_crew": "Doug Rimel, Nick Seward, Mike Mendez"
     },
-    "8372906": {
-      "first_seen": "2026-06-08",
-      "last_seen": "2026-09-28",
-      "customer": "Mike Harrington",
-      "rep": "Jack Obert",
-      "pm": "Haley Barry",
-      "number": "2603-8372906-01",
-      "source": "stage",
-      "crew": "Trendy Build (Walter Diaz), Pablo Remodeling Services (Fernando Fernando)",
-      "company_crew": "Mike Mendez"
-    },
     "8480604": {
       "first_seen": "2026-09-07",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-09-29",
       "customer": "Kuldip Dhanjal",
       "rep": "David Kerns",
       "crew": "Trendy Build (Walter Diaz)",
@@ -67,18 +56,18 @@
     },
     "8521211": {
       "first_seen": "2026-09-15",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-09-29",
       "customer": "Elizabeth Severn",
       "rep": "Harvey Shoemaker",
       "pm": "Haley Barry",
       "number": "2604-8521211-01",
-      "source": "both",
+      "source": "flag",
       "crew": "Trendy Build (Walter Diaz)",
       "company_crew": "Doug Rimel"
     },
     "8722109": {
       "first_seen": "2026-09-17",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-09-29",
       "customer": "Ismaheel Ajibola",
       "rep": "Alfred Duncan",
       "crew": "Trendy Build (Walter Diaz)",
@@ -88,7 +77,7 @@
     },
     "8764657": {
       "first_seen": "2026-09-09",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-09-29",
       "customer": "Linda Halim",
       "rep": "Steven Arevalo",
       "pm": "Paul Brost",
@@ -99,7 +88,7 @@
     },
     "8851531": {
       "first_seen": "2026-08-27",
-      "last_seen": "2026-09-28",
+      "last_seen": "2026-09-29",
       "customer": "Roger Ours",
       "rep": "Andrew Prickel",
       "pm": null,
@@ -165,6 +154,20 @@
       "company_crew": "Nick Seward",
       "resolved": "2026-09-28",
       "days": 41
+    },
+    {
+      "customer_id": "8372906",
+      "first_seen": "2026-06-08",
+      "last_seen": "2026-09-28",
+      "customer": "Mike Harrington",
+      "rep": "Jack Obert",
+      "pm": "Haley Barry",
+      "number": "2603-8372906-01",
+      "source": "stage",
+      "crew": "Trendy Build (Walter Diaz), Pablo Remodeling Services (Fernando Fernando)",
+      "company_crew": "Mike Mendez",
+      "resolved": "2026-09-29",
+      "days": 113
     }
   ]
 }
