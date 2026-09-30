@@ -9,22 +9,22 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-29T11:29:29.653Z",
-    "total": 2749,
+    "updated": "2026-09-30T11:17:25.101Z",
+    "total": 2975,
     "reps": [
       {
         "rep": "Jason Cresswell",
-        "doors": 627,
+        "doors": 678,
         "team": "jack"
       },
       {
         "rep": "David Kerns",
-        "doors": 392,
+        "doors": 419,
         "team": "jack"
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 327,
+        "doors": 378,
         "team": "jack"
       },
       {
@@ -34,27 +34,27 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Christian Brown",
-        "doors": 285,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Doug Coffman",
-        "doors": 212,
+        "doors": 286,
         "team": "mccarthy"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 164,
+        "doors": 229,
         "team": "selfgen"
       },
       {
+        "rep": "Doug Coffman",
+        "doors": 223,
+        "team": "mccarthy"
+      },
+      {
         "rep": "David Bouknight@douglasroofs.com",
-        "doors": 99,
+        "doors": 109,
         "team": "selfgen"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 94,
+        "doors": 97,
         "team": "selfgen"
       },
       {
@@ -78,24 +78,24 @@ const SNAPSHOTS = {
         "team": "inbound"
       },
       {
-        "rep": "Marc Mitchell",
-        "doors": 3,
-        "team": "selfgen"
-      },
-      {
         "rep": "Robert Mumford-Wilson",
-        "doors": 2,
+        "doors": 5,
         "team": "selfgen"
       },
       {
-        "rep": "Jack Obert",
-        "doors": 2,
-        "team": "jack"
+        "rep": "Marc Mitchell",
+        "doors": 5,
+        "team": "selfgen"
       },
       {
         "rep": "George Bechara",
-        "doors": 2,
+        "doors": 3,
         "team": "inbound"
+      },
+      {
+        "rep": "Jack Obert",
+        "doors": 3,
+        "team": "jack"
       },
       {
         "rep": "Terry Eggleston",
@@ -164,42 +164,17 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-29T11:29:38.171Z",
-    "total": 1594,
+    "updated": "2026-09-30T11:17:34.079Z",
+    "total": 138,
     "reps": [
       {
-        "rep": "Kylea White",
-        "doors": 740,
-        "team": "retail"
-      },
-      {
-        "rep": "Dalton Barr",
-        "doors": 346,
-        "team": "retail"
-      },
-      {
-        "rep": "Andrew Harris",
-        "doors": 205,
-        "team": "retail"
-      },
-      {
-        "rep": "Carter Massengill",
-        "doors": 155,
-        "team": "retail"
-      },
-      {
         "rep": "Travis Kizzar",
-        "doors": 129,
+        "doors": 127,
         "team": "selfgen"
       },
       {
         "rep": "Brandon Simmons",
         "doors": 10,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Joshua Baca",
-        "doors": 8,
         "team": "selfgen"
       },
       {
@@ -211,24 +186,12 @@ const SNAPSHOTS = {
     "allowedReps": [
       "justin coghill",
       "brandon simmons",
-      "travis kizzar",
-      "joshua baca",
-      "carter massengill",
-      "andrew harris",
-      "dalton barr",
-      "marcus schanewolf",
-      "kylea white"
+      "travis kizzar"
     ],
     "roster": [
       "Justin Coghill",
       "Brandon Simmons",
-      "Travis Kizzar",
-      "Joshua Baca",
-      "Carter Massengill",
-      "Andrew Harris",
-      "Dalton Barr",
-      "marcus schanewolf",
-      "Kylea White"
+      "Travis Kizzar"
     ]
   }
 };

@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-09-29T11:27:30.026Z",
+    "updated": "2026-09-30T11:15:17.182Z",
     "year": 2026,
     "months": [
       0,
@@ -31,13 +31,13 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          6,
+          4,
           14,
           27,
           15,
-          14
+          15
         ],
-        "total": 76
+        "total": 75
       },
       {
         "rep": "Mike Mccarthy",
@@ -65,9 +65,9 @@ const SNAPSHOTS = {
           6,
           2,
           6,
-          4
+          6
         ],
-        "total": 42
+        "total": 44
       },
       {
         "rep": "Harvey Shoemaker",
@@ -80,9 +80,9 @@ const SNAPSHOTS = {
           16,
           10,
           2,
-          2
+          4
         ],
-        "total": 39
+        "total": 41
       },
       {
         "rep": "Carol Wright",
@@ -151,13 +151,13 @@ const SNAPSHOTS = {
           2,
           4,
           5,
-          4,
+          5,
           1,
           0,
           0,
-          1
+          3
         ],
-        "total": 22
+        "total": 25
       },
       {
         "rep": "George Bechara",
@@ -166,13 +166,13 @@ const SNAPSHOTS = {
           0,
           2,
           5,
-          2,
+          3,
           4,
           1,
           1,
-          2
+          3
         ],
-        "total": 19
+        "total": 21
       },
       {
         "rep": "Izzy Price",
@@ -195,14 +195,14 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          3,
+          4,
           0,
           3,
           0,
           0,
           0
         ],
-        "total": 15
+        "total": 16
       },
       {
         "rep": "Kyle Higginbotham",
@@ -226,13 +226,28 @@ const SNAPSHOTS = {
           0,
           3,
           1,
-          1,
+          0,
           6,
           0,
           0,
           0
         ],
-        "total": 12
+        "total": 11
+      },
+      {
+        "rep": "Robert Mumford-Wilson",
+        "counts": [
+          4,
+          0,
+          0,
+          3,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "total": 9
       },
       {
         "rep": "Kevin Mahan",
@@ -250,21 +265,6 @@ const SNAPSHOTS = {
         "total": 9
       },
       {
-        "rep": "Robert Mumford-Wilson",
-        "counts": [
-          3,
-          0,
-          0,
-          3,
-          1,
-          0,
-          0,
-          0,
-          1
-        ],
-        "total": 8
-      },
-      {
         "rep": "Jason Cresswell",
         "counts": [
           0,
@@ -275,9 +275,9 @@ const SNAPSHOTS = {
           0,
           1,
           2,
-          2
+          3
         ],
-        "total": 5
+        "total": 6
       },
       {
         "rep": "Terry Eggleston",
@@ -325,6 +325,21 @@ const SNAPSHOTS = {
         "total": 1
       },
       {
+        "rep": "Paolo Castillo",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "total": 1
+      },
+      {
         "rep": "sean beasy",
         "counts": [
           0,
@@ -357,7 +372,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-09-29T11:29:20.221Z",
+    "updated": "2026-09-30T11:17:15.563Z",
     "year": 2026,
     "months": [
       0,
@@ -371,21 +386,6 @@ const SNAPSHOTS = {
       8
     ],
     "reps": [
-      {
-        "rep": "Joshua Baca",
-        "counts": [
-          0,
-          2,
-          13,
-          13,
-          6,
-          20,
-          8,
-          12,
-          1
-        ],
-        "total": 75
-      },
       {
         "rep": "Travis Kizzar",
         "counts": [
@@ -422,44 +422,14 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          4,
+          3,
           6,
           7,
           0,
           1,
           1
         ],
-        "total": 23
-      },
-      {
-        "rep": "Carter Massengill",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          2,
-          0,
-          0
-        ],
-        "total": 2
-      },
-      {
-        "rep": "Kylea White",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0
-        ],
-        "total": 1
+        "total": 22
       }
     ]
   }
