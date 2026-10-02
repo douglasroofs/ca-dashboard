@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-01T11:42:58.125Z",
+    "updated": "2026-10-02T11:12:26.260Z",
     "year": 2026,
     "months": [
       0,
@@ -32,14 +32,14 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          15,
           14,
           27,
           15,
           16,
           0
         ],
-        "total": 76
+        "total": 87
       },
       {
         "rep": "Mike Mccarthy",
@@ -49,13 +49,13 @@ const SNAPSHOTS = {
           3,
           0,
           8,
-          6,
+          5,
           7,
           15,
           11,
           0
         ],
-        "total": 51
+        "total": 50
       },
       {
         "rep": "David Kerns",
@@ -65,13 +65,13 @@ const SNAPSHOTS = {
           11,
           8,
           5,
-          6,
+          7,
           2,
           6,
           8,
           0
         ],
-        "total": 46
+        "total": 47
       },
       {
         "rep": "Harvey Shoemaker",
@@ -80,9 +80,9 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          6,
+          5,
           16,
-          10,
+          11,
           2,
           5,
           0
@@ -98,12 +98,12 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          17,
+          19,
           10,
           5,
           0
         ],
-        "total": 36
+        "total": 38
       },
       {
         "rep": "Christian Brown",
@@ -112,14 +112,14 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          4,
+          3,
           6,
           7,
           3,
           7,
           0
         ],
-        "total": 32
+        "total": 31
       },
       {
         "rep": "Andrew  Prickel",
@@ -298,7 +298,7 @@ const SNAPSHOTS = {
         "total": 4
       },
       {
-        "rep": "Doug Coffman",
+        "rep": "Paolo Castillo",
         "counts": [
           0,
           0,
@@ -309,12 +309,12 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          0
+          1
         ],
-        "total": 1
+        "total": 2
       },
       {
-        "rep": "Paolo Castillo",
+        "rep": "Doug Coffman",
         "counts": [
           0,
           0,
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-01T11:44:49.599Z",
+    "updated": "2026-10-02T11:14:20.392Z",
     "year": 2026,
     "months": [
       0,
@@ -391,9 +391,9 @@ const SNAPSHOTS = {
           11,
           13,
           7,
-          0
+          1
         ],
-        "total": 62
+        "total": 63
       }
     ]
   }

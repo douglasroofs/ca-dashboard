@@ -9,9 +9,40 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-01T11:44:52.411Z",
-    "total": 0,
-    "reps": [],
+    "updated": "2026-10-02T11:14:25.293Z",
+    "total": 130,
+    "reps": [
+      {
+        "rep": "Paolo Castillo",
+        "doors": 58,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Christian Brown",
+        "doors": 26,
+        "team": "mccarthy"
+      },
+      {
+        "rep": "Jason Cresswell",
+        "doors": 20,
+        "team": "jack"
+      },
+      {
+        "rep": "Doug Coffman",
+        "doors": 10,
+        "team": "mccarthy"
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 10,
+        "team": "jack"
+      },
+      {
+        "rep": "David Kerns",
+        "doors": 6,
+        "team": "jack"
+      }
+    ],
     "allowedReps": [
       "kyle higginbotham",
       "adam mulvaney",
@@ -69,9 +100,15 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-01T11:44:54.524Z",
-    "total": 0,
-    "reps": [],
+    "updated": "2026-10-02T11:14:29.340Z",
+    "total": 20,
+    "reps": [
+      {
+        "rep": "Travis Kizzar",
+        "doors": 20,
+        "team": "selfgen"
+      }
+    ],
     "allowedReps": [
       "travis kizzar"
     ],
