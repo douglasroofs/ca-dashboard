@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-03T10:30:16.667Z",
+    "updated": "2026-10-03T15:19:33.652Z",
     "year": 2026,
     "months": [
       0,
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-03T10:32:20.639Z",
+    "updated": "2026-10-03T15:19:34.301Z",
     "year": 2026,
     "months": [
       0,
