@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-02T14:51:28.646Z",
+    "updated": "2026-10-03T10:30:16.667Z",
     "year": 2026,
     "months": [
       0,
@@ -33,13 +33,13 @@ const SNAPSHOTS = {
           0,
           0,
           4,
-          14,
+          13,
           27,
           15,
           16,
           0
         ],
-        "total": 76
+        "total": 75
       },
       {
         "rep": "Mike Mccarthy",
@@ -48,14 +48,14 @@ const SNAPSHOTS = {
           0,
           3,
           0,
-          8,
+          9,
           5,
           7,
           15,
           11,
           0
         ],
-        "total": 50
+        "total": 51
       },
       {
         "rep": "David Kerns",
@@ -69,9 +69,9 @@ const SNAPSHOTS = {
           2,
           6,
           8,
-          0
+          1
         ],
-        "total": 47
+        "total": 48
       },
       {
         "rep": "Harvey Shoemaker",
@@ -202,6 +202,22 @@ const SNAPSHOTS = {
         "total": 18
       },
       {
+        "rep": "Kyle Higginbotham",
+        "counts": [
+          3,
+          2,
+          0,
+          0,
+          0,
+          12,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 17
+      },
+      {
         "rep": "Steven Arevalo",
         "counts": [
           2,
@@ -216,22 +232,6 @@ const SNAPSHOTS = {
           0
         ],
         "total": 16
-      },
-      {
-        "rep": "Kyle Higginbotham",
-        "counts": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          12,
-          0,
-          0,
-          0,
-          0
-        ],
-        "total": 13
       },
       {
         "rep": "Adam Mulvaney",
@@ -277,9 +277,9 @@ const SNAPSHOTS = {
           1,
           2,
           3,
-          0
+          2
         ],
-        "total": 6
+        "total": 8
       },
       {
         "rep": "nick seward",
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-02T14:53:27.253Z",
+    "updated": "2026-10-03T10:32:20.639Z",
     "year": 2026,
     "months": [
       0,
@@ -391,9 +391,9 @@ const SNAPSHOTS = {
           11,
           13,
           7,
-          1
+          6
         ],
-        "total": 63
+        "total": 68
       }
     ]
   }
