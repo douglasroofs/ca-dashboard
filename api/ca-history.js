@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-03T15:19:33.652Z",
+    "updated": "2026-10-04T11:12:06.038Z",
     "year": 2026,
     "months": [
       0,
@@ -32,14 +32,14 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          5,
           13,
           27,
           15,
           16,
           0
         ],
-        "total": 75
+        "total": 76
       },
       {
         "rep": "Mike Mccarthy",
@@ -48,14 +48,14 @@ const SNAPSHOTS = {
           0,
           3,
           0,
-          9,
+          8,
           5,
           7,
           15,
           11,
           0
         ],
-        "total": 51
+        "total": 50
       },
       {
         "rep": "David Kerns",
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-03T15:19:34.301Z",
+    "updated": "2026-10-04T11:14:12.560Z",
     "year": 2026,
     "months": [
       0,
@@ -391,9 +391,9 @@ const SNAPSHOTS = {
           11,
           13,
           7,
-          6
+          7
         ],
-        "total": 68
+        "total": 69
       }
     ]
   }
