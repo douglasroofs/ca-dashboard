@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-04T11:12:06.038Z",
+    "updated": "2026-10-05T12:24:49.345Z",
     "year": 2026,
     "months": [
       0,
@@ -85,9 +85,9 @@ const SNAPSHOTS = {
           11,
           2,
           5,
-          0
+          1
         ],
-        "total": 43
+        "total": 44
       },
       {
         "rep": "Carol Wright",
@@ -112,14 +112,14 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          3,
+          4,
           6,
           7,
           3,
           7,
           0
         ],
-        "total": 31
+        "total": 32
       },
       {
         "rep": "Andrew  Prickel",
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-04T11:14:12.560Z",
+    "updated": "2026-10-05T12:26:58.764Z",
     "year": 2026,
     "months": [
       0,
