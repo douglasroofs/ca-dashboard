@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-06T12:07:43.754Z",
+    "updated": "2026-10-06T14:32:32.341Z",
     "year": 2026,
     "months": [
       0,
@@ -298,7 +298,7 @@ const SNAPSHOTS = {
         "total": 4
       },
       {
-        "rep": "Paolo Castillo",
+        "rep": "Doug Coffman",
         "counts": [
           0,
           0,
@@ -314,7 +314,7 @@ const SNAPSHOTS = {
         "total": 2
       },
       {
-        "rep": "Doug Coffman",
+        "rep": "Paolo Castillo",
         "counts": [
           0,
           0,
@@ -325,9 +325,9 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          0
+          1
         ],
-        "total": 1
+        "total": 2
       },
       {
         "rep": "sean beasy",
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-06T12:09:52.017Z",
+    "updated": "2026-10-06T14:34:45.138Z",
     "year": 2026,
     "months": [
       0,
