@@ -9,43 +9,48 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-06T14:28:25.422Z",
-    "total": 205,
+    "updated": "2026-10-07T11:55:33.705Z",
+    "total": 297,
     "reps": [
       {
         "rep": "Paolo Castillo",
-        "doors": 58,
+        "doors": 82,
         "team": "selfgen"
-      },
-      {
-        "rep": "Jason Cresswell",
-        "doors": 37,
-        "team": "jack"
-      },
-      {
-        "rep": "Doug Coffman",
-        "doors": 31,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Harvey Shoemaker",
-        "doors": 28,
-        "team": "jack"
       },
       {
         "rep": "Christian Brown",
-        "doors": 28,
+        "doors": 59,
         "team": "mccarthy"
       },
       {
-        "rep": "Andrew Funk",
-        "doors": 12,
-        "team": "selfgen"
+        "rep": "Doug Coffman",
+        "doors": 48,
+        "team": "mccarthy"
+      },
+      {
+        "rep": "Jason Cresswell",
+        "doors": 41,
+        "team": "jack"
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 29,
+        "team": "jack"
       },
       {
         "rep": "David Kerns",
-        "doors": 11,
+        "doors": 22,
         "team": "jack"
+      },
+      {
+        "rep": "Andrew Funk",
+        "doors": 13,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Mike Mccarthy",
+        "doors": 3,
+        "team": "mccarthy"
       }
     ],
     "allowedReps": [
@@ -56,7 +61,6 @@ const SNAPSHOTS = {
       "andrew funk",
       "michael mccarthy",
       "george bechara",
-      "isabelle price",
       "jack obert",
       "harvey shoemaker",
       "robert wilson",
@@ -66,14 +70,14 @@ const SNAPSHOTS = {
       "nick seward",
       "christian brown",
       "david kerns",
-      "carol wright",
       "jason cresswell",
       "liz charles",
       "doug coffman",
       "paolo castillo",
-      "david bouknight@douglasroofs.com",
-      "dave nulanz",
-      "patrick parsons"
+      "patrick parsons",
+      "kaleb carter",
+      "landyn palmer",
+      "lucas morris"
     ],
     "roster": [
       "Kyle Higginbotham",
@@ -84,7 +88,6 @@ const SNAPSHOTS = {
       "Andrew Funk",
       "Mike Mccarthy",
       "George Bechara",
-      "Izzy Price",
       "Jack Obert",
       "Harvey Shoemaker",
       "Robert Mumford-Wilson",
@@ -94,23 +97,23 @@ const SNAPSHOTS = {
       "nick seward",
       "Christian Brown",
       "David Kerns",
-      "Carol Wright",
       "Jason Cresswell",
       "Liz Charles",
       "Doug Coffman",
       "Paolo Castillo",
-      "David Bouknight@douglasroofs.com",
-      "Dave Nulanz",
-      "Patrick Parsons"
+      "Patrick Parsons",
+      "Kaleb Carter",
+      "Landyn Palmer",
+      "Lucas Morris"
     ]
   },
   "richmond": {
-    "updated": "2026-10-06T14:28:26.407Z",
-    "total": 81,
+    "updated": "2026-10-07T11:55:34.763Z",
+    "total": 113,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 81,
+        "doors": 113,
         "team": "selfgen"
       }
     ],

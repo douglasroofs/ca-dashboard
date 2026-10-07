@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-06T14:32:32.341Z",
+    "updated": "2026-10-07T11:53:23.271Z",
     "year": 2026,
     "months": [
       0,
@@ -49,13 +49,13 @@ const SNAPSHOTS = {
           3,
           0,
           9,
-          5,
+          6,
           7,
           15,
           11,
           0
         ],
-        "total": 51
+        "total": 52
       },
       {
         "rep": "David Kerns",
@@ -88,22 +88,6 @@ const SNAPSHOTS = {
           1
         ],
         "total": 45
-      },
-      {
-        "rep": "Carol Wright",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          4,
-          19,
-          10,
-          5,
-          0
-        ],
-        "total": 38
       },
       {
         "rep": "Christian Brown",
@@ -186,22 +170,6 @@ const SNAPSHOTS = {
         "total": 21
       },
       {
-        "rep": "Izzy Price",
-        "counts": [
-          2,
-          0,
-          5,
-          2,
-          5,
-          3,
-          1,
-          0,
-          0,
-          0
-        ],
-        "total": 18
-      },
-      {
         "rep": "Kyle Higginbotham",
         "counts": [
           3,
@@ -223,7 +191,7 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          4,
+          3,
           0,
           3,
           0,
@@ -231,7 +199,7 @@ const SNAPSHOTS = {
           0,
           0
         ],
-        "total": 16
+        "total": 15
       },
       {
         "rep": "Adam Mulvaney",
@@ -364,7 +332,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-06T14:34:45.138Z",
+    "updated": "2026-10-07T11:55:31.684Z",
     "year": 2026,
     "months": [
       0,
