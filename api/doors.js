@@ -9,48 +9,63 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-07T11:55:33.705Z",
-    "total": 297,
+    "updated": "2026-10-08T12:10:36.672Z",
+    "total": 438,
     "reps": [
       {
+        "rep": "Christian Brown",
+        "doors": 102,
+        "team": "mccarthy"
+      },
+      {
         "rep": "Paolo Castillo",
-        "doors": 82,
+        "doors": 88,
         "team": "selfgen"
       },
       {
-        "rep": "Christian Brown",
-        "doors": 59,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Doug Coffman",
-        "doors": 48,
-        "team": "mccarthy"
-      },
-      {
         "rep": "Jason Cresswell",
-        "doors": 41,
+        "doors": 68,
         "team": "jack"
       },
       {
+        "rep": "Doug Coffman",
+        "doors": 67,
+        "team": "mccarthy"
+      },
+      {
         "rep": "Harvey Shoemaker",
-        "doors": 29,
+        "doors": 40,
         "team": "jack"
       },
       {
         "rep": "David Kerns",
-        "doors": 22,
+        "doors": 28,
         "team": "jack"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 13,
+        "doors": 22,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Cris Duarte",
+        "doors": 9,
         "team": "selfgen"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 3,
+        "doors": 7,
         "team": "mccarthy"
+      },
+      {
+        "rep": "Kaleb Carter",
+        "doors": 4,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Landyn Palmer",
+        "doors": 3,
+        "team": "selfgen"
       }
     ],
     "allowedReps": [
@@ -77,7 +92,7 @@ const SNAPSHOTS = {
       "patrick parsons",
       "kaleb carter",
       "landyn palmer",
-      "lucas morris"
+      "cris duarte"
     ],
     "roster": [
       "Kyle Higginbotham",
@@ -104,16 +119,16 @@ const SNAPSHOTS = {
       "Patrick Parsons",
       "Kaleb Carter",
       "Landyn Palmer",
-      "Lucas Morris"
+      "Cris Duarte"
     ]
   },
   "richmond": {
-    "updated": "2026-10-07T11:55:34.763Z",
-    "total": 113,
+    "updated": "2026-10-08T12:10:37.792Z",
+    "total": 130,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 113,
+        "doors": 130,
         "team": "selfgen"
       }
     ],
