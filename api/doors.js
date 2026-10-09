@@ -9,27 +9,27 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-08T12:10:36.672Z",
-    "total": 438,
+    "updated": "2026-10-09T12:02:23.715Z",
+    "total": 582,
     "reps": [
       {
         "rep": "Christian Brown",
-        "doors": 102,
+        "doors": 149,
         "team": "mccarthy"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 88,
+        "doors": 122,
         "team": "selfgen"
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 68,
+        "doors": 91,
         "team": "jack"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 67,
+        "doors": 88,
         "team": "mccarthy"
       },
       {
@@ -39,7 +39,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "David Kerns",
-        "doors": 28,
+        "doors": 32,
         "team": "jack"
       },
       {
@@ -49,22 +49,27 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Cris Duarte",
-        "doors": 9,
+        "doors": 11,
         "team": "selfgen"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 7,
+        "doors": 9,
         "team": "mccarthy"
       },
       {
-        "rep": "Kaleb Carter",
-        "doors": 4,
+        "rep": "Landyn Palmer",
+        "doors": 9,
         "team": "selfgen"
       },
       {
-        "rep": "Landyn Palmer",
-        "doors": 3,
+        "rep": "Kaleb Carter",
+        "doors": 7,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Robert Mumford-Wilson",
+        "doors": 2,
         "team": "selfgen"
       }
     ],
@@ -123,12 +128,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-08T12:10:37.792Z",
-    "total": 130,
+    "updated": "2026-10-09T12:02:25.005Z",
+    "total": 164,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 130,
+        "doors": 164,
         "team": "selfgen"
       }
     ],
