@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-09T12:00:14.666Z",
+    "updated": "2026-10-10T11:16:43.798Z",
     "year": 2026,
     "months": [
       0,
@@ -32,12 +32,12 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          6,
+          5,
           14,
           27,
           15,
           16,
-          2
+          3
         ],
         "total": 80
       },
@@ -46,16 +46,16 @@ const SNAPSHOTS = {
         "counts": [
           1,
           0,
-          2,
+          3,
           0,
-          9,
+          8,
           6,
           7,
           15,
           11,
-          2
+          3
         ],
-        "total": 53
+        "total": 54
       },
       {
         "rep": "David Kerns",
@@ -63,7 +63,7 @@ const SNAPSHOTS = {
           0,
           0,
           11,
-          8,
+          7,
           5,
           7,
           2,
@@ -71,7 +71,7 @@ const SNAPSHOTS = {
           8,
           4
         ],
-        "total": 51
+        "total": 50
       },
       {
         "rep": "Harvey Shoemaker",
@@ -82,12 +82,12 @@ const SNAPSHOTS = {
           2,
           5,
           17,
-          11,
+          10,
           2,
           4,
-          1
+          3
         ],
-        "total": 44
+        "total": 45
       },
       {
         "rep": "Christian Brown",
@@ -101,25 +101,9 @@ const SNAPSHOTS = {
           7,
           3,
           7,
-          2
+          3
         ],
-        "total": 35
-      },
-      {
-        "rep": "Jack Obert",
-        "counts": [
-          0,
-          0,
-          3,
-          5,
-          7,
-          7,
-          4,
-          0,
-          0,
-          0
-        ],
-        "total": 26
+        "total": 36
       },
       {
         "rep": "Andrew  Prickel",
@@ -128,9 +112,25 @@ const SNAPSHOTS = {
           0,
           3,
           3,
-          5,
+          6,
           1,
           14,
+          0,
+          0,
+          0
+        ],
+        "total": 27
+      },
+      {
+        "rep": "Jack Obert",
+        "counts": [
+          0,
+          0,
+          3,
+          5,
+          8,
+          6,
+          4,
           0,
           0,
           0
@@ -193,13 +193,13 @@ const SNAPSHOTS = {
           5,
           2,
           0,
-          4,
+          3,
           0,
           0,
           0,
           0
         ],
-        "total": 15
+        "total": 14
       },
       {
         "rep": "Adam Mulvaney",
@@ -293,9 +293,9 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          1
+          2
         ],
-        "total": 2
+        "total": 3
       },
       {
         "rep": "sean beasy",
@@ -332,7 +332,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-09T12:02:21.385Z",
+    "updated": "2026-10-10T11:18:52.548Z",
     "year": 2026,
     "months": [
       0,
@@ -352,16 +352,16 @@ const SNAPSHOTS = {
         "counts": [
           3,
           2,
-          9,
+          10,
           1,
           6,
           9,
           11,
           13,
           7,
-          11
+          12
         ],
-        "total": 72
+        "total": 74
       }
     ]
   }
