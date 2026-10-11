@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-10T11:16:43.798Z",
+    "updated": "2026-10-11T11:06:19.703Z",
     "year": 2026,
     "months": [
       0,
@@ -50,12 +50,12 @@ const SNAPSHOTS = {
           0,
           8,
           6,
-          7,
+          8,
           15,
           11,
           3
         ],
-        "total": 54
+        "total": 55
       },
       {
         "rep": "David Kerns",
@@ -85,9 +85,9 @@ const SNAPSHOTS = {
           10,
           2,
           4,
-          3
+          4
         ],
-        "total": 45
+        "total": 46
       },
       {
         "rep": "Christian Brown",
@@ -332,7 +332,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-10T11:18:52.548Z",
+    "updated": "2026-10-11T11:08:03.340Z",
     "year": 2026,
     "months": [
       0,
@@ -350,10 +350,10 @@ const SNAPSHOTS = {
       {
         "rep": "Travis Kizzar",
         "counts": [
-          3,
-          2,
-          10,
-          1,
+          0,
+          0,
+          0,
+          0,
           6,
           9,
           11,
@@ -361,7 +361,7 @@ const SNAPSHOTS = {
           7,
           12
         ],
-        "total": 74
+        "total": 58
       }
     ]
   }
