@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-11T11:06:19.703Z",
+    "updated": "2026-10-11T11:30:14.184Z",
     "year": 2026,
     "months": [
       0,
@@ -332,7 +332,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-11T11:08:03.340Z",
+    "updated": "2026-10-11T11:32:26.214Z",
     "year": 2026,
     "months": [
       0,
@@ -350,10 +350,10 @@ const SNAPSHOTS = {
       {
         "rep": "Travis Kizzar",
         "counts": [
-          0,
-          0,
-          0,
-          0,
+          3,
+          2,
+          10,
+          1,
           6,
           9,
           11,
@@ -361,7 +361,7 @@ const SNAPSHOTS = {
           7,
           12
         ],
-        "total": 58
+        "total": 74
       }
     ]
   }
