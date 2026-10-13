@@ -9,23 +9,38 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-11T11:32:28.235Z",
-    "total": 959,
+    "updated": "2026-10-13T12:51:42.567Z",
+    "total": 1203,
     "reps": [
       {
         "rep": "Christian Brown",
-        "doors": 202,
+        "doors": 211,
         "team": "mccarthy"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 179,
+        "doors": 191,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Cris Duarte",
+        "doors": 139,
         "team": "selfgen"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 133,
+        "doors": 135,
         "team": "mccarthy"
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 125,
+        "team": "jack"
+      },
+      {
+        "rep": "Landyn Palmer",
+        "doors": 116,
+        "team": "selfgen"
       },
       {
         "rep": "Jason Cresswell",
@@ -33,39 +48,24 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
-        "rep": "Harvey Shoemaker",
-        "doors": 91,
-        "team": "jack"
-      },
-      {
-        "rep": "Cris Duarte",
-        "doors": 79,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Landyn Palmer",
-        "doors": 54,
-        "team": "selfgen"
+        "rep": "Mike Mccarthy",
+        "doors": 61,
+        "team": "mccarthy"
       },
       {
         "rep": "David Kerns",
-        "doors": 38,
+        "doors": 46,
         "team": "jack"
       },
       {
         "rep": "Kaleb Carter",
-        "doors": 26,
+        "doors": 36,
         "team": "selfgen"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 25,
+        "doors": 28,
         "team": "selfgen"
-      },
-      {
-        "rep": "Mike Mccarthy",
-        "doors": 17,
-        "team": "mccarthy"
       },
       {
         "rep": "Robert Mumford-Wilson",
@@ -88,6 +88,7 @@ const SNAPSHOTS = {
       "george bechara",
       "jack obert",
       "harvey shoemaker",
+      "kevin mahan",
       "robert wilson",
       "andrew prickel",
       "mike schoultz",
@@ -115,6 +116,7 @@ const SNAPSHOTS = {
       "George Bechara",
       "Jack Obert",
       "Harvey Shoemaker",
+      "Kevin Mahan",
       "Robert Mumford-Wilson",
       "Andrew  Prickel",
       "mike schoultz",
@@ -133,12 +135,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-11T11:32:29.324Z",
-    "total": 171,
+    "updated": "2026-10-13T12:51:43.828Z",
+    "total": 174,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 171,
+        "doors": 174,
         "team": "selfgen"
       }
     ],
