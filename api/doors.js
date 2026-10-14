@@ -9,38 +9,38 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-13T12:51:42.567Z",
-    "total": 1203,
+    "updated": "2026-10-14T10:24:03.927Z",
+    "total": 1580,
     "reps": [
       {
+        "rep": "Cris Duarte",
+        "doors": 238,
+        "team": "selfgen"
+      },
+      {
         "rep": "Christian Brown",
-        "doors": 211,
+        "doors": 234,
         "team": "mccarthy"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 191,
+        "doors": 209,
         "team": "selfgen"
-      },
-      {
-        "rep": "Cris Duarte",
-        "doors": 139,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Doug Coffman",
-        "doors": 135,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Harvey Shoemaker",
-        "doors": 125,
-        "team": "jack"
       },
       {
         "rep": "Landyn Palmer",
-        "doors": 116,
+        "doors": 178,
         "team": "selfgen"
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 158,
+        "team": "jack"
+      },
+      {
+        "rep": "Doug Coffman",
+        "doors": 145,
+        "team": "mccarthy"
       },
       {
         "rep": "Jason Cresswell",
@@ -49,27 +49,32 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 61,
+        "doors": 82,
         "team": "mccarthy"
       },
       {
         "rep": "David Kerns",
-        "doors": 46,
+        "doors": 68,
         "team": "jack"
       },
       {
         "rep": "Kaleb Carter",
-        "doors": 36,
+        "doors": 61,
         "team": "selfgen"
       },
       {
+        "rep": "Kevin Mahan",
+        "doors": 44,
+        "team": "noteam"
+      },
+      {
         "rep": "Andrew Funk",
-        "doors": 28,
+        "doors": 33,
         "team": "selfgen"
       },
       {
         "rep": "Robert Mumford-Wilson",
-        "doors": 4,
+        "doors": 19,
         "team": "selfgen"
       },
       {
@@ -135,12 +140,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-13T12:51:43.828Z",
-    "total": 174,
+    "updated": "2026-10-14T10:24:05.344Z",
+    "total": 185,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 174,
+        "doors": 185,
         "team": "selfgen"
       }
     ],
