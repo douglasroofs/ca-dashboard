@@ -9,37 +9,37 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-14T10:24:03.927Z",
-    "total": 1580,
+    "updated": "2026-10-15T10:08:18.612Z",
+    "total": 1876,
     "reps": [
       {
         "rep": "Cris Duarte",
-        "doors": 238,
+        "doors": 373,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Paolo Castillo",
+        "doors": 249,
         "team": "selfgen"
       },
       {
         "rep": "Christian Brown",
-        "doors": 234,
+        "doors": 244,
         "team": "mccarthy"
       },
       {
-        "rep": "Paolo Castillo",
-        "doors": 209,
-        "team": "selfgen"
-      },
-      {
         "rep": "Landyn Palmer",
-        "doors": 178,
+        "doors": 220,
         "team": "selfgen"
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 158,
+        "doors": 199,
         "team": "jack"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 145,
+        "doors": 156,
         "team": "mccarthy"
       },
       {
@@ -49,17 +49,17 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 82,
+        "doors": 86,
         "team": "mccarthy"
       },
       {
         "rep": "David Kerns",
-        "doors": 68,
+        "doors": 71,
         "team": "jack"
       },
       {
         "rep": "Kaleb Carter",
-        "doors": 61,
+        "doors": 67,
         "team": "selfgen"
       },
       {
@@ -69,12 +69,12 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Andrew Funk",
-        "doors": 33,
+        "doors": 36,
         "team": "selfgen"
       },
       {
         "rep": "Robert Mumford-Wilson",
-        "doors": 19,
+        "doors": 20,
         "team": "selfgen"
       },
       {
@@ -108,7 +108,8 @@ const SNAPSHOTS = {
       "patrick parsons",
       "kaleb carter",
       "landyn palmer",
-      "cris duarte"
+      "cris duarte",
+      "lucas morris"
     ],
     "roster": [
       "Kyle Higginbotham",
@@ -136,16 +137,17 @@ const SNAPSHOTS = {
       "Patrick Parsons",
       "Kaleb Carter",
       "Landyn Palmer",
-      "Cris Duarte"
+      "Cris Duarte",
+      "Lucas Morris"
     ]
   },
   "richmond": {
-    "updated": "2026-10-14T10:24:05.344Z",
-    "total": 185,
+    "updated": "2026-10-15T10:08:20.363Z",
+    "total": 189,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 185,
+        "doors": 189,
         "team": "selfgen"
       }
     ],

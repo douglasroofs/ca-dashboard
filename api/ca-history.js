@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-14T10:21:47.261Z",
+    "updated": "2026-10-15T10:06:01.682Z",
     "year": 2026,
     "months": [
       0,
@@ -32,14 +32,14 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          7,
           14,
           27,
           15,
           16,
           5
         ],
-        "total": 81
+        "total": 84
       },
       {
         "rep": "Mike Mccarthy",
@@ -53,9 +53,9 @@ const SNAPSHOTS = {
           7,
           15,
           11,
-          4
+          5
         ],
-        "total": 55
+        "total": 56
       },
       {
         "rep": "David Kerns",
@@ -82,12 +82,12 @@ const SNAPSHOTS = {
           2,
           5,
           16,
-          10,
+          11,
           2,
           4,
           5
         ],
-        "total": 46
+        "total": 47
       },
       {
         "rep": "Christian Brown",
@@ -96,30 +96,14 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          3,
+          4,
           6,
           7,
           3,
           7,
-          5
+          4
         ],
         "total": 36
-      },
-      {
-        "rep": "Jack Obert",
-        "counts": [
-          0,
-          0,
-          3,
-          5,
-          8,
-          6,
-          4,
-          0,
-          0,
-          0
-        ],
-        "total": 26
       },
       {
         "rep": "Andrew  Prickel",
@@ -149,6 +133,22 @@ const SNAPSHOTS = {
           0,
           0,
           3,
+          0
+        ],
+        "total": 25
+      },
+      {
+        "rep": "Jack Obert",
+        "counts": [
+          0,
+          0,
+          3,
+          5,
+          8,
+          5,
+          4,
+          0,
+          0,
           0
         ],
         "total": 25
@@ -208,14 +208,14 @@ const SNAPSHOTS = {
           0,
           3,
           1,
-          0,
+          1,
           6,
           0,
           0,
           0,
           0
         ],
-        "total": 11
+        "total": 12
       },
       {
         "rep": "Jason Cresswell",
@@ -348,7 +348,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-14T10:24:01.461Z",
+    "updated": "2026-10-15T10:08:16.122Z",
     "year": 2026,
     "months": [
       0,
