@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-16T09:58:19.075Z",
+    "updated": "2026-10-17T09:31:27.723Z",
     "year": 2026,
     "months": [
       0,
@@ -32,24 +32,24 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          6,
           14,
           27,
           15,
           16,
           5
         ],
-        "total": 81
+        "total": 83
       },
       {
         "rep": "Mike Mccarthy",
         "counts": [
           1,
           0,
-          3,
+          2,
           0,
           9,
-          5,
+          6,
           7,
           15,
           11,
@@ -65,13 +65,13 @@ const SNAPSHOTS = {
           11,
           7,
           5,
-          7,
+          8,
           2,
           6,
           8,
           6
         ],
-        "total": 52
+        "total": 53
       },
       {
         "rep": "Harvey Shoemaker",
@@ -80,14 +80,14 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          5,
+          6,
           16,
           11,
           2,
           4,
           6
         ],
-        "total": 48
+        "total": 49
       },
       {
         "rep": "Christian Brown",
@@ -191,7 +191,7 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          4,
+          3,
           0,
           3,
           0,
@@ -199,7 +199,7 @@ const SNAPSHOTS = {
           0,
           0
         ],
-        "total": 16
+        "total": 15
       },
       {
         "rep": "Adam Mulvaney",
@@ -348,7 +348,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-16T10:00:37.612Z",
+    "updated": "2026-10-17T09:33:48.968Z",
     "year": 2026,
     "months": [
       0,
@@ -375,9 +375,9 @@ const SNAPSHOTS = {
           11,
           13,
           7,
-          14
+          16
         ],
-        "total": 76
+        "total": 78
       }
     ]
   }
