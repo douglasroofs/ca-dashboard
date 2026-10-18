@@ -9,17 +9,17 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-17T09:33:51.656Z",
-    "total": 2156,
+    "updated": "2026-10-18T09:47:26.179Z",
+    "total": 2274,
     "reps": [
       {
         "rep": "Cris Duarte",
-        "doors": 464,
+        "doors": 552,
         "team": "selfgen"
       },
       {
         "rep": "Landyn Palmer",
-        "doors": 311,
+        "doors": 325,
         "team": "selfgen"
       },
       {
@@ -29,7 +29,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Christian Brown",
-        "doors": 248,
+        "doors": 253,
         "team": "mccarthy"
       },
       {
@@ -39,7 +39,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Doug Coffman",
-        "doors": 156,
+        "doors": 157,
         "team": "mccarthy"
       },
       {
@@ -49,28 +49,28 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 85,
+        "doors": 86,
         "team": "mccarthy"
       },
       {
+        "rep": "David Kerns",
+        "doors": 76,
+        "team": "jack"
+      },
+      {
         "rep": "Kaleb Carter",
-        "doors": 73,
+        "doors": 75,
         "team": "selfgen"
       },
       {
-        "rep": "David Kerns",
-        "doors": 73,
-        "team": "jack"
+        "rep": "Andrew Funk",
+        "doors": 44,
+        "team": "selfgen"
       },
       {
         "rep": "Kevin Mahan",
         "doors": 44,
         "team": "noteam"
-      },
-      {
-        "rep": "Andrew Funk",
-        "doors": 41,
-        "team": "selfgen"
       },
       {
         "rep": "Robert Mumford-Wilson",
@@ -79,7 +79,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Adam Mulvaney",
-        "doors": 3,
+        "doors": 4,
         "team": "noteam"
       },
       {
@@ -147,12 +147,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-17T09:33:53.430Z",
-    "total": 192,
+    "updated": "2026-10-18T09:47:28.170Z",
+    "total": 193,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 192,
+        "doors": 193,
         "team": "selfgen"
       }
     ],

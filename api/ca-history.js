@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-17T09:31:27.723Z",
+    "updated": "2026-10-18T09:45:01.603Z",
     "year": 2026,
     "months": [
       0,
@@ -32,14 +32,14 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          6,
+          11,
           14,
           27,
           15,
           16,
-          5
+          7
         ],
-        "total": 83
+        "total": 90
       },
       {
         "rep": "Mike Mccarthy",
@@ -48,14 +48,14 @@ const SNAPSHOTS = {
           0,
           2,
           0,
-          9,
+          8,
           6,
           7,
           15,
           11,
           5
         ],
-        "total": 56
+        "total": 55
       },
       {
         "rep": "David Kerns",
@@ -80,8 +80,8 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          6,
-          16,
+          5,
+          17,
           11,
           2,
           4,
@@ -96,14 +96,30 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          3,
-          6,
+          5,
+          7,
           7,
           3,
           7,
           4
         ],
-        "total": 35
+        "total": 38
+      },
+      {
+        "rep": "Jack Obert",
+        "counts": [
+          0,
+          0,
+          3,
+          5,
+          8,
+          7,
+          4,
+          0,
+          0,
+          0
+        ],
+        "total": 27
       },
       {
         "rep": "Andrew  Prickel",
@@ -112,14 +128,14 @@ const SNAPSHOTS = {
           0,
           3,
           3,
-          5,
+          6,
           1,
           14,
           0,
           0,
           0
         ],
-        "total": 26
+        "total": 27
       },
       {
         "rep": "Marc Mitchell",
@@ -133,22 +149,6 @@ const SNAPSHOTS = {
           0,
           0,
           3,
-          0
-        ],
-        "total": 25
-      },
-      {
-        "rep": "Jack Obert",
-        "counts": [
-          0,
-          0,
-          3,
-          5,
-          8,
-          5,
-          4,
-          0,
-          0,
           0
         ],
         "total": 25
@@ -191,9 +191,9 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          3,
+          2,
           0,
-          3,
+          4,
           0,
           0,
           0,
@@ -348,7 +348,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-17T09:33:48.968Z",
+    "updated": "2026-10-18T09:47:23.385Z",
     "year": 2026,
     "months": [
       0,
