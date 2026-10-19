@@ -108,7 +108,7 @@ function jlUrl(dateType, dq, page) {
 async function get(path) {
   let a = await getToken();
   let r = await fetch(V1 + path, { headers: HDR(a.t) });
-  if (r.status === 401 || r.status === 403) {
+  if (r.status === 401 || r.status === 403 || r.status === 409) { // 409 = Leap session bound to another company/login; re-login once
     invalidate(a.gen);
     a = await getToken();
     r = await fetch(V1 + path, { headers: HDR(a.t) });

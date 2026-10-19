@@ -260,7 +260,7 @@ const HDR = (t) => ({ Authorization: 'Bearer ' + t, Accept: 'application/json', 
 async function get(path) {
   let a = await token();
   let r = await fetch(V1 + path, { headers: HDR(a.t) });
-  if (r.status === 401 || r.status === 403) {
+  if (r.status === 401 || r.status === 403 || r.status === 409) { // 409 = Leap session bound to another company/login; re-login once
     invalidate(a.g);
     a = await token();
     r = await fetch(V1 + path, { headers: HDR(a.t) });
