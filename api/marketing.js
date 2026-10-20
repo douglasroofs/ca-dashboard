@@ -49,13 +49,18 @@ const MARKETING_DIVISION = 7399;
 // August is FINAL. partialMonth is null until September is read mid-month.
 //   2026-09: Sep 1-9, 2026, read 2026-09-09 from the MCC Accounts > Performance table:
 //            477-447-4205 $3,383.10 + 819-103-9280 $1,053.65 + 552-749-0839 $171.82 = $4,608.57 (168-374-3174 $0.00).
-//            PARTIAL - replace with the Sep 1-30 figure in early October and set partialMonth back to null.
+//            (superseded below)
+//   2026-09: Sep 1-30, 2026 ("Last month"), read 2026-10-20: 477-447-4205 $17,521.37 + 819-103-9280 $2,769.83
+//            + 552-749-0839 $639.72 = $20,930.92 (168-374-3174 $0.00). FINAL.
+//   2026-10: Oct 1-20, 2026, read 2026-10-20: 477-447-4205 $5,838.06 + 819-103-9280 $3,149.12
+//            + 552-749-0839 $475.81 = $9,462.99 (168-374-3174 $0.00).
+//            PARTIAL - replace with the Oct 1-31 figure in early November and set partialMonth back to null.
 const SPEND = {
   currency: 'USD',
-  partialMonth: '2026-09',
+  partialMonth: '2026-10',
   pendingCredit: 3484.78,
   accounts: ['477-447-4205 NOVA', '819-103-9280 MD-labelled', '552-749-0839 (added Aug 2026)'],
-  byMonth: { '2026-06': 21867.14, '2026-07': 22428.70, '2026-08': 21993.70, '2026-09': 4608.57 },
+  byMonth: { '2026-06': 21867.14, '2026-07': 22428.70, '2026-08': 21993.70, '2026-09': 20930.92, '2026-10': 9462.99 },
 };
 
 // --- Facebook / Meta ads. Live from the Meta Marketing API when the env vars
