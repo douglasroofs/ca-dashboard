@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-20T10:12:35.541Z",
+    "updated": "2026-10-21T10:20:21.143Z",
     "year": 2026,
     "months": [
       0,
@@ -32,14 +32,14 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          8,
+          6,
           14,
           27,
           15,
           16,
-          11
+          12
         ],
-        "total": 91
+        "total": 90
       },
       {
         "rep": "Mike Mccarthy",
@@ -48,14 +48,14 @@ const SNAPSHOTS = {
           0,
           2,
           0,
-          9,
+          8,
           6,
           7,
           15,
           11,
           5
         ],
-        "total": 56
+        "total": 55
       },
       {
         "rep": "David Kerns",
@@ -80,14 +80,14 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          6,
+          5,
           17,
-          11,
+          10,
           2,
           4,
           6
         ],
-        "total": 50
+        "total": 48
       },
       {
         "rep": "Christian Brown",
@@ -144,14 +144,14 @@ const SNAPSHOTS = {
           2,
           4,
           5,
-          5,
+          4,
           1,
           0,
           0,
           3,
           0
         ],
-        "total": 25
+        "total": 24
       },
       {
         "rep": "George Bechara",
@@ -160,14 +160,14 @@ const SNAPSHOTS = {
           0,
           2,
           5,
-          3,
+          2,
           4,
           1,
           1,
           3,
           0
         ],
-        "total": 21
+        "total": 20
       },
       {
         "rep": "Kyle Higginbotham",
@@ -218,6 +218,22 @@ const SNAPSHOTS = {
         "total": 12
       },
       {
+        "rep": "Robert Mumford-Wilson",
+        "counts": [
+          4,
+          0,
+          0,
+          3,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "total": 10
+      },
+      {
         "rep": "Jason Cresswell",
         "counts": [
           0,
@@ -230,22 +246,6 @@ const SNAPSHOTS = {
           2,
           3,
           3
-        ],
-        "total": 9
-      },
-      {
-        "rep": "Robert Mumford-Wilson",
-        "counts": [
-          4,
-          0,
-          0,
-          3,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0
         ],
         "total": 9
       },
@@ -277,9 +277,9 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          3
+          5
         ],
-        "total": 4
+        "total": 6
       },
       {
         "rep": "Paolo Castillo",
@@ -293,9 +293,9 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          3
+          4
         ],
-        "total": 4
+        "total": 5
       },
       {
         "rep": "nick seward",
@@ -348,7 +348,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-20T10:14:54.963Z",
+    "updated": "2026-10-21T10:22:43.010Z",
     "year": 2026,
     "months": [
       0,
@@ -375,9 +375,9 @@ const SNAPSHOTS = {
           11,
           13,
           7,
-          18
+          21
         ],
-        "total": 80
+        "total": 83
       }
     ]
   }
