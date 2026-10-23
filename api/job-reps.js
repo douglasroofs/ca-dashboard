@@ -15,6 +15,7 @@
 //   GET /api/job-reps?punchout=1&probe=<job number> -> that job's customer flags / stage (shape check)
 //   GET /api/job-reps?punchout=1&probe=1&paths=/x,/y -> raw Leap GETs for exploration
 //   POST /api/job-reps?punchout=1&backfill=1 -> CA contingency-date backfill (see backfill() below)
+//   POST /api/job-reps?leapwh=1  -> Leap webhook receiver, listen-only for now (see leapWebhook() below)
 // Age = earliest of the Punch Out stage entry date (stage_last_modified) or the night
 // scripts/refresh-punchout.js first saw the customer flagged (data/punchout-ledger.json).
 // Leap does not stamp when a flag was added.
@@ -266,6 +267,38 @@ async function backfill(req, res) {
   res.status(200).json({ dry, requested: rows.length, processed: results.length, summary, results });
 }
 
+// ── Leap webhook receiver (2026-10-23, STEP 1: LISTEN ONLY) ─────────────────
+// POST /api/job-reps?leapwh=1  <- registered in Leap > Settings > Webhooks.
+// Goal: auto-fill the CA Signed Date when a "CA 1" template document is Accepted (e-signed).
+// Step 1 only records what Leap sends so the real payload shape is known before any write
+// logic exists: no Leap login (so it never pauses anyone's Leap session) and no writes.
+// Each event goes to the Vercel runtime log, tagged [leap-webhook].
+// GET /api/job-reps?leapwh=1&peek=1 -> the last events this warm instance saw (dashboard password
+// required, because payloads carry customer details).
+const LEAP_WH_SEEN = [];
+async function leapWebhook(req, res, url) {
+  if (req.method === 'GET') {
+    if (url.searchParams.get('peek') !== '1') return res.status(200).json({ ok: true, mode: 'listen-only' });
+    if (!dashAuthed(req)) return res.status(401).json({ error: 'dashboard password required' });
+    return res.status(200).json({ count: LEAP_WH_SEEN.length, events: LEAP_WH_SEEN });
+  }
+  let body = req.body;
+  if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { /* keep raw string */ } }
+  const h = req.headers || {};
+  const entry = {
+    at: new Date().toISOString(),
+    method: req.method,
+    content_type: h['content-type'] || null,
+    user_agent: h['user-agent'] || null,
+    query: Object.fromEntries(url.searchParams.entries()),
+    body,
+  };
+  LEAP_WH_SEEN.unshift(entry);
+  if (LEAP_WH_SEEN.length > 25) LEAP_WH_SEEN.length = 25;
+  console.log('[leap-webhook]', JSON.stringify(entry).slice(0, 20000));
+  return res.status(200).json({ ok: true });
+}
+
 async function punchout(req, res, url) {
   if (url.searchParams.get('probe') === 'login') { // why is Leap refusing the login? (body only, never the credentials)
     const username = process.env.JP_USERNAME, password = process.env.JP_PASSWORD;
@@ -354,6 +387,7 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     const url = new URL(req.url, 'http://localhost');
     res.setHeader('Cache-Control', 'no-store');
+    if (url.searchParams.get('leapwh') === '1') return await leapWebhook(req, res, url);
     if (url.searchParams.get('punchout') === '1') return await punchout(req, res, url);
     const debug = url.searchParams.get('debug');
     const token = await getToken();
