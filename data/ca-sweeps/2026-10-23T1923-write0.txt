@@ -1,0 +1,3 @@
+CA check: ALL open jobs, dry run
+pages 1, jobs 0, updated recently 0, already dated 0, documents checked 0, failed pages 0
+No new signed CAs.
