@@ -301,7 +301,7 @@ async function leapWebhook(req, res, url) {
 }
 
 // ── CA auto-date from signed Leap documents (2026-10-23) ─────────────────────
-// GET /api/job-reps?cacheck=1[&hours=3][&write=1][&job=<job number>]
+// GET /api/job-reps?cacheck=1[&page=N][&hours=3][&write=1][&job=<job number>]
 // Leap webhooks do not fire on document signing (tested 2026-10-23), and /proposals can only be
 // listed per job, so this polls instead. Run every 30 min by .github/workflows/ca-check.yml.
 //   1. page through open jobs; keep those updated in the last `hours` with no Contingency Contract
@@ -335,22 +335,21 @@ async function caCheck(req, res, url) {
   const onlyJob = (url.searchParams.get('job') || '').trim();
   const since = started - hours * 3600000;
   const token = await getToken();
-  const stats = { pages: 0, jobs_seen: 0, recent: 0, already_dated: 0, checked: 0 };
+  const stats = { jobs_seen: 0, recent: 0, already_dated: 0, checked: 0 };
   const candidates = [];
   if (onlyJob) {
     const j = await leapGet(token, `/jobs?job_number=${encodeURIComponent(onlyJob)}&limit=1&include_lost_jobs=1&with_archived=1&includes[]=insurance_details&includes[]=customer`);
     (j.data || []).forEach((job) => candidates.push(job));
     stats.jobs_seen = candidates.length;
   } else {
-    for (let page = 1; page <= 40; page++) {
-      if (Date.now() - started > 40000) { stats.stopped_early = `time limit at page ${page}`; break; }
-      const j = await leapGet(token, `/jobs?limit=100&page=${page}&includes[]=insurance_details&includes[]=customer`);
-      const arr = j.data || [];
-      stats.pages = page; stats.jobs_seen += arr.length;
-      arr.forEach((job) => { if (leapUtc(job.updated_at) >= since) candidates.push(job); });
-      const pg = j.meta && j.meta.pagination;
-      if (!arr.length || (pg && pg.current_page >= pg.total_pages)) break;
-    }
+    // Leap takes ~18 s per 100 jobs, so one call reads ONE page (&page=N, default 1) and reports
+    // total_pages; scripts/ca-check.js walks the pages so each call stays under the 60 s limit.
+    const page = Math.max(1, Number(url.searchParams.get('page')) || 1);
+    const j = await leapGet(token, `/jobs?limit=100&page=${page}&includes[]=insurance_details&includes[]=customer`);
+    const arr = j.data || [];
+    const pg = (j.meta && j.meta.pagination) || {};
+    stats.page = page; stats.total_pages = pg.total_pages || page; stats.jobs_seen = arr.length;
+    arr.forEach((job) => { if (leapUtc(job.updated_at) >= since) candidates.push(job); });
   }
   stats.recent = candidates.length;
   const results = [];
