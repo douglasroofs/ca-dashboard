@@ -379,7 +379,10 @@ async function caCheck(req, res, url) {
     const arr = j.data || [];
     const pg = (j.meta && j.meta.pagination) || {};
     stats.page = page; stats.total_pages = pg.total_pages || page; stats.jobs_seen = arr.length;
-    arr.forEach((job) => { if (leapUtc(job.updated_at) >= since) candidates.push(job); });
+    // Also every job CREATED in the last `newdays` days: SalesRabbit creates the Leap job and uploads the
+    // signed CA within minutes, and it is not proven that an upload bumps updated_at.
+    const newSince = started - Math.max(0, Number(url.searchParams.get('newdays') || 2)) * 86400000;
+    arr.forEach((job) => { if (leapUtc(job.updated_at) >= since || leapUtc(job.created_at) >= newSince) candidates.push(job); });
   }
   stats.recent = candidates.length;
   const results = [];
@@ -406,6 +409,29 @@ async function caCheck(req, res, url) {
   const out = { write, hours, since: new Date(since).toISOString(), seconds: Math.round((Date.now() - started) / 100) / 10, stats, results };
   console.log('[ca-check]', JSON.stringify(out).slice(0, 8000));
   res.status(200).json(out);
+}
+
+// ── CA ledger feed (2026-10-23) ──────────────────────────────────────────────
+// GET /api/job-reps?cacounts=1&page=N -> one page of OPEN jobs: those with a Contingency Contract Signed
+// Date (rep = customer rep, same as DataBuilder's "Sales Rep / Customer Rep") and the job numbers without
+// one. scripts/refresh-ca-ledger.js merges this into data/ca-ledger.json nightly; Leap's job list never
+// returns lost/archived jobs, so the ledger keeps every job it has seen dated (they stay counted).
+async function caCounts(req, res, url) {
+  const token = await getToken();
+  const page = Math.max(1, Number(url.searchParams.get('page')) || 1);
+  const j = await leapGet(token, `/jobs?limit=100&page=${page}&includes[]=insurance_details&includes[]=customer&includes[]=customer.rep&includes[]=division`);
+  const arr = j.data || [];
+  const pg = (j.meta && j.meta.pagination) || {};
+  const dated = [], undated = [];
+  arr.forEach((job) => {
+    const ins = unwrap(job.insurance_details) || {};
+    const d = ins.contingency_contract_signed_date;
+    const c = unwrap(job.customer) || {};
+    if (d && d !== '0000-00-00' && ISO_DATE.test(String(d).slice(0, 10))) {
+      dated.push({ job: job.number, date: String(d).slice(0, 10), rep: clean(nameOf(unwrap(c.rep))) || 'Unassigned', customer: custName(c), division: (unwrap(job.division) || {}).name || null });
+    } else undated.push(job.number);
+  });
+  res.status(200).json({ page, total_pages: pg.total_pages || page, jobs: arr.length, dated, undated });
 }
 
 async function punchout(req, res, url) {
@@ -506,6 +532,7 @@ module.exports = async (req, res) => {
     res.setHeader('Cache-Control', 'no-store');
     if (url.searchParams.get('leapwh') === '1') return await leapWebhook(req, res, url);
     if (url.searchParams.get('cacheck') === '1') return await caCheck(req, res, url);
+    if (url.searchParams.get('cacounts') === '1') return await caCounts(req, res, url);
     if (url.searchParams.get('punchout') === '1') return await punchout(req, res, url);
     const debug = url.searchParams.get('debug');
     const token = await getToken();

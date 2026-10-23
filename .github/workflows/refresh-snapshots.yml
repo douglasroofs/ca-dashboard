@@ -27,7 +27,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - uses: actions/checkout@v4
@@ -52,12 +52,19 @@ jobs:
           SUMMARY_FILE: ${{ runner.temp }}/refresh-summary.txt
         run: node scripts/refresh-punchout.js
 
+      - name: Refresh CA ledger (dashboard Leap CA counts)
+        if: always()
+        env:
+          BASE_URL: ${{ inputs.base_url || 'https://stats.douglasroofs.com' }}
+          SUMMARY_FILE: ${{ runner.temp }}/refresh-summary.txt
+        run: node scripts/refresh-ca-ledger.js
+
       - name: Commit updated snapshots
         if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add api/ca-history.js api/doors.js data/punchout-ledger.json
+          git add api/ca-history.js api/doors.js data/punchout-ledger.json data/ca-ledger.json
           if git diff --cached --quiet; then
             echo "No snapshot changes."
             exit 0

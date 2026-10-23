@@ -15,11 +15,31 @@ const DATA = {
   herndon: { updated: "2026-10-20", leapCA: {"Adam Mulvaney":[0,0,0,0,0,0,2,0,2,0,0,0],"Aiden Glonek":[0,0,0,0,0,0,1,1,0,0,0,0],"Alfred Duncan":[0,0,0,0,2,4,7,1,1,3,0,0],"Andrew Funk":[0,0,0,0,4,12,22,8,19,16,0,0],"Andrew Prickel":[0,0,1,0,2,13,14,6,6,3,0,0],"Carol Wright":[0,0,0,0,0,0,12,12,7,1,0,0],"Christian Brown":[0,0,0,0,0,2,5,0,3,3,0,0],"David Kerns":[0,0,0,0,0,7,1,7,8,9,0,0],"Doug Coffman":[0,0,0,0,0,0,0,0,4,7,0,0],"Ethan Wiley":[0,0,0,0,0,0,2,2,0,0,0,0],"George Bechara":[0,0,0,0,2,5,1,1,3,0,0,0],"Harvey Shoemaker":[0,1,2,0,0,7,10,3,10,5,0,0],"Isabelle Price":[0,0,0,0,0,0,1,1,1,1,0,0],"Jack Obert":[3,0,0,0,2,4,4,5,2,2,0,0],"Jason Cresswell":[0,0,0,0,0,0,0,2,3,4,0,0],"Kevin Mahan":[1,2,0,0,1,4,6,1,3,7,0,0],"Marc Mitchell":[0,0,0,0,0,1,0,0,1,1,0,0],"Michael McCarthy":[0,0,2,1,0,6,10,15,7,3,0,0],"Mike Mendez":[0,0,0,1,2,1,0,0,0,0,0,0],"Nick Seward":[3,3,3,0,2,0,1,0,2,0,0,0],"Paolo Castillo":[0,0,0,0,0,0,0,0,0,1,0,0],"Patrick Parsons":[0,0,0,0,0,0,0,0,0,1,0,0],"Robert Wilson":[1,1,2,1,0,1,0,0,1,2,0,0],"Sean Bennett":[0,0,0,1,0,0,0,0,0,0,0,0],"Steven Arevalo":[3,1,2,0,0,1,0,2,1,1,0,0],"Travis Kizzar":[0,0,0,0,0,0,0,0,2,17,0,0],"Zeke King":[0,0,0,0,0,0,0,1,0,0,0,0]}, approved: {"Adam Mulvaney":258139.13,"Alfred Duncan":473927.94,"Andrew Funk":228960.22,"Andrew Prickel":1258096.94,"Carol Wright":13811.11,"Christian Brown":233760.65,"David Kerns":337814.86,"George Bechara":347469.86,"Haley Barry":2645891.25,"Harvey Shoemaker":372960.06,"Isabelle Price":158834.16,"Jack Obert":425282.18,"James Moffett":71421.37,"Kelly Alston":25032.86,"Kevin Mahan":243252.51,"Kyle Higginbotham":20275.6,"Marc Mitchell":290971.78,"Michael McCarthy":497079.17,"Mike Mendez":6323.57,"Mike Schoultz":25955,"Nick  Seward":201043.02,"Robert Wilson":322378.13,"Steven Arevalo":305643.29}, contract: {"Adam Mulvaney":213730.97,"Alfred Duncan":500008.43,"Andrew Funk":152352.64,"Andrew Prickel":1075202.82,"Christian Brown":177979.98,"David Kerns":249726.65,"George Bechara":219618.24,"Haley Barry":2892567.97,"Harvey Shoemaker":335756.78,"Isabelle Price":170788.89,"Jack Obert":362013.04,"James Moffett":71421.37,"Kelly Alston":25032.86,"Kevin Mahan":271267.19,"Kyle Higginbotham":20275.6,"Marc Mitchell":165609.48,"Michael McCarthy":446669.28,"Mike Mendez":6323.57,"Mike Schoultz":25955,"Nick  Seward":172213.17,"Robert Wilson":317432.43,"Steven Arevalo":240164.12} },
   richmond: { updated: "2026-09-23", leapCA: {"Joshua Baca":[0,0,0,0,0,11,5,0,0,0,0,0],"Justin Coghill":[0,0,0,0,0,6,1,0,0,0,0,0],"Travis Kizzar":[0,0,0,0,0,10,13,14,4,0,0,0],"Brandon Simmons":[0,0,0,0,0,8,3,2,0,0,0,0],"Bryan Courtney":[0,0,0,0,0,1,0,0,0,0,0,0],"Logan Burbic":[0,0,0,0,0,2,2,0,0,0,0,0],"Marcus Schanewolf":[0,0,0,0,0,1,0,0,0,0,0,0]}, approved: {"Haley Barry":386964.88,"Bryan Courtney":201845.25,"Justin Coghill":196285.94,"Travis Kizzar":166257.32,"Gregg Desmond":89355,"Brandon Simmons":85382.92,"Paul Brost":59380,"Logan Burbic":37560.87,"Joshua Baca":34702.96,"Pedro Ramirez":28612.92,"Terry Eggleston":24783.29}, contract: {"Haley Barry":636898.95,"Bryan Courtney":200644.53,"Justin Coghill":190096.66,"Travis Kizzar":127372.43,"Gregg Desmond":89355,"Brandon Simmons":144872.2,"Paul Brost":56180,"Logan Burbic":32680.24,"Joshua Baca":34702.96,"Terry Eggleston":24783.29} }
 };
+// 2026-10-23: Herndon leapCA now comes from data/ca-ledger.json (Leap "Contingency Contract Signed Date",
+// rep = customer rep), refreshed nightly by scripts/refresh-ca-ledger.js. The snapshot above is the
+// fallback if the ledger is missing/empty. Richmond stays on its snapshot until RVA joins the main Leap.
+function fromLedger() {
+  let ledger;
+  try { ledger = require('../data/ca-ledger.json'); } catch (e) { return null; }
+  const jobs = Object.values((ledger && ledger.jobs) || {});
+  if (!jobs.length) return null;
+  const yr = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date()).slice(0, 4);
+  const leapCA = {};
+  jobs.forEach((j) => {
+    if (!j.date || !String(j.date).startsWith(yr)) return;
+    const m = Number(String(j.date).slice(5, 7)) - 1;
+    const rep = String(j.rep || 'Unassigned').replace(/\s+/g, ' ').trim();
+    (leapCA[rep] = leapCA[rep] || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])[m]++;
+  });
+  return { updated: String(ledger.updated || '').slice(0, 10), source: 'ca-ledger (Leap CA Signed Date)', leapCA };
+}
+
 module.exports = (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Cache-Control', 'no-store');
   const url = new URL(req.url, 'http://x');
   const office = (url.searchParams.get('office') || 'herndon').toLowerCase();
+  if (office !== 'richmond') { const l = fromLedger(); if (l) return res.status(200).json(l); }
   res.status(200).json(DATA[office] || DATA.herndon);
 };
