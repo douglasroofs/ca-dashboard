@@ -15,7 +15,8 @@
 //   GET /api/job-reps?punchout=1&probe=<job number> -> that job's customer flags / stage (shape check)
 //   GET /api/job-reps?punchout=1&probe=1&paths=/x,/y -> raw Leap GETs for exploration
 //   POST /api/job-reps?punchout=1&backfill=1 -> CA contingency-date backfill (see backfill() below)
-//   POST /api/job-reps?leapwh=1  -> Leap webhook receiver, listen-only for now (see leapWebhook() below)
+//   POST /api/job-reps?leapwh=1  -> Leap webhook receiver, listen-only (Leap sends no document events; unregistered)
+//   GET  /api/job-reps?cacheck=1[&write=1] -> fill CA Signed Date from accepted CA documents (see caCheck() below)
 // Age = earliest of the Punch Out stage entry date (stage_last_modified) or the night
 // scripts/refresh-punchout.js first saw the customer flagged (data/punchout-ledger.json).
 // Leap does not stamp when a flag was added.
@@ -299,6 +300,86 @@ async function leapWebhook(req, res, url) {
   return res.status(200).json({ ok: true });
 }
 
+// ── CA auto-date from signed Leap documents (2026-10-23) ─────────────────────
+// GET /api/job-reps?cacheck=1[&hours=3][&write=1][&job=<job number>]
+// Leap webhooks do not fire on document signing (tested 2026-10-23), and /proposals can only be
+// listed per job, so this polls instead. Run every 30 min by .github/workflows/ca-check.yml.
+//   1. page through open jobs; keep those updated in the last `hours` with no Contingency Contract
+//      Signed Date (accepting a document bumps the job's updated_at to the same second)
+//   2. for each, read /proposals?job_id= and look for status "accepted" whose body carries the CA
+//      wording (reps rename the document freely and Leap stores no template id, so match the text)
+//   3. date = the customer's signature date printed on the document, else the accepted date (ET)
+//   4. write it with writeContingency(), which never overwrites an existing date
+// Dry run unless write=1. Takes no input that reaches Leap except an optional job number, so an
+// outside caller can only make it run the same check sooner.
+const CA_FINGERPRINTS = (process.env.CA_FINGERPRINTS || 'limited visual and non-invasive inspection')
+  .split('|').map((s) => s.trim().toLowerCase()).filter(Boolean);
+const nyDate = (d) => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(d); // YYYY-MM-DD
+const leapUtc = (s) => (s ? Date.parse(String(s).replace(' ', 'T') + 'Z') : NaN); // Leap timestamps are UTC
+function isCaDocument(p) {
+  const body = String((p && p.template) || '').toLowerCase();
+  return CA_FINGERPRINTS.some((f) => body.includes(f));
+}
+function caSignedDate(p) {
+  const html = String(p.template || '');
+  // the customer signature box carries the date it was signed: <div class="sign-date">MM/DD/YYYY</div>
+  const m = html.match(/jp-signature-customer[\s\S]*?class="sign-date"[^>]*>\s*(\d{2})\/(\d{2})\/(\d{4})/);
+  if (m) return { date: `${m[3]}-${m[1]}-${m[2]}`, source: 'customer signature' };
+  const t = leapUtc(p.updated_at);
+  return Number.isFinite(t) ? { date: nyDate(new Date(t)), source: 'accepted (updated_at)' } : null;
+}
+async function caCheck(req, res, url) {
+  const started = Date.now();
+  const write = url.searchParams.get('write') === '1';
+  const hours = Math.max(0.5, Math.min(24 * 14, Number(url.searchParams.get('hours')) || 3));
+  const onlyJob = (url.searchParams.get('job') || '').trim();
+  const since = started - hours * 3600000;
+  const token = await getToken();
+  const stats = { pages: 0, jobs_seen: 0, recent: 0, already_dated: 0, checked: 0 };
+  const candidates = [];
+  if (onlyJob) {
+    const j = await leapGet(token, `/jobs?job_number=${encodeURIComponent(onlyJob)}&limit=1&include_lost_jobs=1&with_archived=1&includes[]=insurance_details&includes[]=customer`);
+    (j.data || []).forEach((job) => candidates.push(job));
+    stats.jobs_seen = candidates.length;
+  } else {
+    for (let page = 1; page <= 40; page++) {
+      if (Date.now() - started > 40000) { stats.stopped_early = `time limit at page ${page}`; break; }
+      const j = await leapGet(token, `/jobs?limit=100&page=${page}&includes[]=insurance_details&includes[]=customer`);
+      const arr = j.data || [];
+      stats.pages = page; stats.jobs_seen += arr.length;
+      arr.forEach((job) => { if (leapUtc(job.updated_at) >= since) candidates.push(job); });
+      const pg = j.meta && j.meta.pagination;
+      if (!arr.length || (pg && pg.current_page >= pg.total_pages)) break;
+    }
+  }
+  stats.recent = candidates.length;
+  const results = [];
+  for (const job of candidates) {
+    const ins = unwrap(job.insurance_details) || {};
+    const ex = ins.contingency_contract_signed_date;
+    if (ex && ex !== '0000-00-00') { stats.already_dated++; if (onlyJob) results.push({ job_number: job.number, action: 'skip', reason: 'already has a date', existing: String(ex).slice(0, 10) }); continue; }
+    if (Date.now() - started > 52000) { stats.stopped_early = 'time limit while checking documents'; break; }
+    stats.checked++;
+    let props = [];
+    try { const p = await leapGet(token, `/proposals?job_id=${job.id}&limit=50`); props = p.data || []; }
+    catch (e) { results.push({ job_number: job.number, action: 'error', reason: String(e.message || e) }); continue; }
+    const signed = props.filter((p) => String(p.status).toLowerCase() === 'accepted' && isCaDocument(p))
+      .sort((a, b) => String(a.updated_at).localeCompare(String(b.updated_at)));
+    if (!signed.length) { if (onlyJob) results.push({ job_number: job.number, action: 'skip', reason: 'no accepted CA document', documents: props.map((p) => `${p.title} (${p.status})`) }); continue; }
+    const doc = signed[0];
+    const d = caSignedDate(doc);
+    const c = unwrap(job.customer) || {};
+    const base = { job_number: job.number, job_id: job.id, customer: custName(c), document: doc.title, document_id: doc.id, date: d && d.date, date_source: d && d.source };
+    if (!d || !ISO_DATE.test(d.date)) { results.push(Object.assign(base, { action: 'skip', reason: 'could not read a date' })); continue; }
+    if (!write) { results.push(Object.assign(base, { action: 'would-write' })); continue; }
+    try { const w = await writeContingency(token, job, ins, d.date); results.push(Object.assign(base, { action: w.ok ? 'written' : 'failed', verified: w.verified })); }
+    catch (e) { results.push(Object.assign(base, { action: 'error', reason: String(e.message || e) })); }
+  }
+  const out = { write, hours, since: new Date(since).toISOString(), seconds: Math.round((Date.now() - started) / 100) / 10, stats, results };
+  console.log('[ca-check]', JSON.stringify(out).slice(0, 8000));
+  res.status(200).json(out);
+}
+
 async function punchout(req, res, url) {
   if (url.searchParams.get('probe') === 'login') { // why is Leap refusing the login? (body only, never the credentials)
     const username = process.env.JP_USERNAME, password = process.env.JP_PASSWORD;
@@ -388,6 +469,7 @@ module.exports = async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     res.setHeader('Cache-Control', 'no-store');
     if (url.searchParams.get('leapwh') === '1') return await leapWebhook(req, res, url);
+    if (url.searchParams.get('cacheck') === '1') return await caCheck(req, res, url);
     if (url.searchParams.get('punchout') === '1') return await punchout(req, res, url);
     const debug = url.searchParams.get('debug');
     const token = await getToken();
