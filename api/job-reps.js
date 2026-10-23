@@ -196,8 +196,16 @@ async function leapWrite(token, method, path, form, enc) {
   const text = await r.text();
   return { method, path, status: r.status, body: text.slice(0, 200) };
 }
-async function readContingency(token, jobId) {
-  const j = await leapGet(token, `/jobs/${jobId}?includes[]=insurance_details`);
+async function readContingency(token, jobId, jobNumber) {
+  let j;
+  try { j = await leapGet(token, `/jobs/${jobId}?includes[]=insurance_details`); }
+  catch (e) {
+    // GET /jobs/{id} answers 412 for lost/archived jobs (seen 2026-10-23); the list endpoint with the
+    // lost/archived switches still returns them.
+    if (!jobNumber) throw e;
+    const l = await leapGet(token, `/jobs?job_number=${encodeURIComponent(jobNumber)}&limit=1&include_lost_jobs=1&with_archived=1&includes[]=insurance_details`);
+    j = { data: (l.data || [])[0] || {} };
+  }
   const ins = unwrap((j.data || j).insurance_details) || {};
   const d = ins.contingency_contract_signed_date;
   return d && d !== '0000-00-00' ? String(d).slice(0, 10) : null;
@@ -227,7 +235,7 @@ async function writeContingency(token, job, ins, date) {
     }
     if (a.status >= 200 && a.status < 300) {
       await sleep(400);
-      const now = await readContingency(token, job.id);
+      const now = await readContingency(token, job.id, job.number);
       if (now === date) return { ok: true, attempts, verified: now };
       attempts[attempts.length - 1].verified = now || null;
     }
