@@ -35,7 +35,9 @@ async function callPage(page, attempt = 1) {
 
 async function main() {
   let ledger = { updated: null, jobs: {} };
+  const SEED = path.resolve(__dirname, '..', 'data', 'ca-ledger-seed.json');
   if (fs.existsSync(FILE)) ledger = JSON.parse(fs.readFileSync(FILE, 'utf8'));
+  else if (fs.existsSync(SEED)) { ledger.jobs = JSON.parse(fs.readFileSync(SEED, 'utf8')).jobs; console.log(`starting from seed: ${Object.keys(ledger.jobs).length} jobs`); }
   ledger.jobs = ledger.jobs || {};
   const added = [], changed = [], removed = [];
   let total = 1, pagesOk = 0;

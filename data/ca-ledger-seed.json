@@ -1,0 +1,1590 @@
+{
+ "updated": "2026-10-23",
+ "note": "Seed: CA-dated jobs that were lost/archived on 2026-10-23 (from DataBuilder report 4407). Merged into data/ca-ledger.json when the ledger does not exist yet.",
+ "jobs": {
+  "2308-4867528-01": {
+   "date": "2023-08-22",
+   "rep": "Terry Eggleston",
+   "customer": "Jacob Louka",
+   "division": "Richmond",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2308-4891662-01": {
+   "date": "2023-08-30",
+   "rep": "Terry Eggleston",
+   "customer": "Lorenzo & Laura McCray",
+   "division": "Richmond",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2309-4917670-01": {
+   "date": "2023-09-09",
+   "rep": "Mike Mendez",
+   "customer": "Antupamat Tummala",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2309-4933423-01": {
+   "date": "2023-09-14",
+   "rep": "Adam Mulvaney",
+   "customer": "Matthew Simpson",
+   "division": "Richmond",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2309-4974915-01": {
+   "date": "2023-09-22",
+   "rep": "Isabelle Price",
+   "customer": "Tara O'Leary",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2310-5018182-01": {
+   "date": "2023-10-09",
+   "rep": "Steven Arevalo",
+   "customer": "Karen Hofmann",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2311-5122527-02": {
+   "date": "2023-11-20",
+   "rep": "Robert Wilson",
+   "customer": "Karen Murray",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2312-5155548-01": {
+   "date": "2023-12-08",
+   "rep": "Christopher Martin",
+   "customer": "Carolyn Bell",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2401-5199057-01": {
+   "date": "2024-01-04",
+   "rep": "Robert Wilson",
+   "customer": "Valera Barksdale",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2401-5199067-01": {
+   "date": "2024-01-04",
+   "rep": "Unassigned",
+   "customer": "Muhammad Malik",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2401-5224607-01": {
+   "date": "2024-01-11",
+   "rep": "Darien Boatwright",
+   "customer": "Carlos Manley",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2401-5237900-01": {
+   "date": "2024-02-05",
+   "rep": "Christopher Martin",
+   "customer": "Eva Huang",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2402-5308027-01": {
+   "date": "2024-02-08",
+   "rep": "Christopher Martin",
+   "customer": "Shawn Liu",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2404-5237160-02": {
+   "date": "2024-04-19",
+   "rep": "Mike Mendez",
+   "customer": "Kenny Wang",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2404-5499973-01": {
+   "date": "2024-04-04",
+   "rep": "Jacob Basso",
+   "customer": "Jacob Basso",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2404-5560455-02": {
+   "date": "2024-04-16",
+   "rep": "Mike Mendez",
+   "customer": "Giorgio Fernandez",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2404-5564458-01": {
+   "date": "2024-04-17",
+   "rep": "Darien Boatwright",
+   "customer": "Edward Johnson",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2405-5689207-01": {
+   "date": "2024-05-23",
+   "rep": "George Johnson",
+   "customer": "John Patrick",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2405-5723175-01": {
+   "date": "2024-05-01",
+   "rep": "Robert Wilson",
+   "customer": "Shihteh Tseng",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2406-5750842-01": {
+   "date": "2024-06-04",
+   "rep": "Christopher Martin",
+   "customer": "Anne Lennan",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2406-5756957-01": {
+   "date": "2024-06-06",
+   "rep": "George Johnson",
+   "customer": "Samina Khan",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2406-5776466-01": {
+   "date": "2024-06-13",
+   "rep": "Robert Wilson",
+   "customer": "Kelley Ripley",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2407-5878810-01": {
+   "date": "2024-07-02",
+   "rep": "Steven Arevalo",
+   "customer": "Debbie Herring",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2407-5883027-01": {
+   "date": "2024-07-03",
+   "rep": "Christopher Martin",
+   "customer": "Mohammad Taleb",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2407-5941702-01": {
+   "date": "2024-07-23",
+   "rep": "Darien Boatwright",
+   "customer": "Anastasia Jacobson",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2407-5942819-01": {
+   "date": "2024-07-24",
+   "rep": "Robert Wilson",
+   "customer": "Michael Bulla",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2407-5963886-01": {
+   "date": "2024-08-01",
+   "rep": "Robert Wilson",
+   "customer": "Rachid Chaker",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2408-4930620-02": {
+   "date": "2024-08-27",
+   "rep": "Kyle Higginbotham",
+   "customer": "Customer Portal",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2408-6014004-01": {
+   "date": "2024-08-12",
+   "rep": "Robert Wilson",
+   "customer": "Howard DeCastro",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2408-6030726-01": {
+   "date": "2024-08-17",
+   "rep": "Joshua Baca",
+   "customer": "Hyo Moon",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2408-6085598-01": {
+   "date": "2024-08-30",
+   "rep": "Darien Boatwright",
+   "customer": "Niko Vivero",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2409-6151699-01": {
+   "date": "2024-11-09",
+   "rep": "Darien Boatwright",
+   "customer": "Gurjit Singh",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2409-6172578-01": {
+   "date": "2024-09-19",
+   "rep": "Robert Wilson",
+   "customer": "Tim Henriques",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2409-6197230-01": {
+   "date": "2024-09-30",
+   "rep": "Robert Wilson",
+   "customer": "Brian Czech",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2410-6235135-01": {
+   "date": "2024-10-10",
+   "rep": "Darien Boatwright",
+   "customer": "Mahogany Swanson",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2410-6240516-01": {
+   "date": "2024-10-10",
+   "rep": "Darien Boatwright",
+   "customer": "Kyle Ferrante",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2410-6240727-01": {
+   "date": "2024-10-10",
+   "rep": "George Johnson",
+   "customer": "Chad Sadler",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2410-6249497-01": {
+   "date": "2024-10-18",
+   "rep": "Darien Boatwright",
+   "customer": "Lynette Harrison",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2410-6266487-01": {
+   "date": "2024-10-17",
+   "rep": "Robert Wilson",
+   "customer": "Firhiwot Kidane",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2411-6340696-01": {
+   "date": "2024-11-12",
+   "rep": "Tin Nguyen",
+   "customer": "Brian Ceppi",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2502-6609504-01": {
+   "date": "2025-02-22",
+   "rep": "Robert Wilson",
+   "customer": "Victor Mayaki",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2502-6624514-01": {
+   "date": "2025-03-01",
+   "rep": "Darien Boatwright",
+   "customer": "Hongyuan Dong",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2503-6668817-01": {
+   "date": "2025-03-08",
+   "rep": "Darien Boatwright",
+   "customer": "Suman Gupta",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2503-6671251-01": {
+   "date": "2025-03-10",
+   "rep": "Robert Wilson",
+   "customer": "John Easterbrook",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2503-6672312-01": {
+   "date": "2025-04-29",
+   "rep": "Darien Boatwright",
+   "customer": "Praven Krish",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2503-6714952-01": {
+   "date": "2025-03-31",
+   "rep": "Robert Wilson",
+   "customer": "Jenna Brooks",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2503-6717658-01": {
+   "date": "2025-03-29",
+   "rep": "Darien Boatwright",
+   "customer": "Ken Tuncer",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2503-6742004-01": {
+   "date": "2025-04-01",
+   "rep": "Robert Wilson",
+   "customer": "Andrew Silvester",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2504-6765895-01": {
+   "date": "2025-04-08",
+   "rep": "Robert Wilson",
+   "customer": "Johnny Restivo",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2504-6783819-01": {
+   "date": "2025-04-08",
+   "rep": "Robert Wilson",
+   "customer": "Karen Gentry",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2504-6794969-01": {
+   "date": "2025-04-14",
+   "rep": "Robert Wilson",
+   "customer": "Bill Hartzell",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2504-6836586-01": {
+   "date": "2025-04-16",
+   "rep": "Darien Boatwright",
+   "customer": "SWETHA SUNKARI",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2504-6836592-01": {
+   "date": "2025-04-16",
+   "rep": "Darien Boatwright",
+   "customer": "Rama Mekala",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2504-6836711-01": {
+   "date": "2025-04-16",
+   "rep": "Darien Boatwright",
+   "customer": "Venkat Thotakura",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2504-6840365-01": {
+   "date": "2025-04-17",
+   "rep": "George Johnson",
+   "customer": "Zahid Nori",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2504-6843048-01": {
+   "date": "2025-04-30",
+   "rep": "Robert Wilson",
+   "customer": "Trong Huynh",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2504-6853795-01": {
+   "date": "2025-04-30",
+   "rep": "Marc Mitchell",
+   "customer": "Ben Lazatin",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2505-6990759-01": {
+   "date": "2025-05-13",
+   "rep": "George Johnson",
+   "customer": "Johnny Moseley",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2506-6037636-02": {
+   "date": "2025-06-09",
+   "rep": "Robert Wilson",
+   "customer": "Allison Massey",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2508-7601419-01": {
+   "date": "2025-08-29",
+   "rep": "Robert Wilson",
+   "customer": "John Zook",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2509-7733223-01": {
+   "date": "2026-01-13",
+   "rep": "Andrew Prickel",
+   "customer": "Tamm Chambless",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2510-7761041-01": {
+   "date": "2026-01-13",
+   "rep": "Andrew Prickel",
+   "customer": "Teresa Herring",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2510-7765666-01": {
+   "date": "2026-01-13",
+   "rep": "Andrew Prickel",
+   "customer": "Thiyaghu Muthuswamy",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2510-7769087-01": {
+   "date": "2026-01-13",
+   "rep": "Kevin Mahan",
+   "customer": "Dianne Damiano",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2510-7822897-01": {
+   "date": "2026-01-13",
+   "rep": "Andrew Prickel",
+   "customer": "Amanda Eamich",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2511-7866297-01": {
+   "date": "2026-03-12",
+   "rep": "Steven Arevalo",
+   "customer": "Mario Stoyanov",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2511-7873048-01": {
+   "date": "2026-01-14",
+   "rep": "Andrew Prickel",
+   "customer": "Lorie Shora",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2511-7893054-01": {
+   "date": "2026-01-13",
+   "rep": "Jack Obert",
+   "customer": "Sarah Rogers",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2512-7919855-01": {
+   "date": "2026-01-14",
+   "rep": "Andrew Prickel",
+   "customer": "Brian Morris",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2512-8001415-01": {
+   "date": "2026-01-12",
+   "rep": "Kevin Mahan",
+   "customer": "Suzanne Moffitt",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2512-8007879-01": {
+   "date": "2026-01-14",
+   "rep": "Andrew Prickel",
+   "customer": "Uzzal Barua",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2512-8009987-01": {
+   "date": "2026-02-09",
+   "rep": "Alfred Duncan",
+   "customer": "Mohammed Qumar",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2601-8029638-02": {
+   "date": "2026-01-22",
+   "rep": "Steven Arevalo",
+   "customer": "Chris Holas",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2601-8209587-01": {
+   "date": "2026-02-02",
+   "rep": "Marc Mitchell",
+   "customer": "Rashad Holloway",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2602-8212463-01": {
+   "date": "2026-03-11",
+   "rep": "Isabelle Price",
+   "customer": "Sahand Miraminy",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2602-8225917-01": {
+   "date": "2026-03-05",
+   "rep": "Alfred Duncan",
+   "customer": "Andrew James",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2602-8241816-01": {
+   "date": "2026-02-11",
+   "rep": "Steven Arevalo",
+   "customer": "Noman Ahmad",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2602-8272130-01": {
+   "date": "2026-02-20",
+   "rep": "Robert Wilson",
+   "customer": "Brad Minners",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2602-8275244-01": {
+   "date": "2026-02-21",
+   "rep": "Marc Mitchell",
+   "customer": "Katherine Tran",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2602-8276206-01": {
+   "date": "2026-02-22",
+   "rep": "Kevin Mahan",
+   "customer": "Lokesh Muniswamy",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2602-8287135-01": {
+   "date": "2026-02-27",
+   "rep": "Alfred Duncan",
+   "customer": "Myia Belton",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2602-8293770-01": {
+   "date": "2026-02-27",
+   "rep": "Steven Arevalo",
+   "customer": "Bruce Gordon",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2602-8295496-01": {
+   "date": "2026-03-02",
+   "rep": "Christian Brown",
+   "customer": "Pankaj Bisht",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8305303-01": {
+   "date": "2026-03-04",
+   "rep": "Christian Brown",
+   "customer": "Moses Dombo",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8369618-01": {
+   "date": "2026-03-12",
+   "rep": "Kevin Mahan",
+   "customer": "Tyler Cooper",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8372897-01": {
+   "date": "2026-03-11",
+   "rep": "Andrew Prickel",
+   "customer": "Sharon Grant",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8374244-01": {
+   "date": "2026-04-13",
+   "rep": "Isabelle Price",
+   "customer": "Judy Evans",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8387602-01": {
+   "date": "2026-03-15",
+   "rep": "Isabelle Price",
+   "customer": "Helen Carter",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8391700-01": {
+   "date": "2026-03-17",
+   "rep": "Nick Seward",
+   "customer": "Vic Sing",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8411589-01": {
+   "date": "2026-03-19",
+   "rep": "Steven Arevalo",
+   "customer": "Jill Dalling",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8420067-01": {
+   "date": "2026-03-20",
+   "rep": "Andrew Funk",
+   "customer": "Eric Thomas",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8422256-01": {
+   "date": "2026-03-20",
+   "rep": "Alfred Duncan",
+   "customer": "Sankara Turu",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8448576-01": {
+   "date": "2026-03-24",
+   "rep": "Steven Arevalo",
+   "customer": "Viktoriya Bashkatova",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8452949-01": {
+   "date": "2026-03-26",
+   "rep": "Michael McCarthy",
+   "customer": "Yush Hu",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8469010-01": {
+   "date": "2026-03-30",
+   "rep": "David Kerns",
+   "customer": "Mekdim Tesfaye",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8471045-01": {
+   "date": "2026-04-02",
+   "rep": "Kevin Mahan",
+   "customer": "Leon Radomsky",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8476034-01": {
+   "date": "2026-03-31",
+   "rep": "Andrew Prickel",
+   "customer": "Charles Pendleton",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8479077-01": {
+   "date": "2026-04-10",
+   "rep": "Marc Mitchell",
+   "customer": "Brent Costa",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2603-8479170-01": {
+   "date": "2026-04-09",
+   "rep": "Alfred Duncan",
+   "customer": "Takenya Millhouse",
+   "division": "Maryland",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8487589-01": {
+   "date": "2026-04-09",
+   "rep": "Andrew Prickel",
+   "customer": "George Oden",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8491567-01": {
+   "date": "2026-04-09",
+   "rep": "Andrew Prickel",
+   "customer": "Michael Yeh",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8492274-01": {
+   "date": "2026-04-08",
+   "rep": "Michael McCarthy",
+   "customer": "Jay Annam",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8492475-01": {
+   "date": "2026-04-04",
+   "rep": "Steven Arevalo",
+   "customer": "Luozhou Li",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8494508-01": {
+   "date": "2026-04-23",
+   "rep": "Andrew Prickel",
+   "customer": "David Rodbard",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8495549-01": {
+   "date": "2026-04-09",
+   "rep": "Alfred Duncan",
+   "customer": "Ray Dorsey",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8495850-01": {
+   "date": "2026-04-08",
+   "rep": "Harvey Shoemaker",
+   "customer": "Ellen Godley",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8501175-01": {
+   "date": "2026-04-23",
+   "rep": "Andrew Prickel",
+   "customer": "Lori Bradley",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8516932-01": {
+   "date": "2026-04-13",
+   "rep": "Alfred Duncan",
+   "customer": "Venessa Mckay",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8521253-01": {
+   "date": "2026-04-17",
+   "rep": "Michael McCarthy",
+   "customer": "Knut Ryerson",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8532337-01": {
+   "date": "2026-04-16",
+   "rep": "Nick Seward",
+   "customer": "Katherine Ahmann",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8533893-01": {
+   "date": "2026-04-16",
+   "rep": "Kevin Mahan",
+   "customer": "Zdravko Sonje",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8537960-01": {
+   "date": "2026-04-23",
+   "rep": "Andrew Prickel",
+   "customer": "Abida Bhatti",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8542755-01": {
+   "date": "2026-04-18",
+   "rep": "Christian Brown",
+   "customer": "Naveed Shad",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8571950-01": {
+   "date": "2026-04-24",
+   "rep": "Kevin Mahan",
+   "customer": "Jenny Zhang",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8573306-01": {
+   "date": "2026-04-23",
+   "rep": "David Kerns",
+   "customer": "Loida Soto",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8578736-01": {
+   "date": "2026-04-28",
+   "rep": "Kevin Mahan",
+   "customer": "Nicole Njeutcha",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2604-8599183-01": {
+   "date": "2026-05-02",
+   "rep": "George Bechara",
+   "customer": "Candy Baez",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8605735-01": {
+   "date": "2026-05-26",
+   "rep": "Marc Mitchell",
+   "customer": "Thomas Kappler",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8606580-01": {
+   "date": "2026-05-05",
+   "rep": "Andrew Prickel",
+   "customer": "K S Ram Mohan",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8612054-01": {
+   "date": "2026-05-04",
+   "rep": "Adam Mulvaney",
+   "customer": "Hengameh Hazrati",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8615662-01": {
+   "date": "2026-08-10",
+   "rep": "Andrew Funk",
+   "customer": "Sylvia Harris",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8626415-01": {
+   "date": "2026-05-08",
+   "rep": "Andrew Prickel",
+   "customer": "Mandy Manthri",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8627541-01": {
+   "date": "2026-05-08",
+   "rep": "David Kerns",
+   "customer": "Ana Gutierrez",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8631384-01": {
+   "date": "2026-05-12",
+   "rep": "Andrew Prickel",
+   "customer": "Mark Weshinskey",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8633251-01": {
+   "date": "2026-05-13",
+   "rep": "Andrew Prickel",
+   "customer": "Susan Manfred",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8643859-01": {
+   "date": "2026-05-16",
+   "rep": "Andrew Prickel",
+   "customer": "Tao Wem",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8652312-01": {
+   "date": "2026-05-26",
+   "rep": "Jack Obert",
+   "customer": "Samiah Hamden",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8660366-01": {
+   "date": "2026-05-26",
+   "rep": "Kevin Mahan",
+   "customer": "Diana Palomino",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8662160-01": {
+   "date": "2026-05-21",
+   "rep": "Andrew Prickel",
+   "customer": "Jean Diberardino",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8662815-01": {
+   "date": "2026-05-22",
+   "rep": "Marc Mitchell",
+   "customer": "Cathy Lynne Doman",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8664698-01": {
+   "date": "2026-06-16",
+   "rep": "Alfred Duncan",
+   "customer": "Jason Rankin",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8668313-01": {
+   "date": "2026-05-26",
+   "rep": "Andrew Prickel",
+   "customer": "Geoffrey Hartman",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8668317-01": {
+   "date": "2026-05-26",
+   "rep": "Andrew Prickel",
+   "customer": "Sharv Chwastyk",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8674533-01": {
+   "date": "2026-05-27",
+   "rep": "Harvey Shoemaker",
+   "customer": "Robert Hyun",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2605-8677703-01": {
+   "date": "2026-05-27",
+   "rep": "Jack Obert",
+   "customer": "Albert Zacharias",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8699383-01": {
+   "date": "2026-06-18",
+   "rep": "Andrew Funk",
+   "customer": "Terry Edwards",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8705236-01": {
+   "date": "2026-06-06",
+   "rep": "Alfred Duncan",
+   "customer": "Bridgette Gulledge",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8709066-01": {
+   "date": "2026-06-11",
+   "rep": "Andrew Funk",
+   "customer": "Catherine Perez",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8712238-01": {
+   "date": "2026-06-06",
+   "rep": "David Kerns",
+   "customer": "Erinc Gallegos Renteria",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8718996-01": {
+   "date": "2026-06-08",
+   "rep": "Andrew Funk",
+   "customer": "Matt Way",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8726680-01": {
+   "date": "2026-06-24",
+   "rep": "Andrew Funk",
+   "customer": "Tim Murphy",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8727565-01": {
+   "date": "2026-06-11",
+   "rep": "Andrew Funk",
+   "customer": "Su Yi",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8729333-01": {
+   "date": "2026-06-11",
+   "rep": "George Bechara",
+   "customer": "Amalendu Thakur",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8734173-01": {
+   "date": "2026-06-16",
+   "rep": "Harvey Shoemaker",
+   "customer": "Judith Poinville",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8734230-01": {
+   "date": "2026-06-13",
+   "rep": "George Bechara",
+   "customer": "Gail Payne",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8761337-01": {
+   "date": "2026-06-22",
+   "rep": "Jack Obert",
+   "customer": "Sung Kwon Yang",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8769816-01": {
+   "date": "2026-06-25",
+   "rep": "Andrew Prickel",
+   "customer": "Michael Murphy",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8776465-01": {
+   "date": "2026-06-26",
+   "rep": "Steven Arevalo",
+   "customer": "Shane Gray",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2606-8790305-01": {
+   "date": "2026-07-01",
+   "rep": "Michael McCarthy",
+   "customer": "Carolina Rui",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8793567-01": {
+   "date": "2026-07-01",
+   "rep": "Andrew Funk",
+   "customer": "Tom Wight",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8793703-01": {
+   "date": "2026-07-01",
+   "rep": "Andrew Funk",
+   "customer": "Alex Christianson",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8806370-01": {
+   "date": "2026-07-07",
+   "rep": "Harvey Shoemaker",
+   "customer": "Tricia Kapuscinski",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8813905-01": {
+   "date": "2026-07-14",
+   "rep": "Steven Arevalo",
+   "customer": "Vishnu Agarwal",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8816214-01": {
+   "date": "2026-07-10",
+   "rep": "Andrew Funk",
+   "customer": "Jonghwa Lee",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8819697-01": {
+   "date": "2026-07-14",
+   "rep": "Andrew Prickel",
+   "customer": "Darrell Landreaux",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8828790-01": {
+   "date": "2026-07-14",
+   "rep": "Alfred Duncan",
+   "customer": "Darryle Brown",
+   "division": "Maryland",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8829226-01": {
+   "date": "2026-07-15",
+   "rep": "Andrew Prickel",
+   "customer": "Andrea Guerrero-Cave",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8842167-01": {
+   "date": "2026-07-20",
+   "rep": "Andrew Funk",
+   "customer": "Paul Tanner",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8848329-01": {
+   "date": "2026-07-21",
+   "rep": "Christian Brown",
+   "customer": "Kabir Bhuiyan",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8850586-01": {
+   "date": "2026-07-22",
+   "rep": "Harvey Shoemaker",
+   "customer": "Anna and Devon Routh",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8853292-01": {
+   "date": "2026-07-23",
+   "rep": "Andrew Funk",
+   "customer": "David Rubin / Cynthia",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8870722-01": {
+   "date": "2026-07-27",
+   "rep": "Andrew Funk",
+   "customer": "Rick Miller",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2607-8886184-01": {
+   "date": "2026-07-29",
+   "rep": "Alfred Duncan",
+   "customer": "Lisa Bush-Caudle",
+   "division": "Maryland",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-8918194-01": {
+   "date": "2026-08-03",
+   "rep": "Andrew Funk",
+   "customer": "James Jones",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-8935099-01": {
+   "date": "2026-08-08",
+   "rep": "Michael McCarthy",
+   "customer": "Ekesh Awal",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-8954587-01": {
+   "date": "2026-08-17",
+   "rep": "Andrew Prickel",
+   "customer": "Lina Gaines",
+   "division": "Marketing",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-8955760-01": {
+   "date": "2026-08-19",
+   "rep": "Alfred Duncan",
+   "customer": "Shevon Alfred",
+   "division": "Maryland",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-8958205-01": {
+   "date": "2026-08-17",
+   "rep": "Andrew Funk",
+   "customer": "Robert Stevens",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-8970444-01": {
+   "date": "2026-08-26",
+   "rep": "Andrew Funk",
+   "customer": "Leone Atchinson",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-8993466-01": {
+   "date": "2026-08-27",
+   "rep": "Alfred Duncan",
+   "customer": "Rob Clark",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-8998426-01": {
+   "date": "2026-08-25",
+   "rep": "Jack Obert",
+   "customer": "Michael Colucci",
+   "division": "Self Gen",
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-9000665-01": {
+   "date": "2026-09-02",
+   "rep": "Andrew Funk",
+   "customer": "Matt Quante",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-9004624-01": {
+   "date": "2026-09-02",
+   "rep": "Andrew Funk",
+   "customer": "Frank Alejandro",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-9029814-01": {
+   "date": "2026-09-02",
+   "rep": "Andrew Funk",
+   "customer": "Emina Herovic",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-9039656-01": {
+   "date": "2026-09-02",
+   "rep": "Andrew Funk",
+   "customer": "Deteng (Dan Liu",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  },
+  "2608-9040298-01": {
+   "date": "2026-09-02",
+   "rep": "Andrew Funk",
+   "customer": "Jim Smith",
+   "division": null,
+   "first_seen": "2026-10-23",
+   "last_seen": "2026-10-23",
+   "note": "lost/archived at seed (DataBuilder 4407)"
+  }
+ }
+}
