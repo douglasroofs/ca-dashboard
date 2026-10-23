@@ -343,12 +343,23 @@ function signedCaDocuments(props) {
   const out = [];
   props.forEach((p) => {
     if (String(p.status).toLowerCase() === 'accepted' && isCaDocument(p)) out.push({ p, d: caSignedDate(p), kind: 'e-signed CA' });
+    // Signed in person on the rep's device but never marked Accepted (status stays sent/viewed, e.g. Travis
+    // Kizzar's RVA CAs): count it when the customer signature box holds a signature image AND a sign date.
+    else if (isCaDocument(p) && customerSigned(p)) { const d = caSignedDate(p); if (d && d.source === 'customer signature') out.push({ p, d, kind: 'signed CA (not marked accepted)' }); }
     else if (isUploadedCa(p)) {
       const t = leapUtc(p.created_at);
       out.push({ p, d: Number.isFinite(t) ? { date: nyDate(new Date(t)), source: 'uploaded CA file' } : null, kind: 'uploaded CA' });
     }
   });
   return out.filter((x) => x.d).sort((a, b) => a.d.date.localeCompare(b.d.date)); // earliest signed CA wins
+}
+function customerSigned(p) {
+  const html = String(p.template || '');
+  const i = html.indexOf('jp-signature-customer');
+  if (i < 0) return false;
+  const next = html.indexOf('jp-signature-', i + 21);
+  const blk = html.slice(i, next > i ? Math.min(next, i + 4000) : i + 4000);
+  return /<img[^>]+src="(data:image\/|https?:)/i.test(blk);
 }
 function caSignedDate(p) {
   const html = String(p.template || '');
