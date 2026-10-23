@@ -18,6 +18,10 @@ on:
         description: 'Write dates (1) or dry run (0)'
         required: false
         default: '1'
+      pages:
+        description: 'Only these pages, comma separated (blank = all)'
+        required: false
+        default: ''
       all:
         description: 'One-time sweep of ALL open jobs (1) instead of recent ones (0)'
         required: false
@@ -44,6 +48,7 @@ jobs:
           HOURS: ${{ inputs.hours || (github.event.schedule == '45 6 * * *' && '48') || '2' }}
           WRITE: ${{ inputs.write || '1' }}
           ALL: ${{ inputs.all || '0' }}
+          PAGES: ${{ inputs.pages || '' }}
           SUMMARY_FILE: ${{ runner.temp }}/ca-check.txt
         run: node scripts/ca-check.js
       - name: Job summary

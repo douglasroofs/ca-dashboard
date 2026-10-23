@@ -11,6 +11,7 @@ const BASE = (process.env.BASE_URL || 'https://stats.douglasroofs.com').replace(
 const HOURS = Number(process.env.HOURS) || 2;
 const WRITE = process.env.WRITE === '1';
 const ALL = process.env.ALL === '1';
+const ONLY_PAGES = (process.env.PAGES || '').split(',').map(Number).filter(Boolean); // e.g. PAGES=16 to redo one page
 const MAX_PAGES = Number(process.env.MAX_PAGES) || 60;
 const fs = require('fs');
 
@@ -34,11 +35,12 @@ async function main() {
   const found = [];
   let total = 1, failed = 0;
   for (let page = 1; page <= Math.min(total, MAX_PAGES); page++) {
+    if (ONLY_PAGES.length && !ONLY_PAGES.includes(page)) continue;
     let r;
     try {
       r = await callPage(page);
       // a page that ran out of time is resumed where it stopped (sweeps check many jobs per page)
-      while (r.stats.next_skip) {
+      while (r.stats.next_skip != null) {
         const more = await callPage(page, 1, r.stats.next_skip);
         ['already_dated', 'checked'].forEach((k) => { r.stats[k] = (r.stats[k] || 0) + (more.stats[k] || 0); });
         r.results = (r.results || []).concat(more.results || []);

@@ -404,7 +404,7 @@ async function caCheck(req, res, url) {
     const ins = unwrap(job.insurance_details) || {};
     const ex = ins.contingency_contract_signed_date;
     if (ex && ex !== '0000-00-00') { stats.already_dated++; if (onlyJob) results.push({ job_number: job.number, action: 'skip', reason: 'already has a date', existing: String(ex).slice(0, 10) }); continue; }
-    if (Date.now() - started > 50000) { stats.stopped_early = 'time limit while checking documents'; stats.next_skip = ci; break; }
+    if (Date.now() - started > 50000 && ci > skipN) { stats.stopped_early = 'time limit while checking documents'; stats.next_skip = ci; break; }
     stats.checked++;
     let props = [];
     try { const p = await leapGet(token, `/proposals?job_id=${job.id}&limit=50`); props = p.data || []; }
