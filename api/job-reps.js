@@ -320,6 +320,28 @@ function isCaDocument(p) {
   const body = String((p && p.template) || '').toLowerCase();
   return CA_FINGERPRINTS.some((f) => body.includes(f));
 }
+// Uploaded CA files are always signed (Kyle 2026-10-23: CAs signed outside Leap, e.g. SalesRabbit,
+// are uploaded as PDFs, and there are no paper CAs). Leap leaves uploads at status "draft", so an
+// upload counts on its name alone: "CA", "CA - Jane Doe.pdf", "Smith C.A.", "Contingency Agreement".
+// Template documents never count by name - only an accepted (e-signed) CA template does.
+const CA_NAME = /(^|[^a-z])c\.?\s?-?a([^a-z]|$)|contingency/i;
+const NOT_CA_NAME = /certificate|warranty|\bcoc\b|change order|work order|invoice|w-?9|\bcoi\b|photo/i;
+function isUploadedCa(p) {
+  const isFile = Number(p && p.is_file) === 1 || String((p && p.type) || '').toLowerCase() === 'file';
+  const name = `${(p && p.title) || ''} ${(p && p.file_name) || ''}`;
+  return isFile && CA_NAME.test(name) && !NOT_CA_NAME.test(name);
+}
+function signedCaDocuments(props) {
+  const out = [];
+  props.forEach((p) => {
+    if (String(p.status).toLowerCase() === 'accepted' && isCaDocument(p)) out.push({ p, d: caSignedDate(p), kind: 'e-signed CA' });
+    else if (isUploadedCa(p)) {
+      const t = leapUtc(p.created_at);
+      out.push({ p, d: Number.isFinite(t) ? { date: nyDate(new Date(t)), source: 'uploaded CA file' } : null, kind: 'uploaded CA' });
+    }
+  });
+  return out.filter((x) => x.d).sort((a, b) => a.d.date.localeCompare(b.d.date)); // earliest signed CA wins
+}
 function caSignedDate(p) {
   const html = String(p.template || '');
   // the customer signature box carries the date it was signed: <div class="sign-date">MM/DD/YYYY</div>
@@ -362,11 +384,10 @@ async function caCheck(req, res, url) {
     let props = [];
     try { const p = await leapGet(token, `/proposals?job_id=${job.id}&limit=50`); props = p.data || []; }
     catch (e) { results.push({ job_number: job.number, action: 'error', reason: String(e.message || e) }); continue; }
-    const signed = props.filter((p) => String(p.status).toLowerCase() === 'accepted' && isCaDocument(p))
-      .sort((a, b) => String(a.updated_at).localeCompare(String(b.updated_at)));
-    if (!signed.length) { if (onlyJob) results.push({ job_number: job.number, action: 'skip', reason: 'no accepted CA document', documents: props.map((p) => `${p.title} (${p.status})`) }); continue; }
-    const doc = signed[0];
-    const d = caSignedDate(doc);
+    const signed = signedCaDocuments(props);
+    if (!signed.length) { if (onlyJob) results.push({ job_number: job.number, action: 'skip', reason: 'no signed CA document', documents: props.map((p) => `${p.title} (${p.status}${Number(p.is_file) === 1 ? ', upload' : ''})`) }); continue; }
+    const doc = signed[0].p;
+    const d = signed[0].d;
     const c = unwrap(job.customer) || {};
     const base = { job_number: job.number, job_id: job.id, customer: custName(c), document: doc.title, document_id: doc.id, date: d && d.date, date_source: d && d.source };
     if (!d || !ISO_DATE.test(d.date)) { results.push(Object.assign(base, { action: 'skip', reason: 'could not read a date' })); continue; }
