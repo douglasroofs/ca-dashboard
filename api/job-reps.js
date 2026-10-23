@@ -417,6 +417,14 @@ async function punchout(req, res, url) {
     return res.status(200).json({ status: r.status, body: text.replace(/"access_token":"[^"]+"/g, '"access_token":"<hidden>"').replace(/"refresh_token":"[^"]+"/g, '"refresh_token":"<hidden>"').slice(0, 600) });
   }
   if (url.searchParams.get('backfill') === '1') return backfill(req, res);
+  if (url.searchParams.get('probe') === 'reporting') { // does DataBuilder accept the v1 login token? (status + shape only)
+    const token = await getToken();
+    const id = String(url.searchParams.get('report') || '4407').replace(/\D/g, '');
+    const r = await fetch(`https://reporting-api.jobprogress.com/api/reports/${id}`, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/json', 'Content-Type': 'application/json' } });
+    const text = await r.text(); let j = null; try { j = JSON.parse(text); } catch (e) {}
+    const conf = j && j.data && j.data.configurations;
+    return res.status(200).json({ status: r.status, name: j && j.data && j.data.name, fields: conf ? conf.fields.map((f) => f.display_name) : null, body: conf ? undefined : text.slice(0, 300) });
+  }
   const token = await getToken();
   const probe = url.searchParams.get('probe');
   if (probe) {
