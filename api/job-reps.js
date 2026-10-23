@@ -393,15 +393,18 @@ async function caCheck(req, res, url) {
     // Also every job CREATED in the last `newdays` days: SalesRabbit creates the Leap job and uploads the
     // signed CA within minutes, and it is not proven that an upload bumps updated_at.
     const newSince = started - Math.max(0, Number(url.searchParams.get('newdays') || 2)) * 86400000;
-    arr.forEach((job) => { if (leapUtc(job.updated_at) >= since || leapUtc(job.created_at) >= newSince) candidates.push(job); });
+    const all = url.searchParams.get('all') === '1'; // one-time sweep: every open job on the page, regardless of when it changed
+    arr.forEach((job) => { if (all || leapUtc(job.updated_at) >= since || leapUtc(job.created_at) >= newSince) candidates.push(job); });
   }
   stats.recent = candidates.length;
   const results = [];
-  for (const job of candidates) {
+  const skipN = Math.max(0, Number(url.searchParams.get('skip')) || 0); // resume a page that hit the time limit
+  for (let ci = skipN; ci < candidates.length; ci++) {
+    const job = candidates[ci];
     const ins = unwrap(job.insurance_details) || {};
     const ex = ins.contingency_contract_signed_date;
     if (ex && ex !== '0000-00-00') { stats.already_dated++; if (onlyJob) results.push({ job_number: job.number, action: 'skip', reason: 'already has a date', existing: String(ex).slice(0, 10) }); continue; }
-    if (Date.now() - started > 52000) { stats.stopped_early = 'time limit while checking documents'; break; }
+    if (Date.now() - started > 50000) { stats.stopped_early = 'time limit while checking documents'; stats.next_skip = ci; break; }
     stats.checked++;
     let props = [];
     try { const p = await leapGet(token, `/proposals?job_id=${job.id}&limit=50`); props = p.data || []; }

@@ -18,6 +18,10 @@ on:
         description: 'Write dates (1) or dry run (0)'
         required: false
         default: '1'
+      all:
+        description: 'One-time sweep of ALL open jobs (1) instead of recent ones (0)'
+        required: false
+        default: '0'
 
 concurrency:
   group: ca-check
@@ -26,7 +30,7 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -36,6 +40,7 @@ jobs:
         env:
           HOURS: ${{ inputs.hours || (github.event.schedule == '45 6 * * *' && '48') || '2' }}
           WRITE: ${{ inputs.write || '1' }}
+          ALL: ${{ inputs.all || '0' }}
           SUMMARY_FILE: ${{ runner.temp }}/ca-check.txt
         run: node scripts/ca-check.js
       - name: Job summary

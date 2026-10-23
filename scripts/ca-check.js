@@ -10,11 +10,12 @@
 const BASE = (process.env.BASE_URL || 'https://stats.douglasroofs.com').replace(/\/$/, '');
 const HOURS = Number(process.env.HOURS) || 2;
 const WRITE = process.env.WRITE === '1';
+const ALL = process.env.ALL === '1';
 const MAX_PAGES = Number(process.env.MAX_PAGES) || 60;
 const fs = require('fs');
 
-async function callPage(page, attempt = 1) {
-  const url = `${BASE}/api/job-reps?cacheck=1&page=${page}&hours=${HOURS}${WRITE ? '&write=1' : ''}`;
+async function callPage(page, attempt = 1, skip = 0) {
+  const url = `${BASE}/api/job-reps?cacheck=1&page=${page}&skip=${skip}&hours=${HOURS}${WRITE ? '&write=1' : ''}${ALL ? '&all=1' : ''}`;
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(90000), headers: { accept: 'application/json' } });
     const text = await res.text();
@@ -22,19 +23,28 @@ async function callPage(page, attempt = 1) {
     if (!res.ok || json.error) throw new Error(`HTTP ${res.status}: ${text.slice(0, 200)}`);
     return json;
   } catch (e) {
-    if (attempt < 3) { console.log(`  page ${page} retry after: ${e.message}`); await new Promise((r) => setTimeout(r, 5000)); return callPage(page, attempt + 1); }
+    if (attempt < 3) { console.log(`  page ${page} retry after: ${e.message}`); await new Promise((r) => setTimeout(r, 5000)); return callPage(page, attempt + 1, skip); }
     throw e;
   }
 }
 
 async function main() {
-  const lines = [`CA check: last ${HOURS}h, ${WRITE ? 'WRITING' : 'dry run'}`];
+  const lines = [`CA check: ${ALL ? 'ALL open jobs' : `last ${HOURS}h`}, ${WRITE ? 'WRITING' : 'dry run'}`];
   const totals = { jobs_seen: 0, recent: 0, already_dated: 0, checked: 0 };
   const found = [];
   let total = 1, failed = 0;
   for (let page = 1; page <= Math.min(total, MAX_PAGES); page++) {
     let r;
-    try { r = await callPage(page); } catch (e) { failed++; lines.push(`page ${page}: FAILED ${e.message}`); continue; }
+    try {
+      r = await callPage(page);
+      // a page that ran out of time is resumed where it stopped (sweeps check many jobs per page)
+      while (r.stats.next_skip) {
+        const more = await callPage(page, 1, r.stats.next_skip);
+        ['already_dated', 'checked'].forEach((k) => { r.stats[k] = (r.stats[k] || 0) + (more.stats[k] || 0); });
+        r.results = (r.results || []).concat(more.results || []);
+        r.stats.next_skip = more.stats.next_skip; r.stats.stopped_early = more.stats.stopped_early;
+      }
+    } catch (e) { failed++; lines.push(`page ${page}: FAILED ${e.message}`); continue; }
     total = r.stats.total_pages || total;
     Object.keys(totals).forEach((k) => { totals[k] += r.stats[k] || 0; });
     if (r.stats.stopped_early) lines.push(`page ${page}: ${r.stats.stopped_early}`);
