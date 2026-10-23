@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-22T10:21:12.133Z",
+    "updated": "2026-10-23T10:15:34.444Z",
     "year": 2026,
     "months": [
       0,
@@ -37,9 +37,9 @@ const SNAPSHOTS = {
           27,
           15,
           16,
-          16
+          18
         ],
-        "total": 93
+        "total": 95
       },
       {
         "rep": "Mike Mccarthy",
@@ -65,11 +65,11 @@ const SNAPSHOTS = {
           11,
           7,
           5,
-          7,
+          6,
           2,
           6,
           8,
-          7
+          8
         ],
         "total": 53
       },
@@ -101,25 +101,9 @@ const SNAPSHOTS = {
           7,
           3,
           7,
-          5
+          6
         ],
-        "total": 38
-      },
-      {
-        "rep": "Andrew  Prickel",
-        "counts": [
-          0,
-          0,
-          3,
-          3,
-          6,
-          1,
-          14,
-          0,
-          0,
-          0
-        ],
-        "total": 27
+        "total": 39
       },
       {
         "rep": "Jack Obert",
@@ -131,6 +115,22 @@ const SNAPSHOTS = {
           8,
           6,
           4,
+          0,
+          0,
+          0
+        ],
+        "total": 26
+      },
+      {
+        "rep": "Andrew  Prickel",
+        "counts": [
+          0,
+          0,
+          3,
+          3,
+          5,
+          1,
+          14,
           0,
           0,
           0
@@ -191,7 +191,7 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          2,
+          3,
           0,
           3,
           0,
@@ -199,7 +199,7 @@ const SNAPSHOTS = {
           0,
           0
         ],
-        "total": 14
+        "total": 15
       },
       {
         "rep": "Adam Mulvaney",
@@ -220,7 +220,7 @@ const SNAPSHOTS = {
       {
         "rep": "Robert Mumford-Wilson",
         "counts": [
-          4,
+          3,
           0,
           0,
           3,
@@ -231,7 +231,7 @@ const SNAPSHOTS = {
           1,
           1
         ],
-        "total": 10
+        "total": 9
       },
       {
         "rep": "Jason Cresswell",
@@ -293,9 +293,9 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          4
+          5
         ],
-        "total": 5
+        "total": 6
       },
       {
         "rep": "nick seward",
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-22T10:23:38.355Z",
+    "updated": "2026-10-23T10:18:14.607Z",
     "year": 2026,
     "months": [
       0,
