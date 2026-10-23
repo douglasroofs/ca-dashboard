@@ -33,7 +33,7 @@ async function main() {
   const lines = [`CA check: ${ALL ? 'ALL open jobs' : `last ${HOURS}h`}, ${WRITE ? 'WRITING' : 'dry run'}`];
   const totals = { jobs_seen: 0, recent: 0, already_dated: 0, checked: 0 };
   const found = [];
-  let total = 1, failed = 0;
+  let total = ONLY_PAGES.length ? Math.max(...ONLY_PAGES) : 1, failed = 0;
   for (let page = 1; page <= Math.min(total, MAX_PAGES); page++) {
     if (ONLY_PAGES.length && !ONLY_PAGES.includes(page)) continue;
     let r;
