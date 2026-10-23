@@ -23,6 +23,9 @@ on:
         required: false
         default: '0'
 
+permissions:
+  contents: write
+
 concurrency:
   group: ca-check
   cancel-in-progress: false
@@ -54,3 +57,16 @@ jobs:
             cat "$SUMMARY_FILE" 2>/dev/null || echo "no summary (check failed early)"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+      - name: Save sweep report to the repo (sweeps only)
+        if: always() && inputs.all == '1'
+        env:
+          SUMMARY_FILE: ${{ runner.temp }}/ca-check.txt
+        run: |
+          mkdir -p data/ca-sweeps
+          f="data/ca-sweeps/$(date -u +%Y-%m-%dT%H%M)-write${{ inputs.write }}.txt"
+          cp "$SUMMARY_FILE" "$f" 2>/dev/null || echo "no summary" > "$f"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$f"
+          git commit -m "CA sweep report" || exit 0
+          git pull --rebase -q origin main && git push origin HEAD:main
