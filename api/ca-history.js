@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-23T17:37:46.087Z",
+    "updated": "2026-10-24T09:39:55.904Z",
     "year": 2026,
     "months": [
       0,
@@ -96,14 +96,14 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          4,
-          7,
+          3,
+          6,
           7,
           3,
           7,
-          6
+          7
         ],
-        "total": 39
+        "total": 38
       },
       {
         "rep": "Jack Obert",
@@ -234,6 +234,22 @@ const SNAPSHOTS = {
         "total": 10
       },
       {
+        "rep": "Jason Cresswell",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "total": 10
+      },
+      {
         "rep": "Robert Mumford-Wilson",
         "counts": [
           3,
@@ -246,22 +262,6 @@ const SNAPSHOTS = {
           0,
           1,
           1
-        ],
-        "total": 9
-      },
-      {
-        "rep": "Jason Cresswell",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          2,
-          3,
-          3
         ],
         "total": 9
       },
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-23T17:40:31.904Z",
+    "updated": "2026-10-24T09:42:33.623Z",
     "year": 2026,
     "months": [
       0,
