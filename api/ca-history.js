@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-24T09:39:55.904Z",
+    "updated": "2026-10-25T09:57:16.934Z",
     "year": 2026,
     "months": [
       0,
@@ -32,12 +32,12 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          6,
+          5,
           13,
           27,
           15,
           16,
-          18
+          19
         ],
         "total": 95
       },
@@ -53,9 +53,9 @@ const SNAPSHOTS = {
           7,
           15,
           11,
-          5
+          6
         ],
-        "total": 56
+        "total": 57
       },
       {
         "rep": "David Kerns",
@@ -68,10 +68,10 @@ const SNAPSHOTS = {
           6,
           2,
           6,
-          8,
+          7,
           8
         ],
-        "total": 53
+        "total": 52
       },
       {
         "rep": "Harvey Shoemaker",
@@ -101,9 +101,25 @@ const SNAPSHOTS = {
           7,
           3,
           7,
-          7
+          8
         ],
-        "total": 38
+        "total": 39
+      },
+      {
+        "rep": "Marc Mitchell",
+        "counts": [
+          5,
+          2,
+          4,
+          5,
+          5,
+          1,
+          0,
+          0,
+          3,
+          1
+        ],
+        "total": 26
       },
       {
         "rep": "Jack Obert",
@@ -138,36 +154,20 @@ const SNAPSHOTS = {
         "total": 26
       },
       {
-        "rep": "Marc Mitchell",
-        "counts": [
-          5,
-          2,
-          4,
-          5,
-          4,
-          1,
-          0,
-          0,
-          3,
-          0
-        ],
-        "total": 24
-      },
-      {
         "rep": "George Bechara",
         "counts": [
           2,
           0,
           2,
           5,
-          2,
+          3,
           4,
           1,
           1,
           3,
           1
         ],
-        "total": 21
+        "total": 22
       },
       {
         "rep": "Kyle Higginbotham",
@@ -218,6 +218,22 @@ const SNAPSHOTS = {
         "total": 12
       },
       {
+        "rep": "Robert Mumford-Wilson",
+        "counts": [
+          4,
+          0,
+          0,
+          3,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "total": 10
+      },
+      {
         "rep": "Kevin Mahan",
         "counts": [
           0,
@@ -250,22 +266,6 @@ const SNAPSHOTS = {
         "total": 10
       },
       {
-        "rep": "Robert Mumford-Wilson",
-        "counts": [
-          3,
-          0,
-          0,
-          3,
-          1,
-          0,
-          0,
-          0,
-          1,
-          1
-        ],
-        "total": 9
-      },
-      {
         "rep": "Doug Coffman",
         "counts": [
           0,
@@ -293,9 +293,9 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          5
+          6
         ],
-        "total": 6
+        "total": 7
       },
       {
         "rep": "nick seward",
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-24T09:42:33.623Z",
+    "updated": "2026-10-25T10:00:03.167Z",
     "year": 2026,
     "months": [
       0,
