@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-25T09:57:16.934Z",
+    "updated": "2026-10-26T11:18:41.461Z",
     "year": 2026,
     "months": [
       0,
@@ -32,14 +32,14 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          5,
+          4,
           13,
           27,
           15,
           16,
           19
         ],
-        "total": 95
+        "total": 94
       },
       {
         "rep": "Mike Mccarthy",
@@ -85,9 +85,9 @@ const SNAPSHOTS = {
           10,
           2,
           4,
-          6
+          7
         ],
-        "total": 47
+        "total": 48
       },
       {
         "rep": "Christian Brown",
@@ -208,14 +208,14 @@ const SNAPSHOTS = {
           0,
           3,
           1,
-          1,
+          0,
           6,
           0,
           0,
           0,
           0
         ],
-        "total": 12
+        "total": 11
       },
       {
         "rep": "Robert Mumford-Wilson",
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-25T10:00:03.167Z",
+    "updated": "2026-10-26T11:21:23.172Z",
     "year": 2026,
     "months": [
       0,
