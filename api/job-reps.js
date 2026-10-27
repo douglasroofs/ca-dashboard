@@ -505,8 +505,14 @@ async function setInsurance(token, job) {
     ['PUT', `/jobs/${cur.id}`, { customer_id, insurance: 1, job_types: [INSURANCE_CATEGORY_ID], insurance_details: keep }, 'json'],
   ];
   const attempts = [];
+  let relogged = false;
   for (const [m, p, f, enc] of candidates) {
-    const a = await leapWrite(token, m, p, f, enc); attempts.push({ status: a.status, enc });
+    let a = await leapWrite(token, m, p, f, enc);
+    if ((a.status === 409 || a.status === 401) && !relogged && /paus|session|token/i.test(JSON.stringify(a))) {
+      relogged = true; cachedToken = null; tokenPromise = null; await sleep(1500); token = await getToken();
+      a = await leapWrite(token, m, p, f, enc);
+    }
+    attempts.push({ status: a.status, enc, body: String(a.body || a.text || JSON.stringify(a.json || '')).slice(0, 300) });
     if (a.status >= 200 && a.status < 300) {
       await sleep(400);
       const after = await readJobFull(token, cur.id, cur.number);
