@@ -1,0 +1,44 @@
+one-off cacheck: 42 jobs
+totals: written 26, skip 16
+written  2602-8241733-01 Mike Brown -> 2026-03-02 (customer signature) verified 2026-03-02
+written  2602-8264510-01 Kevin Kim -> 2026-02-20 (customer signature) verified 2026-02-20
+written  2603-8449228-01 Brandon Jones -> 2026-03-24 (customer signature) verified 2026-03-24
+written  2604-8499958-01 Tra Pham -> 2026-04-09 (customer signature) verified 2026-04-09
+skip     2604-8512882-01  already has a date 2026-04-10
+written  2605-8671401-01 Brad Blythe -> 2026-05-26 (customer signature) verified 2026-05-26
+skip     2605-8690819-01  already has a date 2026-05-29
+skip     2605-8691460-01  already has a date 2026-05-30
+skip     2606-8722109-01  already has a date 2026-06-17
+written  2606-8722175-01 Eddie Miller -> 2026-06-09 (customer signature) verified 2026-06-09
+skip     2606-8724691-01  already has a date 2026-06-10
+written  2606-8767436-01 Sandra Lane -> 2026-08-04 (uploaded CA file) verified 2026-08-04
+written  2606-8777069-01 Josette Zeilah -> 2026-06-26 (customer signature) verified 2026-06-26
+skip     2607-8792196-01  already has a date 2026-07-07
+written  2607-8801874-01 Kadir Gul -> 2026-07-06 (customer signature) verified 2026-07-06
+written  2607-8834678-01 Nancy Weathers -> 2026-07-20 (customer signature) verified 2026-07-20
+written  2607-8882629-01 Darryl Franklin -> 2026-07-28 (customer signature) verified 2026-07-28
+written  2608-8915086-01 Ronald Campbell -> 2026-08-04 (customer signature) verified 2026-08-04
+written  2608-8942901-01 Alan Hurry -> 2026-08-11 (customer signature) verified 2026-08-11
+written  2608-8946776-01 Maria Brown -> 2026-08-12 (customer signature) verified 2026-08-12
+written  2608-8951075-01 Ada Oliver -> 2026-09-16 (customer signature) verified 2026-09-16
+skip     2608-8968792-01  already has a date 2026-08-20
+written  2608-9009971-01 Steven Archer -> 2026-08-29 (customer signature) verified 2026-08-29
+written  2608-9017599-01 George Mullis III -> 2026-08-28 (customer signature) verified 2026-08-28
+written  2608-9017743-01 Jeffrey Johnson -> 2026-08-28 (customer signature) verified 2026-08-28
+written  2609-9054906-01 Brenda Lebre -> 2026-09-04 (customer signature) verified 2026-09-04
+skip     2609-9062547-01  already has a date 2026-09-08
+written  2609-9070046-01 Sylvie Leary -> 2026-09-11 (customer signature) verified 2026-09-11
+skip     2609-9071630-01  already has a date 2026-09-18
+written  2609-9079026-01 Marla Burton -> 2026-09-16 (customer signature) verified 2026-09-16
+skip     2609-9115555-01  already has a date 2026-10-07
+written  2609-9129221-01 Alda Finn -> 2026-09-23 (customer signature) verified 2026-09-23
+written  2609-9131577-01 Akdal Saed -> 2026-10-14 (customer signature) verified 2026-10-14
+skip     2609-9131753-01  already has a date 2026-09-24
+written  2609-9151055-01 Theodora Von Hohenstaufen Nol -> 2026-09-29 (customer signature) verified 2026-09-29
+written  2609-9152908-01 Marlon Fuentes -> 2026-09-30 (customer signature) verified 2026-09-30
+skip     2610-9197158-01  already has a date 2026-10-10
+skip     2610-9268312-01  already has a date 2026-10-14
+skip     2610-9278669-01  already has a date 2026-10-19
+skip     2610-9280008-01  already has a date 2026-10-19
+written  2610-9286052-01 Bettie Marshall -> 2026-10-21 (customer signature) verified 2026-10-21
+skip     2610-9289860-01  already has a date 2026-10-22
