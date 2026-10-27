@@ -1,8 +1,8 @@
 {
- "updated": "2026-10-27T14:14:03.332Z",
+ "updated": "2026-10-27T14:32:55.314Z",
  "month": "2026-10",
- "sr_cas": 94,
- "in_leap": 76,
+ "sr_cas": 96,
+ "in_leap": 77,
  "gaps": [
   {
    "sr_date": "2026-10-05",
@@ -25,34 +25,13 @@
    "office": "herndon",
    "customer": "Art  Rubin",
    "address": "1577 Forest Villa Ln, McLean",
-   "problem": "No CA document in Leap",
+   "problem": "Has documents, no CA date",
    "job": "2610-9223884-01",
    "leap_customer": "Art Rubin",
    "leap_rep": "Andrew Funk",
    "stage": "Inbound Lead",
-   "docs": []
-  },
-  {
-   "sr_date": "2026-10-17",
-   "sr_rep": "Andrew Funk",
-   "office": "herndon",
-   "customer": null,
-   "address": "1703 Shagbark Cir, Reston",
-   "problem": "No Leap job"
-  },
-  {
-   "sr_date": "2026-10-18",
-   "sr_rep": "Andrew Funk",
-   "office": "herndon",
-   "customer": "Tim/Beth  Nank ",
-   "address": "5684 Tower Hill Cir, Alexandria",
-   "problem": "Has documents, no CA date",
-   "job": "2610-9276586-01",
-   "leap_customer": "Tim/Beth Nank",
-   "leap_rep": "Andrew Funk",
-   "stage": "Public Adjuster",
    "docs": [
-    "Beth Nank.pdf (draft, upload)"
+    "557949.pdf (draft, upload)"
    ]
   },
   {
@@ -71,11 +50,43 @@
    ]
   },
   {
-   "sr_date": "2026-10-21",
+   "sr_date": "2026-10-27",
    "sr_rep": "Andrew Funk",
    "office": "herndon",
-   "customer": null,
-   "address": "11302 Fairway Dr, Reston",
+   "customer": "Barry  Shackelford ",
+   "address": "3520 13th St N, Arlington",
+   "problem": "Has documents, no CA date",
+   "job": "2610-9192033-01",
+   "leap_customer": "Barry Shackelford",
+   "leap_rep": "Andrew Funk",
+   "stage": "Inbound Lead",
+   "docs": [
+    "IMG_3667.jpg (draft, upload)",
+    "CA - Barry Shackelford.pdf (draft, upload)"
+   ]
+  },
+  {
+   "sr_date": "2026-10-27",
+   "sr_rep": "Andrew Funk",
+   "office": "herndon",
+   "customer": "Barry Shackelford ",
+   "address": "3520 13th St N, Arlington",
+   "problem": "Has documents, no CA date",
+   "job": "2610-9192033-01",
+   "leap_customer": "Barry Shackelford",
+   "leap_rep": "Andrew Funk",
+   "stage": "Inbound Lead",
+   "docs": [
+    "IMG_3667.jpg (draft, upload)",
+    "CA - Barry Shackelford.pdf (draft, upload)"
+   ]
+  },
+  {
+   "sr_date": "2026-10-09",
+   "sr_rep": "Christian Brown",
+   "office": "herndon",
+   "customer": "Rhonda Ward",
+   "address": "15306 Devonwood Road, Montpelier",
    "problem": "No Leap job"
   },
   {
@@ -90,14 +101,6 @@
    "leap_rep": "Christian Brown",
    "stage": "Public Adjuster",
    "docs": []
-  },
-  {
-   "sr_date": "2026-10-07",
-   "sr_rep": "David Kerns",
-   "office": "herndon",
-   "customer": null,
-   "address": "4351 Farm House Ln, Fairfax",
-   "problem": "No Leap job"
   },
   {
    "sr_date": "2026-10-22",
@@ -122,10 +125,33 @@
   },
   {
    "sr_date": "2026-10-23",
-   "sr_rep": "Kevin Mahan",
+   "sr_rep": "Harvey Shoemaker",
    "office": "herndon",
-   "customer": null,
-   "address": "6860 Bryson Cir, Haymarket",
+   "customer": "Calvin Grant",
+   "address": "8387 Cardova Cir, Richmond",
+   "problem": "No Leap job"
+  },
+  {
+   "sr_date": "2026-10-25",
+   "sr_rep": "Harvey Shoemaker",
+   "office": "herndon",
+   "customer": "Bettie Marshall",
+   "address": "8317 Fulham Dr, Richmond",
+   "problem": "Has documents, no CA date",
+   "job": "2610-9286052-01",
+   "leap_customer": "Bettie Marshall",
+   "leap_rep": "Harvey Shoemaker",
+   "stage": "Inbound Lead",
+   "docs": [
+    "CA (draft)"
+   ]
+  },
+  {
+   "sr_date": "2026-10-01",
+   "sr_rep": "Paolo Castillo",
+   "office": "herndon",
+   "customer": "Robin  Byrd",
+   "address": "11467 Haltonshire Way, Glen Allen",
    "problem": "No Leap job"
   },
   {
@@ -218,39 +244,6 @@
    "ca_date": "2026-09-30"
   },
   {
-   "sr_date": "2026-10-25",
-   "sr_rep": "Harvey Shoemaker",
-   "office": "herndon",
-   "customer": "Bettie Marshall",
-   "address": "8317 Fulham Dr, Richmond",
-   "job": "2607-8824886-01",
-   "leap_rep": "Steven Arevalo",
-   "leap_customer": "Deyon Marshall",
-   "ca_date": "2026-09-14"
-  },
-  {
-   "sr_date": "2026-10-23",
-   "sr_rep": "Harvey Shoemaker",
-   "office": "herndon",
-   "customer": "Calvin Grant",
-   "address": "8387 Cardova Cir, Richmond",
-   "job": "2606-8740027-01",
-   "leap_rep": "Alfred Duncan",
-   "leap_customer": "Grant Williams",
-   "ca_date": "2026-06-22"
-  },
-  {
-   "sr_date": "2026-10-09",
-   "sr_rep": "Christian Brown",
-   "office": "herndon",
-   "customer": "Rhonda Ward",
-   "address": "15306 Devonwood Road, Montpelier",
-   "job": "2610-9268070-01",
-   "leap_rep": "Isabelle Price",
-   "leap_customer": "Jernelle Ward",
-   "ca_date": "2026-10-19"
-  },
-  {
    "sr_date": "2026-10-08",
    "sr_rep": "Mike Mccarthy",
    "office": "herndon",
@@ -271,17 +264,6 @@
    "leap_rep": "Doug Coffman",
    "leap_customer": "Dolores Wever",
    "ca_date": "2026-10-11"
-  },
-  {
-   "sr_date": "2026-10-01",
-   "sr_rep": "Paolo Castillo",
-   "office": "herndon",
-   "customer": "Robin  Byrd",
-   "address": "11467 Haltonshire Way, Glen Allen",
-   "job": "2610-9202523-01",
-   "leap_rep": "Harvey Shoemaker",
-   "leap_customer": "David Byrd",
-   "ca_date": "2026-10-14"
   }
  ]
 }
