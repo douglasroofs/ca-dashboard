@@ -502,6 +502,10 @@ async function setInsurance(token, job) {
   if (!cur) return { ok: false, reason: 'job not found' };
   const types = jobTypeIds(cur);
   const isIns = Number(cur.insurance) === 1;
+  // Inbound leads (/g form, Facebook, LSA) also arrive through Leap's Public API, but always with a referral
+  // source; SalesRabbit's integration sends none. Never mark a job that has a referral source.
+  const cust = unwrap(cur.customer) || {};
+  if (cust.referred_by_type || cust.referred_by_id) return { ok: true, skipped: 'has a referral source (inbound lead, not SalesRabbit)', referral: cust.referred_by_type || null };
   if (types.length && !types.includes(INSURANCE_CATEGORY_ID)) return { ok: true, skipped: 'category already set by someone', types };
   if (isIns && types.includes(INSURANCE_CATEGORY_ID)) return { ok: true, skipped: 'already Insurance + Insurance Claim' };
   const ins = unwrap(cur.insurance_details) || {};
