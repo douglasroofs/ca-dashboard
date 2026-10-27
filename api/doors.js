@@ -9,27 +9,22 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-26T11:21:34.337Z",
-    "total": 3267,
+    "updated": "2026-10-27T10:47:01.665Z",
+    "total": 2950,
     "reps": [
       {
         "rep": "Cris Duarte",
-        "doors": 705,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Landyn Palmer",
-        "doors": 470,
+        "doors": 747,
         "team": "selfgen"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 451,
+        "doors": 460,
         "team": "selfgen"
       },
       {
         "rep": "Christian Brown",
-        "doors": 382,
+        "doors": 395,
         "team": "mccarthy"
       },
       {
@@ -39,27 +34,27 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 260,
+        "doors": 285,
         "team": "jack"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 246,
+        "doors": 272,
         "team": "mccarthy"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 151,
+        "doors": 168,
         "team": "mccarthy"
       },
       {
         "rep": "David Kerns",
-        "doors": 139,
+        "doors": 156,
         "team": "jack"
       },
       {
         "rep": "Andrew Funk",
-        "doors": 58,
+        "doors": 60,
         "team": "selfgen"
       },
       {
@@ -69,12 +64,12 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Robert Mumford-Wilson",
-        "doors": 38,
+        "doors": 39,
         "team": "selfgen"
       },
       {
         "rep": "Adam Mulvaney",
-        "doors": 4,
+        "doors": 5,
         "team": "noteam"
       },
       {
@@ -116,9 +111,9 @@ const SNAPSHOTS = {
       "doug coffman",
       "paolo castillo",
       "patrick parsons",
-      "landyn palmer",
       "cris duarte",
-      "lucas morris"
+      "lucas morris",
+      "brett jenkins"
     ],
     "roster": [
       "Kyle Higginbotham",
@@ -144,18 +139,18 @@ const SNAPSHOTS = {
       "Doug Coffman",
       "Paolo Castillo",
       "Patrick Parsons",
-      "Landyn Palmer",
       "Cris Duarte",
-      "Lucas Morris"
+      "Lucas Morris",
+      "Brett Jenkins"
     ]
   },
   "richmond": {
-    "updated": "2026-10-26T11:21:44.933Z",
-    "total": 220,
+    "updated": "2026-10-27T10:47:12.471Z",
+    "total": 234,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 220,
+        "doors": 234,
         "team": "selfgen"
       }
     ],
