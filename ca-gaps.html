@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Douglas Roofing - CA Gaps</title>
+<style>
+  :root{--ink:#e6edf3;--dim:#8b949e;--line:#30363d;--blue:#58a6ff;--bg:#0d1117;--panel:#161b22;--good:#3fb950;--warn:#d29922;--bad:#f85149;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{background:var(--panel);border-bottom:1px solid var(--line);padding:16px 22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h1{font-size:17px;margin:0;font-weight:600}
+  .nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 8px}
+  .nav a{color:var(--dim);text-decoration:none;font-size:13px;padding:5px 10px;border-radius:6px}
+  .nav a:hover{color:#fff} .nav a.on{color:var(--ink)}
+  .meta{font-size:12px;color:var(--dim);margin-left:auto}
+  .wrap{max-width:1380px;margin:0 auto;padding:22px 16px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:18px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;border-top-width:3px}
+  .card .label{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+  .card .value{font-size:26px;font-weight:700}
+  .card.g{border-top-color:var(--good)} .card.g .value{color:var(--good)}
+  .card.b{border-top-color:var(--bad)} .card.b .value{color:var(--bad)}
+  .card.w{border-top-color:var(--warn)} .card.w .value{color:var(--warn)}
+  section{margin-bottom:24px}
+  h2{font-size:15px;margin:0 0 6px;font-weight:600}
+  p.help{color:var(--dim);font-size:12px;margin:0 0 12px}
+  .tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+  table{width:100%;border-collapse:collapse;background:var(--panel)}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top}
+  th{background:var(--bg);color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+  .p0{background:rgba(248,81,73,.16);color:var(--bad)} .p1{background:rgba(210,153,34,.16);color:var(--warn)} .p2{background:rgba(88,166,255,.16);color:var(--blue)}
+  .sm{font-size:12px;color:var(--dim)}
+  .err{color:var(--bad);border:1px solid var(--bad);border-radius:12px;padding:12px}
+  .empty{color:var(--good);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+</style>
+</head>
+<body>
+<header>
+  <h1>CA Gaps</h1>
+  <nav class="nav"><a href="/revenue.html">Herndon</a><a href="/richmond.html">Richmond</a><a href="/ca-bonus.html">CA Bonus</a><a href="/marketing.html">Marketing</a><a href="/punchout.html">Punch Out</a><a href="/ca-gaps.html" class="on">CA Gaps</a></nav>
+  <span class="meta" id="stamp"></span>
+</header>
+<div class="wrap">
+  <div class="cards" id="cards"></div>
+  <section>
+    <h2>Marked as a CA in SalesRabbit, missing from Leap</h2>
+    <p class="help">These CAs show in Amplify but have no CA Signed Date in Leap, so they will not count or get paid until fixed. Upload the signed CA to the Leap job (the date then fills in automatically within 30 minutes), or create the job if there is none.</p>
+    <div id="gaps"></div>
+  </section>
+  <section>
+    <h2>Different rep in SalesRabbit and Leap</h2>
+    <p class="help">Leap's customer rep is the one who gets paid. Fix the rep in Leap if it is wrong.</p>
+    <div id="reps"></div>
+  </section>
+</div>
+<script>
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const pillCls = { 'No Leap job': 'p0', 'No CA document in Leap': 'p1', 'Has documents, no CA date': 'p2' };
+const md = (d) => d ? d.slice(5).replace('-', '/') : '';
+fetch('/api/job-reps?srgaps=1', { cache: 'no-store' }).then((r) => r.json()).then((g) => {
+  document.getElementById('stamp').textContent = g.updated ? 'Checked ' + new Date(g.updated).toLocaleString() : 'Not run yet';
+  const gaps = g.gaps || [], reps = g.rep_mismatch || [];
+  document.getElementById('cards').innerHTML =
+    `<div class="card g"><div class="label">SR CAs in Leap</div><div class="value">${g.in_leap || 0} / ${g.sr_cas || 0}</div></div>` +
+    `<div class="card b"><div class="label">Missing from Leap</div><div class="value">${gaps.length}</div></div>` +
+    `<div class="card w"><div class="label">Rep mismatch</div><div class="value">${reps.length}</div></div>`;
+  document.getElementById('gaps').innerHTML = gaps.length ? `<div class="tw"><table><thead><tr><th>SR date</th><th>Rep</th><th>Customer</th><th>Problem</th><th>Leap job</th><th>Documents in Leap</th></tr></thead><tbody>` +
+    gaps.map((x) => `<tr><td>${md(x.sr_date)}</td><td>${esc(x.sr_rep)}</td><td>${esc(x.customer || '(no name)')}<div class="sm">${esc(x.address || '')}</div></td><td><span class="pill ${pillCls[x.problem] || ''}">${esc(x.problem)}</span></td><td>${esc(x.job || '')}<div class="sm">${esc(x.stage || '')}</div></td><td class="sm">${esc((x.docs || []).join(', '))}</td></tr>`).join('') +
+    `</tbody></table></div>` : '<div class="empty">Every SalesRabbit CA this month has a CA date in Leap.</div>';
+  document.getElementById('reps').innerHTML = reps.length ? `<div class="tw"><table><thead><tr><th>Customer</th><th>SalesRabbit rep</th><th>Leap rep (paid)</th><th>Leap job</th><th>CA date</th></tr></thead><tbody>` +
+    reps.map((x) => `<tr><td>${esc(x.leap_customer || x.customer)}</td><td>${esc(x.sr_rep)}</td><td>${esc(x.leap_rep)}</td><td>${esc(x.job)}</td><td>${md(x.ca_date)}</td></tr>`).join('') +
+    `</tbody></table></div>` : '<div class="empty">No rep mismatches.</div>';
+}).catch((e) => { document.getElementById('gaps').innerHTML = '<div class="err">Could not load: ' + esc(e.message) + '</div>'; });
+</script>
+</body>
+</html>

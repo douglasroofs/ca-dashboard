@@ -339,14 +339,24 @@ function isUploadedCa(p) {
   const name = `${(p && p.title) || ''} ${(p && p.file_name) || ''}`;
   return isFile && CA_NAME.test(name) && !NOT_CA_NAME.test(name);
 }
-function signedCaDocuments(props) {
+// A PDF that SalesRabbit uploads right after it creates the Leap job IS the signed CA, whatever its
+// name ("Beth Nank.pdf"). SalesRabbit-created jobs have source_type "Public API".
+function isSalesRabbitCaUpload(p, job) {
+  if (!job || String(job.source_type || '').toLowerCase() !== 'public api') return false;
+  const isFile = Number(p && p.is_file) === 1 || String((p && p.type) || '').toLowerCase() === 'file';
+  const name = `${(p && p.title) || ''} ${(p && p.file_name) || ''}`;
+  if (!isFile || !/\.pdf\b/i.test(name) || NOT_CA_NAME.test(name)) return false;
+  const lag = leapUtc(p.created_at) - leapUtc(job.created_at);
+  return Number.isFinite(lag) && lag >= -60000 && lag <= 30 * 60000;
+}
+function signedCaDocuments(props, job) {
   const out = [];
   props.forEach((p) => {
     if (String(p.status).toLowerCase() === 'accepted' && isCaDocument(p)) out.push({ p, d: caSignedDate(p), kind: 'e-signed CA' });
     // Signed in person on the rep's device but never marked Accepted (status stays sent/viewed, e.g. Travis
     // Kizzar's RVA CAs): count it when the customer signature box holds a signature image AND a sign date.
     else if (isCaDocument(p) && customerSigned(p)) { const d = caSignedDate(p); if (d && d.source === 'customer signature') out.push({ p, d, kind: 'signed CA (not marked accepted)' }); }
-    else if (isUploadedCa(p)) {
+    else if (isUploadedCa(p) || isSalesRabbitCaUpload(p, job)) {
       const t = leapUtc(p.created_at);
       out.push({ p, d: Number.isFinite(t) ? { date: nyDate(new Date(t)), source: 'uploaded CA file' } : null, kind: 'uploaded CA' });
     }
@@ -394,7 +404,11 @@ async function caCheck(req, res, url) {
     // signed CA within minutes, and it is not proven that an upload bumps updated_at.
     const newSince = started - Math.max(0, Number(url.searchParams.get('newdays') || 2)) * 86400000;
     const all = url.searchParams.get('all') === '1'; // one-time sweep: every open job on the page, regardless of when it changed
-    arr.forEach((job) => { if (all || leapUtc(job.updated_at) >= since || leapUtc(job.created_at) >= newSince) candidates.push(job); });
+    // plus every job the nightly SalesRabbit cross-check flagged (data/ca-sr-gaps.json): a CA uploaded there
+    // later gets dated even if the upload doesn't bump the job's updated_at
+    let gapJobs = new Set();
+    try { gapJobs = new Set((require('../data/ca-sr-gaps.json').gaps || []).map((g) => g.job).filter(Boolean)); } catch (e) {}
+    arr.forEach((job) => { if (all || gapJobs.has(job.number) || leapUtc(job.updated_at) >= since || leapUtc(job.created_at) >= newSince) candidates.push(job); });
   }
   stats.recent = candidates.length;
   const results = [];
@@ -409,7 +423,7 @@ async function caCheck(req, res, url) {
     let props = [];
     try { const p = await leapGet(token, `/proposals?job_id=${job.id}&limit=50`); props = p.data || []; }
     catch (e) { results.push({ job_number: job.number, action: 'error', reason: String(e.message || e) }); continue; }
-    const signed = signedCaDocuments(props);
+    const signed = signedCaDocuments(props, job);
     if (!signed.length) { if (onlyJob) results.push({ job_number: job.number, action: 'skip', reason: 'no signed CA document', documents: props.map((p) => `${p.title} (${p.status}${Number(p.is_file) === 1 ? ', upload' : ''})`) }); continue; }
     const doc = signed[0].p;
     const d = signed[0].d;
@@ -430,6 +444,35 @@ async function caCheck(req, res, url) {
 // Date (rep = customer rep, same as DataBuilder's "Sales Rep / Customer Rep") and the job numbers without
 // one. scripts/refresh-ca-ledger.js merges this into data/ca-ledger.json nightly; Leap's job list never
 // returns lost/archived jobs, so the ledger keeps every job it has seen dated (they stay counted).
+// GET /api/job-reps?findjob=1&q=<street address or name>[&name=<customer name>] -> Leap jobs that match
+// (incl. lost), each with its CA Signed Date, customer rep, stage and documents. Used by the nightly
+// SalesRabbit-vs-Leap CA gap check (scripts/refresh-ca-gaps.js). ?srgaps=1 serves the last report.
+async function findJob(req, res, url) {
+  const token = await getToken();
+  const q = (url.searchParams.get('q') || '').trim();
+  const name = (url.searchParams.get('name') || '').trim().toLowerCase();
+  const words = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter((w) => w.length > 1);
+  const out = [];
+  for (const kw of [q, name].filter(Boolean)) {
+    const j = await leapGet(token, `/jobs?keyword=${encodeURIComponent(kw)}&limit=10&include_lost_jobs=1&includes[]=customer&includes[]=customer.rep&includes[]=insurance_details&includes[]=address`);
+    const qw = words(q).slice(0, 2).join(' '), last = words(name).pop();
+    for (const job of j.data || []) {
+      const c = unwrap(job.customer) || {};
+      const hay = words(JSON.stringify([c.full_name, c.first_name, c.last_name, unwrap(job.address), unwrap(c.address)])).join(' ');
+      if (!((qw && hay.includes(qw)) || (last && hay.includes(last)))) continue;
+      if (out.some((x) => x.job === job.number)) continue;
+      const ins = unwrap(job.insurance_details) || {};
+      const d = ins.contingency_contract_signed_date;
+      let docs = [];
+      try { const p = await leapGet(token, `/proposals?job_id=${job.id}&limit=50`); docs = (p.data || []).map((x) => `${x.title} (${x.status}${Number(x.is_file) === 1 ? ', upload' : ''})`); } catch (e) { docs = ['?']; }
+      out.push({ job: job.number, customer: custName(c), rep: clean(nameOf(unwrap(c.rep))), stage: (unwrap(job.current_stage) || {}).name || null, created: String(job.created_at || '').slice(0, 10), ca_date: d && d !== '0000-00-00' ? String(d).slice(0, 10) : null, docs, matched_by: qw && hay.includes(qw) ? 'address' : 'name' });
+      if (out.length >= 3) break;
+    }
+    if (out.length) break;
+  }
+  res.status(200).json({ q, name, jobs: out });
+}
+
 async function caCounts(req, res, url) {
   const token = await getToken();
   const page = Math.max(1, Number(url.searchParams.get('page')) || 1);
@@ -547,6 +590,8 @@ module.exports = async (req, res) => {
     if (url.searchParams.get('leapwh') === '1') return await leapWebhook(req, res, url);
     if (url.searchParams.get('cacheck') === '1') return await caCheck(req, res, url);
     if (url.searchParams.get('cacounts') === '1') return await caCounts(req, res, url);
+    if (url.searchParams.get('findjob') === '1') return await findJob(req, res, url);
+    if (url.searchParams.get('srgaps') === '1') { let g = { updated: null, gaps: [] }; try { g = require('../data/ca-sr-gaps.json'); } catch (e) {} return res.status(200).json(g); }
     if (url.searchParams.get('punchout') === '1') return await punchout(req, res, url);
     const debug = url.searchParams.get('debug');
     const token = await getToken();
