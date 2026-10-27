@@ -474,6 +474,64 @@ async function findJob(req, res, url) {
   res.status(200).json({ q, name, jobs: out });
 }
 
+// ── SalesRabbit jobs -> Insurance (2026-10-27) ───────────────────────────────
+// SalesRabbit's Leap integration only sends contact details, so its jobs ("Public API") arrive with no
+// category and without the Insurance flag. setInsurance() marks one job Insurance + category "Insurance
+// Claim" (job_types id INSURANCE_CATEGORY_ID, default 1594), keeping every insurance detail already on
+// it. A job whose category someone already set (Retail, Warranty...) is never touched.
+const INSURANCE_CATEGORY_ID = Number(process.env.INSURANCE_CATEGORY_ID || 1594);
+async function readJobFull(token, jobId, jobNumber) {
+  const inc = 'includes[]=insurance_details&includes[]=job_types&includes[]=customer';
+  try { const j = await leapGet(token, `/jobs/${jobId}?${inc}`); return j.data || j; }
+  catch (e) { const l = await leapGet(token, `/jobs?job_number=${encodeURIComponent(jobNumber)}&limit=1&include_lost_jobs=1&with_archived=1&${inc}`); return (l.data || [])[0] || null; }
+}
+const jobTypeIds = (job) => (unwrap(job.job_types) || []).map((t) => Number(t.id));
+async function setInsurance(token, job) {
+  const cur = await readJobFull(token, job.id, job.number);
+  if (!cur) return { ok: false, reason: 'job not found' };
+  const types = jobTypeIds(cur);
+  const isIns = Number(cur.insurance) === 1;
+  if (types.length && !types.includes(INSURANCE_CATEGORY_ID)) return { ok: true, skipped: 'category already set by someone', types };
+  if (isIns && types.includes(INSURANCE_CATEGORY_ID)) return { ok: true, skipped: 'already Insurance + Insurance Claim' };
+  const ins = unwrap(cur.insurance_details) || {};
+  const keep = {};
+  ['insurance_company', 'insurance_number', 'phone', 'fax', 'email', 'adjuster_name', 'adjuster_phone', 'adjuster_email', 'adjuster_phone_ext', 'date_of_loss', 'claim_filed_date', 'contingency_contract_signed_date', 'policy_number', 'rcv', 'supplement', 'net_claim', 'acv', 'depreciation', 'deductable_amount', 'total', 'upgrade']
+    .forEach((k) => { if (ins[k] != null && ins[k] !== '' && ins[k] !== '0000-00-00') keep[k] = String(ins[k]); });
+  const customer_id = String(cur.customer_id || (unwrap(cur.customer) || {}).id || '');
+  const form = { customer_id, insurance: '1', 'job_types[]': String(INSURANCE_CATEGORY_ID) };
+  Object.keys(keep).forEach((k) => { form[`insurance_details[${k}]`] = keep[k]; });
+  const candidates = [
+    ['PUT', `/jobs/${cur.id}`, form, 'form'],
+    ['PUT', `/jobs/${cur.id}`, { customer_id, insurance: 1, job_types: [INSURANCE_CATEGORY_ID], insurance_details: keep }, 'json'],
+  ];
+  const attempts = [];
+  for (const [m, p, f, enc] of candidates) {
+    const a = await leapWrite(token, m, p, f, enc); attempts.push({ status: a.status, enc });
+    if (a.status >= 200 && a.status < 300) {
+      await sleep(400);
+      const after = await readJobFull(token, cur.id, cur.number);
+      const afterIns = unwrap(after.insurance_details) || {};
+      const lost = Object.keys(keep).filter((k) => String(afterIns[k] == null ? '' : afterIns[k]).slice(0, 10) !== keep[k].slice(0, 10));
+      const ok = Number(after.insurance) === 1 && jobTypeIds(after).includes(INSURANCE_CATEGORY_ID);
+      if (ok) return { ok: true, attempts, before: { insurance: isIns, types }, after: { insurance: true, types: jobTypeIds(after) }, kept: Object.keys(keep), changed_details: lost };
+      attempts[attempts.length - 1].after = { insurance: after.insurance, types: jobTypeIds(after) };
+    }
+  }
+  return { ok: false, attempts };
+}
+// GET /api/job-reps?setins=1&job=<number>[&write=1] -> preview (or apply) Insurance + Insurance Claim on one job
+async function setInsuranceOne(req, res, url) {
+  const token = await getToken();
+  const num = url.searchParams.get('job');
+  const l = await leapGet(token, `/jobs?job_number=${encodeURIComponent(num)}&limit=1&include_lost_jobs=1&with_archived=1&includes[]=job_types&includes[]=customer`);
+  const job = (l.data || [])[0];
+  if (!job) return res.status(404).json({ error: 'job not found', job: num });
+  const preview = { job: job.number, customer: custName(unwrap(job.customer) || {}), source: job.source_type || null, insurance: Number(job.insurance) === 1, categories: (unwrap(job.job_types) || []).map((t) => t.name) };
+  if (url.searchParams.get('write') !== '1') return res.status(200).json({ write: false, preview });
+  const r = await setInsurance(token, job);
+  res.status(200).json({ write: true, preview, result: r });
+}
+
 async function caCounts(req, res, url) {
   const token = await getToken();
   const page = Math.max(1, Number(url.searchParams.get('page')) || 1);
@@ -591,6 +649,7 @@ module.exports = async (req, res) => {
     if (url.searchParams.get('leapwh') === '1') return await leapWebhook(req, res, url);
     if (url.searchParams.get('cacheck') === '1') return await caCheck(req, res, url);
     if (url.searchParams.get('cacounts') === '1') return await caCounts(req, res, url);
+    if (url.searchParams.get('setins') === '1') return await setInsuranceOne(req, res, url);
     if (url.searchParams.get('findjob') === '1') return await findJob(req, res, url);
     if (url.searchParams.get('srgaps') === '1') { let g = { updated: null, gaps: [] }; try { g = require('../data/ca-sr-gaps.json'); } catch (e) {} return res.status(200).json(g); }
     if (url.searchParams.get('punchout') === '1') return await punchout(req, res, url);
