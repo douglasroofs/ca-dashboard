@@ -1,0 +1,47 @@
+name: One-off Leap writes (approved lists)
+
+# Manual only. Runs scripts/run-job-list.js over a committed list of job numbers and commits the report
+# to data/one-off/. Shares the ca-check concurrency group so it never runs at the same time as the
+# 30-minute CA check (both use the dashboard's single Leap session).
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'setins (Insurance + Insurance Claim) or cacheck (CA Signed Date)'
+        required: true
+      jobs_file:
+        description: 'List file under data/one-off/'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ca-check
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Write
+        env:
+          MODE: ${{ inputs.mode }}
+          JOBS_FILE: data/one-off/${{ inputs.jobs_file }}
+          REPORT_FILE: data/one-off/report-${{ inputs.mode }}-${{ github.run_id }}.txt
+          SUMMARY_FILE: ${{ runner.temp }}/summary.txt
+        run: node scripts/run-job-list.js
+      - name: Save report
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/one-off/report-* || true
+          git commit -m "One-off write report (${{ inputs.mode }})" || exit 0
+          git pull --rebase -q origin main && git push origin HEAD:main
