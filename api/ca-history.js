@@ -414,7 +414,7 @@ function arr(j) { return Array.isArray(j) ? j : (j && (j.data || j.results || j.
 function monthStart() { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), 1); }
 function stormAllowed(team, office) { const n = norm(team); if (office === 'richmond') return n.indexOf('richmond') > -1; return !n || (n.indexOf('self') > -1 && n.indexOf('gen') > -1) || n.indexOf('jack') > -1 || n.indexOf('inbound') > -1 || n.indexOf('mccarthy') > -1; }
 
-async function compute(office, year, monthOnly) {
+async function compute(office, year, monthOnly, detail) {
   const usersRes = await srGet('/users');
   const allUsers = arr(usersRes.json).map((u) => ({
     id: String(pick(u, ['id'])),
@@ -429,7 +429,7 @@ async function compute(office, year, monthOnly) {
   const now = new Date();
   const since = monthOnly ? monthStart() : new Date(year, 0, 1);
   const hdr = { 'If-Status-Modified-Since': since.toISOString() };
-  const counts = {}; const seen = new Set(); const seenLead = new Set(); let eventsScanned = 0, pages = 0;
+  const details = []; const counts = {}; const seen = new Set(); const seenLead = new Set(); let eventsScanned = 0, pages = 0;
   for (let page = 1; page <= 120; page++) {
     const r = await srGet('/leadStatusHistories?perPage=' + CAP + '&page=' + page, hdr);
     const data = (r.json && r.json.data) || {};
@@ -453,6 +453,7 @@ async function compute(office, year, monthOnly) {
         if (seen.has(key)) continue; seen.add(key);
         if (!counts[rk]) counts[rk] = new Array(12).fill(0);
         counts[rk][m]++;
+        if (detail) details.push({ lead: lid, rep: display[rk] || rk, date: d.toISOString().slice(0, 10), status: ev.name });
       }
     }
     if (fresh === 0) break;
@@ -464,7 +465,21 @@ async function compute(office, year, monthOnly) {
     const c = counts[rk]; const total = months.reduce((a, m) => a + c[m], 0);
     return { rep: display[rk] || rk, counts: months.map((m) => c[m]), total };
   }).sort((a, b) => b.total - a.total);
-  return { office, year, updated: new Date().toISOString(), months, reps, eventsScanned, pages, leadsScanned: seenLead.size };
+  const out = { office, year, updated: new Date().toISOString(), months, reps, eventsScanned, pages, leadsScanned: seenLead.size };
+  if (detail) { // ?detail=1 (audit): each CA with the lead's name/address, to match against Leap
+    for (let i = 0; i < details.length; i += 10) {
+      await Promise.all(details.slice(i, i + 10).map(async (x) => {
+        try {
+          const r = await srGet('/leads/' + x.lead); const l = (r.json && r.json.data) || r.json || {};
+          x.name = [pick(l, ['firstName']), pick(l, ['lastName'])].filter(Boolean).join(' ') || pick(l, ['businessName', 'name']) || null;
+          x.address = [pick(l, ['street1', 'address', 'street']), pick(l, ['city'])].filter(Boolean).join(', ') || null;
+          x.leapId = pick(l, ['externalId', 'crmId']) || null;
+        } catch (e) { x.err = String(e.message || e); }
+      }));
+    }
+    out.details = details;
+  }
+  return out;
 }
 
 module.exports = async (req, res) => {
@@ -476,7 +491,7 @@ module.exports = async (req, res) => {
     const year = parseInt(url.searchParams.get('year') || '', 10) || new Date().getFullYear();
     const live = url.searchParams.get('live');
     const monthOnly = url.searchParams.get('scope') !== 'year';
-    if (live === '1') { const data = await compute(office, year, monthOnly); res.status(200).json(data); return; }
+    if (live === '1') { const data = await compute(office, year, monthOnly, url.searchParams.get('detail') === '1'); res.status(200).json(data); return; }
     res.status(200).json(SNAPSHOTS[office] || SNAPSHOTS.herndon);
   } catch (err) {
     res.status(500).json({ error: String(err && err.message ? err.message : err) });
