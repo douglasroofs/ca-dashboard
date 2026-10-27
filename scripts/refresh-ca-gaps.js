@@ -54,7 +54,7 @@ async function main() {
     let hit = last ? ledgerList.filter((l) => l.w.includes(last) && (w.length < 2 || l.w.includes(w[0]) || l.w.length < 2)) : [];
     let leapJobs = null;
     if (!hit.length) {
-      const street = String(x.address || '').split(',')[0];
+      const street = String(x.address || '').split(',')[0].split(/\s+/).slice(0, 2).join(' '); // "1703 Shagbark" - Leap's keyword search misses on the full street
       const f = await getJson(`${BASE}/api/job-reps?findjob=1&q=${encodeURIComponent(street)}&name=${encodeURIComponent(x.name || '')}`);
       leapJobs = f.jobs || [];
       hit = leapJobs.filter((j) => j.ca_date).map((j) => ({ job: j.job, rep: j.rep, date: j.ca_date, customer: j.customer }));

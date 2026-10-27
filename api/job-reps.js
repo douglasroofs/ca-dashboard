@@ -455,11 +455,12 @@ async function findJob(req, res, url) {
   const out = [];
   for (const kw of [q, name].filter(Boolean)) {
     const j = await leapGet(token, `/jobs?keyword=${encodeURIComponent(kw)}&limit=10&include_lost_jobs=1&includes[]=customer&includes[]=customer.rep&includes[]=insurance_details&includes[]=address`);
-    const qw = words(q).slice(0, 2).join(' '), last = words(name).pop();
+    const qw = words(q).slice(0, 2).join(' '), nw = words(name);
+    const nameHit = (hay) => nw.length > 0 && nw.filter((w) => w !== 'and').every((w) => hay.includes(w)); // all name words, not just the last name
     for (const job of j.data || []) {
       const c = unwrap(job.customer) || {};
       const hay = words(JSON.stringify([c.full_name, c.first_name, c.last_name, unwrap(job.address), unwrap(c.address)])).join(' ');
-      if (!((qw && hay.includes(qw)) || (last && hay.includes(last)))) continue;
+      if (!((qw && hay.includes(qw)) || nameHit(hay))) continue;
       if (out.some((x) => x.job === job.number)) continue;
       const ins = unwrap(job.insurance_details) || {};
       const d = ins.contingency_contract_signed_date;
