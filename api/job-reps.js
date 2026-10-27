@@ -381,6 +381,7 @@ function caSignedDate(p) {
 }
 async function caCheck(req, res, url) {
   const started = Date.now();
+  const newSinceAll = started - Math.max(0, Number(url.searchParams.get('newdays') || 2)) * 86400000;
   const write = url.searchParams.get('write') === '1';
   const hours = Math.max(0.5, Math.min(24 * 14, Number(url.searchParams.get('hours')) || 3));
   const onlyJob = (url.searchParams.get('job') || '').trim();
@@ -396,13 +397,13 @@ async function caCheck(req, res, url) {
     // Leap takes ~18 s per 100 jobs, so one call reads ONE page (&page=N, default 1) and reports
     // total_pages; scripts/ca-check.js walks the pages so each call stays under the 60 s limit.
     const page = Math.max(1, Number(url.searchParams.get('page')) || 1);
-    const j = await leapGet(token, `/jobs?limit=100&page=${page}&includes[]=insurance_details&includes[]=customer`);
+    const j = await leapGet(token, `/jobs?limit=100&page=${page}&includes[]=insurance_details&includes[]=customer&includes[]=job_types`);
     const arr = j.data || [];
     const pg = (j.meta && j.meta.pagination) || {};
     stats.page = page; stats.total_pages = pg.total_pages || page; stats.jobs_seen = arr.length;
     // Also every job CREATED in the last `newdays` days: SalesRabbit creates the Leap job and uploads the
     // signed CA within minutes, and it is not proven that an upload bumps updated_at.
-    const newSince = started - Math.max(0, Number(url.searchParams.get('newdays') || 2)) * 86400000;
+    const newSince = newSinceAll;
     const all = url.searchParams.get('all') === '1'; // one-time sweep: every open job on the page, regardless of when it changed
     // plus every job the nightly SalesRabbit cross-check flagged (data/ca-sr-gaps.json): a CA uploaded there
     // later gets dated even if the upload doesn't bump the job's updated_at
@@ -415,6 +416,16 @@ async function caCheck(req, res, url) {
   const skipN = Math.max(0, Number(url.searchParams.get('skip')) || 0); // resume a page that hit the time limit
   for (let ci = skipN; ci < candidates.length; ci++) {
     const job = candidates[ci];
+    // New SalesRabbit job (created in the newdays window) with no category -> Insurance + "Insurance Claim".
+    // Older SalesRabbit jobs are left alone here (backlog is reviewed separately).
+    if (!onlyJob && String(job.source_type || '').toLowerCase() === 'public api' && leapUtc(job.created_at) >= newSinceAll
+        && !jobTypeIds(job).length && Date.now() - started < 45000) {
+      stats.sr_insurance = (stats.sr_insurance || 0) + 1;
+      if (write) {
+        try { const r = await setInsurance(token, job); results.push({ job_number: job.number, customer: custName(unwrap(job.customer) || {}), action: r.ok && !r.skipped ? 'marked Insurance' : (r.skipped ? 'skip' : 'failed'), document: 'SalesRabbit job', date: '', date_source: r.skipped || (r.ok ? 'Insurance + Insurance Claim' : JSON.stringify(r.attempts || '').slice(0, 120)) }); }
+        catch (e) { results.push({ job_number: job.number, action: 'error', reason: 'insurance: ' + String(e.message || e) }); }
+      } else results.push({ job_number: job.number, customer: custName(unwrap(job.customer) || {}), action: 'would mark Insurance', document: 'SalesRabbit job', date: '', date_source: 'Insurance + Insurance Claim' });
+    }
     const ins = unwrap(job.insurance_details) || {};
     const ex = ins.contingency_contract_signed_date;
     if (ex && ex !== '0000-00-00') { stats.already_dated++; if (onlyJob) results.push({ job_number: job.number, action: 'skip', reason: 'already has a date', existing: String(ex).slice(0, 10) }); continue; }
