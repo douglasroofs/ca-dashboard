@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-27T14:18:07.177Z",
+    "updated": "2026-10-28T11:28:17.503Z",
     "year": 2026,
     "months": [
       0,
@@ -32,14 +32,14 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          10,
           13,
           27,
           15,
           16,
-          20
+          24
         ],
-        "total": 95
+        "total": 105
       },
       {
         "rep": "Mike Mccarthy",
@@ -49,13 +49,13 @@ const SNAPSHOTS = {
           3,
           0,
           8,
+          5,
           6,
-          7,
           15,
           11,
-          6
+          7
         ],
-        "total": 57
+        "total": 56
       },
       {
         "rep": "David Kerns",
@@ -68,10 +68,10 @@ const SNAPSHOTS = {
           6,
           2,
           6,
-          6,
+          7,
           8
         ],
-        "total": 51
+        "total": 52
       },
       {
         "rep": "Harvey Shoemaker",
@@ -85,9 +85,9 @@ const SNAPSHOTS = {
           10,
           2,
           4,
-          7
+          8
         ],
-        "total": 48
+        "total": 49
       },
       {
         "rep": "Christian Brown",
@@ -202,6 +202,38 @@ const SNAPSHOTS = {
         "total": 16
       },
       {
+        "rep": "Kevin Mahan",
+        "counts": [
+          0,
+          2,
+          2,
+          2,
+          3,
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        "total": 12
+      },
+      {
+        "rep": "Adam Mulvaney",
+        "counts": [
+          1,
+          0,
+          3,
+          1,
+          1,
+          6,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 12
+      },
+      {
         "rep": "Robert Mumford-Wilson",
         "counts": [
           4,
@@ -234,34 +266,18 @@ const SNAPSHOTS = {
         "total": 11
       },
       {
-        "rep": "Adam Mulvaney",
-        "counts": [
-          1,
-          0,
-          3,
-          1,
-          0,
-          6,
-          0,
-          0,
-          0,
-          0
-        ],
-        "total": 11
-      },
-      {
-        "rep": "Kevin Mahan",
+        "rep": "Paolo Castillo",
         "counts": [
           0,
-          2,
-          2,
-          2,
-          3,
           0,
           0,
           0,
           0,
-          1
+          0,
+          0,
+          0,
+          1,
+          9
         ],
         "total": 10
       },
@@ -277,25 +293,9 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          7
+          8
         ],
-        "total": 8
-      },
-      {
-        "rep": "Paolo Castillo",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          7
-        ],
-        "total": 8
+        "total": 9
       },
       {
         "rep": "nick seward",
@@ -364,7 +364,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-27T14:20:54.197Z",
+    "updated": "2026-10-28T11:30:58.768Z",
     "year": 2026,
     "months": [
       0,
@@ -391,9 +391,9 @@ const SNAPSHOTS = {
           11,
           13,
           7,
-          21
+          22
         ],
-        "total": 83
+        "total": 84
       }
     ]
   }

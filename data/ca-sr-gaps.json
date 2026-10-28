@@ -1,86 +1,9 @@
 {
- "updated": "2026-10-27T14:32:55.314Z",
+ "updated": "2026-10-28T11:41:41.276Z",
  "month": "2026-10",
- "sr_cas": 96,
- "in_leap": 77,
+ "sr_cas": 106,
+ "in_leap": 93,
  "gaps": [
-  {
-   "sr_date": "2026-10-05",
-   "sr_rep": "Andrew Funk",
-   "office": "herndon",
-   "customer": "Douglas  Frechtling ",
-   "address": "6003 Cromwell Dr, Bethesda",
-   "problem": "Has documents, no CA date",
-   "job": "2610-9180307-01",
-   "leap_customer": "Douglas Frechtling",
-   "leap_rep": "Andrew Funk",
-   "stage": "Public Adjuster",
-   "docs": [
-    "554996.pdf (draft, upload)"
-   ]
-  },
-  {
-   "sr_date": "2026-10-13",
-   "sr_rep": "Andrew Funk",
-   "office": "herndon",
-   "customer": "Art  Rubin",
-   "address": "1577 Forest Villa Ln, McLean",
-   "problem": "Has documents, no CA date",
-   "job": "2610-9223884-01",
-   "leap_customer": "Art Rubin",
-   "leap_rep": "Andrew Funk",
-   "stage": "Inbound Lead",
-   "docs": [
-    "557949.pdf (draft, upload)"
-   ]
-  },
-  {
-   "sr_date": "2026-10-19",
-   "sr_rep": "Andrew Funk",
-   "office": "herndon",
-   "customer": "Nasir  Masud ",
-   "address": "5613 Tower Hill Cir, Alexandria",
-   "problem": "Has documents, no CA date",
-   "job": "2610-9278442-01",
-   "leap_customer": "Nasir Masud",
-   "leap_rep": "Andrew Funk",
-   "stage": "Public Adjuster",
-   "docs": [
-    "Nasir Masud (draft, upload)"
-   ]
-  },
-  {
-   "sr_date": "2026-10-27",
-   "sr_rep": "Andrew Funk",
-   "office": "herndon",
-   "customer": "Barry  Shackelford ",
-   "address": "3520 13th St N, Arlington",
-   "problem": "Has documents, no CA date",
-   "job": "2610-9192033-01",
-   "leap_customer": "Barry Shackelford",
-   "leap_rep": "Andrew Funk",
-   "stage": "Inbound Lead",
-   "docs": [
-    "IMG_3667.jpg (draft, upload)",
-    "CA - Barry Shackelford.pdf (draft, upload)"
-   ]
-  },
-  {
-   "sr_date": "2026-10-27",
-   "sr_rep": "Andrew Funk",
-   "office": "herndon",
-   "customer": "Barry Shackelford ",
-   "address": "3520 13th St N, Arlington",
-   "problem": "Has documents, no CA date",
-   "job": "2610-9192033-01",
-   "leap_customer": "Barry Shackelford",
-   "leap_rep": "Andrew Funk",
-   "stage": "Inbound Lead",
-   "docs": [
-    "IMG_3667.jpg (draft, upload)",
-    "CA - Barry Shackelford.pdf (draft, upload)"
-   ]
-  },
   {
    "sr_date": "2026-10-09",
    "sr_rep": "Christian Brown",
@@ -91,24 +14,16 @@
   },
   {
    "sr_date": "2026-10-22",
-   "sr_rep": "Christian Brown",
-   "office": "herndon",
-   "customer": "Carolyn Lockhart",
-   "address": "8005 Arbor Glen Place, Richmond",
-   "problem": "No CA document in Leap",
-   "job": "2610-9269578-01",
-   "leap_customer": "Carolyn Lockhart",
-   "leap_rep": "Christian Brown",
-   "stage": "Public Adjuster",
-   "docs": []
-  },
-  {
-   "sr_date": "2026-10-22",
    "sr_rep": "David Kerns",
    "office": "herndon",
    "customer": "Tom Harrell",
    "address": "3818 Duston Pl, Fairfax",
-   "problem": "No Leap job"
+   "problem": "No CA document in Leap",
+   "job": "2610-9299013-02",
+   "leap_customer": "Tom Harrell",
+   "leap_rep": "David Kerns",
+   "stage": "Claims Filed",
+   "docs": []
   },
   {
    "sr_date": "2026-10-21",
@@ -132,21 +47,6 @@
    "problem": "No Leap job"
   },
   {
-   "sr_date": "2026-10-25",
-   "sr_rep": "Harvey Shoemaker",
-   "office": "herndon",
-   "customer": "Bettie Marshall",
-   "address": "8317 Fulham Dr, Richmond",
-   "problem": "Has documents, no CA date",
-   "job": "2610-9286052-01",
-   "leap_customer": "Bettie Marshall",
-   "leap_rep": "Harvey Shoemaker",
-   "stage": "Inbound Lead",
-   "docs": [
-    "CA (draft)"
-   ]
-  },
-  {
    "sr_date": "2026-10-01",
    "sr_rep": "Paolo Castillo",
    "office": "herndon",
@@ -168,19 +68,6 @@
    "docs": []
   },
   {
-   "sr_date": "2026-10-22",
-   "sr_rep": "Paolo Castillo",
-   "office": "herndon",
-   "customer": "Henrietta Grigsby",
-   "address": "13604 Kingsman Rd, Woodbridge",
-   "problem": "No CA document in Leap",
-   "job": "2610-9288307-01",
-   "leap_customer": "Henrietta Grigsby",
-   "leap_rep": "Paolo Castillo",
-   "stage": "Public Adjuster",
-   "docs": []
-  },
-  {
    "sr_date": "2026-10-26",
    "sr_rep": "Paolo Castillo",
    "office": "herndon",
@@ -191,6 +78,32 @@
    "leap_customer": "Pura Kam",
    "leap_rep": "Paolo Castillo",
    "stage": "Public Adjuster",
+   "docs": []
+  },
+  {
+   "sr_date": "2026-10-27",
+   "sr_rep": "Paolo Castillo",
+   "office": "herndon",
+   "customer": "Martin Podmajerski",
+   "address": "3015 Creel Ct, Woodbridge",
+   "problem": "No CA document in Leap",
+   "job": "2610-9300110-01",
+   "leap_customer": "Martin Podmajerski",
+   "leap_rep": "Paolo Castillo",
+   "stage": "Inbound Lead",
+   "docs": []
+  },
+  {
+   "sr_date": "2026-10-27",
+   "sr_rep": "Paolo Castillo",
+   "office": "herndon",
+   "customer": "Alberto Toloza",
+   "address": "12075 Willowood Dr, Woodbridge",
+   "problem": "No CA document in Leap",
+   "job": "2610-9300296-01",
+   "leap_customer": "Alberto Toloza",
+   "leap_rep": "Paolo Castillo",
+   "stage": "Inbound Lead",
    "docs": []
   },
   {
