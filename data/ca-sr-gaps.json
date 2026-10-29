@@ -1,8 +1,8 @@
 {
- "updated": "2026-10-28T11:41:41.276Z",
+ "updated": "2026-10-29T11:52:44.512Z",
  "month": "2026-10",
- "sr_cas": 106,
- "in_leap": 93,
+ "sr_cas": 111,
+ "in_leap": 103,
  "gaps": [
   {
    "sr_date": "2026-10-09",
@@ -39,14 +39,6 @@
    "docs": []
   },
   {
-   "sr_date": "2026-10-23",
-   "sr_rep": "Harvey Shoemaker",
-   "office": "herndon",
-   "customer": "Calvin Grant",
-   "address": "8387 Cardova Cir, Richmond",
-   "problem": "No Leap job"
-  },
-  {
    "sr_date": "2026-10-01",
    "sr_rep": "Paolo Castillo",
    "office": "herndon",
@@ -65,58 +57,6 @@
    "leap_customer": "Warren Oliver",
    "leap_rep": "Paolo Castillo",
    "stage": "Public Adjuster",
-   "docs": []
-  },
-  {
-   "sr_date": "2026-10-26",
-   "sr_rep": "Paolo Castillo",
-   "office": "herndon",
-   "customer": "Pura Kam",
-   "address": "12047 Willowood Dr, Woodbridge",
-   "problem": "No CA document in Leap",
-   "job": "2610-9297489-01",
-   "leap_customer": "Pura Kam",
-   "leap_rep": "Paolo Castillo",
-   "stage": "Public Adjuster",
-   "docs": []
-  },
-  {
-   "sr_date": "2026-10-27",
-   "sr_rep": "Paolo Castillo",
-   "office": "herndon",
-   "customer": "Martin Podmajerski",
-   "address": "3015 Creel Ct, Woodbridge",
-   "problem": "No CA document in Leap",
-   "job": "2610-9300110-01",
-   "leap_customer": "Martin Podmajerski",
-   "leap_rep": "Paolo Castillo",
-   "stage": "Inbound Lead",
-   "docs": []
-  },
-  {
-   "sr_date": "2026-10-27",
-   "sr_rep": "Paolo Castillo",
-   "office": "herndon",
-   "customer": "Alberto Toloza",
-   "address": "12075 Willowood Dr, Woodbridge",
-   "problem": "No CA document in Leap",
-   "job": "2610-9300296-01",
-   "leap_customer": "Alberto Toloza",
-   "leap_rep": "Paolo Castillo",
-   "stage": "Inbound Lead",
-   "docs": []
-  },
-  {
-   "sr_date": "2026-10-26",
-   "sr_rep": "Robert Mumford-Wilson",
-   "office": "herndon",
-   "customer": "Pragyan Mainali",
-   "address": "7609 Great Dover St, Gainesville",
-   "problem": "No CA document in Leap",
-   "job": "2610-9297252-01",
-   "leap_customer": "Pragyan Mainali",
-   "leap_rep": "Robert Wilson",
-   "stage": "Inspected",
    "docs": []
   },
   {
