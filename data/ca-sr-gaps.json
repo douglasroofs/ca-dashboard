@@ -1,8 +1,8 @@
 {
- "updated": "2026-10-29T11:52:44.512Z",
+ "updated": "2026-10-30T11:43:44.618Z",
  "month": "2026-10",
- "sr_cas": 111,
- "in_leap": 103,
+ "sr_cas": 113,
+ "in_leap": 106,
  "gaps": [
   {
    "sr_date": "2026-10-09",
@@ -45,19 +45,6 @@
    "customer": "Robin  Byrd",
    "address": "11467 Haltonshire Way, Glen Allen",
    "problem": "No Leap job"
-  },
-  {
-   "sr_date": "2026-10-08",
-   "sr_rep": "Paolo Castillo",
-   "office": "herndon",
-   "customer": "Warren Oliver",
-   "address": "2803 Lito Rd, Glen Allen",
-   "problem": "No CA document in Leap",
-   "job": "2610-9194383-01",
-   "leap_customer": "Warren Oliver",
-   "leap_rep": "Paolo Castillo",
-   "stage": "Public Adjuster",
-   "docs": []
   },
   {
    "sr_date": "2026-10-02",
