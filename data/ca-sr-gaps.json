@@ -1,8 +1,8 @@
 {
- "updated": "2026-10-30T11:43:44.618Z",
+ "updated": "2026-10-31T11:15:58.979Z",
  "month": "2026-10",
- "sr_cas": 113,
- "in_leap": 106,
+ "sr_cas": 117,
+ "in_leap": 110,
  "gaps": [
   {
    "sr_date": "2026-10-09",
@@ -82,6 +82,28 @@
    "leap_rep": "David Kerns",
    "leap_customer": "Kathleen Jimerson",
    "ca_date": "2026-09-30"
+  },
+  {
+   "sr_date": "2026-10-30",
+   "sr_rep": "Marc Mitchell",
+   "office": "herndon",
+   "customer": "Bictoria  Brown",
+   "address": "14092 Madrigal Dr, Woodbridge",
+   "job": "2610-9308589-01",
+   "leap_rep": "Doug Coffman",
+   "leap_customer": "Victoria Brown",
+   "ca_date": "2026-10-30"
+  },
+  {
+   "sr_date": "2026-10-30",
+   "sr_rep": "Marc Mitchell",
+   "office": "herndon",
+   "customer": "Victoria Brown",
+   "address": "14092 Madrigal Dr, Woodbridge",
+   "job": "2610-9308589-01",
+   "leap_rep": "Doug Coffman",
+   "leap_customer": "Victoria Brown",
+   "ca_date": "2026-10-30"
   },
   {
    "sr_date": "2026-10-08",
