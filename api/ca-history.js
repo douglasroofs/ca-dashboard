@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-31T11:01:23.828Z",
+    "updated": "2026-11-01T11:56:41.821Z",
     "year": 2026,
     "months": [
       0,
@@ -22,7 +22,8 @@ const SNAPSHOTS = {
       6,
       7,
       8,
-      9
+      9,
+      10
     ],
     "reps": [
       {
@@ -37,7 +38,8 @@ const SNAPSHOTS = {
           27,
           15,
           16,
-          26
+          26,
+          0
         ],
         "total": 100
       },
@@ -53,25 +55,10 @@ const SNAPSHOTS = {
           6,
           15,
           11,
-          9
+          9,
+          0
         ],
         "total": 58
-      },
-      {
-        "rep": "David Kerns",
-        "counts": [
-          0,
-          0,
-          11,
-          7,
-          5,
-          7,
-          2,
-          6,
-          7,
-          9
-        ],
-        "total": 54
       },
       {
         "rep": "Harvey Shoemaker",
@@ -85,9 +72,27 @@ const SNAPSHOTS = {
           11,
           2,
           4,
-          9
+          11,
+          0
         ],
-        "total": 52
+        "total": 54
+      },
+      {
+        "rep": "David Kerns",
+        "counts": [
+          0,
+          0,
+          11,
+          7,
+          5,
+          7,
+          2,
+          6,
+          7,
+          9,
+          0
+        ],
+        "total": 54
       },
       {
         "rep": "Christian Brown",
@@ -101,7 +106,8 @@ const SNAPSHOTS = {
           7,
           3,
           7,
-          8
+          8,
+          0
         ],
         "total": 41
       },
@@ -117,7 +123,8 @@ const SNAPSHOTS = {
           0,
           0,
           3,
-          3
+          3,
+          0
         ],
         "total": 28
       },
@@ -131,6 +138,7 @@ const SNAPSHOTS = {
           5,
           1,
           14,
+          0,
           0,
           0,
           0
@@ -149,6 +157,7 @@ const SNAPSHOTS = {
           4,
           0,
           0,
+          0,
           0
         ],
         "total": 25
@@ -165,7 +174,8 @@ const SNAPSHOTS = {
           1,
           1,
           3,
-          1
+          1,
+          0
         ],
         "total": 22
       },
@@ -178,6 +188,7 @@ const SNAPSHOTS = {
           0,
           0,
           12,
+          0,
           0,
           0,
           0,
@@ -197,6 +208,7 @@ const SNAPSHOTS = {
           0,
           0,
           0,
+          0,
           0
         ],
         "total": 16
@@ -213,7 +225,8 @@ const SNAPSHOTS = {
           1,
           2,
           3,
-          6
+          6,
+          0
         ],
         "total": 12
       },
@@ -229,7 +242,8 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          3
+          3,
+          0
         ],
         "total": 12
       },
@@ -242,6 +256,7 @@ const SNAPSHOTS = {
           1,
           1,
           6,
+          0,
           0,
           0,
           0,
@@ -261,7 +276,8 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          2
+          2,
+          0
         ],
         "total": 11
       },
@@ -277,7 +293,8 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          9
+          9,
+          0
         ],
         "total": 10
       },
@@ -293,7 +310,8 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          8
+          8,
+          0
         ],
         "total": 9
       },
@@ -304,6 +322,7 @@ const SNAPSHOTS = {
           0,
           0,
           4,
+          0,
           0,
           0,
           0,
@@ -325,7 +344,8 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          3
+          3,
+          0
         ],
         "total": 3
       },
@@ -339,6 +359,7 @@ const SNAPSHOTS = {
           0,
           0,
           1,
+          0,
           0,
           0,
           0
@@ -357,6 +378,7 @@ const SNAPSHOTS = {
           0,
           0,
           0,
+          0,
           0
         ],
         "total": 1
@@ -364,7 +386,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-31T11:04:09.389Z",
+    "updated": "2026-11-01T11:59:21.730Z",
     "year": 2026,
     "months": [
       0,
@@ -376,7 +398,8 @@ const SNAPSHOTS = {
       6,
       7,
       8,
-      9
+      9,
+      10
     ],
     "reps": [
       {
@@ -391,7 +414,8 @@ const SNAPSHOTS = {
           11,
           13,
           7,
-          22
+          22,
+          0
         ],
         "total": 84
       }

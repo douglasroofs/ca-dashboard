@@ -9,95 +9,9 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-10-31T11:04:23.717Z",
-    "total": 3326,
-    "reps": [
-      {
-        "rep": "Cris Duarte",
-        "doors": 747,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Paolo Castillo",
-        "doors": 486,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Christian Brown",
-        "doors": 442,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Doug Coffman",
-        "doors": 360,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Jason Cresswell",
-        "doors": 353,
-        "team": "jack"
-      },
-      {
-        "rep": "Harvey Shoemaker",
-        "doors": 312,
-        "team": "jack"
-      },
-      {
-        "rep": "David Kerns",
-        "doors": 246,
-        "team": "jack"
-      },
-      {
-        "rep": "Mike Mccarthy",
-        "doors": 179,
-        "team": "mccarthy"
-      },
-      {
-        "rep": "Andrew Funk",
-        "doors": 69,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Kevin Mahan",
-        "doors": 66,
-        "team": "noteam"
-      },
-      {
-        "rep": "Robert Mumford-Wilson",
-        "doors": 39,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Lucas Morris",
-        "doors": 12,
-        "team": "noteam"
-      },
-      {
-        "rep": "Adam Mulvaney",
-        "doors": 5,
-        "team": "noteam"
-      },
-      {
-        "rep": "George Bechara",
-        "doors": 3,
-        "team": "inbound"
-      },
-      {
-        "rep": "Marc Mitchell",
-        "doors": 3,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Kyle Higginbotham",
-        "doors": 2,
-        "team": "noteam"
-      },
-      {
-        "rep": "Brett Jenkins",
-        "doors": 2,
-        "team": "selfgen"
-      }
-    ],
+    "updated": "2026-11-01T11:59:24.815Z",
+    "total": 0,
+    "reps": [],
     "allowedReps": [
       "kyle higginbotham",
       "adam mulvaney",
@@ -155,15 +69,9 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-10-31T11:04:37.186Z",
-    "total": 239,
-    "reps": [
-      {
-        "rep": "Travis Kizzar",
-        "doors": 239,
-        "team": "selfgen"
-      }
-    ],
+    "updated": "2026-11-01T11:59:27.234Z",
+    "total": 0,
+    "reps": [],
     "allowedReps": [
       "travis kizzar"
     ],
