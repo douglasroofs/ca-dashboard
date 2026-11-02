@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-01T11:56:41.821Z",
+    "updated": "2026-11-02T13:41:35.330Z",
     "year": 2026,
     "months": [
       0,
@@ -50,7 +50,7 @@ const SNAPSHOTS = {
           0,
           3,
           0,
-          8,
+          9,
           5,
           6,
           15,
@@ -58,7 +58,7 @@ const SNAPSHOTS = {
           9,
           0
         ],
-        "total": 58
+        "total": 59
       },
       {
         "rep": "Harvey Shoemaker",
@@ -386,7 +386,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-01T11:59:21.730Z",
+    "updated": "2026-11-02T13:44:15.523Z",
     "year": 2026,
     "months": [
       0,
