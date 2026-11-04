@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-03T12:55:21.510Z",
+    "updated": "2026-11-04T13:08:16.756Z",
     "year": 2026,
     "months": [
       0,
@@ -33,15 +33,15 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          4,
+          15,
           12,
           27,
           15,
-          16,
+          15,
           27,
-          0
+          2
         ],
-        "total": 101
+        "total": 113
       },
       {
         "rep": "Mike Mccarthy",
@@ -50,7 +50,7 @@ const SNAPSHOTS = {
           0,
           3,
           0,
-          8,
+          9,
           5,
           6,
           15,
@@ -58,7 +58,7 @@ const SNAPSHOTS = {
           9,
           0
         ],
-        "total": 58
+        "total": 59
       },
       {
         "rep": "David Kerns",
@@ -84,7 +84,7 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          5,
+          6,
           16,
           11,
           2,
@@ -92,7 +92,7 @@ const SNAPSHOTS = {
           11,
           0
         ],
-        "total": 53
+        "total": 54
       },
       {
         "rep": "Christian Brown",
@@ -107,9 +107,9 @@ const SNAPSHOTS = {
           3,
           7,
           8,
-          0
+          1
         ],
-        "total": 39
+        "total": 40
       },
       {
         "rep": "Marc Mitchell",
@@ -124,9 +124,9 @@ const SNAPSHOTS = {
           0,
           3,
           3,
-          0
+          1
         ],
-        "total": 28
+        "total": 29
       },
       {
         "rep": "Andrew  Prickel",
@@ -282,7 +282,7 @@ const SNAPSHOTS = {
         "total": 11
       },
       {
-        "rep": "Paolo Castillo",
+        "rep": "Doug Coffman",
         "counts": [
           0,
           0,
@@ -293,13 +293,13 @@ const SNAPSHOTS = {
           0,
           0,
           1,
-          9,
+          8,
           0
         ],
-        "total": 10
+        "total": 9
       },
       {
-        "rep": "Doug Coffman",
+        "rep": "Paolo Castillo",
         "counts": [
           0,
           0,
@@ -386,7 +386,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-03T12:58:06.923Z",
+    "updated": "2026-11-04T13:11:03.876Z",
     "year": 2026,
     "months": [
       0,

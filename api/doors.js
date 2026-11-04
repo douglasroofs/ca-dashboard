@@ -9,23 +9,48 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-03T12:58:12.560Z",
-    "total": 32,
+    "updated": "2026-11-04T13:11:09.767Z",
+    "total": 92,
     "reps": [
       {
         "rep": "Christian Brown",
-        "doors": 20,
+        "doors": 28,
         "team": "mccarthy"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 11,
+        "doors": 19,
         "team": "mccarthy"
       },
       {
         "rep": "David Kerns",
-        "doors": 1,
+        "doors": 18,
         "team": "jack"
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 15,
+        "team": "jack"
+      },
+      {
+        "rep": "Paolo Castillo",
+        "doors": 8,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Andrew Funk",
+        "doors": 2,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Marc Mitchell",
+        "doors": 1,
+        "team": "selfgen"
+      },
+      {
+        "rep": "Lucas Morris",
+        "doors": 1,
+        "team": "noteam"
       }
     ],
     "allowedReps": [
@@ -52,7 +77,13 @@ const SNAPSHOTS = {
       "paolo castillo",
       "patrick parsons",
       "lucas morris",
-      "brett jenkins"
+      "brett jenkins",
+      "richard washington",
+      "tyler ladd",
+      "konner gubler",
+      "krysta paulson",
+      "adam schall",
+      "adam schnall"
     ],
     "roster": [
       "Kyle Higginbotham",
@@ -79,11 +110,17 @@ const SNAPSHOTS = {
       "Paolo Castillo",
       "Patrick Parsons",
       "Lucas Morris",
-      "Brett Jenkins"
+      "Brett Jenkins",
+      "Richard Washington",
+      "Tyler  Ladd",
+      "Konner Gubler",
+      "Krysta Paulson",
+      "Adam Schall",
+      "Adam Schnall"
     ]
   },
   "richmond": {
-    "updated": "2026-11-03T12:58:17.543Z",
+    "updated": "2026-11-04T13:11:14.817Z",
     "total": 1,
     "reps": [
       {

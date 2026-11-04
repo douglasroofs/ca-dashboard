@@ -1,8 +1,8 @@
 {
- "updated": "2026-11-03T13:08:41.333Z",
+ "updated": "2026-11-04T13:22:32.509Z",
  "month": "2026-11",
- "sr_cas": 1,
- "in_leap": 0,
+ "sr_cas": 5,
+ "in_leap": 3,
  "gaps": [
   {
    "sr_date": "2026-11-02",
@@ -10,7 +10,25 @@
    "office": "herndon",
    "customer": "Tom Chao",
    "address": "5125 Pheasant Ridge Rd, Fairfax",
-   "problem": "No Leap job"
+   "problem": "No CA document in Leap",
+   "job": "2611-9315284-01",
+   "leap_customer": "Tom Chao",
+   "leap_rep": "David Kerns",
+   "stage": "Claims Filed",
+   "docs": []
+  },
+  {
+   "sr_date": "2026-11-03",
+   "sr_rep": "Marc Mitchell",
+   "office": "herndon",
+   "customer": "Luke Arseneau",
+   "address": "5040 Portsmouth Rd, Fairfax",
+   "problem": "No CA document in Leap",
+   "job": "2611-9315652-01",
+   "leap_customer": "Luke Arseneau",
+   "leap_rep": "Marc Mitchell",
+   "stage": "Supplementing",
+   "docs": []
   }
  ],
  "rep_mismatch": []
