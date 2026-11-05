@@ -9,23 +9,28 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-04T13:11:09.767Z",
-    "total": 92,
+    "updated": "2026-11-05T13:24:22.601Z",
+    "total": 141,
     "reps": [
       {
         "rep": "Christian Brown",
-        "doors": 28,
+        "doors": 41,
         "team": "mccarthy"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 19,
+        "doors": 32,
         "team": "mccarthy"
       },
       {
         "rep": "David Kerns",
-        "doors": 18,
+        "doors": 20,
         "team": "jack"
+      },
+      {
+        "rep": "Paolo Castillo",
+        "doors": 19,
+        "team": "selfgen"
       },
       {
         "rep": "Harvey Shoemaker",
@@ -33,9 +38,9 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
-        "rep": "Paolo Castillo",
+        "rep": "Lucas Morris",
         "doors": 8,
-        "team": "selfgen"
+        "team": "noteam"
       },
       {
         "rep": "Andrew Funk",
@@ -48,7 +53,17 @@ const SNAPSHOTS = {
         "team": "selfgen"
       },
       {
-        "rep": "Lucas Morris",
+        "rep": "Tyler Ladd",
+        "doors": 1,
+        "team": "noteam"
+      },
+      {
+        "rep": "Krysta Paulson",
+        "doors": 1,
+        "team": "noteam"
+      },
+      {
+        "rep": "Konnor Gubler",
         "doors": 1,
         "team": "noteam"
       }
@@ -79,11 +94,10 @@ const SNAPSHOTS = {
       "lucas morris",
       "brett jenkins",
       "richard washington",
-      "tyler ladd",
-      "konner gubler",
+      "konnor gubler",
       "krysta paulson",
       "adam schall",
-      "adam schnall"
+      "tyler ladd"
     ],
     "roster": [
       "Kyle Higginbotham",
@@ -112,20 +126,19 @@ const SNAPSHOTS = {
       "Lucas Morris",
       "Brett Jenkins",
       "Richard Washington",
-      "Tyler  Ladd",
-      "Konner Gubler",
+      "Konnor Gubler",
       "Krysta Paulson",
       "Adam Schall",
-      "Adam Schnall"
+      "Tyler Ladd"
     ]
   },
   "richmond": {
-    "updated": "2026-11-04T13:11:14.817Z",
-    "total": 1,
+    "updated": "2026-11-05T13:24:27.695Z",
+    "total": 2,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 1,
+        "doors": 2,
         "team": "selfgen"
       }
     ],

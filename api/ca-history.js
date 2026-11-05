@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-04T13:08:16.756Z",
+    "updated": "2026-11-05T13:21:29.575Z",
     "year": 2026,
     "months": [
       0,
@@ -34,21 +34,21 @@ const SNAPSHOTS = {
           0,
           0,
           15,
-          12,
+          13,
           27,
           15,
           15,
           27,
           2
         ],
-        "total": 113
+        "total": 114
       },
       {
         "rep": "Mike Mccarthy",
         "counts": [
           1,
           0,
-          3,
+          2,
           0,
           9,
           5,
@@ -58,7 +58,7 @@ const SNAPSHOTS = {
           9,
           0
         ],
-        "total": 59
+        "total": 58
       },
       {
         "rep": "David Kerns",
@@ -68,14 +68,14 @@ const SNAPSHOTS = {
           11,
           7,
           5,
-          7,
+          8,
           2,
           6,
           7,
           9,
-          1
+          2
         ],
-        "total": 55
+        "total": 57
       },
       {
         "rep": "Harvey Shoemaker",
@@ -85,14 +85,14 @@ const SNAPSHOTS = {
           1,
           2,
           6,
-          16,
+          17,
           11,
           2,
           4,
           11,
           0
         ],
-        "total": 54
+        "total": 55
       },
       {
         "rep": "Christian Brown",
@@ -129,6 +129,23 @@ const SNAPSHOTS = {
         "total": 29
       },
       {
+        "rep": "Jack Obert",
+        "counts": [
+          0,
+          0,
+          3,
+          5,
+          8,
+          7,
+          4,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 27
+      },
+      {
         "rep": "Andrew  Prickel",
         "counts": [
           0,
@@ -144,23 +161,6 @@ const SNAPSHOTS = {
           0
         ],
         "total": 26
-      },
-      {
-        "rep": "Jack Obert",
-        "counts": [
-          0,
-          0,
-          3,
-          5,
-          8,
-          5,
-          4,
-          0,
-          0,
-          0,
-          0
-        ],
-        "total": 25
       },
       {
         "rep": "George Bechara",
@@ -316,6 +316,23 @@ const SNAPSHOTS = {
         "total": 9
       },
       {
+        "rep": "Lucas Morris",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          1
+        ],
+        "total": 4
+      },
+      {
         "rep": "nick seward",
         "counts": [
           0,
@@ -331,23 +348,6 @@ const SNAPSHOTS = {
           0
         ],
         "total": 4
-      },
-      {
-        "rep": "Lucas Morris",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          3,
-          0
-        ],
-        "total": 3
       },
       {
         "rep": "sean beasy",
@@ -386,7 +386,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-04T13:11:03.876Z",
+    "updated": "2026-11-05T13:24:16.739Z",
     "year": 2026,
     "months": [
       0,
