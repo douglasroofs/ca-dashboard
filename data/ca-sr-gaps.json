@@ -1,8 +1,8 @@
 {
- "updated": "2026-11-05T13:35:10.897Z",
+ "updated": "2026-11-06T13:17:55.336Z",
  "month": "2026-11",
- "sr_cas": 7,
- "in_leap": 4,
+ "sr_cas": 8,
+ "in_leap": 5,
  "gaps": [
   {
    "sr_date": "2026-11-02",
@@ -14,7 +14,7 @@
    "job": "2611-9315284-01",
    "leap_customer": "Tom Chao",
    "leap_rep": "David Kerns",
-   "stage": "Claims Filed",
+   "stage": "Adjusters Meeting Scheduled",
    "docs": []
   },
   {
@@ -40,7 +40,7 @@
    "job": "2611-9315652-01",
    "leap_customer": "Luke Arseneau",
    "leap_rep": "Marc Mitchell",
-   "stage": "Approved",
+   "stage": "Discovery",
    "docs": []
   }
  ],

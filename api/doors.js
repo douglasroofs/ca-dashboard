@@ -9,18 +9,28 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-05T13:24:22.601Z",
-    "total": 141,
+    "updated": "2026-11-06T13:07:42.570Z",
+    "total": 267,
     "reps": [
       {
+        "rep": "Paolo Castillo",
+        "doors": 62,
+        "team": "selfgen"
+      },
+      {
         "rep": "Christian Brown",
-        "doors": 41,
+        "doors": 61,
         "team": "mccarthy"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 32,
+        "doors": 54,
         "team": "mccarthy"
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 43,
+        "team": "jack"
       },
       {
         "rep": "David Kerns",
@@ -28,18 +38,13 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
-        "rep": "Paolo Castillo",
-        "doors": 19,
-        "team": "selfgen"
-      },
-      {
-        "rep": "Harvey Shoemaker",
-        "doors": 15,
-        "team": "jack"
-      },
-      {
         "rep": "Lucas Morris",
-        "doors": 8,
+        "doors": 13,
+        "team": "noteam"
+      },
+      {
+        "rep": "Kevin Mahan",
+        "doors": 7,
         "team": "noteam"
       },
       {
@@ -48,17 +53,17 @@ const SNAPSHOTS = {
         "team": "selfgen"
       },
       {
+        "rep": "Krysta Paulson",
+        "doors": 2,
+        "team": "noteam"
+      },
+      {
         "rep": "Marc Mitchell",
         "doors": 1,
         "team": "selfgen"
       },
       {
         "rep": "Tyler Ladd",
-        "doors": 1,
-        "team": "noteam"
-      },
-      {
-        "rep": "Krysta Paulson",
         "doors": 1,
         "team": "noteam"
       },
@@ -93,7 +98,6 @@ const SNAPSHOTS = {
       "patrick parsons",
       "lucas morris",
       "brett jenkins",
-      "richard washington",
       "konnor gubler",
       "krysta paulson",
       "adam schall",
@@ -125,7 +129,6 @@ const SNAPSHOTS = {
       "Patrick Parsons",
       "Lucas Morris",
       "Brett Jenkins",
-      "Richard Washington",
       "Konnor Gubler",
       "Krysta Paulson",
       "Adam Schall",
@@ -133,12 +136,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-05T13:24:27.695Z",
-    "total": 2,
+    "updated": "2026-11-06T13:07:47.784Z",
+    "total": 3,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 2,
+        "doors": 3,
         "team": "selfgen"
       }
     ],

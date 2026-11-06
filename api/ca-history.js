@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-05T13:21:29.575Z",
+    "updated": "2026-11-06T13:04:49.415Z",
     "year": 2026,
     "months": [
       0,
@@ -33,7 +33,7 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          15,
+          4,
           13,
           27,
           15,
@@ -41,7 +41,7 @@ const SNAPSHOTS = {
           27,
           2
         ],
-        "total": 114
+        "total": 103
       },
       {
         "rep": "Mike Mccarthy",
@@ -84,13 +84,13 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          6,
+          5,
           17,
           11,
           2,
           4,
           11,
-          0
+          1
         ],
         "total": 55
       },
@@ -101,15 +101,15 @@ const SNAPSHOTS = {
           0,
           1,
           3,
-          3,
-          6,
+          5,
+          7,
           7,
           3,
           7,
           8,
           1
         ],
-        "total": 40
+        "total": 43
       },
       {
         "rep": "Marc Mitchell",
@@ -202,9 +202,9 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          3,
+          2,
           0,
-          3,
+          4,
           0,
           0,
           0,
@@ -386,7 +386,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-05T13:24:16.739Z",
+    "updated": "2026-11-06T13:07:36.255Z",
     "year": 2026,
     "months": [
       0,
