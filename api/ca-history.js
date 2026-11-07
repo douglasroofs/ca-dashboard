@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-06T13:04:49.415Z",
+    "updated": "2026-11-07T11:50:48.198Z",
     "year": 2026,
     "months": [
       0,
@@ -84,7 +84,7 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          5,
+          6,
           17,
           11,
           2,
@@ -92,7 +92,7 @@ const SNAPSHOTS = {
           11,
           1
         ],
-        "total": 55
+        "total": 56
       },
       {
         "rep": "Christian Brown",
@@ -107,9 +107,9 @@ const SNAPSHOTS = {
           3,
           7,
           8,
-          1
+          3
         ],
-        "total": 43
+        "total": 45
       },
       {
         "rep": "Marc Mitchell",
@@ -282,7 +282,7 @@ const SNAPSHOTS = {
         "total": 11
       },
       {
-        "rep": "Doug Coffman",
+        "rep": "Paolo Castillo",
         "counts": [
           0,
           0,
@@ -294,12 +294,12 @@ const SNAPSHOTS = {
           0,
           1,
           8,
-          0
+          1
         ],
-        "total": 9
+        "total": 10
       },
       {
-        "rep": "Paolo Castillo",
+        "rep": "Doug Coffman",
         "counts": [
           0,
           0,
@@ -386,7 +386,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-06T13:07:36.255Z",
+    "updated": "2026-11-07T11:53:29.733Z",
     "year": 2026,
     "months": [
       0,
@@ -415,9 +415,9 @@ const SNAPSHOTS = {
           13,
           7,
           22,
-          0
+          1
         ],
-        "total": 84
+        "total": 85
       }
     ]
   }

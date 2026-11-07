@@ -9,18 +9,18 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-06T13:07:42.570Z",
-    "total": 267,
+    "updated": "2026-11-07T11:53:35.201Z",
+    "total": 314,
     "reps": [
       {
-        "rep": "Paolo Castillo",
-        "doors": 62,
-        "team": "selfgen"
+        "rep": "Christian Brown",
+        "doors": 81,
+        "team": "mccarthy"
       },
       {
-        "rep": "Christian Brown",
-        "doors": 61,
-        "team": "mccarthy"
+        "rep": "Paolo Castillo",
+        "doors": 63,
+        "team": "selfgen"
       },
       {
         "rep": "Mike Mccarthy",
@@ -33,18 +33,18 @@ const SNAPSHOTS = {
         "team": "jack"
       },
       {
-        "rep": "David Kerns",
-        "doors": 20,
-        "team": "jack"
-      },
-      {
         "rep": "Lucas Morris",
-        "doors": 13,
+        "doors": 36,
         "team": "noteam"
       },
       {
+        "rep": "David Kerns",
+        "doors": 22,
+        "team": "jack"
+      },
+      {
         "rep": "Kevin Mahan",
-        "doors": 7,
+        "doors": 8,
         "team": "noteam"
       },
       {
@@ -136,12 +136,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-06T13:07:47.784Z",
-    "total": 3,
+    "updated": "2026-11-07T11:53:40.026Z",
+    "total": 4,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 3,
+        "doors": 4,
         "team": "selfgen"
       }
     ],

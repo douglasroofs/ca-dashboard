@@ -1,9 +1,35 @@
 {
- "updated": "2026-11-06T13:17:55.336Z",
+ "updated": "2026-11-07T12:04:37.584Z",
  "month": "2026-11",
- "sr_cas": 8,
- "in_leap": 5,
+ "sr_cas": 12,
+ "in_leap": 6,
  "gaps": [
+  {
+   "sr_date": "2026-11-06",
+   "sr_rep": "Christian Brown",
+   "office": "herndon",
+   "customer": "Andrew Nelson",
+   "address": "8002 Tarkington Drive, Richmond",
+   "problem": "No CA document in Leap",
+   "job": "2611-9324020-01",
+   "leap_customer": "Andrew Nelson",
+   "leap_rep": "Christian Brown",
+   "stage": "Inbound Lead",
+   "docs": []
+  },
+  {
+   "sr_date": "2026-11-06",
+   "sr_rep": "Christian Brown",
+   "office": "herndon",
+   "customer": "Andrew Nelson",
+   "address": "8002 Tarkington Drive, Richmond",
+   "problem": "No CA document in Leap",
+   "job": "2611-9324020-01",
+   "leap_customer": "Andrew Nelson",
+   "leap_rep": "Christian Brown",
+   "stage": "Inbound Lead",
+   "docs": []
+  },
   {
    "sr_date": "2026-11-02",
    "sr_rep": "David Kerns",
@@ -41,6 +67,19 @@
    "leap_customer": "Luke Arseneau",
    "leap_rep": "Marc Mitchell",
    "stage": "Discovery",
+   "docs": []
+  },
+  {
+   "sr_date": "2026-11-07",
+   "sr_rep": "Paolo Castillo",
+   "office": "herndon",
+   "customer": "Navid Masud",
+   "address": "14110 Madrigal Dr, Woodbridge",
+   "problem": "No CA document in Leap",
+   "job": "2611-9324726-01",
+   "leap_customer": "Navid Masud",
+   "leap_rep": "Paolo Castillo",
+   "stage": "Inbound Lead",
    "docs": []
   }
  ],
