@@ -1,8 +1,8 @@
 {
- "updated": "2026-11-07T12:04:37.584Z",
+ "updated": "2026-11-08T12:15:08.221Z",
  "month": "2026-11",
- "sr_cas": 12,
- "in_leap": 6,
+ "sr_cas": 15,
+ "in_leap": 8,
  "gaps": [
   {
    "sr_date": "2026-11-06",
@@ -31,6 +31,14 @@
    "docs": []
   },
   {
+   "sr_date": "2026-11-08",
+   "sr_rep": "Christian Brown",
+   "office": "herndon",
+   "customer": null,
+   "address": "4325 Grantlake Road, Richmond",
+   "problem": "No Leap job"
+  },
+  {
    "sr_date": "2026-11-02",
    "sr_rep": "David Kerns",
    "office": "herndon",
@@ -53,7 +61,7 @@
    "job": "2611-9319059-01",
    "leap_customer": "Alex Chang",
    "leap_rep": "David Kerns",
-   "stage": "Claims Filed",
+   "stage": "Adjusters Meeting Scheduled",
    "docs": []
   },
   {
@@ -73,14 +81,9 @@
    "sr_date": "2026-11-07",
    "sr_rep": "Paolo Castillo",
    "office": "herndon",
-   "customer": "Navid Masud",
-   "address": "14110 Madrigal Dr, Woodbridge",
-   "problem": "No CA document in Leap",
-   "job": "2611-9324726-01",
-   "leap_customer": "Navid Masud",
-   "leap_rep": "Paolo Castillo",
-   "stage": "Inbound Lead",
-   "docs": []
+   "customer": "Steven Rabanales",
+   "address": "12061 Willowood Dr, Woodbridge",
+   "problem": "No Leap job"
   }
  ],
  "rep_mismatch": []

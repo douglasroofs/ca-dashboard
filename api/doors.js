@@ -9,18 +9,18 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-07T11:53:35.201Z",
-    "total": 314,
+    "updated": "2026-11-08T12:05:21.617Z",
+    "total": 417,
     "reps": [
       {
-        "rep": "Christian Brown",
-        "doors": 81,
-        "team": "mccarthy"
+        "rep": "Paolo Castillo",
+        "doors": 124,
+        "team": "selfgen"
       },
       {
-        "rep": "Paolo Castillo",
-        "doors": 63,
-        "team": "selfgen"
+        "rep": "Christian Brown",
+        "doors": 84,
+        "team": "mccarthy"
       },
       {
         "rep": "Mike Mccarthy",
@@ -28,19 +28,24 @@ const SNAPSHOTS = {
         "team": "mccarthy"
       },
       {
+        "rep": "Lucas Morris",
+        "doors": 54,
+        "team": "noteam"
+      },
+      {
         "rep": "Harvey Shoemaker",
         "doors": 43,
         "team": "jack"
       },
       {
-        "rep": "Lucas Morris",
-        "doors": 36,
-        "team": "noteam"
+        "rep": "David Kerns",
+        "doors": 23,
+        "team": "jack"
       },
       {
-        "rep": "David Kerns",
-        "doors": 22,
-        "team": "jack"
+        "rep": "Doug Coffman",
+        "doors": 20,
+        "team": "mccarthy"
       },
       {
         "rep": "Kevin Mahan",
@@ -136,12 +141,12 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-07T11:53:40.026Z",
-    "total": 4,
+    "updated": "2026-11-08T12:05:27.500Z",
+    "total": 6,
     "reps": [
       {
         "rep": "Travis Kizzar",
-        "doors": 4,
+        "doors": 6,
         "team": "selfgen"
       }
     ],
