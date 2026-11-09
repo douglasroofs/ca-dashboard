@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-08T12:02:28.306Z",
+    "updated": "2026-11-09T14:04:25.781Z",
     "year": 2026,
     "months": [
       0,
@@ -33,7 +33,7 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          8,
+          10,
           13,
           27,
           15,
@@ -41,7 +41,7 @@ const SNAPSHOTS = {
           27,
           2
         ],
-        "total": 107
+        "total": 109
       },
       {
         "rep": "Mike Mccarthy",
@@ -67,15 +67,15 @@ const SNAPSHOTS = {
           1,
           1,
           2,
-          6,
+          5,
           17,
           11,
           2,
           4,
           11,
-          1
+          3
         ],
-        "total": 56
+        "total": 57
       },
       {
         "rep": "David Kerns",
@@ -135,7 +135,7 @@ const SNAPSHOTS = {
           0,
           3,
           5,
-          8,
+          7,
           7,
           4,
           0,
@@ -143,7 +143,7 @@ const SNAPSHOTS = {
           0,
           0
         ],
-        "total": 27
+        "total": 26
       },
       {
         "rep": "Andrew  Prickel",
@@ -231,6 +231,23 @@ const SNAPSHOTS = {
         "total": 12
       },
       {
+        "rep": "Paolo Castillo",
+        "counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          8,
+          3
+        ],
+        "total": 12
+      },
+      {
         "rep": "Kevin Mahan",
         "counts": [
           0,
@@ -278,23 +295,6 @@ const SNAPSHOTS = {
           1,
           2,
           0
-        ],
-        "total": 11
-      },
-      {
-        "rep": "Paolo Castillo",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          8,
-          2
         ],
         "total": 11
       },
@@ -386,7 +386,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-08T12:05:15.111Z",
+    "updated": "2026-11-09T14:07:11.602Z",
     "year": 2026,
     "months": [
       0,

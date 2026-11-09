@@ -1,8 +1,8 @@
 {
- "updated": "2026-11-08T12:15:08.221Z",
+ "updated": "2026-11-09T14:19:09.398Z",
  "month": "2026-11",
- "sr_cas": 15,
- "in_leap": 8,
+ "sr_cas": 18,
+ "in_leap": 11,
  "gaps": [
   {
    "sr_date": "2026-11-06",
@@ -14,7 +14,7 @@
    "job": "2611-9324020-01",
    "leap_customer": "Andrew Nelson",
    "leap_rep": "Christian Brown",
-   "stage": "Inbound Lead",
+   "stage": "Discovery",
    "docs": []
   },
   {
@@ -27,7 +27,7 @@
    "job": "2611-9324020-01",
    "leap_customer": "Andrew Nelson",
    "leap_rep": "Christian Brown",
-   "stage": "Inbound Lead",
+   "stage": "Discovery",
    "docs": []
   },
   {
