@@ -54,13 +54,18 @@ const MARKETING_DIVISION = 7399;
 //            + 552-749-0839 $639.72 = $20,930.92 (168-374-3174 $0.00). FINAL.
 //   2026-10: Oct 1-20, 2026, read 2026-10-20: 477-447-4205 $5,838.06 + 819-103-9280 $3,149.12
 //            + 552-749-0839 $475.81 = $9,462.99 (168-374-3174 $0.00).
-//            PARTIAL - replace with the Oct 1-31 figure in early November and set partialMonth back to null.
+//            (superseded below)
+//   2026-10: Oct 1-31, 2026 ("Last month"), read 2026-11-10: 477-447-4205 $7,943.22 + 819-103-9280 $3,762.10
+//            + 552-749-0839 $475.81 = $12,181.13 (168-374-3174 $0.00). FINAL.
+//   2026-11: Nov 1-10, 2026, read 2026-11-10: 477-447-4205 $943.27 + 819-103-9280 $166.45
+//            + 552-749-0839 $310.59 = $1,420.31 (168-374-3174 $0.00).
+//            PARTIAL - replace with the Nov 1-30 figure in early December and set partialMonth back to null.
 const SPEND = {
   currency: 'USD',
-  partialMonth: '2026-10',
+  partialMonth: '2026-11',
   pendingCredit: 3484.78,
   accounts: ['477-447-4205 NOVA', '819-103-9280 MD-labelled', '552-749-0839 (added Aug 2026)'],
-  byMonth: { '2026-06': 21867.14, '2026-07': 22428.70, '2026-08': 21993.70, '2026-09': 20930.92, '2026-10': 9462.99 },
+  byMonth: { '2026-06': 21867.14, '2026-07': 22428.70, '2026-08': 21993.70, '2026-09': 20930.92, '2026-10': 12181.13, '2026-11': 1420.31 },
 };
 
 // --- Facebook / Meta ads. Live from the Meta Marketing API when the env vars
@@ -80,10 +85,16 @@ const FACEBOOK = {
   //            $1,102.93, 13 form leads); the other four were off at $0.00. FINAL.
   //   2026-09: Ads Manager, Campaigns, Sep 1-9 2026, Amount spent, read 2026-09-09. Same single live campaign
   //            (Alfred Duncan - Maryland, $303.32, 4 form leads); the other four still off at $0.00.
-  //            PARTIAL - replace with Sep 1-30 in early October and set partialMonth back to null.
-  partialMonth: '2026-09',
+  //            (superseded below)
+  //   2026-09: Sep 1-30 2026, Amount spent, read 2026-11-10: Alfred Duncan - Maryland $739.81 (15 form leads),
+  //            all others $0.00. FINAL.
+  //   2026-10: Oct 1-31 2026, read 2026-11-10: new campaign "PC | LEAD GENERATION | LOCAL AUDIENCE" $875.58;
+  //            Alfred Duncan - Maryland now off ($0.00), others $0.00. FINAL.
+  //   2026-11: Nov 1-10 2026, read 2026-11-10: PC | LEAD GENERATION | LOCAL AUDIENCE $345.99, others $0.00.
+  //            PARTIAL - replace with Nov 1-30 in early December and set partialMonth back to null.
+  partialMonth: '2026-11',
   // Replace July with an exact figure once META_ACCESS_TOKEN is in Vercel.
-  byMonth: { '2026-07': 186, '2026-08': 1102.93, '2026-09': 303.32 },
+  byMonth: { '2026-07': 186, '2026-08': 1102.93, '2026-09': 739.81, '2026-10': 875.58, '2026-11': 345.99 },
 };
 
 // --- Marketing company retainer. Effective-dated: each row applies from its
