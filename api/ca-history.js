@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-09T14:04:25.781Z",
+    "updated": "2026-11-10T13:38:29.984Z",
     "year": 2026,
     "months": [
       0,
@@ -33,32 +33,15 @@ const SNAPSHOTS = {
           0,
           0,
           0,
-          10,
+          8,
           13,
           27,
           15,
           15,
           27,
-          2
+          3
         ],
-        "total": 109
-      },
-      {
-        "rep": "Mike Mccarthy",
-        "counts": [
-          1,
-          0,
-          2,
-          0,
-          9,
-          5,
-          6,
-          15,
-          11,
-          9,
-          0
-        ],
-        "total": 58
+        "total": 108
       },
       {
         "rep": "Harvey Shoemaker",
@@ -74,6 +57,23 @@ const SNAPSHOTS = {
           4,
           11,
           3
+        ],
+        "total": 57
+      },
+      {
+        "rep": "Mike Mccarthy",
+        "counts": [
+          1,
+          0,
+          2,
+          0,
+          8,
+          5,
+          6,
+          15,
+          11,
+          9,
+          0
         ],
         "total": 57
       },
@@ -135,7 +135,7 @@ const SNAPSHOTS = {
           0,
           3,
           5,
-          7,
+          8,
           7,
           4,
           0,
@@ -143,7 +143,7 @@ const SNAPSHOTS = {
           0,
           0
         ],
-        "total": 26
+        "total": 27
       },
       {
         "rep": "Andrew  Prickel",
@@ -311,9 +311,9 @@ const SNAPSHOTS = {
           0,
           1,
           8,
-          0
+          1
         ],
-        "total": 9
+        "total": 10
       },
       {
         "rep": "Lucas Morris",
@@ -386,7 +386,7 @@ const SNAPSHOTS = {
     ]
   },
   "richmond": {
-    "updated": "2026-11-09T14:07:11.602Z",
+    "updated": "2026-11-10T13:41:11.866Z",
     "year": 2026,
     "months": [
       0,
@@ -407,7 +407,7 @@ const SNAPSHOTS = {
         "counts": [
           3,
           2,
-          9,
+          10,
           1,
           6,
           9,
@@ -417,7 +417,7 @@ const SNAPSHOTS = {
           22,
           1
         ],
-        "total": 84
+        "total": 85
       }
     ]
   }
