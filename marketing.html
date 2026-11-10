@@ -70,7 +70,7 @@
 <body>
 <header>
   <h1>Douglas Roofing - Marketing</h1>
-  <nav class="nav"><a href="/revenue.html">Herndon</a><a href="/richmond.html">Richmond</a><a href="/ca-bonus.html">CA Bonus</a><a href="/marketing.html" class="on">Marketing</a><a href="/punchout.html">Punch Out</a><a href="/ca-gaps.html">CA Gaps</a></nav>
+  <nav class="nav"><a href="/revenue.html">Herndon</a><a href="/ca-bonus.html">CA Bonus</a><a href="/marketing.html" class="on">Marketing</a><a href="/punchout.html">Punch Out</a></nav>
   <span class="muted" id="stamp" style="margin-left:auto"></span>
 </header>
 <div class="wrap">
@@ -92,9 +92,17 @@ var money=function(n){return '$'+(n||0).toLocaleString('en-US',{minimumFractionD
 var pct=function(a,b){return b?Math.round(a*100/b)+'%':'-';};
 var iso=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
 
-fetch('/api/marketing?office=herndon&t='+Date.now(),{cache:'no-store'})
- .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
- .then(function(d){D=d;init();})
+// CA SIGNED = Leap CA signed date (Contingency Contract Signed Date), from /api/leap-extra?jobs=1 (2026-11-10).
+// A CA counts on this page when its CA date is in range and the job is a Marketing job: Leap division
+// "Marketing", or the job has a Marketing-division appointment (many jobs have no division set).
+var CAJ={}, CA_UPD='', CA_ERR=false;
+function caYear(y){return fetch('/api/leap-extra?jobs=1&year='+y+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();})
+  .then(function(j){CA_UPD=j.updated||CA_UPD;(j.jobs||[]).forEach(function(x){CAJ[x.job]=x;});}).catch(function(){CA_ERR=true;});}
+var _y=new Date().getFullYear();
+Promise.all([
+ fetch('/api/marketing?office=herndon&t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}),
+ caYear(_y), caYear(_y-1)
+]).then(function(a){D=a[0];init();})
  .catch(function(e){document.getElementById('root').innerHTML='<div class="err">Could not load: '+esc(e.message)+'</div>';});
 
 function init(){
@@ -198,7 +206,9 @@ function draw(){
   var from=new Date(f+'T00:00:00'), to=new Date(t+'T23:59:59');
   var recs=D.records.filter(function(r){return r.d>=f && r.d<=t;});
   var notRan={}; D.notRan.forEach(function(x){notRan[x]=1;});
-  var isCA={}; D.caResults.forEach(function(x){isCA[x]=1;});
+  var isCA={}; // kept for the calSection signature; CA status now comes from CAJ (CA signed date)
+  var mktJob={}; D.records.forEach(function(r){if(r.job)mktJob[r.job]=1;});
+  var caList=Object.keys(CAJ).map(function(k){return CAJ[k];}).filter(function(j){return j.date>=f&&j.date<=t&&(j.division==='Marketing'||mktJob[j.job]);});
   var isRT={}; D.retailResults.forEach(function(x){isRT[x]=1;});
 
   var T={set:0,ran:0,ca:0,rt:0,un:0}, reps={}, results={}, src={};
@@ -207,7 +217,6 @@ function draw(){
     var R=reps[r.rep];
     T.set++;R.set++;
     if(!notRan[r.res]){T.ran++;R.ran++;}
-    if(isCA[r.res]){T.ca++;R.ca++;}
     if(isRT[r.res]){T.rt++;R.rt++;}
     if(!r.res){T.un++;R.un++;}
     var rk=r.res||'(unresulted)';
@@ -215,6 +224,8 @@ function draw(){
     R.byRes[rk]=(R.byRes[rk]||0)+1;
     src[r.src]=(src[r.src]||0)+1;
   });
+  T.ca=caList.length;
+  caList.forEach(function(j){if(!reps[j.rep])reps[j.rep]={rep:j.rep,set:0,ran:0,ca:0,rt:0,un:0,byRes:{}};reps[j.rep].ca++;});
   var C=costsFor(from,to), spend=C.total, signed=T.ca+T.rt;
   document.getElementById('note').textContent=recs.length+' appointments in range';
 
@@ -222,7 +233,7 @@ function draw(){
   H.push('<div class="cards">');
   H.push(card(T.set,'Appointments Set'));
   H.push(card(T.ran,'Ran','', pct(T.ran,T.set)+' of set'));
-  H.push(card(T.ca,'CA Signed','ca', pct(T.ca,T.ran)+' of ran - Leap result: Claim Filed'));
+  H.push(card(CA_ERR?'-':T.ca,'CA Signed','ca', (CA_ERR?'CA data failed to load':(pct(T.ca,T.ran)+' of ran - Leap CA signed date'+(CA_UPD?' (as of '+CA_UPD+')':'')))));
   H.push(card(T.rt,'Retail / Repair','rt', pct(T.rt,T.ran)+' of ran - Leap result: Retail Sale'));
   H.push('<div class="card alert"><div class="label">Unresulted</div><div class="value">'+T.un+'</div><div class="sub">'+pct(T.un,T.set)+' of set</div></div>');
   H.push('</div>');
@@ -259,17 +270,17 @@ function draw(){
   var resCols=Object.keys(results).filter(function(k){return k!=='(unresulted)';})
     .sort(function(a,b){return results[b]-results[a];});
   var shortCol=function(x){ return x.length>14 ? x.slice(0,13)+'\u2026' : x; };
-  H.push('<section><h2>By rep <span class="muted" style="font-size:12px;font-weight:400">result reasons exactly as recorded in Leap</span></h2>');
-  H.push('<div style="overflow-x:auto"><table><tr><th>Rep</th><th class="num">Set</th><th class="num">Ran</th><th class="num">Run %</th>'
+  H.push('<section><h2>By rep <span class="muted" style="font-size:12px;font-weight:400">result reasons exactly as recorded in Leap; CA signed from the Leap CA signed date</span></h2>');
+  H.push('<div style="overflow-x:auto"><table><tr><th>Rep</th><th class="num">Set</th><th class="num">Ran</th><th class="num">Run %</th><th class="num" title="Marketing jobs with a Leap CA signed date in range, credited to the customer rep">CA signed</th>'
     + resCols.map(function(k){return '<th class="num" title="'+esc(k)+'">'+esc(shortCol(k))+'</th>';}).join('')
     + '<th class="num">Unresulted</th></tr>');
-  Object.keys(reps).map(function(k){return reps[k];}).sort(function(a,b){return b.set-a.set;}).forEach(function(r){
-    H.push('<tr><td>'+esc(r.rep)+'</td><td class="num">'+r.set+'</td><td class="num">'+r.ran+'</td><td class="num">'+pct(r.ran,r.set)+'</td>'
+  Object.keys(reps).map(function(k){return reps[k];}).sort(function(a,b){return (b.set-a.set)||(b.ca-a.ca);}).forEach(function(r){
+    H.push('<tr><td>'+esc(r.rep)+'</td><td class="num">'+r.set+'</td><td class="num">'+r.ran+'</td><td class="num">'+pct(r.ran,r.set)+'</td><td class="num ca">'+(r.ca||'')+'</td>'
       + resCols.map(function(k){var v=r.byRes[k]||0; return '<td class="num">'+(v||'')+'</td>';}).join('')
       + '<td class="num '+(r.un?'bad':'')+'">'+r.un+' <span class="muted">'+pct(r.un,r.set)+'</span></td></tr>');
   });
   // Column totals, so this table reconciles against the Results section below.
-  H.push('<tr style="border-top:2px solid rgba(128,128,128,.45);font-weight:600"><td>All reps</td><td class="num">'+T.set+'</td><td class="num">'+T.ran+'</td><td class="num">'+pct(T.ran,T.set)+'</td>'
+  H.push('<tr style="border-top:2px solid rgba(128,128,128,.45);font-weight:600"><td>All reps</td><td class="num">'+T.set+'</td><td class="num">'+T.ran+'</td><td class="num">'+pct(T.ran,T.set)+'</td><td class="num ca">'+T.ca+'</td>'
     + resCols.map(function(k){return '<td class="num">'+(results[k]||0)+'</td>';}).join('')
     + '<td class="num">'+T.un+'</td></tr>');
   H.push('</table></div></section>');
@@ -290,7 +301,7 @@ function draw(){
   H.push('<table id="tbl"><tr><th>Date</th><th>Rep</th><th>Customer</th><th>Result</th><th>Stage</th><th>Source</th></tr>');
   recs.forEach(function(r){
     H.push('<tr><td>'+esc(r.d)+'</td><td>'+esc(r.rep)+'</td><td>'+esc(r.cust)+'</td>'+
-      '<td class="'+(!r.res?'bad':(isCA[r.res]?'ca':(isRT[r.res]?'rt':'')))+'">'+esc(r.res||'UNRESULTED')+'</td>'+
+      '<td class="'+(!r.res?'bad':(CAJ[r.job]?'ca':(isRT[r.res]?'rt':'')))+'">'+esc(r.res||'UNRESULTED')+'</td>'+
       '<td>'+esc(r.stage)+'</td><td>'+esc(r.src)+'</td></tr>');
   });
   H.push('</table></section>');
@@ -310,7 +321,7 @@ var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function apClass(r,isCA,isRT,notRan){
   if(!r.res) return ['un','UNRESULTED'];
-  if(isCA[r.res]) return ['ca','CA SIGNED'];
+  if(r.job&&CAJ[r.job]) return ['ca','CA SIGNED'];
   if(isRT[r.res]) return ['rt',r.res.toUpperCase()];
   if(notRan[r.res]) return ['nr',/cancel/i.test(r.res)?'CANCELED':'NO ANSWER'];
   return ['ot',r.res.toUpperCase()];

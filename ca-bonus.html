@@ -37,10 +37,9 @@ tfoot td{font-weight:700;background:#0d1117;border-top:2px solid #30363d}
 .ok{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.35);color:#7ee787}
 </style></head><body>
 <header>
-<h1>Douglas Roofing - YTD <span>(SalesRabbit vs Leap CAs + Revenue YTD)</span></h1>
-<nav class="nav"><a href="/revenue.html">Herndon</a><a href="/richmond.html">Richmond</a><a href="/ca-bonus.html" class="on">CA Bonus</a><a href="/marketing.html">Marketing</a><a href="/punchout.html">Punch Out</a><a href="/ca-gaps.html">CA Gaps</a></nav>
+<h1>Douglas Roofing - YTD <span>(CAs by Leap CA signed date + Revenue YTD)</span></h1>
+<nav class="nav"><a href="/revenue.html">Herndon</a><a href="/ca-bonus.html" class="on">CA Bonus</a><a href="/marketing.html">Marketing</a><a href="/punchout.html">Punch Out</a></nav>
 <div class="hd">
-<div class="toggle"><button data-office="herndon" class="on">Herndon</button><button data-office="richmond">Richmond</button></div>
 <span class="meta" id="upd"></span>
 <button id="rf">Refresh</button>
 </div>
@@ -48,9 +47,9 @@ tfoot td{font-weight:700;background:#0d1117;border-top:2px solid #30363d}
 <div class="wrap">
 <div id="banner"></div>
 <div id="cards" class="cards"></div>
-<div class="legend">Each month cell shows <b>SalesRabbit</b> / <span class="leap">Leap</span> CAs. <b>Approved</b> / <b>Contract</b> are <b>live</b> job-level revenue YTD, credited to the customer rep.</div>
+<div class="legend">Each month cell shows CAs counted by the <b>Leap CA signed date</b>. <b>Approved</b> / <b>Contract</b> are <b>live</b> job-level revenue YTD, credited to the customer rep.</div>
 <div id="tw"><div class="state">Loading...</div></div>
-<div class="note">SalesRabbit CA = ICA/SGCA pins set that month. Leap CA = documents named "CA" created that month. Revenue is pulled live from Leap's job listing - one row per job - so upgrade sales are not double-counted and nobody is excluded by name.</div>
+<div class="note">CA = a job whose Leap "Contingency Contract Signed Date" falls in that month, credited to the customer rep. Lost/archived jobs still count. Revenue is pulled live from Leap's job listing - one row per job - so upgrade sales are not double-counted and nobody is excluded by name.</div>
 </div>
 <script>
 /* Rebuilt 2026-08-20.
@@ -60,10 +59,11 @@ tfoot td{font-weight:700;background:#0d1117;border-top:2px solid #30363d}
      is GONE. It was hiding $3.1M of contract revenue on this page. Haley nets
      out on her own now because she is not the customer rep on any job.
    - CA history still comes from snapshots, so the page states their age up top
-     rather than presenting three-day-old counts as current. */
+     rather than presenting three-day-old counts as current.
+   2026-11-10: CAs now come ONLY from the Leap CA signed date (/api/leap-extra, ledger refreshed nightly).
+   SalesRabbit CA pins and the Richmond office toggle were removed. */
 var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var ALIAS={'mike mccarthy':'michael mccarthy','izzy price':'isabelle price','robert mumford-wilson':'robert wilson'};
-var office='herndon';
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function norm(s){return String(s==null?'':s).trim().toLowerCase().replace(/\s+/g,' ')}
 function dkey(n){var x=norm(n);return ALIAS[x]||x}
@@ -72,7 +72,6 @@ function p2(n){return (n<10?'0':'')+n}
 function ageHrs(iso){var t=Date.parse(iso);return isNaN(t)?null:Math.round((Date.now()-t)/36e5)}
 function ageText(iso){var h=ageHrs(iso);if(h===null)return 'unknown';if(h<24)return h+'h ago';return Math.round(h/24)+'d ago';}
 function revUrl(){
-  if(office==='richmond')return '/api/rich-revenue?duration=YTD&t='+Date.now();
   var n=new Date();
   return '/api/revenue?start='+n.getFullYear()+'-01-01&end='+n.getFullYear()+'-'+p2(n.getMonth()+1)+'-'+p2(n.getDate())+'&t='+Date.now();
 }
@@ -80,68 +79,63 @@ function load(){
   var b=document.getElementById('rf');b.disabled=true;
   document.getElementById('tw').innerHTML='<div class="state">Loading grid...</div>';
   Promise.all([
-    fetch('/api/ca-history?office='+office+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],months:[]}}),
-    fetch('/api/leap-extra?office='+office+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{}}}),
+    fetch('/api/leap-extra?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{},error:'CA data unavailable'}}),
     fetch(revUrl(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],error:'revenue unavailable'}})
   ]).then(function(res){
-    var ca=res[0]||{}, lx=res[1]||{}, rev=res[2]||{};
-    render(ca,lx,rev);
+    var lx=res[0]||{}, rev=res[1]||{};
+    render(lx,rev);
   }).catch(function(e){
     document.getElementById('tw').innerHTML='<div class="state" style="color:#f85149">Could not load: '+esc(String(e.message||e))+'</div>';
   }).then(function(){b.disabled=false});
 }
-function render(d,lx,rev){
+function render(lx,rev){
   document.getElementById('upd').textContent='Revenue live '+new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-  var months=d.months||[];
+  var months=[];for(var mi=0;mi<=new Date().getMonth();mi++)months.push(mi);
   var map={};
-  function ensure(name){var k=dkey(name);if(!map[k])map[k]={rep:name,sr:new Array(12).fill(0),leap:new Array(12).fill(0),approved:0,contract:0};return map[k];}
-  (d.reps||[]).forEach(function(r){var o=ensure(r.rep);o.rep=r.rep;(r.counts||[]).forEach(function(c,idx){if(months[idx]!==undefined)o.sr[months[idx]]=c;});});
+  function ensure(name){var k=dkey(name);if(!map[k])map[k]={rep:name,leap:new Array(12).fill(0),approved:0,contract:0};return map[k];}
   var lc=lx.leapCA||{};
   Object.keys(lc).forEach(function(name){var o=ensure(name);var arr=lc[name]||[];for(var m=0;m<12;m++)o.leap[m]=arr[m]||0;});
-  // Live revenue. /api/revenue uses approved_amount/contract_amount,
-  // /api/rich-revenue uses approved/contract. Accept either.
+  // Live revenue from /api/revenue (approved_amount/contract_amount).
   (rev.reps||[]).forEach(function(r){
     var o=ensure(r.rep);
     o.approved=Number(r.approved_amount!==undefined?r.approved_amount:r.approved)||0;
     o.contract=Number(r.contract_amount!==undefined?r.contract_amount:r.contract)||0;
   });
   var rows=Object.keys(map).map(function(k){var o=map[k];
-    o.srYTD=months.reduce(function(a,m){return a+o.sr[m]},0);
     o.leapYTD=months.reduce(function(a,m){return a+o.leap[m]},0);
     return o;});
   // No name filter. Anyone with activity or revenue appears.
-  rows=rows.filter(function(o){return o.srYTD||o.leapYTD||o.approved||o.contract;});
-  rows.sort(function(a,b){return (b.contract-a.contract)||(b.srYTD-a.srYTD)});
+  rows=rows.filter(function(o){return o.leapYTD||o.approved||o.contract;});
+  rows.sort(function(a,b){return (b.contract-a.contract)||(b.leapYTD-a.leapYTD)});
 
   var head='<tr><th class="rank">#</th><th class="rep">Rep</th>'+months.map(function(m){return '<th class="num">'+MONTHS[m]+'</th>'}).join('')+'<th class="num tot">CA YTD</th><th class="num rev">Approved</th><th class="num rev">Contract</th></tr>';
-  var cT=months.map(function(){return {sr:0,leap:0}});var gSR=0,gL=0;
+  var cT=months.map(function(){return {leap:0}});var gL=0;
   var body=rows.map(function(o,i){
-    months.forEach(function(m,idx){cT[idx].sr+=o.sr[m];cT[idx].leap+=o.leap[m];});
-    gSR+=o.srYTD;gL+=o.leapYTD;
-    var cells=months.map(function(m){return '<td class="num">'+o.sr[m]+' / <span class="leap">'+o.leap[m]+'</span></td>'}).join('');
-    return '<tr><td class="rank">'+(i+1)+'</td><td class="rep">'+esc(o.rep)+'</td>'+cells+'<td class="num tot">'+o.srYTD+' / <span class="leap">'+o.leapYTD+'</span></td><td class="num rev">'+money(o.approved)+'</td><td class="num rev">'+money(o.contract)+'</td></tr>';
+    months.forEach(function(m,idx){cT[idx].leap+=o.leap[m];});
+    gL+=o.leapYTD;
+    var cells=months.map(function(m){return '<td class="num">'+(o.leap[m]||'<span style="opacity:.35">0</span>')+'</td>'}).join('');
+    return '<tr><td class="rank">'+(i+1)+'</td><td class="rep">'+esc(o.rep)+'</td>'+cells+'<td class="num tot">'+o.leapYTD+'</td><td class="num rev">'+money(o.approved)+'</td><td class="num rev">'+money(o.contract)+'</td></tr>';
   }).join('');
   // Company totals come from the endpoint, not the sum of rendered rows, so the
   // page can never quietly under-report by dropping someone.
   var co=(rev.companyAll||rev.company||{});
   var gAp=Number(co.approved_amount)||0, gCn=Number(co.contract_amount)||0;
-  var foot='<tr><td></td><td class="rep">Team total</td>'+cT.map(function(c){return '<td class="num">'+c.sr+' / <span class="leap">'+c.leap+'</span></td>'}).join('')+'<td class="num tot">'+gSR+' / <span class="leap">'+gL+'</span></td><td class="num rev">'+money(gAp)+'</td><td class="num rev">'+money(gCn)+'</td></tr>';
+  var foot='<tr><td></td><td class="rep">Team total</td>'+cT.map(function(c){return '<td class="num">'+c.leap+'</td>'}).join('')+'<td class="num tot">'+gL+'</td><td class="num rev">'+money(gAp)+'</td><td class="num rev">'+money(gCn)+'</td></tr>';
   document.getElementById('tw').innerHTML='<table><thead>'+head+'</thead><tbody>'+body+'</tbody><tfoot>'+foot+'</tfoot></table>';
 
   document.getElementById('cards').innerHTML=
-    '<div class="ycard yk"><div class="label">CAs YTD</div><div class="value">'+gSR+' / <span class="leap">'+gL+'</span></div><div class="sub">SalesRabbit / Leap</div></div>'+
+    '<div class="ycard yk"><div class="label">CAs YTD</div><div class="value">'+gL+'</div><div class="sub">Leap CA signed date</div></div>'+
     '<div class="ycard ya"><div class="label">Approved Revenue</div><div class="value">'+money(gAp)+'</div><div class="sub">Job awarded date · YTD · live</div></div>'+
     '<div class="ycard yc"><div class="label">Contract Signed</div><div class="value">'+money(gCn)+'</div><div class="sub">Contract signed date · YTD · live</div></div>';
 
-  var srAge=ageHrs(d.updated), stale=(srAge===null||srAge>36);
+  var caAge=lx.updated?ageHrs(lx.updated+'T06:00:00'):null, stale=!!lx.error||caAge===null||caAge>36;
   var bits=['Revenue: <b>live</b> from Leap job listing, '+(rev.jobs?(rev.jobs.contract+' jobs'):'job level')+'.',
-            'SalesRabbit CAs: snapshot from <b>'+ageText(d.updated)+'</b>.',
-            'Leap CAs: snapshot dated <b>'+esc(String(lx.updated||'unknown'))+'</b>.'];
+            'CAs: Leap CA signed date, refreshed nightly - last <b>'+esc(String(lx.updated||'unknown'))+'</b>.'];
+  if(lx.error)bits.unshift('<b>CA data failed to load.</b>');
   if(rev.error)bits.unshift('<b>Revenue failed to load:</b> '+esc(String(rev.error)));
   document.getElementById('banner').innerHTML='<div class="banner '+(stale||rev.error?'warn':'ok')+'">'+bits.join(' &nbsp;·&nbsp; ')+
-    (stale?'<br>The CA columns are not live - they refresh from a scheduled job that has not run. Revenue above is current.':'')+'</div>';
+    (stale&&!lx.error?'<br>The CA counts have not refreshed in over a day - check the Refresh SR snapshots Action. Revenue above is current.':'')+'</div>';
 }
-[].slice.call(document.querySelectorAll('.toggle button')).forEach(function(btn){btn.addEventListener('click',function(){office=btn.getAttribute('data-office');[].slice.call(document.querySelectorAll('.toggle button')).forEach(function(x){x.classList.remove('on')});btn.classList.add('on');load();});});
 document.getElementById('rf').addEventListener('click',load);
 load();
 </script>

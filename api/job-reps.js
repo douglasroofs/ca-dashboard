@@ -405,11 +405,7 @@ async function caCheck(req, res, url) {
     // signed CA within minutes, and it is not proven that an upload bumps updated_at.
     const newSince = newSinceAll;
     const all = url.searchParams.get('all') === '1'; // one-time sweep: every open job on the page, regardless of when it changed
-    // plus every job the nightly SalesRabbit cross-check flagged (data/ca-sr-gaps.json): a CA uploaded there
-    // later gets dated even if the upload doesn't bump the job's updated_at
-    let gapJobs = new Set();
-    try { gapJobs = new Set((require('../data/ca-sr-gaps.json').gaps || []).map((g) => g.job).filter(Boolean)); } catch (e) {}
-    arr.forEach((job) => { if (all || gapJobs.has(job.number) || leapUtc(job.updated_at) >= since || leapUtc(job.created_at) >= newSince) candidates.push(job); });
+    arr.forEach((job) => { if (all || leapUtc(job.updated_at) >= since || leapUtc(job.created_at) >= newSince) candidates.push(job); });
   }
   stats.recent = candidates.length;
   const results = [];
@@ -457,7 +453,7 @@ async function caCheck(req, res, url) {
 // returns lost/archived jobs, so the ledger keeps every job it has seen dated (they stay counted).
 // GET /api/job-reps?findjob=1&q=<street address or name>[&name=<customer name>] -> Leap jobs that match
 // (incl. lost), each with its CA Signed Date, customer rep, stage and documents. Used by the nightly
-// SalesRabbit-vs-Leap CA gap check (scripts/refresh-ca-gaps.js). ?srgaps=1 serves the last report.
+// (Was used by the retired SalesRabbit-vs-Leap CA gap check; kept as a lookup helper.)
 async function findJob(req, res, url) {
   const token = await getToken();
   const q = (url.searchParams.get('q') || '').trim();
@@ -672,7 +668,6 @@ module.exports = async (req, res) => {
     if (url.searchParams.get('cacounts') === '1') return await caCounts(req, res, url);
     if (url.searchParams.get('setins') === '1') return await setInsuranceOne(req, res, url);
     if (url.searchParams.get('findjob') === '1') return await findJob(req, res, url);
-    if (url.searchParams.get('srgaps') === '1') { let g = { updated: null, gaps: [] }; try { g = require('../data/ca-sr-gaps.json'); } catch (e) {} return res.status(200).json(g); }
     if (url.searchParams.get('punchout') === '1') return await punchout(req, res, url);
     const debug = url.searchParams.get('debug');
     const token = await getToken();

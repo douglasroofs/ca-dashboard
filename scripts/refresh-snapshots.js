@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE = (process.env.BASE_URL || 'https://stats.douglasroofs.com').replace(/\/$/, '');
-const OFFICES = ['herndon', 'richmond'];
+const OFFICES = ['herndon']; // Richmond retired 2026-11-10 -- all RVA jobs now live in the main Leap company
 const TIMEOUT_MS = 240000; // ca-history scope=year is slow (~60s+); allow plenty
 const ROOT = path.resolve(__dirname, '..');
 
