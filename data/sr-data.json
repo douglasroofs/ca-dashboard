@@ -15644,6 +15644,15 @@
       "date": "2026-11-11",
       "address": "6630 West Road, Chesterfield, VA",
       "ts": "2026-11-11T20:40:16.573Z"
+    },
+    {
+      "leadId": "82403",
+      "repName": "Christian Brown",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-11",
+      "address": "3700 Ghent Drive, Chesterfield, VA",
+      "ts": "2026-11-11T20:40:20.391Z"
     }
   ]
 }
