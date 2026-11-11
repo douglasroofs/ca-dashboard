@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-06",
+  "updated": "2026-11-11",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -15572,6 +15572,15 @@
       "date": "2026-11-06",
       "address": "8002 Tarkington Drive, Richmond, VA",
       "ts": "2026-11-11T20:36:32.064Z"
+    },
+    {
+      "leadId": "82391",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-11",
+      "address": "3600 Ghent Drive, Chesterfield, VA",
+      "ts": "2026-11-11T20:36:44.639Z"
     }
   ]
 }
