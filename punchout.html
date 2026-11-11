@@ -84,6 +84,7 @@
   <div id="root"><div class="state">Loading punch-outs from Leap...</div></div>
 </div>
 <script>
+var FRESH=0;function U(u){return FRESH?u+(u.indexOf('?')>-1?'&':'?')+'fresh='+FRESH:u}// Refresh -> bypass the 5-min edge cache
 var D=null, S={bucket:null, old:false, src:null, q:'', sort:'days', asc:false};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
 var BK=['0-3','4-7','8-14','15+'];
@@ -98,7 +99,7 @@ function load(){
 }
 function attempt(){
   tries++;
-  fetch('/api/job-reps?punchout=1&t='+Date.now(),{cache:'no-store'})
+  fetch(U('/api/job-reps?punchout=1'),{cache:'no-store'})
    .then(function(r){return r.text().then(function(t){var j;try{j=JSON.parse(t)}catch(e){throw new Error('HTTP '+r.status+' '+t.slice(0,120))}if(!r.ok||j.error)throw new Error(j.error||('HTTP '+r.status));return j;});})
    .then(function(d){D=d;init();})
    .catch(function(e){
@@ -115,7 +116,7 @@ function init(){
   document.getElementById('sFlag').onclick=function(){S.src=S.src==='flag'?null:'flag';draw();};
   document.getElementById('sStage').onclick=function(){S.src=S.src==='stage'?null:'stage';draw();};
   document.getElementById('q').oninput=function(){S.q=this.value.toLowerCase();draw();};
-  document.getElementById('rf').onclick=load;
+  document.getElementById('rf').onclick=function(){FRESH=Date.now();load();};
   draw();
 }
 

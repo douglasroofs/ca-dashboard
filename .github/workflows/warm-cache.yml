@@ -1,0 +1,36 @@
+name: Warm dashboard cache
+
+# Keeps the edge-cached API responses (s-maxage=300, stale-while-revalidate) fresh so pages open
+# instantly. Hits the EXACT URLs the pages request, one at a time (Leap allows one login session,
+# so parallel calls would log each other out). Every 15 min, ~6am-10pm ET, Mon-Sat.
+
+on:
+  schedule:
+    - cron: '7,22,37,52 10-23,0-2 * * 1-6'
+  workflow_dispatch:
+
+concurrency:
+  group: warm-cache
+  cancel-in-progress: true
+
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Warm page data
+        env:
+          BASE: https://stats.douglasroofs.com
+          TZ: America/New_York
+        run: |
+          Y=$(date +%Y); M=$(date +%m); D=$(date +%d)
+          for path in \
+            "/api/revenue" \
+            "/api/doors?office=herndon&live=1" \
+            "/api/revenue?start=${Y}-01-01&end=${Y}-${M}-${D}" \
+            "/api/marketing?office=herndon" \
+            "/api/job-reps?punchout=1"
+          do
+            out=$(curl -s -o /dev/null -w '%{http_code} %{time_total}s' --max-time 90 "${BASE}${path}" || echo "curl failed")
+            echo "${path} -> ${out}"
+          done

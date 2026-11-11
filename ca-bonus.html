@@ -52,6 +52,7 @@ tfoot td{font-weight:700;background:#0d1117;border-top:2px solid #30363d}
 <div class="note">CA = a job whose Leap "Contingency Contract Signed Date" falls in that month, credited to the customer rep. Lost/archived jobs still count. Revenue is pulled live from Leap's job listing - one row per job - so upgrade sales are not double-counted and nobody is excluded by name.</div>
 </div>
 <script>
+var FRESH=0;function U(u){return FRESH?u+(u.indexOf('?')>-1?'&':'?')+'fresh='+FRESH:u}// Refresh -> bypass the 5-min edge cache
 /* Rebuilt 2026-08-20.
    - Revenue columns now come LIVE from /api/revenue and /api/rich-revenue
      (job-level, customer-rep attributed) instead of the leap-extra snapshot.
@@ -73,14 +74,14 @@ function ageHrs(iso){var t=Date.parse(iso);return isNaN(t)?null:Math.round((Date
 function ageText(iso){var h=ageHrs(iso);if(h===null)return 'unknown';if(h<24)return h+'h ago';return Math.round(h/24)+'d ago';}
 function revUrl(){
   var n=new Date();
-  return '/api/revenue?start='+n.getFullYear()+'-01-01&end='+n.getFullYear()+'-'+p2(n.getMonth()+1)+'-'+p2(n.getDate())+'&t='+Date.now();
+  return '/api/revenue?start='+n.getFullYear()+'-01-01&end='+n.getFullYear()+'-'+p2(n.getMonth()+1)+'-'+p2(n.getDate());
 }
 function load(){
   var b=document.getElementById('rf');b.disabled=true;
   document.getElementById('tw').innerHTML='<div class="state">Loading grid...</div>';
   Promise.all([
-    fetch('/api/leap-extra?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{},error:'CA data unavailable'}}),
-    fetch(revUrl(),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],error:'revenue unavailable'}})
+    fetch('/api/leap-extra',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{},error:'CA data unavailable'}}),
+    fetch(U(revUrl()),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],error:'revenue unavailable'}})
   ]).then(function(res){
     var lx=res[0]||{}, rev=res[1]||{};
     render(lx,rev);
@@ -136,7 +137,7 @@ function render(lx,rev){
   document.getElementById('banner').innerHTML='<div class="banner '+(stale||rev.error?'warn':'ok')+'">'+bits.join(' &nbsp;·&nbsp; ')+
     (stale&&!lx.error?'<br>The CA counts have not refreshed in over a day - check the Refresh SR snapshots Action. Revenue above is current.':'')+'</div>';
 }
-document.getElementById('rf').addEventListener('click',load);
+document.getElementById('rf').addEventListener('click',function(){FRESH=Date.now();load();});
 load();
 </script>
 </body></html>

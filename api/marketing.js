@@ -372,6 +372,10 @@ module.exports = async (req, res) => {
     }
 
     const today = iso(now);
+    // Cached at Vercel's edge (2026-11-10): served instantly for 5 min, then the stale copy is served while a
+    // fresh one is fetched in the background. The Refresh buttons add ?fresh=<time> to force a live pull, and
+    // .github/workflows/warm-cache.yml re-pulls every page's URLs during business hours.
+    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400');
     res.status(200).json({
       updated: new Date().toISOString(),
       today,

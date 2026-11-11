@@ -651,6 +651,10 @@ async function punchout(req, res, url) {
   rows.sort((a, b) => (b.days == null ? -1 : b.days) - (a.days == null ? -1 : a.days));
   const buckets = { '0-3': 0, '4-7': 0, '8-14': 0, '15+': 0, unknown: 0 };
   rows.forEach((r) => { buckets[r.bucket] = (buckets[r.bucket] || 0) + 1; });
+  // Cached at Vercel's edge (2026-11-10): served instantly for 5 min, then the stale copy is served while a
+  // fresh one is fetched in the background. The Refresh buttons add ?fresh=<time> to force a live pull, and
+  // .github/workflows/warm-cache.yml re-pulls every page's URLs during business hours.
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400');
   res.status(200).json({
     updated: new Date().toISOString(), office: 'herndon', flag: { id: FLAG_ID, title: 'PUNCH OUT', for: 'customer' }, stage: { code: STAGE_CODE, name: 'Punch Out' },
     counts: { flagged: flagged.length, in_stage: staged.length, open: rows.length }, open: rows.length, buckets,

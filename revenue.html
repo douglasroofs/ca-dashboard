@@ -43,6 +43,7 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 <div id="tw"><div class="state">Loading...</div></div></div>
 </div>
 <script>
+var FRESH=0;function U(u){return FRESH?u+(u.indexOf('?')>-1?'&':'?')+'fresh='+FRESH:u}// Refresh -> bypass the 5-min edge cache
 var fmt=function(n){return '$'+(Number(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})};
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function norm(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
@@ -53,7 +54,7 @@ function fullMonthIdx(rg){var s=new Date(rg.start+'T12:00:00'),e=new Date(rg.end
 function srcs(rg){
 if(!rg){return Promise.all([
 Promise.resolve({reps:[]}),
-fetch('/api/doors?office=herndon&live=1',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0,roster:[],allowedReps:[]}})
+fetch(U('/api/doors?office=herndon&live=1'),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0,roster:[],allowedReps:[]}})
 ])}
 return fetchRangeChunked(rg).then(function(j){
 var ca={updated:j.updated,reps:(j.reps||[]).map(function(x){return {rep:x.rep,counts:[x.cas||0]}})};
@@ -126,7 +127,7 @@ var S={rev:null,le:{jobs:[]},caFrom:_caFrom,caTo:_caTo,dr:{reps:[],roster:[],all
 // instead of blocking behind the SalesRabbit scan.
 var pRev=Promise.all([
 fetch('/api/leap-extra?jobs=1&year='+_caFrom.slice(0,4),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {jobs:[],error:'CA data unavailable'}}),
-fetch('/api/revenue'+(CUR?('?start='+CUR.start+'&end='+CUR.end):''),{cache:'no-store'}).then(function(r){return r.json()})
+fetch(U('/api/revenue'+(CUR?('?start='+CUR.start+'&end='+CUR.end):'')),{cache:'no-store'}).then(function(r){return r.json()})
 ]).then(function(a){S.le=a[0]||{jobs:[]};S.rev=a[1];if(S.rev&&S.rev.error)throw new Error(S.rev.error);render(S);});
 // Phase 2 -- SalesRabbit doors/CAs. Fills in the door columns when it lands.
 // Budget scales with the range: the scan is now one request per calendar month.
@@ -199,7 +200,7 @@ if(rev.inactive&&((+rev.inactive.approved_amount)||(+rev.inactive.contract_amoun
 TEAMS.forEach(function(p){var g=rowsArr.filter(function(r){return r.team===p[0];});if(!g.length)return;g.sort(function(x,y){return (y.contract-x.contract)||(y.approved-x.approved)||(y.doors-x.doors)});var t=tot(g);var note=(p[0]==='__unassigned')?' · inactive reps, house accounts and names Leap reports that SalesRabbit does not':'';html+='<h2 style="margin-top:26px">'+p[1]+' <span style="color:#6b7888;font-weight:400">('+g.length+' reps · by Contract Signed'+note+')</span></h2>'+THEAD+g.map(rowH).join('')+'</tbody><tfoot>'+foot(t)+'</tfoot></table>';});
 document.getElementById('tw').innerHTML=html||'<div class="state">No activity in this period</div>';
 }
-document.getElementById('rf').addEventListener('click',function(){load(CUR);});
+document.getElementById('rf').addEventListener('click',function(){FRESH=Date.now();load(CUR);});
 document.getElementById('apply').addEventListener('click',function(){var s=document.getElementById('dFrom').value,e=document.getElementById('dTo').value;if(!s||!e){alert('Pick both a start and end date.');return}if(e<s){alert('End date is before start date.');return}load({start:s,end:e});});
 document.getElementById('d7').addEventListener('click',function(){var n=new Date();var s=new Date(n.getTime()-6*864e5);document.getElementById('dFrom').value=iso(s);document.getElementById('dTo').value=iso(n);load({start:iso(s),end:iso(n)});});
 document.getElementById('reset').addEventListener('click',function(){var n=new Date();document.getElementById('dFrom').value=iso(new Date(n.getFullYear(),n.getMonth(),1));document.getElementById('dTo').value=iso(n);load(null);});

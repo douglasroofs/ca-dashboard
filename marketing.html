@@ -72,6 +72,7 @@
   <h1>Douglas Roofing - Marketing</h1>
   <nav class="nav"><a href="/revenue.html">Sales</a><a href="/ca-bonus.html">CA Bonus</a><a href="/marketing.html" class="on">Marketing</a><a href="/punchout.html">Punch Out</a></nav>
   <span class="muted" id="stamp" style="margin-left:auto"></span>
+  <button id="rf" style="margin-left:10px;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer" onclick="location.search='?fresh='+Date.now()">Refresh</button>
 </header>
 <div class="wrap">
   <div class="rangebar">
@@ -96,11 +97,12 @@ var iso=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2
 // A CA counts on this page when its CA date is in range and the job is a Marketing job: Leap division
 // "Marketing", or the job has a Marketing-division appointment (many jobs have no division set).
 var CAJ={}, CA_UPD='', CA_ERR=false;
-function caYear(y){return fetch('/api/leap-extra?jobs=1&year='+y+'&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();})
+var FRESH=(location.search.match(/fresh=(\d+)/)||[])[1]||0; // Refresh button -> bypass the 5-min edge cache
+function caYear(y){return fetch('/api/leap-extra?jobs=1&year='+y,{cache:'no-store'}).then(function(r){return r.json();})
   .then(function(j){CA_UPD=j.updated||CA_UPD;(j.jobs||[]).forEach(function(x){CAJ[x.job]=x;});}).catch(function(){CA_ERR=true;});}
 var _y=new Date().getFullYear();
 Promise.all([
- fetch('/api/marketing?office=herndon&t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}),
+ fetch('/api/marketing?office=herndon'+(FRESH?'&fresh='+FRESH:''),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}),
  caYear(_y), caYear(_y-1)
 ]).then(function(a){D=a[0];init();})
  .catch(function(e){document.getElementById('root').innerHTML='<div class="err">Could not load: '+esc(e.message)+'</div>';});
