@@ -15806,6 +15806,15 @@
       "date": "2026-11-11",
       "address": "41979 Cedar Point Pl, Aldie, VA",
       "ts": "2026-11-11T21:55:07.327Z"
+    },
+    {
+      "leadId": "82467",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-11",
+      "address": "25807 Lennox Hale Dr, Aldie, VA",
+      "ts": "2026-11-11T21:57:07.980Z"
     }
   ]
 }
