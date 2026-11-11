@@ -15527,6 +15527,15 @@
       "date": "2026-11-11",
       "address": "13401 Hidden Meadow Ct, Herndon, VA",
       "ts": "2026-11-11T18:55:10.905Z"
+    },
+    {
+      "leadId": "81715",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-11",
+      "address": "8002 Tarkington Drive, Richmond, VA",
+      "ts": "2026-11-11T18:55:58.807Z"
     }
   ]
 }
