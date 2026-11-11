@@ -15761,6 +15761,15 @@
       "date": "2026-11-11",
       "address": "",
       "ts": "2026-11-11T21:25:54.547Z"
+    },
+    {
+      "leadId": "82448",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-11",
+      "address": "42235 Frontier Spring Dr, Chantilly, VA",
+      "ts": "2026-11-11T21:27:55.739Z"
     }
   ]
 }
