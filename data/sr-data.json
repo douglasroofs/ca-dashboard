@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-11",
+  "updated": "2026-11-06",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -15563,6 +15563,15 @@
       "date": "2026-11-11",
       "address": "25486 Amber Gate Terr, Chantilly, VA",
       "ts": "2026-11-11T20:36:06.013Z"
+    },
+    {
+      "leadId": "81715",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-06",
+      "address": "8002 Tarkington Drive, Richmond, VA",
+      "ts": "2026-11-11T20:36:32.064Z"
     }
   ]
 }
