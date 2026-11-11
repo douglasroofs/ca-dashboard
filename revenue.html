@@ -54,7 +54,7 @@ function fullMonthIdx(rg){var s=new Date(rg.start+'T12:00:00'),e=new Date(rg.end
 function srcs(rg){
 if(!rg){return Promise.all([
 Promise.resolve({reps:[]}),
-fetch(U('/api/doors?office=herndon&live=1'),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0,roster:[],allowedReps:[]}})
+fetch(U('/api/doors?office=herndon&live=1'),{cache:'no-store',credentials:'omit'}).then(function(r){return r.json()}).catch(function(){return {reps:[],total:0,roster:[],allowedReps:[]}})
 ])}
 return fetchRangeChunked(rg).then(function(j){
 var ca={updated:j.updated,reps:(j.reps||[]).map(function(x){return {rep:x.rep,counts:[x.cas||0]}})};
@@ -77,7 +77,7 @@ cur=new Date(mEnd.getFullYear(),mEnd.getMonth(),mEnd.getDate()+1,12,0,0);
 }
 return out;
 }
-function fetchRange1(s,e){return fetch('/api/range?office=herndon&start='+s+'&end='+e,{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){if(j.error)throw new Error(j.error);return j})}
+function fetchRange1(s,e){return fetch('/api/range?office=herndon&start='+s+'&end='+e,{cache:'no-store',credentials:'omit'}).then(function(r){return r.json()}).then(function(j){if(j.error)throw new Error(j.error);return j})}
 function mergeRange(list,expected){
 var ok=list.filter(function(x){return !!x});
 if(!ok.length)throw new Error('SalesRabbit range scan failed for every month in this range');
@@ -126,8 +126,8 @@ var S={rev:null,le:{jobs:[]},caFrom:_caFrom,caTo:_caTo,dr:{reps:[],roster:[],all
 // Phase 1 -- Leap revenue. Fast and range-accurate, so paint it immediately
 // instead of blocking behind the SalesRabbit scan.
 var pRev=Promise.all([
-fetch('/api/leap-extra?jobs=1&year='+_caFrom.slice(0,4),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {jobs:[],error:'CA data unavailable'}}),
-fetch(U('/api/revenue'+(CUR?('?start='+CUR.start+'&end='+CUR.end):'')),{cache:'no-store'}).then(function(r){return r.json()})
+fetch('/api/leap-extra?jobs=1&year='+_caFrom.slice(0,4),{cache:'no-store',credentials:'omit'}).then(function(r){return r.json()}).catch(function(){return {jobs:[],error:'CA data unavailable'}}),
+fetch(U('/api/revenue'+(CUR?('?start='+CUR.start+'&end='+CUR.end):'')),{cache:'no-store',credentials:'omit'}).then(function(r){return r.json()})
 ]).then(function(a){S.le=a[0]||{jobs:[]};S.rev=a[1];if(S.rev&&S.rev.error)throw new Error(S.rev.error);render(S);});
 // Phase 2 -- SalesRabbit doors/CAs. Fills in the door columns when it lands.
 // Budget scales with the range: the scan is now one request per calendar month.

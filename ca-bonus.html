@@ -80,8 +80,8 @@ function load(){
   var b=document.getElementById('rf');b.disabled=true;
   document.getElementById('tw').innerHTML='<div class="state">Loading grid...</div>';
   Promise.all([
-    fetch('/api/leap-extra',{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{},error:'CA data unavailable'}}),
-    fetch(U(revUrl()),{cache:'no-store'}).then(function(r){return r.json()}).catch(function(){return {reps:[],error:'revenue unavailable'}})
+    fetch('/api/leap-extra',{cache:'no-store',credentials:'omit'}).then(function(r){return r.json()}).catch(function(){return {leapCA:{},error:'CA data unavailable'}}),
+    fetch(U(revUrl()),{cache:'no-store',credentials:'omit'}).then(function(r){return r.json()}).catch(function(){return {reps:[],error:'revenue unavailable'}})
   ]).then(function(res){
     var lx=res[0]||{}, rev=res[1]||{};
     render(lx,rev);

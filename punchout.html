@@ -99,7 +99,7 @@ function load(){
 }
 function attempt(){
   tries++;
-  fetch(U('/api/job-reps?punchout=1'),{cache:'no-store'})
+  fetch(U('/api/job-reps?punchout=1'),{cache:'no-store',credentials:'omit'})
    .then(function(r){return r.text().then(function(t){var j;try{j=JSON.parse(t)}catch(e){throw new Error('HTTP '+r.status+' '+t.slice(0,120))}if(!r.ok||j.error)throw new Error(j.error||('HTTP '+r.status));return j;});})
    .then(function(d){D=d;init();})
    .catch(function(e){
