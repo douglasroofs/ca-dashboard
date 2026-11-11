@@ -31,7 +31,7 @@ tfoot td{font-weight:700;background:#fafbfc;border-top:2px solid #e5e9f0}
 .rangebar button.ghost{background:#fff;color:#1f6feb;border:1px solid #cfe0fb}
 .rangebar .note{font-size:12px;color:#6b7888;margin-left:auto}
 </style></head><body>
-<header><h1>Douglas Roofing - DC Dashboard (Month to Date)</h1><nav class="nav"><a href="/revenue.html" class="on">Herndon</a><a href="/ca-bonus.html">CA Bonus</a><a href="/marketing.html">Marketing</a><a href="/punchout.html">Punch Out</a></nav><div class="hd"><span class="meta" id="upd"></span><button id="rf">Refresh</button></div></header>
+<header><h1>Douglas Roofing - Sales (Month to Date)</h1><nav class="nav"><a href="/revenue.html" class="on">Sales</a><a href="/ca-bonus.html">CA Bonus</a><a href="/marketing.html">Marketing</a><a href="/punchout.html">Punch Out</a></nav><div class="hd"><span class="meta" id="upd"></span><button id="rf">Refresh</button></div></header>
 <div class="wrap">
 <div class="rangebar"><span class="rl">Range</span><input type="date" id="dFrom"><span class="rl">to</span><input type="date" id="dTo"><button id="apply">Apply</button><button id="d7" class="ghost">Last 7 days</button><button id="reset" class="ghost">Month to date</button><span class="note" id="rangeNote">Month to date</span></div>
 <div class="cards">
@@ -160,11 +160,17 @@ var rowsArr=Object.keys(map).map(function(k){return map[k]});
 // reps now land in the Unassigned / Inactive group and stay in the total.
 var teamByRep=(dr&&dr.teamByRep)||{};
 var haveTeams=Object.keys(teamByRep).length>0;
+// Old snapshot keys (before team names were passed through as-is).
+var LEGACY={selfgen:'DC Self Gen',jack:'Jacks Team',mccarthy:'Mccarthy Team',inbound:'DC Inbound',retail:'Retail',other:'Other',noteam:''};
 var allowSet=new Set(dr.allowedReps||[]);
 rowsArr.forEach(function(r){var k=dkey(r.rep);
 if(!haveTeams){r.team='all';return}
-r.team=(teamByRep[k]!==undefined)?teamByRep[k]:(allowSet.has(k)?'other':'unassigned');});
-var TEAMS=haveTeams?[['selfgen','Self-Gen'],['jack',"Jack's Team"],['mccarthy',"McCarthy's Team"],['inbound','Inbound'],['retail','Retail'],['other','Other'],['noteam','No team set in SalesRabbit'],['unassigned','Unassigned / Inactive — not on the SalesRabbit roster']]:[['all','All Reps']];
+r.team=(teamByRep[k]!==undefined)?(LEGACY[teamByRep[k]]!==undefined?LEGACY[teamByRep[k]]:String(teamByRep[k]||'').trim()):'__unassigned';});
+// Sections are the ACTUAL SalesRabbit team names (2026-11-10): rename, add or move reps between teams in
+// SalesRabbit and the page follows on the next load. Blank team -> "No team set"; a Leap rep with no
+// active SalesRabbit user -> "Unassigned / Inactive".
+var _tn={};rowsArr.forEach(function(r){if(r.team&&r.team!=='__unassigned'&&r.team!=='all')_tn[r.team]=1;});
+var TEAMS=haveTeams?Object.keys(_tn).sort(function(a,b){return a.localeCompare(b)}).map(function(t){return [t,t]}).concat([['','No team set in SalesRabbit'],['__unassigned','Unassigned / Inactive — not on the SalesRabbit roster']]):[['all','All Reps']];
 function tot(a){var t={d:0,c:0,ap:0,cn:0};a.forEach(function(r){t.d+=(r.doors||0);t.c+=(r.cas||0);t.ap+=(r.approved||0);t.cn+=(r.contract||0)});return t}
 function ratio(d,c){return c>0?Math.round(d/c):'—';}
 function rowH(r,i){return '<tr><td class="rank">'+(i+1)+'</td><td>'+esc(r.rep)+'</td><td class="num">'+(S.srState==='ok'?(r.doors||0):'—')+'</td><td class="num">'+(r.cas||0)+'</td><td class="num">'+(S.srState==='ok'?ratio(r.doors||0,r.cas||0):'—')+'</td><td class="num">'+fmt(r.approved)+'</td><td class="num" style="font-weight:600">'+fmt(r.contract)+'</td></tr>';}
@@ -190,7 +196,7 @@ else if(dr.partial){html+='<div class="state" style="color:#b45309">Doors are in
 var gapAp=Math.round((headAp-off.ap)*100)/100, gapCn=Math.round((headCn-off.cn)*100)/100;
 if(Math.abs(gapAp)>1||Math.abs(gapCn)>1){html+='<div class="state" style="color:#b45309">Unattributed to any rep: '+fmt(gapAp)+' approved / '+fmt(gapCn)+' contract signed. Headline totals come from Leap; the difference is revenue Leap reports at company level but not against a rep row.</div>'}
 if(rev.inactive&&((+rev.inactive.approved_amount)||(+rev.inactive.contract_amount))){html+='<div class="state" style="color:#6b7888">Includes deactivated Leap users: '+fmt(rev.inactive.approved_amount)+' approved / '+fmt(rev.inactive.contract_amount)+' contract signed.</div>'}
-TEAMS.forEach(function(p){var g=rowsArr.filter(function(r){return r.team===p[0];});if(!g.length)return;g.sort(function(x,y){return (y.contract-x.contract)||(y.approved-x.approved)||(y.doors-x.doors)});var t=tot(g);var note=(p[0]==='unassigned')?' · inactive reps, house accounts and names Leap reports that SalesRabbit does not':'';html+='<h2 style="margin-top:26px">'+p[1]+' <span style="color:#6b7888;font-weight:400">('+g.length+' reps · by Contract Signed'+note+')</span></h2>'+THEAD+g.map(rowH).join('')+'</tbody><tfoot>'+foot(t)+'</tfoot></table>';});
+TEAMS.forEach(function(p){var g=rowsArr.filter(function(r){return r.team===p[0];});if(!g.length)return;g.sort(function(x,y){return (y.contract-x.contract)||(y.approved-x.approved)||(y.doors-x.doors)});var t=tot(g);var note=(p[0]==='__unassigned')?' · inactive reps, house accounts and names Leap reports that SalesRabbit does not':'';html+='<h2 style="margin-top:26px">'+p[1]+' <span style="color:#6b7888;font-weight:400">('+g.length+' reps · by Contract Signed'+note+')</span></h2>'+THEAD+g.map(rowH).join('')+'</tbody><tfoot>'+foot(t)+'</tfoot></table>';});
 document.getElementById('tw').innerHTML=html||'<div class="state">No activity in this period</div>';
 }
 document.getElementById('rf').addEventListener('click',function(){load(CUR);});
