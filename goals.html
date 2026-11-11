@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Douglas Roofing - Goals</title><style>
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f6f9;color:#0f2438}
+header{background:#0f2438;color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+header h1{font-size:17px;margin:0;font-weight:600}
+.meta{font-size:12px;color:#aebfd2}
+.nav{display:flex;gap:4px;flex-wrap:wrap;margin:0 8px}.nav a{color:#aebfd2;text-decoration:none;font-size:13px;padding:5px 10px;border-radius:6px}.nav a.on{background:#1f6feb;color:#fff}.nav a:hover{color:#fff}
+.hd{display:flex;gap:12px;align-items:center}
+.wrap{max-width:1100px;margin:0 auto;padding:22px}
+button{background:#1f6feb;color:#fff;border:none;padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit}
+button.ghost{background:#fff;color:#1f6feb;border:1px solid #cfe0fb}
+button.lnk{background:none;color:#1f6feb;padding:2px 4px;font-size:12px}
+button.danger{background:#fff;color:#b42318;border:1px solid #f3c2bd}
+button:disabled{opacity:.5;cursor:default}
+input,select,textarea{border:1px solid #dfe4ec;border-radius:8px;padding:7px 9px;font-size:13px;color:#0f2438;font-family:inherit;background:#fff}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid #e5e9f0;border-radius:12px;padding:10px 14px;margin-bottom:18px}
+.bar .rl{font-size:12px;color:#6b7888;text-transform:uppercase;letter-spacing:.5px}
+.seg{display:inline-flex;border:1px solid #cfe0fb;border-radius:8px;overflow:hidden}
+.seg button{border-radius:0;background:#fff;color:#1f6feb;border:none;border-right:1px solid #cfe0fb}
+.seg button:last-child{border-right:none}.seg button.on{background:#1f6feb;color:#fff}
+.sp{margin-left:auto}
+h2{font-size:15px;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+h2 .muted{font-size:12px;font-weight:400}
+.muted{color:#6b7888}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.card{background:#fff;border:1px solid #e5e9f0;border-radius:12px;padding:16px 18px;border-top:3px solid #1a7f37}
+.card .label{font-size:12px;color:#6b7888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.card .value{font-size:24px;font-weight:700}
+.card .sub{font-size:12px;color:#6b7888;margin-top:6px}
+.prog{height:10px;background:#eef1f6;border-radius:6px;position:relative;margin-top:10px;overflow:visible}
+.prog i{display:block;height:100%;border-radius:6px;background:#1a7f37}
+.prog i.behind{background:#d97706}.prog i.far{background:#b42318}
+.prog b{position:absolute;top:-4px;width:2px;height:18px;background:#0f2438;opacity:.55}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e9f0;border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:10px 12px;font-size:14px;border-bottom:1px solid #eef1f6;vertical-align:top}
+th{background:#fafbfc;color:#6b7888;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+tr:last-child td{border-bottom:none}
+td.t{width:46%}td .n{font-size:12px;color:#6b7888;margin-top:3px;white-space:pre-wrap}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.s-ns{background:#eef1f6;color:#4b5a6b}.s-ip{background:#dbeafe;color:#1d4ed8}.s-dn{background:#d6f0dd;color:#1a7f37}.s-ot{background:#fde2e1;color:#b42318}
+.own{font-weight:600}.own.none{color:#9aa6b4;font-weight:400}
+.late{color:#b42318;font-weight:600}
+.state{padding:26px;text-align:center;color:#6b7888;background:#fff;border:1px dashed #dfe4ec;border-radius:12px}
+.err{padding:12px 14px;border-radius:10px;background:#fde2e1;color:#8a1c12;margin-bottom:14px;font-size:13px}
+.lock{max-width:380px;margin:70px auto;background:#fff;border:1px solid #e5e9f0;border-radius:14px;padding:26px}
+.lock h3{margin:0 0 6px}.lock input{width:100%;box-sizing:border-box;margin:14px 0 10px;font-size:15px;padding:10px}
+.form{background:#fff;border:1px solid #cfe0fb;border-radius:12px;padding:16px;margin-bottom:18px;display:none}
+.form.open{display:block}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.grid label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:#6b7888;text-transform:uppercase;letter-spacing:.4px}
+.grid .w2{grid-column:span 2}.grid .w4{grid-column:span 4}
+@media(max-width:760px){.grid{grid-template-columns:1fr 1fr}.grid .w4{grid-column:span 2}td.t{width:auto}}
+.summary{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin:-4px 0 14px}
+.summary span b{font-size:15px}
+</style></head><body>
+<header><h1>Douglas Roofing - Goals</h1><nav class="nav"><a href="/revenue.html">Sales</a><a href="/ca-bonus.html">YTD</a><a href="/marketing.html">Marketing</a><a href="/punchout.html">Punch Out</a><a href="/goals.html" class="on">Goals</a></nav><div class="hd"><span class="meta" id="upd"></span><button id="lockBtn" class="ghost" style="display:none">Lock</button></div></header>
+<div class="wrap" id="root"><div class="state">Loading...</div></div>
+<script>
+/* Goals page (2026-11-10). Owners' annual / quarterly / monthly goals: revenue targets measured against live
+   Leap revenue (/api/revenue, Contract Signed), and department task goals with an owner, status and due date.
+   Separate Goals password (GOALS_PASSWORD) on top of the dashboard password; data is stored encrypted. */
+var OWNERS=['Kyle','Mike','Adam'], STATUSES=['Not started','In progress','Done','Off track'];
+var DEPTS=['Company','Sales','Production','Marketing','Insurance / Claims','Repairs','Office / Admin','Finance','RVA'];
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var PW='', G=[], VIEW={period:'annual',year:0,quarter:0,month:0,owner:''}, EDIT=null, REV={};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function money(n){return '$'+Math.round(Number(n)||0).toLocaleString('en-US')}
+function p2(n){return (n<10?'0':'')+n}
+function isoD(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())}
+function store(k,v){try{if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}}
+function load(k){try{return localStorage.getItem(k)||''}catch(e){return ''}}
+(function(){var n=new Date();VIEW.year=n.getFullYear();VIEW.quarter=Math.floor(n.getMonth()/3)+1;VIEW.month=n.getMonth()+1;
+  var v=load('goalsView');if(v){try{var o=JSON.parse(v);if(o.period)VIEW.period=o.period;if(o.owner!==undefined)VIEW.owner=o.owner;}catch(e){}}})();
+
+function api(method,body){
+  return fetch('/api/goals',{method:method,cache:'no-store',headers:Object.assign({'x-goals-password':PW},body?{'Content-Type':'application/json'}:{}),body:body?JSON.stringify(body):undefined})
+    .then(function(r){return r.json().then(function(j){if(!r.ok){var e=new Error(j.error||('HTTP '+r.status));e.status=r.status;throw e;}return j;});});
+}
+function lockScreen(msg){
+  document.getElementById('lockBtn').style.display='none';document.getElementById('upd').textContent='';
+  document.getElementById('root').innerHTML='<div class="lock"><h3>Owners\' goals</h3><div class="muted" style="font-size:13px">This page has its own password, separate from the dashboard.</div>'+
+    (msg?'<div class="err" style="margin:12px 0 0">'+esc(msg)+'</div>':'')+
+    '<input type="password" id="pw" placeholder="Goals password" autocomplete="current-password"><button id="go" style="width:100%">Unlock</button></div>';
+  var go=function(){PW=document.getElementById('pw').value;if(!PW)return;start();};
+  document.getElementById('go').onclick=go;document.getElementById('pw').onkeydown=function(e){if(e.key==='Enter')go();};
+  document.getElementById('pw').focus();
+}
+function start(){
+  document.getElementById('root').innerHTML='<div class="state">Loading goals...</div>';
+  api('GET').then(function(j){store('goalsPw',PW);G=j.goals||[];document.getElementById('lockBtn').style.display='';stamp(j.updated);render();})
+  .catch(function(e){if(e.status===401){var typed=!!document.getElementById('pw')||!load('goalsPw');store('goalsPw',null);PW='';lockScreen(typed?'Wrong password.':'');}
+    else{document.getElementById('root').innerHTML='<div class="err">'+esc(e.message)+'</div>';}});
+}
+function stamp(u){document.getElementById('upd').textContent=u?('Last change '+new Date(u).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})):'No goals saved yet';}
+document.getElementById('lockBtn').onclick=function(){store('goalsPw',null);PW='';G=[];lockScreen('');};
+
+// ---- periods ----
+function range(g){ // [start,end] dates of a goal's period
+  var y=g.year;
+  if(g.period==='monthly')return [new Date(y,g.month-1,1),new Date(y,g.month,0)];
+  if(g.period==='quarterly')return [new Date(y,(g.quarter-1)*3,1),new Date(y,g.quarter*3,0)];
+  return [new Date(y,0,1),new Date(y,11,31)];
+}
+function label(g){return g.period==='monthly'?(MON[g.month-1]+' '+g.year):g.period==='quarterly'?('Q'+g.quarter+' '+g.year):(String(g.year));}
+function inView(g){
+  if(g.period!==VIEW.period||g.year!==VIEW.year)return false;
+  if(g.period==='quarterly'&&g.quarter!==VIEW.quarter)return false;
+  if(g.period==='monthly'&&g.month!==VIEW.month)return false;
+  if(VIEW.owner&&g.owner!==VIEW.owner)return false;
+  return true;
+}
+function viewGoal(){return {period:VIEW.period,year:VIEW.year,quarter:VIEW.quarter,month:VIEW.month};}
+
+// ---- revenue actuals (Contract Signed, live from Leap via the cached /api/revenue) ----
+function revFor(g){
+  var r=range(g),today=new Date(),s=r[0],e=r[1]<today?r[1]:today;
+  if(s>today)return Promise.resolve({future:true});
+  var k=isoD(s)+'_'+isoD(e);
+  if(!REV[k])REV[k]=fetch('/api/revenue?start='+isoD(s)+'&end='+isoD(e),{credentials:'omit'}).then(function(x){return x.json()}).catch(function(){return {error:'revenue unavailable'}});
+  return REV[k];
+}
+function pace(g){var r=range(g),t=new Date();if(t<r[0])return 0;if(t>r[1])return 1;return (t-r[0])/(r[1]-r[0]+864e5);}
+
+function render(){
+  store('goalsView',JSON.stringify({period:VIEW.period,owner:VIEW.owner}));
+  var years=[];for(var y=new Date().getFullYear()-1;y<=new Date().getFullYear()+2;y++)years.push(y);
+  G.forEach(function(g){if(years.indexOf(g.year)<0)years.push(g.year)});years.sort();
+  var H=[];
+  H.push('<div class="bar"><div class="seg">'+['annual','quarterly','monthly'].map(function(p){return '<button data-p="'+p+'" class="'+(VIEW.period===p?'on':'')+'">'+p.charAt(0).toUpperCase()+p.slice(1)+'</button>'}).join('')+'</div>');
+  H.push('<select id="vy">'+years.map(function(y){return '<option'+(y===VIEW.year?' selected':'')+'>'+y+'</option>'}).join('')+'</select>');
+  if(VIEW.period==='quarterly')H.push('<select id="vq">'+[1,2,3,4].map(function(q){return '<option value="'+q+'"'+(q===VIEW.quarter?' selected':'')+'>Q'+q+'</option>'}).join('')+'</select>');
+  if(VIEW.period==='monthly')H.push('<select id="vm">'+MON.map(function(m,i){return '<option value="'+(i+1)+'"'+(i+1===VIEW.month?' selected':'')+'>'+m+'</option>'}).join('')+'</select>');
+  H.push('<span class="rl" style="margin-left:10px">Owner</span><select id="vo"><option value="">All 3</option>'+OWNERS.map(function(o){return '<option'+(o===VIEW.owner?' selected':'')+'>'+o+'</option>'}).join('')+'<option value="__none"'+(VIEW.owner==='__none'?' selected':'')+'>Unassigned</option></select>');
+  H.push('<button class="sp" id="addRev">+ Revenue goal</button><button id="addTask">+ Goal</button></div>');
+  H.push('<div class="form" id="form"></div>');
+
+  var list=G.filter(function(g){return VIEW.owner==='__none'?(inViewNoOwner(g)&&!g.owner):inView(g);});
+  var rev=list.filter(function(g){return g.kind==='revenue'}), tasks=list.filter(function(g){return g.kind!=='revenue'});
+  var per=label(viewGoal());
+
+  H.push('<h2>Revenue goals <span class="muted">'+esc(per)+' · progress = Contract Signed revenue from Leap (approved shown underneath) · the tick marks where you should be today</span></h2>');
+  if(!rev.length)H.push('<div class="state">No revenue goal for '+esc(per)+'. <button class="lnk" id="addRev2">Add one</button></div>');
+  else{H.push('<div class="cards">');rev.forEach(function(g){H.push('<div class="card" id="rc_'+g.id+'"><div class="label"><span>'+esc(g.title)+(g.department?' · '+esc(g.department):'')+'</span><span>'+ownerHtml(g)+'</span></div><div class="value">... <span class="muted" style="font-size:14px;font-weight:400">of '+money(g.target)+'</span></div><div class="prog"><i style="width:0"></i></div><div class="sub">Loading revenue...</div><div style="margin-top:8px"><button class="lnk" data-edit="'+g.id+'">Edit</button></div></div>');});H.push('</div>');}
+
+  var done=tasks.filter(function(g){return g.status==='Done'}).length, off=tasks.filter(function(g){return g.status==='Off track'}).length;
+  H.push('<h2>Department goals <span class="muted">'+esc(per)+'</span></h2>');
+  if(tasks.length)H.push('<div class="summary"><span><b>'+tasks.length+'</b> goals</span><span><b>'+done+'</b> done</span><span><b>'+tasks.filter(function(g){return g.status==='In progress'}).length+'</b> in progress</span><span style="color:#b42318"><b>'+off+'</b> off track</span><span class="muted">'+Math.round(done*100/tasks.length)+'% complete</span></div>');
+  if(!tasks.length)H.push('<div class="state">No department goals for '+esc(per)+(VIEW.owner?' for this owner':'')+'. <button class="lnk" id="addTask2">Add one</button></div>');
+  else{
+    var byD={};tasks.forEach(function(g){var d=g.department||'Company';(byD[d]=byD[d]||[]).push(g)});
+    var order=Object.keys(byD).sort(function(a,b){var ia=DEPTS.indexOf(a),ib=DEPTS.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib)||a.localeCompare(b)});
+    var stOrder={'Off track':0,'In progress':1,'Not started':2,'Done':3};
+    H.push('<table><tr><th>Goal</th><th>Owner</th><th>Status</th><th>Due</th><th></th></tr>');
+    order.forEach(function(d){
+      H.push('<tr><td colspan="5" style="background:#f6f8fb;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#4b5a6b">'+esc(d)+' <span class="muted" style="font-weight:400">('+byD[d].filter(function(g){return g.status==='Done'}).length+'/'+byD[d].length+' done)</span></td></tr>');
+      byD[d].sort(function(a,b){return (stOrder[a.status]-stOrder[b.status])||String(a.due||'9').localeCompare(String(b.due||'9'))}).forEach(function(g){
+        var late=g.due&&g.status!=='Done'&&g.due<isoD(new Date());
+        H.push('<tr><td class="t">'+esc(g.title)+(g.notes?'<div class="n">'+esc(g.notes)+'</div>':'')+'</td><td>'+ownerHtml(g)+'</td>'+
+          '<td><select data-st="'+g.id+'">'+STATUSES.map(function(s){return '<option'+(s===g.status?' selected':'')+'>'+s+'</option>'}).join('')+'</select></td>'+
+          '<td class="'+(late?'late':'')+'">'+(g.due?new Date(g.due+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'<span class="muted">-</span>')+(late?' (late)':'')+'</td>'+
+          '<td style="white-space:nowrap"><button class="lnk" data-edit="'+g.id+'">Edit</button></td></tr>');
+      });
+    });
+    H.push('</table>');
+  }
+  var other=G.filter(function(g){return g.period!==VIEW.period||g.year!==VIEW.year}).length;
+  H.push('<div class="muted" style="font-size:12px;margin-top:16px">Saved encrypted; only someone with the Goals password can read it. '+G.length+' goals in total'+(other?(', '+other+' in other periods'):'')+'.</div>');
+  document.getElementById('root').innerHTML=H.join('');
+  wire();
+  rev.forEach(fillRev);
+}
+function inViewNoOwner(g){var o=VIEW.owner;VIEW.owner='';var r=inView(g);VIEW.owner=o;return r;}
+function ownerHtml(g){return g.owner?'<span class="own">'+esc(g.owner)+'</span>':'<span class="own none">Unassigned</span>';}
+function fillRev(g){
+  revFor(g).then(function(r){
+    var el=document.getElementById('rc_'+g.id);if(!el)return;
+    if(r.future){el.querySelector('.value').innerHTML=money(0)+' <span class="muted" style="font-size:14px;font-weight:400">of '+money(g.target)+'</span>';el.querySelector('.sub').textContent='This period has not started yet.';return;}
+    if(r.error){el.querySelector('.sub').textContent='Could not load revenue: '+r.error;return;}
+    var co=r.companyAll||r.company||{},cn=Number(co.contract_amount)||0,ap=Number(co.approved_amount)||0;
+    var pct=g.target?cn/g.target:0,pc=pace(g),cls=(pct>=pc-0.02)?'':(pct>=pc-0.15?'behind':'far');
+    el.style.borderTopColor=cls==='far'?'#b42318':cls==='behind'?'#d97706':'#1a7f37';
+    el.querySelector('.value').innerHTML=money(cn)+' <span class="muted" style="font-size:14px;font-weight:400">of '+money(g.target)+' ('+Math.round(pct*100)+'%)</span>';
+    el.querySelector('.prog').innerHTML='<i class="'+cls+'" style="width:'+Math.min(100,pct*100).toFixed(1)+'%"></i>'+(pc>0&&pc<1?'<b style="left:'+(pc*100).toFixed(1)+'%"></b>':'');
+    var need=Math.max(0,g.target-cn), left=Math.max(0,Math.ceil((range(g)[1]-new Date())/864e5));
+    el.querySelector('.sub').innerHTML='Approved '+money(ap)+' · '+(pc>=1?(cn>=g.target?'Goal hit':'Missed by '+money(need)):('On pace for '+money(pc>0?cn/pc:0)+' · '+money(need)+' to go, '+left+' days left'));
+  });
+}
+function wire(){
+  [].forEach.call(document.querySelectorAll('.seg button'),function(b){b.onclick=function(){VIEW.period=b.getAttribute('data-p');render();};});
+  var on=function(id,f){var e=document.getElementById(id);if(e)e.onchange=f;};
+  on('vy',function(){VIEW.year=+this.value;render();});on('vq',function(){VIEW.quarter=+this.value;render();});
+  on('vm',function(){VIEW.month=+this.value;render();});on('vo',function(){VIEW.owner=this.value;render();});
+  ['addRev','addRev2'].forEach(function(id){var e=document.getElementById(id);if(e)e.onclick=function(){openForm(Object.assign(viewGoal(),{kind:'revenue',title:'Revenue goal',department:'Company',owner:VIEW.owner&&VIEW.owner!=='__none'?VIEW.owner:''}));};});
+  ['addTask','addTask2'].forEach(function(id){var e=document.getElementById(id);if(e)e.onclick=function(){openForm(Object.assign(viewGoal(),{kind:'task',owner:VIEW.owner&&VIEW.owner!=='__none'?VIEW.owner:''}));};});
+  [].forEach.call(document.querySelectorAll('[data-edit]'),function(b){b.onclick=function(){openForm(G.filter(function(g){return g.id===b.getAttribute('data-edit')})[0]);};});
+  [].forEach.call(document.querySelectorAll('[data-st]'),function(s){s.onchange=function(){var g=G.filter(function(x){return x.id===s.getAttribute('data-st')})[0];save(Object.assign({},g,{status:s.value}),s);};});
+}
+function openForm(g){
+  EDIT=g||{};var f=document.getElementById('form'),rv=EDIT.kind==='revenue';
+  var opt=function(arr,cur,blank){return (blank?'<option value="">'+blank+'</option>':'')+arr.map(function(x){return '<option'+(x===cur?' selected':'')+'>'+x+'</option>'}).join('')};
+  f.innerHTML='<div style="font-weight:600;margin-bottom:12px">'+(EDIT.id?'Edit goal':'New '+(rv?'revenue goal':'goal'))+'</div><div class="grid">'+
+    '<label class="w4">'+(rv?'Name':'Goal')+'<input id="f_title" value="'+esc(EDIT.title||'')+'" placeholder="'+(rv?'e.g. Company revenue':'e.g. Define repair department pricing')+'"></label>'+
+    '<label>Type<select id="f_kind"><option value="task"'+(rv?'':' selected')+'>Department goal</option><option value="revenue"'+(rv?' selected':'')+'>Revenue goal</option></select></label>'+
+    '<label>Period<select id="f_period">'+['annual','quarterly','monthly'].map(function(p){return '<option value="'+p+'"'+(p===EDIT.period?' selected':'')+'>'+p.charAt(0).toUpperCase()+p.slice(1)+'</option>'}).join('')+'</select></label>'+
+    '<label>Year<input id="f_year" type="number" value="'+(EDIT.year||VIEW.year)+'"></label>'+
+    '<label id="l_q">Quarter<select id="f_quarter">'+[1,2,3,4].map(function(q){return '<option value="'+q+'"'+(q===(EDIT.quarter||VIEW.quarter)?' selected':'')+'>Q'+q+'</option>'}).join('')+'</select></label>'+
+    '<label id="l_m">Month<select id="f_month">'+MON.map(function(m,i){return '<option value="'+(i+1)+'"'+(i+1===(EDIT.month||VIEW.month)?' selected':'')+'>'+m+'</option>'}).join('')+'</select></label>'+
+    '<label>Department<input id="f_dept" list="depts" value="'+esc(EDIT.department||'')+'" placeholder="Pick or type"><datalist id="depts">'+DEPTS.map(function(d){return '<option value="'+esc(d)+'">'}).join('')+'</datalist></label>'+
+    '<label>Owner<select id="f_owner">'+opt(OWNERS,EDIT.owner,'Unassigned')+'</select></label>'+
+    '<label id="l_t">Revenue target ($)<input id="f_target" type="number" min="0" step="1000" value="'+(EDIT.target||'')+'"></label>'+
+    '<label id="l_s">Status<select id="f_status">'+opt(STATUSES,EDIT.status||'Not started')+'</select></label>'+
+    '<label id="l_d">Due date<input id="f_due" type="date" value="'+esc(EDIT.due||'')+'"></label>'+
+    '<label class="w4">Notes / sub-steps<textarea id="f_notes" rows="2">'+esc(EDIT.notes||'')+'</textarea></label></div>'+
+    '<div id="f_err" class="err" style="display:none;margin-top:10px"></div>'+
+    '<div style="display:flex;gap:8px;margin-top:12px"><button id="f_save">Save</button><button class="ghost" id="f_cancel">Cancel</button>'+(EDIT.id?'<button class="danger" id="f_del" style="margin-left:auto">Delete</button>':'')+'</div>';
+  f.classList.add('open');
+  var sync=function(){var p=document.getElementById('f_period').value,k=document.getElementById('f_kind').value;
+    document.getElementById('l_q').style.display=p==='quarterly'?'':'none';document.getElementById('l_m').style.display=p==='monthly'?'':'none';
+    document.getElementById('l_t').style.display=k==='revenue'?'':'none';['l_s','l_d'].forEach(function(id){document.getElementById(id).style.display=k==='revenue'?'none':''});};
+  document.getElementById('f_period').onchange=sync;document.getElementById('f_kind').onchange=sync;sync();
+  document.getElementById('f_cancel').onclick=function(){f.classList.remove('open');f.innerHTML='';};
+  document.getElementById('f_save').onclick=function(){
+    var v=function(id){return document.getElementById(id).value};
+    save({id:EDIT.id,kind:v('f_kind'),title:v('f_title'),period:v('f_period'),year:+v('f_year'),quarter:+v('f_quarter'),month:+v('f_month'),department:v('f_dept'),owner:v('f_owner'),target:+v('f_target')||0,status:v('f_status'),due:v('f_due'),notes:v('f_notes')},document.getElementById('f_save'),true);
+  };
+  if(EDIT.id)document.getElementById('f_del').onclick=function(){
+    var b=this;if(b.textContent!=='Click again to delete'){b.textContent='Click again to delete';return;}
+    b.disabled=true;api('POST',{action:'delete',id:EDIT.id}).then(function(j){G=j.goals;stamp(j.updated);render();}).catch(function(e){showErr(e)});
+  };
+  document.getElementById('f_title').focus();f.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function showErr(e){var x=document.getElementById('f_err');if(x){x.style.display='';x.textContent=e.message;}else alert(e.message);if(e.status===401){store('goalsPw',null);}}
+function save(goal,btn,fromForm){
+  if(btn)btn.disabled=true;
+  api('POST',{action:'upsert',goal:goal}).then(function(j){G=j.goals;stamp(j.updated);
+    if(fromForm){VIEW.period=goal.period;VIEW.year=goal.year;if(goal.period==='quarterly')VIEW.quarter=goal.quarter;if(goal.period==='monthly')VIEW.month=goal.month;}
+    render();})
+  .catch(function(e){if(btn)btn.disabled=false;showErr(e);});
+}
+PW=load('goalsPw');if(PW)start();else lockScreen('');
+</script>
+</body></html>
