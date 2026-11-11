@@ -15689,6 +15689,15 @@
       "date": "2026-11-11",
       "address": "3601 Pierson Drive, Chesterfield, VA",
       "ts": "2026-11-11T20:40:37.930Z"
+    },
+    {
+      "leadId": "82413",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-11",
+      "address": "43627 White Cap Terr, Chantilly, VA",
+      "ts": "2026-11-11T20:46:00.127Z"
     }
   ]
 }
