@@ -15752,6 +15752,15 @@
       "date": "2026-11-11",
       "address": "42221 St Huberts Pl, Chantilly, VA",
       "ts": "2026-11-11T21:24:35.161Z"
+    },
+    {
+      "leadId": "82447",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-11",
+      "address": "",
+      "ts": "2026-11-11T21:25:54.547Z"
     }
   ]
 }
