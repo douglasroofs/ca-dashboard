@@ -14,14 +14,17 @@
 //   GET  /api/goals           -> { goals: [...], updated }
 //   POST /api/goals  { action: 'upsert', goal: {...} } | { action: 'delete', id }
 //
-// Goal: { id, period: 'annual'|'quarterly'|'monthly', year, quarter, month, kind: 'revenue'|'task', title,
+// Goal: { id, period: 'annual'|'quarterly'|'monthly', year, quarter, month, kind: 'metric'|'task', metric, title,
 //   department, owner: 'Kyle'|'Mike'|'Adam'|'', target, status, due, notes, created, updated }
+// kind 'metric' = a number goal tracked live from the dashboard; metric is one of METRICS below.
+// (Goals saved as kind 'revenue' before 2026-11-10 21:00 are read as metric 'contract'.)
 const crypto = require('crypto');
 const REPO = 'douglasroofs/ca-dashboard';
 const PATH = 'data/goals.enc.json';
 const API = `https://api.github.com/repos/${REPO}/contents/${PATH}`;
 const OWNERS = ['Kyle', 'Mike', 'Adam', ''];
 const STATUSES = ['Not started', 'In progress', 'Done', 'Off track'];
+const METRICS = ['contract', 'approved', 'cas', 'mkt_cas', 'mkt_set', 'mkt_ran'];
 const gh = () => ({ Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, Accept: 'application/vnd.github+json', 'User-Agent': 'ca-dashboard-goals' });
 
 function secret() { return process.env.GOALS_KEY || process.env.GOALS_PASSWORD || ''; }
@@ -67,7 +70,8 @@ const int = (v, lo, hi) => { const n = parseInt(v, 10); return n >= lo && n <= h
 function clean(g, prev) {
   const now = new Date().toISOString();
   const period = ['annual', 'quarterly', 'monthly'].includes(g.period) ? g.period : 'annual';
-  const kind = g.kind === 'revenue' ? 'revenue' : 'task';
+  const kind = (g.kind === 'metric' || g.kind === 'revenue') ? 'metric' : 'task';
+  const metric = kind === 'metric' ? (METRICS.includes(g.metric) ? g.metric : 'contract') : null;
   const out = {
     id: String((prev && prev.id) || g.id || ('g' + Date.now().toString(36) + crypto.randomBytes(3).toString('hex'))),
     period,
@@ -75,10 +79,11 @@ function clean(g, prev) {
     quarter: period === 'quarterly' ? (int(g.quarter, 1, 4) || 1) : null,
     month: period === 'monthly' ? (int(g.month, 1, 12) || 1) : null,
     kind,
-    title: String(g.title || '').trim().slice(0, 300) || (kind === 'revenue' ? 'Revenue goal' : ''),
+    metric,
+    title: String(g.title || '').trim().slice(0, 300) || (kind === 'metric' ? 'Company' : ''),
     department: String(g.department || '').trim().slice(0, 60),
     owner: OWNERS.includes(g.owner) ? g.owner : '',
-    target: kind === 'revenue' ? Math.max(0, Number(g.target) || 0) : null,
+    target: kind === 'metric' ? Math.max(0, Number(g.target) || 0) : null,
     status: STATUSES.includes(g.status) ? g.status : 'Not started',
     due: iso(g.due),
     notes: String(g.notes || '').trim().slice(0, 1000),
@@ -125,6 +130,7 @@ module.exports = async (req, res) => {
         const i = g.id ? goals.findIndex((x) => x.id === g.id) : -1;
         const next = clean(g, i >= 0 ? goals[i] : null);
         if (!next.title) return res.status(400).json({ error: 'A goal needs a title' });
+        if (next.kind === 'task' && !next.department) return res.status(400).json({ error: 'Department goals need a department' });
         if (i >= 0) goals[i] = next; else goals.push(next);
       }
       const out = { updated: new Date().toISOString(), goals };

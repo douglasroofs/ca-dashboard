@@ -55,12 +55,25 @@ td.t{width:46%}td .n{font-size:12px;color:#6b7888;margin-top:3px;white-space:pre
 <header><h1>Douglas Roofing - Goals</h1><nav class="nav"><a href="/revenue.html">Sales</a><a href="/ca-bonus.html">YTD</a><a href="/marketing.html">Marketing</a><a href="/punchout.html">Punch Out</a><a href="/goals.html" class="on">Goals</a></nav><div class="hd"><span class="meta" id="upd"></span><button id="lockBtn" class="ghost" style="display:none">Lock</button></div></header>
 <div class="wrap" id="root"><div class="state">Loading...</div></div>
 <script>
-/* Goals page (2026-11-10). Owners' annual / quarterly / monthly goals: revenue targets measured against live
-   Leap revenue (/api/revenue, Contract Signed), and department task goals with an owner, status and due date.
+/* Goals page (2026-11-10). Owners' annual / quarterly / monthly goals: number goals tracked live from the
+   dashboard (Contract Signed or Approved revenue, CAs, marketing CAs / appointments), and department task goals with an owner, status and due date.
    Separate Goals password (GOALS_PASSWORD) on top of the dashboard password; data is stored encrypted. */
 var OWNERS=['Kyle','Mike','Adam'], STATUSES=['Not started','In progress','Done','Off track'];
-var DEPTS=['Company','Sales','Production','Marketing','Insurance / Claims','Repairs','Office / Admin','Finance','RVA'];
+var DEPTS=['Sales','Production','Marketing','Insurance / Claims','Repairs','Office / Admin','Finance','RVA']; // department goals must pick one (or Other)
 var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+// Number goals track these dashboard figures live (company-wide, for the goal's period).
+var METRICS={
+  contract:{label:'Contract Signed revenue',unit:'$',src:'Leap, by contract signed date (Sales page headline)'},
+  approved:{label:'Approved revenue',unit:'$',src:'Leap, by job awarded (approved) date'},
+  cas:{label:'CAs signed',unit:'#',src:'Leap CA signed date, all jobs (Sales / YTD pages)'},
+  mkt_cas:{label:'Marketing CAs signed',unit:'#',src:'Leap CA signed date on Marketing jobs (Marketing page)'},
+  mkt_set:{label:'Marketing appointments set',unit:'#',src:'Leap appointments, Marketing division, up to today'},
+  mkt_ran:{label:'Marketing appointments ran',unit:'#',src:'Leap appointments, Marketing division, excluding canceled / no answer'}
+};
+var MORDER=['contract','approved','cas','mkt_cas','mkt_set','mkt_ran'];
+function isNum(g){return g.kind==='metric'||g.kind==='revenue';}
+function metOf(g){return METRICS[g.metric]?g.metric:'contract';}
+function fmtM(m,v){return METRICS[m].unit==='$'?money(v):Math.round(Number(v)||0).toLocaleString('en-US');}
 var PW='', G=[], VIEW={period:'annual',year:0,quarter:0,month:0,owner:''}, EDIT=null, REV={};
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function money(n){return '$'+Math.round(Number(n)||0).toLocaleString('en-US')}
@@ -110,13 +123,32 @@ function inView(g){
 }
 function viewGoal(){return {period:VIEW.period,year:VIEW.year,quarter:VIEW.quarter,month:VIEW.month};}
 
-// ---- revenue actuals (Contract Signed, live from Leap via the cached /api/revenue) ----
-function revFor(g){
-  var r=range(g),today=new Date(),s=r[0],e=r[1]<today?r[1]:today;
-  if(s>today)return Promise.resolve({future:true});
-  var k=isoD(s)+'_'+isoD(e);
-  if(!REV[k])REV[k]=fetch('/api/revenue?start='+isoD(s)+'&end='+isoD(e),{credentials:'omit'}).then(function(x){return x.json()}).catch(function(){return {error:'revenue unavailable'}});
-  return REV[k];
+// ---- live actuals from the dashboard's own endpoints (all edge-cached) ----
+var CACHE={};
+function once(k,f){if(!CACHE[k])CACHE[k]=f().catch(function(e){return {error:String(e.message||e)}});return CACHE[k];}
+function getJ(u){return fetch(u,{credentials:'omit'}).then(function(x){if(!x.ok)throw new Error('HTTP '+x.status);return x.json()});}
+function clipRange(g){var r=range(g),t=new Date();return {s:r[0],e:r[1]<t?r[1]:t,future:r[0]>t};}
+function revenueFor(s,e){return once('rev'+isoD(s)+isoD(e),function(){return getJ('/api/revenue?start='+isoD(s)+'&end='+isoD(e))});}
+function casYear(y){return once('cas'+y,function(){return getJ('/api/leap-extra?jobs=1&year='+y)});}
+function mktYear(y){ // default URL for the current year (same cache key as the Marketing page)
+  return once('mkt'+y,function(){return getJ(y===new Date().getFullYear()?'/api/marketing?office=herndon':('/api/marketing?office=herndon&start='+y+'-01-01&end='+y+'-12-31'))});}
+function actual(g){ // -> Promise<{value, extra, error, future}>
+  var m=metOf(g),c=clipRange(g),f=isoD(c.s),t=isoD(c.e);
+  if(c.future)return Promise.resolve({future:true,value:0});
+  if(m==='contract'||m==='approved')return revenueFor(c.s,c.e).then(function(r){if(r.error)return r;var co=r.companyAll||r.company||{};
+    var cn=Number(co.contract_amount)||0,ap=Number(co.approved_amount)||0;
+    return m==='contract'?{value:cn,extra:'Approved '+money(ap)}:{value:ap,extra:'Contract Signed '+money(cn)};});
+  if(m==='cas'||m==='mkt_cas'){
+    var p=[casYear(g.year)];if(m==='mkt_cas')p.push(mktYear(g.year));
+    return Promise.all(p).then(function(a){if(a[0].error)return a[0];if(a[1]&&a[1].error)return a[1];
+      var mj={};if(a[1])(a[1].records||[]).forEach(function(r){if(r.job)mj[r.job]=1;});
+      var n=(a[0].jobs||[]).filter(function(j){return j.date>=f&&j.date<=t&&(m==='cas'||j.division==='Marketing'||mj[j.job]);}).length;
+      return {value:n,extra:'as of '+(a[0].updated||'?')};});
+  }
+  return mktYear(g.year).then(function(d){if(d.error)return d;var nr={};(d.notRan||[]).forEach(function(x){nr[x]=1;});
+    var rs=(d.records||[]).filter(function(r){return r.d>=f&&r.d<=t;});
+    var ran=rs.filter(function(r){return !nr[r.res];}).length;
+    return m==='mkt_set'?{value:rs.length,extra:ran+' ran'}:{value:ran,extra:rs.length+' set'};});
 }
 function pace(g){var r=range(g),t=new Date();if(t<r[0])return 0;if(t>r[1])return 1;return (t-r[0])/(r[1]-r[0]+864e5);}
 
@@ -130,23 +162,23 @@ function render(){
   if(VIEW.period==='quarterly')H.push('<select id="vq">'+[1,2,3,4].map(function(q){return '<option value="'+q+'"'+(q===VIEW.quarter?' selected':'')+'>Q'+q+'</option>'}).join('')+'</select>');
   if(VIEW.period==='monthly')H.push('<select id="vm">'+MON.map(function(m,i){return '<option value="'+(i+1)+'"'+(i+1===VIEW.month?' selected':'')+'>'+m+'</option>'}).join('')+'</select>');
   H.push('<span class="rl" style="margin-left:10px">Owner</span><select id="vo"><option value="">All 3</option>'+OWNERS.map(function(o){return '<option'+(o===VIEW.owner?' selected':'')+'>'+o+'</option>'}).join('')+'<option value="__none"'+(VIEW.owner==='__none'?' selected':'')+'>Unassigned</option></select>');
-  H.push('<button class="sp" id="addRev">+ Revenue goal</button><button id="addTask">+ Goal</button></div>');
+  H.push('<button class="sp" id="addRev">+ Number goal</button><button id="addTask">+ Goal</button></div>');
   H.push('<div class="form" id="form"></div>');
 
   var list=G.filter(function(g){return VIEW.owner==='__none'?(inViewNoOwner(g)&&!g.owner):inView(g);});
-  var rev=list.filter(function(g){return g.kind==='revenue'}), tasks=list.filter(function(g){return g.kind!=='revenue'});
+  var rev=list.filter(isNum).sort(function(a,b){return MORDER.indexOf(metOf(a))-MORDER.indexOf(metOf(b))}), tasks=list.filter(function(g){return !isNum(g)});
   var per=label(viewGoal());
 
-  H.push('<h2>Revenue goals <span class="muted">'+esc(per)+' · progress = Contract Signed revenue from Leap (approved shown underneath) · the tick marks where you should be today</span></h2>');
-  if(!rev.length)H.push('<div class="state">No revenue goal for '+esc(per)+'. <button class="lnk" id="addRev2">Add one</button></div>');
-  else{H.push('<div class="cards">');rev.forEach(function(g){H.push('<div class="card" id="rc_'+g.id+'"><div class="label"><span>'+esc(g.title)+(g.department?' · '+esc(g.department):'')+'</span><span>'+ownerHtml(g)+'</span></div><div class="value">... <span class="muted" style="font-size:14px;font-weight:400">of '+money(g.target)+'</span></div><div class="prog"><i style="width:0"></i></div><div class="sub">Loading revenue...</div><div style="margin-top:8px"><button class="lnk" data-edit="'+g.id+'">Edit</button></div></div>');});H.push('</div>');}
+  H.push('<h2>Number goals <span class="muted">'+esc(per)+' · tracked live from the dashboard · the tick marks where you should be today</span></h2>');
+  if(!rev.length)H.push('<div class="state">No number goals for '+esc(per)+'. <button class="lnk" id="addRev2">Add one</button> (revenue, CAs or marketing appointments)</div>');
+  else{H.push('<div class="cards">');rev.forEach(function(g){var m=metOf(g);H.push('<div class="card" id="rc_'+g.id+'"><div class="label"><span>'+esc(METRICS[m].label)+(g.title&&g.title!=='Company'&&g.title!=='Revenue goal'?' · '+esc(g.title):'')+'</span><span>'+ownerHtml(g)+'</span></div><div class="value">... <span class="muted" style="font-size:14px;font-weight:400">of '+fmtM(m,g.target)+'</span></div><div class="prog"><i style="width:0"></i></div><div class="sub">Loading revenue...</div><div style="margin-top:8px"><button class="lnk" data-edit="'+g.id+'">Edit</button></div></div>');});H.push('</div>');}
 
   var done=tasks.filter(function(g){return g.status==='Done'}).length, off=tasks.filter(function(g){return g.status==='Off track'}).length;
   H.push('<h2>Department goals <span class="muted">'+esc(per)+'</span></h2>');
   if(tasks.length)H.push('<div class="summary"><span><b>'+tasks.length+'</b> goals</span><span><b>'+done+'</b> done</span><span><b>'+tasks.filter(function(g){return g.status==='In progress'}).length+'</b> in progress</span><span style="color:#b42318"><b>'+off+'</b> off track</span><span class="muted">'+Math.round(done*100/tasks.length)+'% complete</span></div>');
   if(!tasks.length)H.push('<div class="state">No department goals for '+esc(per)+(VIEW.owner?' for this owner':'')+'. <button class="lnk" id="addTask2">Add one</button></div>');
   else{
-    var byD={};tasks.forEach(function(g){var d=g.department||'Company';(byD[d]=byD[d]||[]).push(g)});
+    var byD={};tasks.forEach(function(g){var d=g.department||'No department set';(byD[d]=byD[d]||[]).push(g)});
     var order=Object.keys(byD).sort(function(a,b){var ia=DEPTS.indexOf(a),ib=DEPTS.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib)||a.localeCompare(b)});
     var stOrder={'Off track':0,'In progress':1,'Not started':2,'Done':3};
     H.push('<table><tr><th>Goal</th><th>Owner</th><th>Status</th><th>Due</th><th></th></tr>');
@@ -171,17 +203,19 @@ function render(){
 function inViewNoOwner(g){var o=VIEW.owner;VIEW.owner='';var r=inView(g);VIEW.owner=o;return r;}
 function ownerHtml(g){return g.owner?'<span class="own">'+esc(g.owner)+'</span>':'<span class="own none">Unassigned</span>';}
 function fillRev(g){
-  revFor(g).then(function(r){
+  var m=metOf(g);
+  actual(g).then(function(r){
     var el=document.getElementById('rc_'+g.id);if(!el)return;
-    if(r.future){el.querySelector('.value').innerHTML=money(0)+' <span class="muted" style="font-size:14px;font-weight:400">of '+money(g.target)+'</span>';el.querySelector('.sub').textContent='This period has not started yet.';return;}
-    if(r.error){el.querySelector('.sub').textContent='Could not load revenue: '+r.error;return;}
-    var co=r.companyAll||r.company||{},cn=Number(co.contract_amount)||0,ap=Number(co.approved_amount)||0;
-    var pct=g.target?cn/g.target:0,pc=pace(g),cls=(pct>=pc-0.02)?'':(pct>=pc-0.15?'behind':'far');
+    var of=' <span class="muted" style="font-size:14px;font-weight:400">of '+fmtM(m,g.target);
+    if(r.future){el.querySelector('.value').innerHTML=fmtM(m,0)+of+'</span>';el.querySelector('.sub').textContent='This period has not started yet.';return;}
+    if(r.error){el.querySelector('.sub').textContent='Could not load: '+r.error;return;}
+    var v=r.value,pct=g.target?v/g.target:0,pc=pace(g),cls=(pct>=pc-0.02)?'':(pct>=pc-0.15?'behind':'far');
     el.style.borderTopColor=cls==='far'?'#b42318':cls==='behind'?'#d97706':'#1a7f37';
-    el.querySelector('.value').innerHTML=money(cn)+' <span class="muted" style="font-size:14px;font-weight:400">of '+money(g.target)+' ('+Math.round(pct*100)+'%)</span>';
+    el.querySelector('.value').innerHTML=fmtM(m,v)+of+' ('+Math.round(pct*100)+'%)</span>';
     el.querySelector('.prog').innerHTML='<i class="'+cls+'" style="width:'+Math.min(100,pct*100).toFixed(1)+'%"></i>'+(pc>0&&pc<1?'<b style="left:'+(pc*100).toFixed(1)+'%"></b>':'');
-    var need=Math.max(0,g.target-cn), left=Math.max(0,Math.ceil((range(g)[1]-new Date())/864e5));
-    el.querySelector('.sub').innerHTML='Approved '+money(ap)+' · '+(pc>=1?(cn>=g.target?'Goal hit':'Missed by '+money(need)):('On pace for '+money(pc>0?cn/pc:0)+' · '+money(need)+' to go, '+left+' days left'));
+    var need=Math.max(0,g.target-v), left=Math.max(0,Math.ceil((range(g)[1]-new Date())/864e5));
+    var st=pc>=1?(v>=g.target?'Goal hit':'Missed by '+fmtM(m,need)):('On pace for '+fmtM(m,pc>0?v/pc:0)+' · '+fmtM(m,need)+' to go, '+left+' days left');
+    el.querySelector('.sub').innerHTML=(r.extra?esc(r.extra)+' · ':'')+st+'<br><span style="opacity:.75">'+esc(METRICS[m].src)+'</span>';
   });
 }
 function wire(){
@@ -189,24 +223,26 @@ function wire(){
   var on=function(id,f){var e=document.getElementById(id);if(e)e.onchange=f;};
   on('vy',function(){VIEW.year=+this.value;render();});on('vq',function(){VIEW.quarter=+this.value;render();});
   on('vm',function(){VIEW.month=+this.value;render();});on('vo',function(){VIEW.owner=this.value;render();});
-  ['addRev','addRev2'].forEach(function(id){var e=document.getElementById(id);if(e)e.onclick=function(){openForm(Object.assign(viewGoal(),{kind:'revenue',title:'Revenue goal',department:'Company',owner:VIEW.owner&&VIEW.owner!=='__none'?VIEW.owner:''}));};});
+  ['addRev','addRev2'].forEach(function(id){var e=document.getElementById(id);if(e)e.onclick=function(){openForm(Object.assign(viewGoal(),{kind:'metric',metric:'contract',title:'',department:'Company',owner:VIEW.owner&&VIEW.owner!=='__none'?VIEW.owner:''}));};});
   ['addTask','addTask2'].forEach(function(id){var e=document.getElementById(id);if(e)e.onclick=function(){openForm(Object.assign(viewGoal(),{kind:'task',owner:VIEW.owner&&VIEW.owner!=='__none'?VIEW.owner:''}));};});
   [].forEach.call(document.querySelectorAll('[data-edit]'),function(b){b.onclick=function(){openForm(G.filter(function(g){return g.id===b.getAttribute('data-edit')})[0]);};});
   [].forEach.call(document.querySelectorAll('[data-st]'),function(s){s.onchange=function(){var g=G.filter(function(x){return x.id===s.getAttribute('data-st')})[0];save(Object.assign({},g,{status:s.value}),s);};});
 }
 function openForm(g){
-  EDIT=g||{};var f=document.getElementById('form'),rv=EDIT.kind==='revenue';
+  EDIT=g||{};var f=document.getElementById('form'),rv=isNum(EDIT);
   var opt=function(arr,cur,blank){return (blank?'<option value="">'+blank+'</option>':'')+arr.map(function(x){return '<option'+(x===cur?' selected':'')+'>'+x+'</option>'}).join('')};
-  f.innerHTML='<div style="font-weight:600;margin-bottom:12px">'+(EDIT.id?'Edit goal':'New '+(rv?'revenue goal':'goal'))+'</div><div class="grid">'+
-    '<label class="w4">'+(rv?'Name':'Goal')+'<input id="f_title" value="'+esc(EDIT.title||'')+'" placeholder="'+(rv?'e.g. Company revenue':'e.g. Define repair department pricing')+'"></label>'+
-    '<label>Type<select id="f_kind"><option value="task"'+(rv?'':' selected')+'>Department goal</option><option value="revenue"'+(rv?' selected':'')+'>Revenue goal</option></select></label>'+
+  f.innerHTML='<div style="font-weight:600;margin-bottom:12px">'+(EDIT.id?'Edit goal':'New '+(rv?'number goal':'goal'))+'</div><div class="grid">'+
+    '<label class="w2">Type<select id="f_kind"><option value="task"'+(rv?'':' selected')+'>Department goal (a task)</option><option value="metric"'+(rv?' selected':'')+'>Number goal (tracked from the dashboard)</option></select></label>'+
+    '<label class="w2" id="l_met">Tracks<select id="f_metric">'+MORDER.map(function(k){return '<option value="'+k+'"'+(k===metOf(EDIT)?' selected':'')+'>'+METRICS[k].label+'</option>'}).join('')+'</select></label>'+
+    '<label class="w4"><span id="l_title">'+(rv?'Label (optional)':'Goal')+'</span><input id="f_title" value="'+esc(EDIT.title==='Company'||EDIT.title==='Revenue goal'?'':(EDIT.title||''))+'" placeholder="'+(rv?'e.g. Stretch target':'e.g. Define repair department pricing')+'"></label>'+
     '<label>Period<select id="f_period">'+['annual','quarterly','monthly'].map(function(p){return '<option value="'+p+'"'+(p===EDIT.period?' selected':'')+'>'+p.charAt(0).toUpperCase()+p.slice(1)+'</option>'}).join('')+'</select></label>'+
     '<label>Year<input id="f_year" type="number" value="'+(EDIT.year||VIEW.year)+'"></label>'+
     '<label id="l_q">Quarter<select id="f_quarter">'+[1,2,3,4].map(function(q){return '<option value="'+q+'"'+(q===(EDIT.quarter||VIEW.quarter)?' selected':'')+'>Q'+q+'</option>'}).join('')+'</select></label>'+
     '<label id="l_m">Month<select id="f_month">'+MON.map(function(m,i){return '<option value="'+(i+1)+'"'+(i+1===(EDIT.month||VIEW.month)?' selected':'')+'>'+m+'</option>'}).join('')+'</select></label>'+
-    '<label>Department<input id="f_dept" list="depts" value="'+esc(EDIT.department||'')+'" placeholder="Pick or type"><datalist id="depts">'+DEPTS.map(function(d){return '<option value="'+esc(d)+'">'}).join('')+'</datalist></label>'+
+    '<label id="l_dep">Department *<select id="f_dept"><option value="">Choose a department</option>'+DEPTS.map(function(d){return '<option'+(d===EDIT.department?' selected':'')+'>'+esc(d)+'</option>'}).join('')+'<option value="__other"'+(EDIT.department&&DEPTS.indexOf(EDIT.department)<0&&EDIT.department!=='Company'?' selected':'')+'>Other…</option></select></label>'+
+    '<label id="l_depo">Other department<input id="f_depo" value="'+esc(EDIT.department&&DEPTS.indexOf(EDIT.department)<0&&EDIT.department!=='Company'?EDIT.department:'')+'" placeholder="Department name"></label>'+
     '<label>Owner<select id="f_owner">'+opt(OWNERS,EDIT.owner,'Unassigned')+'</select></label>'+
-    '<label id="l_t">Revenue target ($)<input id="f_target" type="number" min="0" step="1000" value="'+(EDIT.target||'')+'"></label>'+
+    '<label id="l_t"><span id="l_tl">Target</span><input id="f_target" type="number" min="0" step="any" value="'+(EDIT.target||'')+'"></label>'+
     '<label id="l_s">Status<select id="f_status">'+opt(STATUSES,EDIT.status||'Not started')+'</select></label>'+
     '<label id="l_d">Due date<input id="f_due" type="date" value="'+esc(EDIT.due||'')+'"></label>'+
     '<label class="w4">Notes / sub-steps<textarea id="f_notes" rows="2">'+esc(EDIT.notes||'')+'</textarea></label></div>'+
@@ -215,12 +251,20 @@ function openForm(g){
   f.classList.add('open');
   var sync=function(){var p=document.getElementById('f_period').value,k=document.getElementById('f_kind').value;
     document.getElementById('l_q').style.display=p==='quarterly'?'':'none';document.getElementById('l_m').style.display=p==='monthly'?'':'none';
-    document.getElementById('l_t').style.display=k==='revenue'?'':'none';['l_s','l_d'].forEach(function(id){document.getElementById(id).style.display=k==='revenue'?'none':''});};
-  document.getElementById('f_period').onchange=sync;document.getElementById('f_kind').onchange=sync;sync();
+    var num=k==='metric',mk=document.getElementById('f_metric').value;
+    document.getElementById('l_t').style.display=num?'':'none';document.getElementById('l_met').style.display=num?'':'none';
+    document.getElementById('l_tl').textContent=METRICS[mk].unit==='$'?'Target ($)':'Target (count)';
+    document.getElementById('l_title').textContent=num?'Label (optional)':'Goal';
+    ['l_s','l_d','l_dep'].forEach(function(id){document.getElementById(id).style.display=num?'none':''});
+    document.getElementById('l_depo').style.display=(!num&&document.getElementById('f_dept').value==='__other')?'':'none';};
+  document.getElementById('f_period').onchange=sync;document.getElementById('f_kind').onchange=sync;document.getElementById('f_metric').onchange=sync;document.getElementById('f_dept').onchange=sync;sync();
   document.getElementById('f_cancel').onclick=function(){f.classList.remove('open');f.innerHTML='';};
   document.getElementById('f_save').onclick=function(){
     var v=function(id){return document.getElementById(id).value};
-    save({id:EDIT.id,kind:v('f_kind'),title:v('f_title'),period:v('f_period'),year:+v('f_year'),quarter:+v('f_quarter'),month:+v('f_month'),department:v('f_dept'),owner:v('f_owner'),target:+v('f_target')||0,status:v('f_status'),due:v('f_due'),notes:v('f_notes')},document.getElementById('f_save'),true);
+    var num=v('f_kind')==='metric', dep=num?'Company':(v('f_dept')==='__other'?v('f_depo').trim():v('f_dept'));
+    if(!num&&!dep){var x=document.getElementById('f_err');x.style.display='';x.textContent='Pick the department this goal belongs to.';return;}
+    if(!num&&!v('f_title').trim()){var y=document.getElementById('f_err');y.style.display='';y.textContent='Give the goal a name.';return;}
+    save({id:EDIT.id,kind:v('f_kind'),metric:v('f_metric'),title:v('f_title'),period:v('f_period'),year:+v('f_year'),quarter:+v('f_quarter'),month:+v('f_month'),department:dep,owner:v('f_owner'),target:+v('f_target')||0,status:v('f_status'),due:v('f_due'),notes:v('f_notes')},document.getElementById('f_save'),true);
   };
   if(EDIT.id)document.getElementById('f_del').onclick=function(){
     var b=this;if(b.textContent!=='Click again to delete'){b.textContent='Click again to delete';return;}
