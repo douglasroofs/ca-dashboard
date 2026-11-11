@@ -15824,6 +15824,15 @@
       "date": "2026-11-11",
       "address": "25803 Lennox Hale Dr, Aldie, VA",
       "ts": "2026-11-11T21:59:12.554Z"
+    },
+    {
+      "leadId": "82473",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-11",
+      "address": "",
+      "ts": "2026-11-11T22:03:14.299Z"
     }
   ]
 }
