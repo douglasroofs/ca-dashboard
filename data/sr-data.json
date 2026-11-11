@@ -15788,6 +15788,15 @@
       "date": "2026-11-11",
       "address": "42241 St Huberts Pl, Chantilly, VA",
       "ts": "2026-11-11T21:43:17.526Z"
+    },
+    {
+      "leadId": "82465",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-11",
+      "address": "41991 Cedar Point Pl, Aldie, VA",
+      "ts": "2026-11-11T21:47:38.715Z"
     }
   ]
 }
