@@ -15851,6 +15851,15 @@
       "date": "2026-11-11",
       "address": "41993 Winning Glory Dr, Aldie, VA",
       "ts": "2026-11-11T22:30:18.162Z"
+    },
+    {
+      "leadId": "79300",
+      "repName": "David Kerns",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-11",
+      "address": "41980 Winning Glory Dr, Aldie, VA",
+      "ts": "2026-11-11T22:34:23.801Z"
     }
   ]
 }
