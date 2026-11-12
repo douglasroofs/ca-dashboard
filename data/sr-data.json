@@ -15878,6 +15878,15 @@
       "date": "2026-11-12",
       "address": "13636 Dornock Ct, Herndon, VA",
       "ts": "2026-11-12T14:53:10.355Z"
+    },
+    {
+      "leadId": "81715",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-12",
+      "address": "8002 Tarkington Drive, Richmond, VA",
+      "ts": "2026-11-12T15:59:16.976Z"
     }
   ]
 }
