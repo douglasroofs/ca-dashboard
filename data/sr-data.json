@@ -16022,6 +16022,15 @@
       "date": "2026-11-12",
       "address": "10212 Fox Ln, Fairfax, VA",
       "ts": "2026-11-12T17:52:24.143Z"
+    },
+    {
+      "leadId": "82538",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "10124 Cardinal Rd, Fairfax, VA",
+      "ts": "2026-11-12T17:54:24.715Z"
     }
   ]
 }
