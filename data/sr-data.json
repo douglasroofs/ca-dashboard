@@ -16247,6 +16247,15 @@
       "date": "2026-11-12",
       "address": "508 Virginia Avenue, Mineral, VA",
       "ts": "2026-11-12T21:02:25.007Z"
+    },
+    {
+      "leadId": "82693",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "2603 Lafayette Ave, Henrico, VA",
+      "ts": "2026-11-12T21:11:01.039Z"
     }
   ]
 }
