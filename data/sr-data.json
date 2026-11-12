@@ -16175,6 +16175,15 @@
       "date": "2026-11-12",
       "address": "9804 Fairmont Ave, Manassas, VA",
       "ts": "2026-11-12T20:30:00.176Z"
+    },
+    {
+      "leadId": "82676",
+      "repName": "David Kerns",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "8000 Deward Ct, Manassas, VA",
+      "ts": "2026-11-12T20:34:09.507Z"
     }
   ]
 }
