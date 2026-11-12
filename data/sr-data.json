@@ -16130,6 +16130,15 @@
       "date": "2026-11-12",
       "address": "",
       "ts": "2026-11-12T20:22:05.648Z"
+    },
+    {
+      "leadId": "82668",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "9893 Rickover Ct, Manassas, VA",
+      "ts": "2026-11-12T20:22:31.184Z"
     }
   ]
 }
