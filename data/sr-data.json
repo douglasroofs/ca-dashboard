@@ -16040,6 +16040,15 @@
       "date": "2026-11-12",
       "address": "10127 Cardinal Rd, Fairfax, VA",
       "ts": "2026-11-12T17:56:35.276Z"
+    },
+    {
+      "leadId": "82549",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "6312 Fredonia Rd, Richmond, VA",
+      "ts": "2026-11-12T18:17:24.750Z"
     }
   ]
 }
