@@ -16229,6 +16229,15 @@
       "date": "2026-11-12",
       "address": "7906 Clifton St, Manassas, VA",
       "ts": "2026-11-12T20:51:54.746Z"
+    },
+    {
+      "leadId": "82682",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "9806 Sudley Manor Dr, Manassas, VA",
+      "ts": "2026-11-12T20:54:03.993Z"
     }
   ]
 }
