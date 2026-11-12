@@ -16013,6 +16013,15 @@
       "date": "2026-11-12",
       "address": "10222 Fox Ln, Fairfax, VA",
       "ts": "2026-11-12T17:45:27.552Z"
+    },
+    {
+      "leadId": "82537",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "10212 Fox Ln, Fairfax, VA",
+      "ts": "2026-11-12T17:52:24.143Z"
     }
   ]
 }
