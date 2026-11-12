@@ -15977,6 +15977,15 @@
       "date": "2026-11-12",
       "address": "10118 Scout Dr, Fairfax, VA",
       "ts": "2026-11-12T17:19:44.386Z"
+    },
+    {
+      "leadId": "82531",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "3209 Saber Cir, Fairfax, VA",
+      "ts": "2026-11-12T17:21:44.483Z"
     }
   ]
 }
