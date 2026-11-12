@@ -16220,6 +16220,15 @@
       "date": "2026-11-12",
       "address": "2618 Lafayette Ave, Henrico, VA",
       "ts": "2026-11-12T20:44:14.180Z"
+    },
+    {
+      "leadId": "82681",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "7906 Clifton St, Manassas, VA",
+      "ts": "2026-11-12T20:51:54.746Z"
     }
   ]
 }
