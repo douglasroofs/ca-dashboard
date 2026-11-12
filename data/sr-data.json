@@ -16193,6 +16193,15 @@
       "date": "2026-11-12",
       "address": "6511 Galaxie Rd, Henrico, VA",
       "ts": "2026-11-12T20:37:44.433Z"
+    },
+    {
+      "leadId": "82678",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "9843 Alan Ct, Manassas, VA",
+      "ts": "2026-11-12T20:39:21.459Z"
     }
   ]
 }
