@@ -16067,6 +16067,15 @@
       "date": "2026-11-12",
       "address": "16615 Mountain Road, Montpelier, VA",
       "ts": "2026-11-12T19:31:11.965Z"
+    },
+    {
+      "leadId": "82626",
+      "repName": "Christian Brown",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "10378 State Route 652, Mineral, VA",
+      "ts": "2026-11-12T19:32:29.963Z"
     }
   ]
 }
