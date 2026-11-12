@@ -15995,6 +15995,15 @@
       "date": "2026-11-12",
       "address": "3214 Saber Cir, Fairfax, VA",
       "ts": "2026-11-12T17:23:43.803Z"
+    },
+    {
+      "leadId": "82534",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "3211 Armory Ct, Fairfax, VA",
+      "ts": "2026-11-12T17:36:31.289Z"
     }
   ]
 }
