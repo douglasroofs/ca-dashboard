@@ -16139,6 +16139,15 @@
       "date": "2026-11-12",
       "address": "9893 Rickover Ct, Manassas, VA",
       "ts": "2026-11-12T20:22:31.184Z"
+    },
+    {
+      "leadId": "82670",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-11-12",
+      "address": "2906 Ruthland Rd, Henrico, VA",
+      "ts": "2026-11-12T20:25:07.668Z"
     }
   ]
 }
