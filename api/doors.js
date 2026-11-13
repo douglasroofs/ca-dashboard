@@ -9,13 +9,18 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-12T13:54:23.765Z",
-    "total": 1099,
+    "updated": "2026-11-13T13:16:38.973Z",
+    "total": 1357,
     "reps": [
       {
         "rep": "Paolo Castillo",
-        "doors": 188,
+        "doors": 194,
         "team": "DC Self Gen"
+      },
+      {
+        "rep": "Konnor Gubler",
+        "doors": 176,
+        "team": "other"
       },
       {
         "rep": "Krysta Paulson",
@@ -24,53 +29,48 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Christian Brown",
-        "doors": 130,
+        "doors": 142,
         "team": "Mccarthy Team"
       },
       {
-        "rep": "Konnor Gubler",
-        "doors": 92,
+        "rep": "Tyler Ladd",
+        "doors": 106,
+        "team": "other"
+      },
+      {
+        "rep": "Adam Schall",
+        "doors": 104,
         "team": "other"
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 89,
+        "doors": 94,
         "team": "Jacks Team"
       },
       {
-        "rep": "Adam Schall",
-        "doors": 80,
+        "rep": "Lucas Morris",
+        "doors": 79,
         "team": "other"
       },
       {
-        "rep": "Lucas Morris",
-        "doors": 75,
-        "team": "other"
+        "rep": "David Kerns",
+        "doors": 77,
+        "team": "Jacks Team"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 55,
+        "doors": 66,
         "team": "Mccarthy Team"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 49,
+        "doors": 53,
         "team": "Mccarthy Team"
-      },
-      {
-        "rep": "David Kerns",
-        "doors": 46,
-        "team": "Jacks Team"
       },
       {
         "rep": "Travis Kizzar",
         "doors": 43,
         "team": "Richmond Storm"
-      },
-      {
-        "rep": "Tyler Ladd",
-        "doors": 36,
-        "team": "other"
       },
       {
         "rep": "Jason Cresswell",
@@ -83,6 +83,11 @@ const SNAPSHOTS = {
         "team": "Jacks Team"
       },
       {
+        "rep": "Marc Mitchell",
+        "doors": 9,
+        "team": "DC Self Gen"
+      },
+      {
         "rep": "Kevin Mahan",
         "doors": 8,
         "team": "other"
@@ -90,11 +95,6 @@ const SNAPSHOTS = {
       {
         "rep": "Andrew Funk",
         "doors": 3,
-        "team": "DC Self Gen"
-      },
-      {
-        "rep": "Marc Mitchell",
-        "doors": 2,
         "team": "DC Self Gen"
       },
       {
