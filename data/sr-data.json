@@ -16319,6 +16319,15 @@
       "date": "2026-11-13",
       "address": "1701 Black Heath Rd, Midlothian, VA",
       "ts": "2026-11-13T15:47:16.595Z"
+    },
+    {
+      "leadId": "82843",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-13",
+      "address": "9411 Chatham St, Manassas, VA",
+      "ts": "2026-11-13T19:18:17.063Z"
     }
   ]
 }
