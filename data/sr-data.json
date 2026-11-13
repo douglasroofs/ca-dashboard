@@ -16355,6 +16355,15 @@
       "date": "2026-11-13",
       "address": "848 Green Ridge Drive, Richmond, VA",
       "ts": "2026-11-13T21:41:12.596Z"
+    },
+    {
+      "leadId": "83044",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-13",
+      "address": "854 Green Ridge Drive, Richmond, VA",
+      "ts": "2026-11-13T21:54:05.008Z"
     }
   ]
 }
