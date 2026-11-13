@@ -16346,6 +16346,15 @@
       "date": "2026-11-13",
       "address": "1932 Robindale Rd, North Chesterfield, VA",
       "ts": "2026-11-13T21:16:32.949Z"
+    },
+    {
+      "leadId": "83038",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-13",
+      "address": "848 Green Ridge Drive, Richmond, VA",
+      "ts": "2026-11-13T21:41:12.596Z"
     }
   ]
 }
