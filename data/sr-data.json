@@ -16481,6 +16481,15 @@
       "date": "2026-11-14",
       "address": "2300 Rosecroft Blvd, Fort Washington, MD",
       "ts": "2026-11-14T16:41:21.880Z"
+    },
+    {
+      "leadId": "83101",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "6903 Bitternut Ct, Fort Washington, MD",
+      "ts": "2026-11-14T16:54:01.964Z"
     }
   ]
 }
