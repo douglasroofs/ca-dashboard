@@ -9,37 +9,37 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-13T13:16:38.973Z",
-    "total": 1357,
+    "updated": "2026-11-14T12:20:43.307Z",
+    "total": 1677,
     "reps": [
       {
-        "rep": "Paolo Castillo",
-        "doors": 194,
-        "team": "DC Self Gen"
-      },
-      {
         "rep": "Konnor Gubler",
-        "doors": 176,
+        "doors": 302,
         "team": "other"
       },
       {
         "rep": "Krysta Paulson",
-        "doors": 155,
+        "doors": 239,
         "team": "other"
       },
       {
+        "rep": "Paolo Castillo",
+        "doors": 205,
+        "team": "DC Self Gen"
+      },
+      {
         "rep": "Christian Brown",
-        "doors": 142,
+        "doors": 145,
         "team": "Mccarthy Team"
       },
       {
         "rep": "Tyler Ladd",
-        "doors": 106,
+        "doors": 140,
         "team": "other"
       },
       {
         "rep": "Adam Schall",
-        "doors": 104,
+        "doors": 130,
         "team": "other"
       },
       {
@@ -54,13 +54,18 @@ const SNAPSHOTS = {
       },
       {
         "rep": "David Kerns",
-        "doors": 77,
+        "doors": 78,
         "team": "Jacks Team"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 66,
+        "doors": 71,
         "team": "Mccarthy Team"
+      },
+      {
+        "rep": "Jason Cresswell",
+        "doors": 55,
+        "team": "Jacks Team"
       },
       {
         "rep": "Doug Coffman",
@@ -69,13 +74,8 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 43,
+        "doors": 51,
         "team": "Richmond Storm"
-      },
-      {
-        "rep": "Jason Cresswell",
-        "doors": 33,
-        "team": "Jacks Team"
       },
       {
         "rep": "Jack Obert",
@@ -103,12 +103,12 @@ const SNAPSHOTS = {
         "team": "other"
       },
       {
-        "rep": "Niyah Cousins",
+        "rep": "Wyatt Wise",
         "doors": 1,
         "team": "Richmond Storm"
       },
       {
-        "rep": "Wyatt Wise",
+        "rep": "Quincy Edwards",
         "doors": 1,
         "team": "Richmond Storm"
       }
