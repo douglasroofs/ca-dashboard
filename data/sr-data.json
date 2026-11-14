@@ -16490,6 +16490,15 @@
       "date": "2026-11-14",
       "address": "6903 Bitternut Ct, Fort Washington, MD",
       "ts": "2026-11-14T16:54:01.964Z"
+    },
+    {
+      "leadId": "83104",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "2003 Browns Ln, Fort Washington, MD",
+      "ts": "2026-11-14T16:58:23.501Z"
     }
   ]
 }
