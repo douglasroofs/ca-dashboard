@@ -16571,6 +16571,15 @@
       "date": "2026-11-14",
       "address": "3700 Captain Wendell Pruitt Way, Fort Washington, MD",
       "ts": "2026-11-14T17:54:53.335Z"
+    },
+    {
+      "leadId": "83163",
+      "repName": "Christian Brown",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "3202 Douglasdale Road, Richmond, VA",
+      "ts": "2026-11-14T18:10:19.399Z"
     }
   ]
 }
