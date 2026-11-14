@@ -16499,6 +16499,15 @@
       "date": "2026-11-14",
       "address": "2003 Browns Ln, Fort Washington, MD",
       "ts": "2026-11-14T16:58:23.501Z"
+    },
+    {
+      "leadId": "83105",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "6902 Bock Rd, Fort Washington, MD",
+      "ts": "2026-11-14T16:59:59.747Z"
     }
   ]
 }
