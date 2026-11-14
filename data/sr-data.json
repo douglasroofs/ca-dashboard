@@ -16751,6 +16751,15 @@
       "date": "2026-11-14",
       "address": "8220 Brookfield Road, Richmond, VA",
       "ts": "2026-11-14T19:12:22.822Z"
+    },
+    {
+      "leadId": "83241",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "302 N Wilkinson Rd, Richmond, VA",
+      "ts": "2026-11-14T19:15:59.003Z"
     }
   ]
 }
