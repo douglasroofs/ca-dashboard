@@ -16814,6 +16814,15 @@
       "date": "2026-11-14",
       "address": "8209 Whistler Rd, Richmond, VA",
       "ts": "2026-11-14T19:36:34.208Z"
+    },
+    {
+      "leadId": "83251",
+      "repName": "Michael McCarthy",
+      "status": "PITCH MISS",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "8215 Whistler Rd, Richmond, VA",
+      "ts": "2026-11-14T19:36:56.726Z"
     }
   ]
 }
