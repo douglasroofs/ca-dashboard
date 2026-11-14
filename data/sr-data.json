@@ -16625,6 +16625,15 @@
       "date": "2026-11-14",
       "address": "6303 Fredonia Rd, Richmond, VA",
       "ts": "2026-11-14T18:35:52.878Z"
+    },
+    {
+      "leadId": "83203",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "6316 Fredonia Rd, Richmond, VA",
+      "ts": "2026-11-14T18:40:29.317Z"
     }
   ]
 }
