@@ -16706,6 +16706,15 @@
       "date": "2026-11-14",
       "address": "8321 Whistler Road, Richmond, VA",
       "ts": "2026-11-14T18:47:41.468Z"
+    },
+    {
+      "leadId": "83218",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "103 Dirk Dr, Richmond, VA",
+      "ts": "2026-11-14T18:53:27.222Z"
     }
   ]
 }
