@@ -16535,6 +16535,15 @@
       "date": "2026-11-14",
       "address": "7815 Granite Hall Avenue, Richmond, VA",
       "ts": "2026-11-14T17:31:39.523Z"
+    },
+    {
+      "leadId": "83134",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "3517 Captain Wendell Pruitt Way, Fort Washington, MD",
+      "ts": "2026-11-14T17:42:11.150Z"
     }
   ]
 }
