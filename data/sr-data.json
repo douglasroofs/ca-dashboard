@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13",
+  "updated": "2026-11-14",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -16364,6 +16364,15 @@
       "date": "2026-11-13",
       "address": "854 Green Ridge Drive, Richmond, VA",
       "ts": "2026-11-13T21:54:05.008Z"
+    },
+    {
+      "leadId": "83073",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "",
+      "ts": "2026-11-14T15:22:24.115Z"
     }
   ]
 }
