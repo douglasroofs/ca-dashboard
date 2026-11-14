@@ -16886,6 +16886,15 @@
       "date": "2026-11-14",
       "address": "8202 Diane Ln, Richmond, VA",
       "ts": "2026-11-14T20:20:47.029Z"
+    },
+    {
+      "leadId": "83264",
+      "repName": "Harvey Shoemaker",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "104 Chickahominy Bluffs Rd, Richmond, VA",
+      "ts": "2026-11-14T20:20:55.604Z"
     }
   ]
 }
