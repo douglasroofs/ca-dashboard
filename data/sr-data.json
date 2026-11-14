@@ -16724,6 +16724,15 @@
       "date": "2026-11-14",
       "address": "310 N Wilkinson Rd, Richmond, VA",
       "ts": "2026-11-14T19:04:06.431Z"
+    },
+    {
+      "leadId": "83229",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "307 N Wilkinson Rd, Richmond, VA",
+      "ts": "2026-11-14T19:06:01.020Z"
     }
   ]
 }
