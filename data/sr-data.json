@@ -16769,6 +16769,15 @@
       "date": "2026-11-14",
       "address": "8201 Diane Ln, Richmond, VA",
       "ts": "2026-11-14T19:23:07.006Z"
+    },
+    {
+      "leadId": "83243",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "8216 Pilgrim Terr, Richmond, VA",
+      "ts": "2026-11-14T19:27:15.547Z"
     }
   ]
 }
