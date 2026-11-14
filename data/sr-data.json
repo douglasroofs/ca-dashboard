@@ -16877,6 +16877,15 @@
       "date": "2026-11-14",
       "address": "8320 Fulham Court, Richmond, VA",
       "ts": "2026-11-14T20:13:33.090Z"
+    },
+    {
+      "leadId": "83263",
+      "repName": "Harvey Shoemaker",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "8202 Diane Ln, Richmond, VA",
+      "ts": "2026-11-14T20:20:47.029Z"
     }
   ]
 }
