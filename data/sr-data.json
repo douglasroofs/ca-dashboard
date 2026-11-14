@@ -16517,6 +16517,15 @@
       "date": "2026-11-14",
       "address": "2019 Border Dr, Fort Washington, MD",
       "ts": "2026-11-14T17:16:49.523Z"
+    },
+    {
+      "leadId": "83122",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "6400 Caryhurst Dr, Fort Washington, MD",
+      "ts": "2026-11-14T17:25:24.126Z"
     }
   ]
 }
