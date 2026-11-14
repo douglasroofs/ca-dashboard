@@ -16391,6 +16391,15 @@
       "date": "2026-11-14",
       "address": "6913 Calvin St, Fort Washington, MD",
       "ts": "2026-11-14T15:44:10.908Z"
+    },
+    {
+      "leadId": "83076",
+      "repName": "David Kerns",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "6906 Calvin St, Fort Washington, MD",
+      "ts": "2026-11-14T15:50:10.532Z"
     }
   ]
 }
