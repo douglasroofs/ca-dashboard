@@ -16796,6 +16796,15 @@
       "date": "2026-11-14",
       "address": "8205 Pilgrim Terr, Richmond, VA",
       "ts": "2026-11-14T19:29:19.783Z"
+    },
+    {
+      "leadId": "83248",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-14",
+      "address": "8203 Whistler Rd, Richmond, VA",
+      "ts": "2026-11-14T19:32:21.706Z"
     }
   ]
 }
