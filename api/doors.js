@@ -9,27 +9,27 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-14T12:20:43.307Z",
-    "total": 1677,
+    "updated": "2026-11-15T12:52:59.424Z",
+    "total": 1921,
     "reps": [
+      {
+        "rep": "Krysta Paulson",
+        "doors": 337,
+        "team": "other"
+      },
       {
         "rep": "Konnor Gubler",
         "doors": 302,
         "team": "other"
       },
       {
-        "rep": "Krysta Paulson",
-        "doors": 239,
-        "team": "other"
-      },
-      {
         "rep": "Paolo Castillo",
-        "doors": 205,
+        "doors": 235,
         "team": "DC Self Gen"
       },
       {
         "rep": "Christian Brown",
-        "doors": 145,
+        "doors": 163,
         "team": "Mccarthy Team"
       },
       {
@@ -44,38 +44,38 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 94,
+        "doors": 116,
+        "team": "Jacks Team"
+      },
+      {
+        "rep": "David Kerns",
+        "doors": 102,
         "team": "Jacks Team"
       },
       {
         "rep": "Lucas Morris",
-        "doors": 79,
+        "doors": 86,
         "team": "other"
       },
       {
-        "rep": "David Kerns",
-        "doors": 78,
-        "team": "Jacks Team"
-      },
-      {
         "rep": "Mike Mccarthy",
-        "doors": 71,
+        "doors": 85,
         "team": "Mccarthy Team"
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 55,
+        "doors": 70,
         "team": "Jacks Team"
+      },
+      {
+        "rep": "Travis Kizzar",
+        "doors": 59,
+        "team": "Richmond Storm"
       },
       {
         "rep": "Doug Coffman",
         "doors": 53,
         "team": "Mccarthy Team"
-      },
-      {
-        "rep": "Travis Kizzar",
-        "doors": 51,
-        "team": "Richmond Storm"
       },
       {
         "rep": "Jack Obert",
@@ -86,6 +86,11 @@ const SNAPSHOTS = {
         "rep": "Marc Mitchell",
         "doors": 9,
         "team": "DC Self Gen"
+      },
+      {
+        "rep": "Wyatt Wise",
+        "doors": 9,
+        "team": "Richmond Storm"
       },
       {
         "rep": "Kevin Mahan",
@@ -101,11 +106,6 @@ const SNAPSHOTS = {
         "rep": "Adam Mulvaney",
         "doors": 2,
         "team": "other"
-      },
-      {
-        "rep": "Wyatt Wise",
-        "doors": 1,
-        "team": "Richmond Storm"
       },
       {
         "rep": "Quincy Edwards",
