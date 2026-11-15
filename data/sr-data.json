@@ -17192,6 +17192,15 @@
       "date": "2026-11-15",
       "address": "125 William Chambers Jr Dr, Glen Burnie, MD",
       "ts": "2026-11-15T20:39:34.162Z"
+    },
+    {
+      "leadId": "83379",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-15",
+      "address": "127 William Chambers Jr Dr, Glen Burnie, MD",
+      "ts": "2026-11-15T20:39:52.959Z"
     }
   ]
 }
