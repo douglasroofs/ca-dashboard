@@ -16922,6 +16922,15 @@
       "date": "2026-11-15",
       "address": "3262 Sandown Park Rd, Keswick, VA",
       "ts": "2026-11-15T16:23:17.288Z"
+    },
+    {
+      "leadId": "83314",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-15",
+      "address": "1404 Giltspur Road, Richmond, VA",
+      "ts": "2026-11-15T16:40:58.636Z"
     }
   ]
 }
