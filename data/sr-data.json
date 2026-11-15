@@ -17174,6 +17174,15 @@
       "date": "2026-11-15",
       "address": "11218 S Shore Rd, Reston, VA",
       "ts": "2026-11-15T20:38:50.489Z"
+    },
+    {
+      "leadId": "83377",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-15",
+      "address": "125 William Chambers Jr Dr, Glen Burnie, MD",
+      "ts": "2026-11-15T20:39:20.936Z"
     }
   ]
 }
