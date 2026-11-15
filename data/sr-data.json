@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-15",
+  "updated": "2026-06-12",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -16931,6 +16931,15 @@
       "date": "2026-11-15",
       "address": "1404 Giltspur Road, Richmond, VA",
       "ts": "2026-11-15T16:40:58.636Z"
+    },
+    {
+      "leadId": "50204",
+      "repName": "Andrew Funk",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-06-12",
+      "address": "11427 Hook Rd, Reston, VA",
+      "ts": "2026-11-15T16:50:37.021Z"
     }
   ]
 }
