@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-14",
+  "updated": "2026-11-15",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -16913,6 +16913,15 @@
       "date": "2026-11-14",
       "address": "111 Chickahominy Bluffs Rd, Richmond, VA",
       "ts": "2026-11-15T15:27:26.586Z"
+    },
+    {
+      "leadId": "83312",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-11-15",
+      "address": "3262 Sandown Park Rd, Keswick, VA",
+      "ts": "2026-11-15T16:23:17.288Z"
     }
   ]
 }
