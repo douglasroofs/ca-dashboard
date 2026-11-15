@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-12",
+  "updated": "2026-11-15",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -16940,6 +16940,15 @@
       "date": "2026-06-12",
       "address": "11427 Hook Rd, Reston, VA",
       "ts": "2026-11-15T16:50:37.021Z"
+    },
+    {
+      "leadId": "83315",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-15",
+      "address": "11398 Fairway Dr, Reston, VA",
+      "ts": "2026-11-15T16:51:16.545Z"
     }
   ]
 }
