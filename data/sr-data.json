@@ -17219,6 +17219,15 @@
       "date": "2026-11-15",
       "address": "7426 Laneview Dr, Richmond, VA",
       "ts": "2026-11-15T21:17:38.594Z"
+    },
+    {
+      "leadId": "83382",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-15",
+      "address": "2710 Grantwood Rd, Richmond, VA",
+      "ts": "2026-11-15T21:19:04.687Z"
     }
   ]
 }
