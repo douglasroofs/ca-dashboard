@@ -16958,6 +16958,15 @@
       "date": "2026-11-15",
       "address": "7732 Yorkdale Dr, North Chesterfield, VA",
       "ts": "2026-11-15T17:58:02.357Z"
+    },
+    {
+      "leadId": "83317",
+      "repName": "Michael McCarthy",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-15",
+      "address": "2225 Lancashire Dr, North Chesterfield, VA",
+      "ts": "2026-11-15T18:02:36.486Z"
     }
   ]
 }
