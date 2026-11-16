@@ -17660,6 +17660,15 @@
       "date": "2026-11-16",
       "address": "10505 Lambeth Rd, Glen Allen, VA",
       "ts": "2026-11-16T20:12:08.897Z"
+    },
+    {
+      "leadId": "83724",
+      "repName": "Michael McCarthy",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "10206 Christiano Dr, Glen Allen, VA",
+      "ts": "2026-11-16T20:31:24.990Z"
     }
   ]
 }
