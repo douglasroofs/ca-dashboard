@@ -17417,6 +17417,15 @@
       "date": "2026-11-16",
       "address": "8202 Diane Ln, Richmond, VA",
       "ts": "2026-11-16T19:00:04.329Z"
+    },
+    {
+      "leadId": "83563",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "1672 Atkinson Road, Mineral, VA",
+      "ts": "2026-11-16T19:06:54.630Z"
     }
   ]
 }
