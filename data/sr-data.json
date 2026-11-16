@@ -17453,6 +17453,15 @@
       "date": "2026-11-16",
       "address": "1006 Dirk Dr, Richmond, VA",
       "ts": "2026-11-16T19:19:30.560Z"
+    },
+    {
+      "leadId": "83602",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "8211 Bowers Ln, Richmond, VA",
+      "ts": "2026-11-16T19:21:31.719Z"
     }
   ]
 }
