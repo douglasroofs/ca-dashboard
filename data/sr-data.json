@@ -17498,6 +17498,15 @@
       "date": "2026-11-16",
       "address": "10401 Warren Rd, Glen Allen, VA",
       "ts": "2026-11-16T19:24:27.940Z"
+    },
+    {
+      "leadId": "83605",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-16",
+      "address": "611 Effingham Drive, Richmond, VA",
+      "ts": "2026-11-16T19:26:13.997Z"
     }
   ]
 }
