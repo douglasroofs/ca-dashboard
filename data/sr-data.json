@@ -17723,6 +17723,15 @@
       "date": "2026-11-16",
       "address": "10227 Heritage Ln, Glen Allen, VA",
       "ts": "2026-11-16T20:50:54.575Z"
+    },
+    {
+      "leadId": "83841",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "10227 Heritage Ln, Glen Allen, VA",
+      "ts": "2026-11-16T20:53:26.603Z"
     }
   ]
 }
