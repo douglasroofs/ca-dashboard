@@ -17471,6 +17471,15 @@
       "date": "2026-11-16",
       "address": "903 Derrymore Road, Richmond, VA",
       "ts": "2026-11-16T19:23:04.930Z"
+    },
+    {
+      "leadId": "83605",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "611 Effingham Drive, Richmond, VA",
+      "ts": "2026-11-16T19:24:09.080Z"
     }
   ]
 }
