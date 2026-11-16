@@ -17345,6 +17345,15 @@
       "date": "2026-11-16",
       "address": "10307 Delray Rd, Glen Allen, VA",
       "ts": "2026-11-16T18:07:15.881Z"
+    },
+    {
+      "leadId": "83506",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "10419 Leander Dr, Glen Allen, VA",
+      "ts": "2026-11-16T18:18:03.833Z"
     }
   ]
 }
