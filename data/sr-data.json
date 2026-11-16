@@ -17318,6 +17318,15 @@
       "date": "2026-11-16",
       "address": "2850 Maidens Road, Maidens, VA",
       "ts": "2026-11-16T17:55:21.601Z"
+    },
+    {
+      "leadId": "83473",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "10319 Delray Rd, Glen Allen, VA",
+      "ts": "2026-11-16T18:00:32.878Z"
     }
   ]
 }
