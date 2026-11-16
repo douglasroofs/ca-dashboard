@@ -17282,6 +17282,15 @@
       "date": "2026-11-16",
       "address": "10315 Old Courtney Rd, Glen Allen, VA",
       "ts": "2026-11-16T17:45:31.123Z"
+    },
+    {
+      "leadId": "83414",
+      "repName": "Christian Brown",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "2838 Sandy Hook Road, Goochland, VA",
+      "ts": "2026-11-16T17:48:09.510Z"
     }
   ]
 }
