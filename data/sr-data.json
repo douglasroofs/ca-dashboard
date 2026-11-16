@@ -17759,6 +17759,15 @@
       "date": "2026-11-16",
       "address": "3300 Wyntrebrooke Dr, North Chesterfield, VA",
       "ts": "2026-11-16T22:58:48.000Z"
+    },
+    {
+      "leadId": "83252",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-16",
+      "address": "8202 Diane Ln, Richmond, VA",
+      "ts": "2026-11-16T23:04:39.340Z"
     }
   ]
 }
