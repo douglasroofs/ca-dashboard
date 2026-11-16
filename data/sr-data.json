@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-15",
+  "updated": "2026-11-16",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -17255,6 +17255,15 @@
       "date": "2026-11-15",
       "address": "2601 Kenmore Rd, Richmond, VA",
       "ts": "2026-11-15T21:41:03.307Z"
+    },
+    {
+      "leadId": "83386",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "8013 Gardenwood Terrace, Richmond, VA",
+      "ts": "2026-11-16T14:55:50.185Z"
     }
   ]
 }
