@@ -17489,6 +17489,15 @@
       "date": "2026-11-16",
       "address": "8215 Colebrook Rd, Richmond, VA",
       "ts": "2026-11-16T19:24:12.588Z"
+    },
+    {
+      "leadId": "83607",
+      "repName": "Michael McCarthy",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "10401 Warren Rd, Glen Allen, VA",
+      "ts": "2026-11-16T19:24:27.940Z"
     }
   ]
 }
