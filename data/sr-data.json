@@ -17561,6 +17561,15 @@
       "date": "2026-11-16",
       "address": "10225 Acworth Dr, Glen Allen, VA",
       "ts": "2026-11-16T19:37:45.850Z"
+    },
+    {
+      "leadId": "83620",
+      "repName": "Andrew Funk",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "14953 Dufief Dr, North Potomac, MD",
+      "ts": "2026-11-16T19:40:56.049Z"
     }
   ]
 }
