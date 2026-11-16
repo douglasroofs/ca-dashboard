@@ -17768,6 +17768,15 @@
       "date": "2026-11-16",
       "address": "8202 Diane Ln, Richmond, VA",
       "ts": "2026-11-16T23:04:39.340Z"
+    },
+    {
+      "leadId": "83895",
+      "repName": "Harvey Shoemaker",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-16",
+      "address": "9179 Chamberlayne Rd, Mechanicsville, VA",
+      "ts": "2026-11-16T23:05:07.420Z"
     }
   ]
 }
