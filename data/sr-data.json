@@ -17579,6 +17579,15 @@
       "date": "2026-11-16",
       "address": "8301 Wallingford Ln, Richmond, VA",
       "ts": "2026-11-16T19:42:33.889Z"
+    },
+    {
+      "leadId": "83624",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-16",
+      "address": "216 Fulham Cir, Richmond, VA",
+      "ts": "2026-11-16T19:46:05.810Z"
     }
   ]
 }
