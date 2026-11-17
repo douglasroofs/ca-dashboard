@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16",
+  "updated": "2026-11-17",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -17795,6 +17795,15 @@
       "date": "2026-11-16",
       "address": "10227 Heritage Ln, Glen Allen, VA",
       "ts": "2026-11-17T06:31:46.392Z"
+    },
+    {
+      "leadId": "83947",
+      "repName": "Andrew Funk",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-17",
+      "address": "5572 Cedar Break Dr, Centreville, VA",
+      "ts": "2026-11-17T17:05:06.426Z"
     }
   ]
 }
