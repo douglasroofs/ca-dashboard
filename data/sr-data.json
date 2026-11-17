@@ -18020,6 +18020,15 @@
       "date": "2026-11-17",
       "address": "4800 29th St N, Arlington, VA",
       "ts": "2026-11-17T19:46:34.773Z"
+    },
+    {
+      "leadId": "84055",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-17",
+      "address": "8402 Impalla Dr, Manassas, VA",
+      "ts": "2026-11-17T19:50:49.649Z"
     }
   ]
 }
