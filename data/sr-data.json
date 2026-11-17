@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16",
+  "updated": "2026-11-17",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -17777,6 +17777,15 @@
       "date": "2026-11-16",
       "address": "9179 Chamberlayne Rd, Mechanicsville, VA",
       "ts": "2026-11-16T23:05:07.420Z"
+    },
+    {
+      "leadId": "82752",
+      "repName": "Michael McCarthy",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-17",
+      "address": "1701 Black Heath Rd, Midlothian, VA",
+      "ts": "2026-11-17T01:17:01.131Z"
     }
   ]
 }
