@@ -18155,6 +18155,15 @@
       "date": "2026-11-17",
       "address": "7911 Norfolk Ct, Manassas, VA",
       "ts": "2026-11-17T21:10:51.335Z"
+    },
+    {
+      "leadId": "84107",
+      "repName": "David Kerns",
+      "status": "RENTER",
+      "isCA": false,
+      "date": "2026-11-17",
+      "address": "7908 Norfolk Ct, Manassas, VA",
+      "ts": "2026-11-17T21:13:34.820Z"
     }
   ]
 }
