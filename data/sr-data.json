@@ -18092,6 +18092,15 @@
       "date": "2026-11-17",
       "address": "4818 Old Dominion Dr, Arlington, VA",
       "ts": "2026-11-17T20:27:04.655Z"
+    },
+    {
+      "leadId": "84082",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-11-17",
+      "address": "2401 N Upshur St, Arlington, VA",
+      "ts": "2026-11-17T20:38:51.373Z"
     }
   ]
 }
