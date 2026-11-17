@@ -18227,6 +18227,15 @@
       "date": "2026-11-17",
       "address": "9710 Sudley Manor Dr, Manassas, VA",
       "ts": "2026-11-17T21:51:37.801Z"
+    },
+    {
+      "leadId": "84127",
+      "repName": "David Kerns",
+      "status": "APPT. SCHEDULED",
+      "isCA": false,
+      "date": "2026-11-17",
+      "address": "9809 Sudley Manor Dr, Manassas, VA",
+      "ts": "2026-11-17T21:53:36.307Z"
     }
   ]
 }
