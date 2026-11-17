@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-16T13:50:23.358Z",
+    "updated": "2026-11-17T14:42:05.920Z",
     "year": 2026,
     "months": [
       0,
@@ -26,108 +26,6 @@ const SNAPSHOTS = {
       10
     ],
     "reps": [
-      {
-        "rep": "Andrew Funk",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          4,
-          12,
-          27,
-          15,
-          15,
-          27,
-          6
-        ],
-        "total": 106
-      },
-      {
-        "rep": "Mike Mccarthy",
-        "counts": [
-          1,
-          0,
-          3,
-          0,
-          9,
-          5,
-          6,
-          15,
-          11,
-          9,
-          0
-        ],
-        "total": 59
-      },
-      {
-        "rep": "Harvey Shoemaker",
-        "counts": [
-          0,
-          1,
-          1,
-          2,
-          5,
-          16,
-          11,
-          2,
-          4,
-          11,
-          4
-        ],
-        "total": 57
-      },
-      {
-        "rep": "David Kerns",
-        "counts": [
-          0,
-          0,
-          11,
-          7,
-          5,
-          7,
-          2,
-          6,
-          7,
-          9,
-          3
-        ],
-        "total": 57
-      },
-      {
-        "rep": "Christian Brown",
-        "counts": [
-          1,
-          0,
-          1,
-          3,
-          4,
-          6,
-          7,
-          3,
-          7,
-          8,
-          6
-        ],
-        "total": 46
-      },
-      {
-        "rep": "Marc Mitchell",
-        "counts": [
-          5,
-          2,
-          4,
-          5,
-          5,
-          1,
-          0,
-          0,
-          3,
-          3,
-          2
-        ],
-        "total": 30
-      },
       {
         "rep": "Andrew  Prickel",
         "counts": [
@@ -146,30 +44,13 @@ const SNAPSHOTS = {
         "total": 26
       },
       {
-        "rep": "Jack Obert",
-        "counts": [
-          0,
-          0,
-          3,
-          5,
-          8,
-          5,
-          4,
-          0,
-          0,
-          0,
-          0
-        ],
-        "total": 25
-      },
-      {
         "rep": "George Bechara",
         "counts": [
           2,
           0,
           2,
           5,
-          3,
+          2,
           4,
           1,
           1,
@@ -177,24 +58,7 @@ const SNAPSHOTS = {
           1,
           0
         ],
-        "total": 22
-      },
-      {
-        "rep": "Kyle Higginbotham",
-        "counts": [
-          3,
-          2,
-          0,
-          0,
-          0,
-          12,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "total": 17
+        "total": 21
       },
       {
         "rep": "Steven Arevalo",
@@ -202,9 +66,9 @@ const SNAPSHOTS = {
           2,
           2,
           5,
-          3,
+          2,
           0,
-          3,
+          4,
           0,
           0,
           0,
@@ -212,142 +76,6 @@ const SNAPSHOTS = {
           0
         ],
         "total": 15
-      },
-      {
-        "rep": "Paolo Castillo",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          8,
-          4
-        ],
-        "total": 13
-      },
-      {
-        "rep": "Jason Cresswell",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          2,
-          3,
-          6,
-          0
-        ],
-        "total": 12
-      },
-      {
-        "rep": "Kevin Mahan",
-        "counts": [
-          0,
-          2,
-          2,
-          2,
-          3,
-          0,
-          0,
-          0,
-          0,
-          3,
-          0
-        ],
-        "total": 12
-      },
-      {
-        "rep": "Adam Mulvaney",
-        "counts": [
-          1,
-          0,
-          3,
-          1,
-          1,
-          6,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "total": 12
-      },
-      {
-        "rep": "Doug Coffman",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          8,
-          2
-        ],
-        "total": 11
-      },
-      {
-        "rep": "Robert Mumford-Wilson",
-        "counts": [
-          4,
-          0,
-          0,
-          3,
-          1,
-          0,
-          0,
-          0,
-          1,
-          2,
-          0
-        ],
-        "total": 11
-      },
-      {
-        "rep": "Lucas Morris",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          3,
-          4
-        ],
-        "total": 7
-      },
-      {
-        "rep": "sean beasy",
-        "counts": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ],
-        "total": 1
       }
     ]
   },

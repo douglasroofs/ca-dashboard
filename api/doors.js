@@ -9,108 +9,113 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-16T13:50:31.926Z",
-    "total": 1999,
+    "updated": "2026-11-17T14:42:14.534Z",
+    "total": 2506,
     "reps": [
       {
         "rep": "Krysta Paulson",
-        "doors": 369,
-        "team": "other"
+        "doors": 530,
+        "team": "DC"
       },
       {
         "rep": "Konnor Gubler",
         "doors": 302,
-        "team": "other"
+        "team": "DC"
+      },
+      {
+        "rep": "Tyler Ladd",
+        "doors": 265,
+        "team": "DC"
       },
       {
         "rep": "Paolo Castillo",
         "doors": 235,
-        "team": "DC Self Gen"
-      },
-      {
-        "rep": "Christian Brown",
-        "doors": 164,
-        "team": "Mccarthy Team"
-      },
-      {
-        "rep": "Tyler Ladd",
-        "doors": 140,
-        "team": "other"
+        "team": "DC"
       },
       {
         "rep": "Adam Schall",
-        "doors": 132,
-        "team": "other"
+        "doors": 177,
+        "team": "DC"
       },
       {
-        "rep": "Harvey Shoemaker",
-        "doors": 118,
-        "team": "Jacks Team"
+        "rep": "Christian Brown",
+        "doors": 170,
+        "team": "RVA"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 116,
-        "team": "Mccarthy Team"
+        "doors": 155,
+        "team": "DC"
+      },
+      {
+        "rep": "Lucas Morris",
+        "doors": 146,
+        "team": "DC"
+      },
+      {
+        "rep": "Harvey Shoemaker",
+        "doors": 138,
+        "team": "RVA"
       },
       {
         "rep": "David Kerns",
         "doors": 102,
-        "team": "Jacks Team"
-      },
-      {
-        "rep": "Lucas Morris",
-        "doors": 92,
-        "team": "other"
+        "team": "DC"
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 70,
-        "team": "Jacks Team"
-      },
-      {
-        "rep": "Travis Kizzar",
-        "doors": 59,
-        "team": "Richmond Storm"
+        "doors": 96,
+        "team": "DC"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 53,
-        "team": "Mccarthy Team"
+        "doors": 77,
+        "team": "DC"
+      },
+      {
+        "rep": "Travis Kizzar",
+        "doors": 58,
+        "team": "RVA"
       },
       {
         "rep": "Jack Obert",
         "doors": 11,
-        "team": "Jacks Team"
+        "team": "DC"
+      },
+      {
+        "rep": "Andrew Funk",
+        "doors": 9,
+        "team": "DC"
       },
       {
         "rep": "Marc Mitchell",
         "doors": 9,
-        "team": "DC Self Gen"
+        "team": "DC"
       },
       {
         "rep": "Wyatt Wise",
         "doors": 9,
-        "team": "Richmond Storm"
+        "team": "RVA"
       },
       {
         "rep": "Kevin Mahan",
         "doors": 8,
-        "team": "other"
+        "team": "DC"
       },
       {
-        "rep": "Andrew Funk",
-        "doors": 7,
-        "team": "DC Self Gen"
+        "rep": "Kyle Higginbotham",
+        "doors": 6,
+        "team": "Office"
       },
       {
         "rep": "Adam Mulvaney",
         "doors": 2,
-        "team": "other"
+        "team": "Office"
       },
       {
         "rep": "Quincy Edwards",
         "doors": 1,
-        "team": "Richmond Storm"
+        "team": "RVA"
       }
     ],
     "allowedReps": [
