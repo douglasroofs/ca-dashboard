@@ -18101,6 +18101,15 @@
       "date": "2026-11-17",
       "address": "2401 N Upshur St, Arlington, VA",
       "ts": "2026-11-17T20:38:51.373Z"
+    },
+    {
+      "leadId": "84092",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-17",
+      "address": "9555 Damascus Dr, Manassas, VA",
+      "ts": "2026-11-17T20:57:03.861Z"
     }
   ]
 }
