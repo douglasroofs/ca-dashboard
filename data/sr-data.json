@@ -18173,6 +18173,15 @@
       "date": "2026-11-17",
       "address": "9645 Norfolk St, Manassas, VA",
       "ts": "2026-11-17T21:19:20.236Z"
+    },
+    {
+      "leadId": "84116",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-17",
+      "address": "9330 King George Dr, Manassas, VA",
+      "ts": "2026-11-17T21:27:57.255Z"
     }
   ]
 }
