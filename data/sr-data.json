@@ -18209,6 +18209,15 @@
       "date": "2026-11-17",
       "address": "9527 Bonair Dr, Manassas, VA",
       "ts": "2026-11-17T21:39:33.986Z"
+    },
+    {
+      "leadId": "84124",
+      "repName": "David Kerns",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-17",
+      "address": "9521 Bonair Dr, Manassas, VA",
+      "ts": "2026-11-17T21:43:28.329Z"
     }
   ]
 }
