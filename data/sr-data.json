@@ -18128,6 +18128,15 @@
       "date": "2026-11-17",
       "address": "9548 Damascus Dr, Manassas, VA",
       "ts": "2026-11-17T21:03:13.678Z"
+    },
+    {
+      "leadId": "84101",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-17",
+      "address": "9619 Norfolk St, Manassas, VA",
+      "ts": "2026-11-17T21:06:48.257Z"
     }
   ]
 }
