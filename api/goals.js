@@ -13,6 +13,12 @@
 //   GET  /api/goals?probe=1   -> { password: bool, token: bool, read: bool, write: bool }  (no secrets, no goals)
 //   GET  /api/goals           -> { goals: [...], updated }
 //   POST /api/goals  { action: 'upsert', goal: {...} } | { action: 'delete', id }
+//                    | { action: 'comment', comment: { type, by, to, goalId, text } }      (Questions & comments, 2026-11-17)
+//                    | { action: 'reply', id, reply: { by, text } } | { action: 'resolve', id, resolved } | { action: 'delete_comment', id }
+//   Every response carries { updated, goals, comments }.
+//
+// Comment: { id, type: 'Question'|'Comment', by: 'Kyle'|'Mike'|'Adam', to: owner or '' (all owners), goalId (or ''),
+//   text, resolved, resolvedBy, resolvedAt, replies: [{ id, by, text, at }], created, updated }
 //
 // Goal: { id, period: 'annual'|'quarterly'|'monthly', year, quarter, month, kind: 'metric'|'task', metric, title,
 //   department, owner: 'Kyle'|'Mike'|'Adam'|'', target, status, due, notes, created, updated }
@@ -25,6 +31,9 @@ const API = `https://api.github.com/repos/${REPO}/contents/${PATH}`;
 const OWNERS = ['Kyle', 'Mike', 'Adam', ''];
 const STATUSES = ['Not started', 'In progress', 'Done', 'Off track'];
 const METRICS = ['contract', 'approved', 'cas', 'mkt_cas', 'mkt_set', 'mkt_ran'];
+const POSTERS = ['Kyle', 'Mike', 'Adam'];
+const CTYPES = ['Question', 'Comment'];
+const newId = (p) => p + Date.now().toString(36) + crypto.randomBytes(3).toString('hex');
 const gh = () => ({ Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, Accept: 'application/vnd.github+json', 'User-Agent': 'ca-dashboard-goals' });
 
 function secret() { return process.env.GOALS_KEY || process.env.GOALS_PASSWORD || ''; }
@@ -112,7 +121,7 @@ module.exports = async (req, res) => {
 
     if (req.method === 'GET') {
       const { doc } = await readStore();
-      return res.status(200).json({ updated: doc.updated || null, goals: doc.goals || [] });
+      return res.status(200).json({ updated: doc.updated || null, goals: doc.goals || [], comments: doc.comments || [] });
     }
     if (req.method !== 'POST') return res.status(405).json({ error: 'GET or POST only' });
     let body = req.body;
@@ -121,10 +130,41 @@ module.exports = async (req, res) => {
     for (let attempt = 1; attempt <= 3; attempt++) {
       const { doc, sha } = await readStore();
       const goals = Array.isArray(doc.goals) ? doc.goals : [];
+      const comments = Array.isArray(doc.comments) ? doc.comments : [];
+      const now = new Date().toISOString();
+      const findC = (id) => comments.findIndex((c) => c.id === id);
+      let what = 'save';
       if (body.action === 'delete') {
         const i = goals.findIndex((g) => g.id === body.id);
         if (i < 0) return res.status(404).json({ error: 'Goal not found' });
-        goals.splice(i, 1);
+        goals.splice(i, 1); what = 'delete';
+      } else if (body.action === 'comment') {
+        const c = body.comment || {};
+        const text = String(c.text || '').trim().slice(0, 2000);
+        if (!text) return res.status(400).json({ error: 'Write something first' });
+        if (!POSTERS.includes(c.by)) return res.status(400).json({ error: 'Pick who is posting' });
+        const goalId = String(c.goalId || '');
+        comments.push({ id: newId('c'), type: CTYPES.includes(c.type) ? c.type : 'Comment', by: c.by,
+          to: POSTERS.includes(c.to) ? c.to : '', goalId: goals.some((g) => g.id === goalId) ? goalId : '',
+          text, resolved: false, resolvedBy: '', resolvedAt: '', replies: [], created: now, updated: now });
+        what = 'comment';
+      } else if (body.action === 'reply') {
+        const i = findC(body.id); if (i < 0) return res.status(404).json({ error: 'That post was deleted' });
+        const r = body.reply || {};
+        const text = String(r.text || '').trim().slice(0, 2000);
+        if (!text) return res.status(400).json({ error: 'Write a reply first' });
+        if (!POSTERS.includes(r.by)) return res.status(400).json({ error: 'Pick who is posting' });
+        const c = comments[i]; c.replies = Array.isArray(c.replies) ? c.replies : [];
+        c.replies.push({ id: newId('r'), by: r.by, text, at: now }); c.updated = now;
+        what = 'reply';
+      } else if (body.action === 'resolve') {
+        const i = findC(body.id); if (i < 0) return res.status(404).json({ error: 'That post was deleted' });
+        const c = comments[i]; c.resolved = !!body.resolved;
+        c.resolvedBy = c.resolved && POSTERS.includes(body.by) ? body.by : ''; c.resolvedAt = c.resolved ? now : ''; c.updated = now;
+        what = c.resolved ? 'resolve' : 'reopen';
+      } else if (body.action === 'delete_comment') {
+        const i = findC(body.id); if (i < 0) return res.status(404).json({ error: 'That post was already deleted' });
+        comments.splice(i, 1); what = 'delete comment';
       } else {
         const g = body.goal || {};
         const i = g.id ? goals.findIndex((x) => x.id === g.id) : -1;
@@ -133,8 +173,8 @@ module.exports = async (req, res) => {
         if (next.kind === 'task' && !next.department) return res.status(400).json({ error: 'Department goals need a department' });
         if (i >= 0) goals[i] = next; else goals.push(next);
       }
-      const out = { updated: new Date().toISOString(), goals };
-      try { await writeStore(out, sha, `Goals updated from the dashboard (${body.action === 'delete' ? 'delete' : 'save'})`); return res.status(200).json(out); }
+      const out = { updated: now, goals, comments };
+      try { await writeStore(out, sha, `Goals updated from the dashboard (${what})`); return res.status(200).json(out); }
       catch (e) { if (!e.conflict || attempt === 3) throw e; }
     }
   } catch (e) {
