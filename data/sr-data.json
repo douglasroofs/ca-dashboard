@@ -18182,6 +18182,15 @@
       "date": "2026-11-17",
       "address": "9330 King George Dr, Manassas, VA",
       "ts": "2026-11-17T21:27:57.255Z"
+    },
+    {
+      "leadId": "84117",
+      "repName": "David Kerns",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-17",
+      "address": "",
+      "ts": "2026-11-17T21:30:24.940Z"
     }
   ]
 }
