@@ -56,6 +56,19 @@ td.grp{background:var(--panel2)!important;font-weight:600;font-size:12px;text-tr
 @media(max-width:760px){.grid{grid-template-columns:1fr 1fr}.grid .w4{grid-column:span 2}td.t{width:auto}}
 .summary{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin:-4px 0 14px;color:var(--dim)}
 .summary span b{font-size:15px;color:var(--ink)}.summary .bad b,.summary .bad{color:var(--bad)}
+.qc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.qc.res{opacity:.6}
+.qc .hd2{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--dim);margin-bottom:6px}
+.qc .txt{white-space:pre-wrap;word-wrap:break-word}
+.tag{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;padding:1px 7px;border-radius:10px;border:1px solid var(--line)}
+.tag.q{color:var(--warn);border-color:rgba(210,153,34,.5)}.tag.c{color:var(--blue);border-color:rgba(88,166,255,.45)}.tag.ok{color:var(--good);border-color:rgba(63,185,80,.45)}
+.about{color:var(--blue);cursor:pointer}
+.rep{border-left:2px solid var(--line);margin:10px 0 0 4px;padding:2px 0 2px 12px}
+.rep .who{font-size:12px;color:var(--dim)}
+.compose{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.compose textarea,.qc textarea{width:100%;resize:vertical}
+.crow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:12px;color:var(--dim)}
+.cnt{font-size:12px;color:var(--warn);margin-left:6px;cursor:pointer;background:none;border:none;padding:0}
 </style></head><body>
 <header><h1>Douglas Roofing - Goals</h1><nav class="nav"><a href="/revenue.html">Sales</a><a href="/ca-bonus.html">YTD</a><a href="/marketing.html">Marketing</a><a href="/punchout.html">Punch Out</a><a href="/goals.html" class="on">Goals</a></nav><div class="hd"><span class="meta" id="upd"></span><button id="lockBtn" class="ghost" style="display:none">Lock</button></div></header>
 <div class="wrap" id="root"><div class="state">Loading...</div></div>
@@ -79,6 +92,7 @@ var MORDER=['contract','approved','cas','mkt_cas','mkt_set','mkt_ran'];
 function isNum(g){return g.kind==='metric'||g.kind==='revenue';}
 function metOf(g){return METRICS[g.metric]?g.metric:'contract';}
 function fmtM(m,v){return METRICS[m].unit==='$'?money(v):Math.round(Number(v)||0).toLocaleString('en-US');}
+var C=[], CF='open', DRAFT={text:'',type:'Question',to:'',about:''}, REPLY={};
 var PW='', G=[], VIEW={period:'annual',year:0,quarter:0,month:0,owner:''}, EDIT=null, REV={};
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function money(n){return '$'+Math.round(Number(n)||0).toLocaleString('en-US')}
@@ -104,7 +118,7 @@ function lockScreen(msg){
 }
 function start(){
   document.getElementById('root').innerHTML='<div class="state">Loading goals...</div>';
-  api('GET').then(function(j){store('goalsPw',PW);G=j.goals||[];document.getElementById('lockBtn').style.display='';stamp(j.updated);render();})
+  api('GET').then(function(j){store('goalsPw',PW);G=j.goals||[];C=j.comments||[];document.getElementById('lockBtn').style.display='';stamp(j.updated);render();})
   .catch(function(e){if(e.status===401){var typed=!!document.getElementById('pw')||!load('goalsPw');store('goalsPw',null);PW='';lockScreen(typed?'Wrong password.':'');}
     else{document.getElementById('root').innerHTML='<div class="err">'+esc(e.message)+'</div>';}});
 }
@@ -176,7 +190,7 @@ function render(){
 
   H.push('<h2>Number goals <span class="muted">'+esc(per)+' · tracked live from the dashboard · the tick marks where you should be today</span></h2>');
   if(!rev.length)H.push('<div class="state">No number goals for '+esc(per)+'. <button class="lnk" id="addRev2">Add one</button> (revenue, CAs or marketing appointments)</div>');
-  else{H.push('<div class="cards">');rev.forEach(function(g){var m=metOf(g);H.push('<div class="card" id="rc_'+g.id+'"><div class="label"><span>'+esc(METRICS[m].label)+(g.title&&g.title!=='Company'&&g.title!=='Revenue goal'?' · '+esc(g.title):'')+'</span><span>'+ownerHtml(g)+'</span></div><div class="value">... <span class="muted" style="font-size:14px;font-weight:400">of '+fmtM(m,g.target)+'</span></div><div class="prog"><i style="width:0"></i></div><div class="sub">Loading revenue...</div><div style="margin-top:8px"><button class="lnk" data-edit="'+g.id+'">Edit</button></div></div>');});H.push('</div>');}
+  else{H.push('<div class="cards">');rev.forEach(function(g){var m=metOf(g);H.push('<div class="card" id="rc_'+g.id+'"><div class="label"><span>'+esc(METRICS[m].label)+(g.title&&g.title!=='Company'&&g.title!=='Revenue goal'?' · '+esc(g.title):'')+'</span><span>'+ownerHtml(g)+'</span></div><div class="value">... <span class="muted" style="font-size:14px;font-weight:400">of '+fmtM(m,g.target)+'</span></div><div class="prog"><i style="width:0"></i></div><div class="sub">Loading revenue...</div><div style="margin-top:8px"><button class="lnk" data-edit="'+g.id+'">Edit</button><button class="lnk" data-ask="'+g.id+'">Comment</button>'+cntHtml(g)+'</div></div>');});H.push('</div>');}
 
   var done=tasks.filter(function(g){return g.status==='Done'}).length, off=tasks.filter(function(g){return g.status==='Off track'}).length;
   H.push('<h2>Department goals <span class="muted">'+esc(per)+'</span></h2>');
@@ -194,15 +208,16 @@ function render(){
         H.push('<tr><td class="t">'+esc(g.title)+(g.notes?'<div class="n">'+esc(g.notes)+'</div>':'')+'</td><td>'+ownerHtml(g)+'</td>'+
           '<td><select data-st="'+g.id+'">'+STATUSES.map(function(s){return '<option'+(s===g.status?' selected':'')+'>'+s+'</option>'}).join('')+'</select></td>'+
           '<td class="'+(late?'late':'')+'">'+(g.due?new Date(g.due+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'<span class="muted">-</span>')+(late?' (late)':'')+'</td>'+
-          '<td style="white-space:nowrap"><button class="lnk" data-edit="'+g.id+'">Edit</button></td></tr>');
+          '<td style="white-space:nowrap"><button class="lnk" data-edit="'+g.id+'">Edit</button><button class="lnk" data-ask="'+g.id+'">Comment</button>'+cntHtml(g)+'</td></tr>');
       });
     });
     H.push('</table>');
   }
+  H.push(commentsHtml());
   var other=G.filter(function(g){return g.period!==VIEW.period||g.year!==VIEW.year}).length;
-  H.push('<div class="muted" style="font-size:12px;margin-top:16px">Saved encrypted; only someone with the Goals password can read it. '+G.length+' goals in total'+(other?(', '+other+' in other periods'):'')+'.</div>');
+  H.push('<div class="muted" style="font-size:12px;margin-top:16px">Saved encrypted; only someone with the Goals password can read it. '+G.length+' goals and '+C.length+' questions / comments in total'+(other?(', '+other+' in other periods'):'')+'.</div>');
   document.getElementById('root').innerHTML=H.join('');
-  wire();
+  wire();wireComments();
   rev.forEach(fillRev);
 }
 function inViewNoOwner(g){var o=VIEW.owner;VIEW.owner='';var r=inView(g);VIEW.owner=o;return r;}
@@ -273,17 +288,103 @@ function openForm(g){
   };
   if(EDIT.id)document.getElementById('f_del').onclick=function(){
     var b=this;if(b.textContent!=='Click again to delete'){b.textContent='Click again to delete';return;}
-    b.disabled=true;api('POST',{action:'delete',id:EDIT.id}).then(function(j){G=j.goals;stamp(j.updated);render();}).catch(function(e){showErr(e)});
+    b.disabled=true;api('POST',{action:'delete',id:EDIT.id}).then(function(j){G=j.goals;C=j.comments||C;stamp(j.updated);render();}).catch(function(e){showErr(e)});
   };
   document.getElementById('f_title').focus();f.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function showErr(e){var x=document.getElementById('f_err');if(x){x.style.display='';x.textContent=e.message;}else alert(e.message);if(e.status===401){store('goalsPw',null);}}
 function save(goal,btn,fromForm){
   if(btn)btn.disabled=true;
-  api('POST',{action:'upsert',goal:goal}).then(function(j){G=j.goals;stamp(j.updated);
+  api('POST',{action:'upsert',goal:goal}).then(function(j){G=j.goals;C=j.comments||C;stamp(j.updated);
     if(fromForm){VIEW.period=goal.period;VIEW.year=goal.year;if(goal.period==='quarterly')VIEW.quarter=goal.quarter;if(goal.period==='monthly')VIEW.month=goal.month;}
     render();})
   .catch(function(e){if(btn)btn.disabled=false;showErr(e);});
+}
+// ---- Questions & comments (2026-11-17) ----
+// One running thread list for the three owners: ask a question or leave a comment, optionally about a goal and/or
+// for one owner; reply, resolve, reopen. Who is posting is picked once per browser (no per-person logins).
+function me(){var m=load('goalsMe');return OWNERS.indexOf(m)>=0?m:'';}
+function goalById(id){return G.filter(function(g){return g.id===id})[0];}
+function goalName(g){return isNum(g)?(METRICS[metOf(g)].label+(g.title&&g.title!=='Company'&&g.title!=='Revenue goal'?' - '+g.title:'')):g.title;}
+function openFor(g){return C.filter(function(c){return c.goalId===g.id&&!c.resolved}).length;}
+function cntHtml(g){var n=openFor(g);return n?'<button class="cnt" data-jump="'+g.id+'" title="Open questions / comments on this goal">&#128172; '+n+'</button>':'';}
+function when(t){return t?new Date(t).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'';}
+function mineToAnswer(c){var m=VIEW.owner&&VIEW.owner!=='__none'?VIEW.owner:me();return c.type==='Question'&&!c.resolved&&m&&(c.to===m||(!c.to&&c.by!==m));}
+function commentsHtml(){
+  var who=me(), H=[];
+  var vis=C.filter(function(c){return CF==='all'||(CF==='open'?!c.resolved:c.resolved);});
+  if(VIEW.owner&&VIEW.owner!=='__none')vis=vis.filter(function(c){return c.by===VIEW.owner||c.to===VIEW.owner||!c.to;});
+  vis.sort(function(a,b){return (a.resolved-b.resolved)||((b.type==='Question'&&!b.resolved)-(a.type==='Question'&&!a.resolved))||String(b.updated||b.created).localeCompare(String(a.updated||a.created));});
+  var openQ=C.filter(function(c){return c.type==='Question'&&!c.resolved}).length;
+  H.push('<h2 id="qa">Questions &amp; comments <span class="muted">'+openQ+' open question'+(openQ===1?'':'s')+' · for the Tuesday owners meeting or anything in between</span></h2>');
+  var aboutOpts=G.slice().sort(function(a,b){return (inView(b)-inView(a))||String(goalName(a)).localeCompare(goalName(b));});
+  H.push('<div class="compose"><textarea id="c_text" rows="2" placeholder="Ask a question or leave a comment for the other owners...">'+esc(DRAFT.text)+'</textarea>'+
+    '<div class="crow"><select id="c_type">'+['Question','Comment'].map(function(t){return '<option'+(t===DRAFT.type?' selected':'')+'>'+t+'</option>'}).join('')+'</select>'+
+    'from <select id="c_by"><option value="">Who are you?</option>'+OWNERS.map(function(o){return '<option'+(o===who?' selected':'')+'>'+o+'</option>'}).join('')+'</select>'+
+    'for <select id="c_to"><option value="">All owners</option>'+OWNERS.map(function(o){return '<option'+(o===DRAFT.to?' selected':'')+'>'+o+'</option>'}).join('')+'</select>'+
+    'about <select id="c_about" style="max-width:300px"><option value="">General (no goal)</option>'+aboutOpts.map(function(g){return '<option value="'+g.id+'"'+(g.id===DRAFT.about?' selected':'')+'>'+esc(label(g)+' · '+goalName(g))+'</option>'}).join('')+'</select>'+
+    '<button id="c_post" class="sp">Post</button></div><div id="c_err" class="err" style="display:none;margin:10px 0 0"></div></div>');
+  H.push('<div class="bar" style="margin-bottom:12px"><div class="seg" id="cf">'+[['open','Open'],['resolved','Resolved'],['all','All']].map(function(x){return '<button data-cf="'+x[0]+'" class="'+(CF===x[0]?'on':'')+'">'+x[1]+' ('+C.filter(function(c){return x[0]==='all'||(x[0]==='open'?!c.resolved:c.resolved)}).length+')</button>'}).join('')+'</div>'+
+    (VIEW.owner&&VIEW.owner!=='__none'?'<span class="muted" style="font-size:12px">Showing posts from, for, or to everyone incl. '+esc(VIEW.owner)+'</span>':'')+'</div>');
+  if(!vis.length)H.push('<div class="state">'+(CF==='open'?'Nothing open. Questions and comments you post show up here until someone marks them resolved.':'Nothing here yet.')+'</div>');
+  vis.forEach(function(c){
+    var g=c.goalId?goalById(c.goalId):null, q=c.type==='Question';
+    H.push('<div class="qc'+(c.resolved?' res':'')+'" id="qc_'+c.id+'"><div class="hd2">'+
+      '<span class="tag '+(c.resolved?'ok':q?'q':'c')+'">'+(c.resolved?'Resolved':esc(c.type))+'</span>'+
+      '<b style="color:var(--ink)">'+esc(c.by)+'</b>'+(c.to?' &rarr; <b style="color:var(--ink)">'+esc(c.to)+'</b>':' &rarr; all owners')+
+      (c.goalId?(g?' · on <span class="about" data-goto="'+g.id+'">'+esc(label(g)+' · '+goalName(g))+'</span>':' · on a deleted goal'):'')+
+      ' · '+when(c.created)+(mineToAnswer(c)?' · <span style="color:var(--warn);font-weight:600">waiting on you</span>':'')+'</div>'+
+      '<div class="txt">'+esc(c.text)+'</div>');
+    (c.replies||[]).forEach(function(r){H.push('<div class="rep"><div class="who"><b style="color:var(--ink)">'+esc(r.by)+'</b> · '+when(r.at)+'</div><div class="txt">'+esc(r.text)+'</div></div>');});
+    if(c.resolved)H.push('<div class="muted" style="font-size:12px;margin-top:8px">Resolved'+(c.resolvedBy?' by '+esc(c.resolvedBy):'')+' '+when(c.resolvedAt)+'</div>');
+    if(REPLY[c.id]!==undefined)H.push('<div style="margin-top:10px"><textarea rows="2" data-rt="'+c.id+'" placeholder="Reply as '+esc(who||'...')+'">'+esc(REPLY[c.id])+'</textarea>'+
+      '<div class="crow"><button data-rs="'+c.id+'">Post reply</button><button class="ghost" data-rx="'+c.id+'">Cancel</button>'+(q&&!c.resolved?'<label style="display:flex;gap:5px;align-items:center"><input type="checkbox" data-rr="'+c.id+'"> Answered - mark resolved</label>':'')+'</div></div>');
+    H.push('<div class="crow" style="margin-top:6px">'+(REPLY[c.id]===undefined?'<button class="lnk" data-reply="'+c.id+'">Reply</button>':'')+
+      '<button class="lnk" data-res="'+c.id+'" data-v="'+(c.resolved?'0':'1')+'">'+(c.resolved?'Reopen':'Mark resolved')+'</button>'+
+      '<button class="lnk" style="color:var(--bad);margin-left:auto" data-cdel="'+c.id+'">Delete</button></div><div class="err" style="display:none;margin-top:8px" id="ce_'+c.id+'"></div></div>');
+  });
+  return H.join('');
+}
+function cpost(body,btn,errEl,after){
+  if(btn)btn.disabled=true;
+  return api('POST',body).then(function(j){G=j.goals||G;C=j.comments||[];stamp(j.updated);if(after)after();render();})
+    .catch(function(e){if(btn)btn.disabled=false;if(errEl){errEl.style.display='';errEl.textContent=e.message;}else alert(e.message);if(e.status===401)store('goalsPw',null);});
+}
+function needMe(errEl){var m=me();if(!m){errEl.style.display='';errEl.textContent='Pick who you are in the "from" box first (remembered on this computer).';}return m;}
+function wireComments(){
+  var q=function(sel,f){[].forEach.call(document.querySelectorAll(sel),f);};
+  var t=document.getElementById('c_text');if(!t)return;
+  t.oninput=function(){DRAFT.text=t.value;};
+  document.getElementById('c_type').onchange=function(){DRAFT.type=this.value;};
+  document.getElementById('c_to').onchange=function(){DRAFT.to=this.value;};
+  document.getElementById('c_about').onchange=function(){DRAFT.about=this.value;};
+  document.getElementById('c_by').onchange=function(){store('goalsMe',this.value||null);};
+  document.getElementById('c_post').onclick=function(){
+    var err=document.getElementById('c_err'),m=needMe(err);if(!m)return;
+    if(!DRAFT.text.trim()){err.style.display='';err.textContent='Write something first.';return;}
+    cpost({action:'comment',comment:{type:DRAFT.type,by:m,to:DRAFT.to,goalId:DRAFT.about,text:DRAFT.text}},this,err,function(){DRAFT.text='';DRAFT.about='';CF='open';});
+  };
+  q('#cf button',function(b){b.onclick=function(){CF=b.getAttribute('data-cf');render();};});
+  q('[data-reply]',function(b){b.onclick=function(){REPLY[b.getAttribute('data-reply')]='';render();var x=document.querySelector('[data-rt="'+b.getAttribute('data-reply')+'"]');if(x)x.focus();};});
+  q('[data-rt]',function(x){x.oninput=function(){REPLY[x.getAttribute('data-rt')]=x.value;};});
+  q('[data-rx]',function(b){b.onclick=function(){delete REPLY[b.getAttribute('data-rx')];render();};});
+  q('[data-rs]',function(b){b.onclick=function(){
+    var id=b.getAttribute('data-rs'),err=document.getElementById('ce_'+id),m=needMe(err);if(!m)return;
+    var txt=(REPLY[id]||'').trim();if(!txt){err.style.display='';err.textContent='Write a reply first.';return;}
+    var rr=document.querySelector('[data-rr="'+id+'"]'),andResolve=rr&&rr.checked;
+    b.disabled=true;
+    api('POST',{action:'reply',id:id,reply:{by:m,text:txt}}).then(function(j){C=j.comments||[];delete REPLY[id];
+      return andResolve?cpost({action:'resolve',id:id,resolved:true,by:m},null,err):(stamp(j.updated),render());})
+    .catch(function(e){b.disabled=false;err.style.display='';err.textContent=e.message;});
+  };});
+  q('[data-res]',function(b){b.onclick=function(){var id=b.getAttribute('data-res');cpost({action:'resolve',id:id,resolved:b.getAttribute('data-v')==='1',by:me()},b,document.getElementById('ce_'+id));};});
+  q('[data-cdel]',function(b){b.onclick=function(){if(b.textContent!=='Click again to delete'){b.textContent='Click again to delete';return;}
+    var id=b.getAttribute('data-cdel');cpost({action:'delete_comment',id:id},b,document.getElementById('ce_'+id));};});
+  q('[data-ask]',function(b){b.onclick=function(){DRAFT.about=b.getAttribute('data-ask');render();var x=document.getElementById('c_text');x.scrollIntoView({behavior:'smooth',block:'center'});x.focus();};});
+  q('[data-jump]',function(b){b.onclick=function(){CF='open';render();var id=b.getAttribute('data-jump'),first=C.filter(function(c){return c.goalId===id&&!c.resolved})[0];
+    var el=first&&document.getElementById('qc_'+first.id);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.borderColor='var(--blue)';}};});
+  q('[data-goto]',function(b){b.onclick=function(){var g=goalById(b.getAttribute('data-goto'));if(!g)return;
+    VIEW.period=g.period;VIEW.year=g.year;if(g.quarter)VIEW.quarter=g.quarter;if(g.month)VIEW.month=g.month;render();window.scrollTo({top:0,behavior:'smooth'});};});
 }
 PW=load('goalsPw');if(PW)start();else lockScreen('');
 </script>
