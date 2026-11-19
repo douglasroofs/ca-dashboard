@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-19",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -18281,6 +18281,15 @@
       "date": "2026-11-18",
       "address": "40192 Braddock Rd, Aldie, VA",
       "ts": "2026-11-19T16:25:34.697Z"
+    },
+    {
+      "leadId": "84609",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-19",
+      "address": "6022 Greeley Blvd, Springfield, VA",
+      "ts": "2026-11-19T19:39:25.447Z"
     }
   ]
 }
