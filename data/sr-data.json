@@ -18290,6 +18290,15 @@
       "date": "2026-11-19",
       "address": "6022 Greeley Blvd, Springfield, VA",
       "ts": "2026-11-19T19:39:25.447Z"
+    },
+    {
+      "leadId": "84627",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-19",
+      "address": "1124 Hodges Road, Richmond, VA",
+      "ts": "2026-11-19T20:23:31.784Z"
     }
   ]
 }
