@@ -9,22 +9,22 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-18T14:19:11.764Z",
-    "total": 2737,
+    "updated": "2026-11-19T14:34:15.497Z",
+    "total": 3148,
     "reps": [
       {
         "rep": "Krysta Paulson",
-        "doors": 530,
+        "doors": 658,
         "team": "DC"
       },
       {
         "rep": "Konnor Gubler",
-        "doors": 398,
+        "doors": 492,
         "team": "DC"
       },
       {
         "rep": "Tyler Ladd",
-        "doors": 265,
+        "doors": 360,
         "team": "DC"
       },
       {
@@ -34,22 +34,27 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Adam Schall",
-        "doors": 192,
+        "doors": 211,
         "team": "DC"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 178,
+        "doors": 179,
         "team": "DC"
       },
       {
         "rep": "Christian Brown",
-        "doors": 170,
+        "doors": 171,
         "team": "RVA"
       },
       {
         "rep": "Lucas Morris",
-        "doors": 150,
+        "doors": 152,
+        "team": "DC"
+      },
+      {
+        "rep": "Doug Coffman",
+        "doors": 138,
         "team": "DC"
       },
       {
@@ -64,17 +69,17 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 107,
-        "team": "DC"
-      },
-      {
-        "rep": "Doug Coffman",
-        "doors": 103,
+        "doors": 120,
         "team": "DC"
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 65,
+        "doors": 77,
+        "team": "RVA"
+      },
+      {
+        "rep": "Diamond Beverly",
+        "doors": 12,
         "team": "RVA"
       },
       {
@@ -88,12 +93,17 @@ const SNAPSHOTS = {
         "team": "DC"
       },
       {
+        "rep": "Marc Mitchell",
+        "doors": 9,
+        "team": "DC"
+      },
+      {
         "rep": "Wyatt Wise",
         "doors": 9,
         "team": "RVA"
       },
       {
-        "rep": "Marc Mitchell",
+        "rep": "Kevin Mahan",
         "doors": 9,
         "team": "DC"
       },
@@ -103,13 +113,8 @@ const SNAPSHOTS = {
         "team": "Office"
       },
       {
-        "rep": "Kevin Mahan",
-        "doors": 8,
-        "team": "DC"
-      },
-      {
-        "rep": "Diamond Beverly",
-        "doors": 5,
+        "rep": "Brian Chandler",
+        "doors": 2,
         "team": "RVA"
       },
       {
@@ -121,6 +126,11 @@ const SNAPSHOTS = {
         "rep": "Quincy Edwards",
         "doors": 1,
         "team": "RVA"
+      },
+      {
+        "rep": "Mel Sneed",
+        "doors": 1,
+        "team": "DC"
       }
     ],
     "allowedReps": [
