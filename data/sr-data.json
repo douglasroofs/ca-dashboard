@@ -18362,6 +18362,15 @@
       "date": "2026-11-19",
       "address": "1012 Bolton Road, Richmond, VA",
       "ts": "2026-11-19T20:56:39.529Z"
+    },
+    {
+      "leadId": "84663",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-19",
+      "address": "1030 Bolton Road, Richmond, VA",
+      "ts": "2026-11-19T20:57:03.965Z"
     }
   ]
 }
