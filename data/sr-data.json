@@ -18533,6 +18533,15 @@
       "date": "2026-11-20",
       "address": "2930 Angel Pl, Waldorf, MD",
       "ts": "2026-11-20T17:27:34.989Z"
+    },
+    {
+      "leadId": "84789",
+      "repName": "Michael McCarthy",
+      "status": "DO NOT KNOCK",
+      "isCA": false,
+      "date": "2026-11-20",
+      "address": "6772 Lake Anne Ct, Warrenton, VA",
+      "ts": "2026-11-20T19:32:01.456Z"
     }
   ]
 }
