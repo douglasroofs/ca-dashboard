@@ -1,5 +1,5 @@
 {
-  "updated": "2025-08-15",
+  "updated": "2026-11-20",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -18524,6 +18524,15 @@
       "date": "2026-11-19",
       "address": "1215 Hodges Rd, Richmond, VA",
       "ts": "2026-11-19T23:03:43.404Z"
+    },
+    {
+      "leadId": "81405",
+      "repName": "Michael McCarthy",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-20",
+      "address": "2930 Angel Pl, Waldorf, MD",
+      "ts": "2026-11-20T17:27:34.989Z"
     }
   ]
 }
