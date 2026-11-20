@@ -18542,6 +18542,15 @@
       "date": "2026-11-20",
       "address": "6772 Lake Anne Ct, Warrenton, VA",
       "ts": "2026-11-20T19:32:01.456Z"
+    },
+    {
+      "leadId": "84799",
+      "repName": "Michael McCarthy",
+      "status": "DO NOT KNOCK",
+      "isCA": false,
+      "date": "2026-11-20",
+      "address": "",
+      "ts": "2026-11-20T19:38:12.385Z"
     }
   ]
 }
