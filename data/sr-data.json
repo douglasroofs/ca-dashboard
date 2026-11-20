@@ -18686,6 +18686,15 @@
       "date": "2026-11-20",
       "address": "7118 Shepherdstown Rd, Warrenton, VA",
       "ts": "2026-11-20T20:28:36.474Z"
+    },
+    {
+      "leadId": "84876",
+      "repName": "Michael McCarthy",
+      "status": "DO NOT KNOCK",
+      "isCA": false,
+      "date": "2026-11-20",
+      "address": "7132 Shepherdstown Rd, Warrenton, VA",
+      "ts": "2026-11-20T20:29:20.119Z"
     }
   ]
 }
