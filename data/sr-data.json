@@ -18596,6 +18596,15 @@
       "date": "2026-11-20",
       "address": "111 Chickahominy Bluffs Rd, Richmond, VA",
       "ts": "2026-11-20T20:09:30.455Z"
+    },
+    {
+      "leadId": "84839",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-11-20",
+      "address": "6751–6767 Kennedy Rd, Warrenton, VA",
+      "ts": "2026-11-20T20:15:38.563Z"
     }
   ]
 }
