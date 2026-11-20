@@ -18569,6 +18569,15 @@
       "date": "2026-11-20",
       "address": "211 Chickahominy Bluffs Rd, Richmond, VA",
       "ts": "2026-11-20T19:54:41.073Z"
+    },
+    {
+      "leadId": "84818",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-20",
+      "address": "216 Fulham Cir, Richmond, VA",
+      "ts": "2026-11-20T19:56:34.133Z"
     }
   ]
 }
