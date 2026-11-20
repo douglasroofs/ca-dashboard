@@ -18830,6 +18830,15 @@
       "date": "2026-11-20",
       "address": "7358 Tucan Ct, Warrenton, VA",
       "ts": "2026-11-20T21:19:12.837Z"
+    },
+    {
+      "leadId": "84943",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-20",
+      "address": "8009 Cobblewood Terrace, Richmond, VA",
+      "ts": "2026-11-20T22:20:34.050Z"
     }
   ]
 }
