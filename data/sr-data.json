@@ -18587,6 +18587,15 @@
       "date": "2026-11-20",
       "address": "4117 Eddy Ct, Warrenton, VA",
       "ts": "2026-11-20T20:07:57.441Z"
+    },
+    {
+      "leadId": "84833",
+      "repName": "Harvey Shoemaker",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-20",
+      "address": "111 Chickahominy Bluffs Rd, Richmond, VA",
+      "ts": "2026-11-20T20:09:30.455Z"
     }
   ]
 }
