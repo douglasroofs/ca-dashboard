@@ -9,8 +9,8 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-19T14:34:15.497Z",
-    "total": 3148,
+    "updated": "2026-11-20T14:11:52.318Z",
+    "total": 2972,
     "reps": [
       {
         "rep": "Krysta Paulson",
@@ -19,37 +19,37 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Konnor Gubler",
-        "doors": 492,
-        "team": "DC"
-      },
-      {
-        "rep": "Tyler Ladd",
-        "doors": 360,
+        "doors": 532,
         "team": "DC"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 247,
+        "doors": 255,
         "team": "DC"
       },
       {
         "rep": "Adam Schall",
-        "doors": 211,
+        "doors": 216,
         "team": "DC"
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 179,
+        "doors": 197,
         "team": "DC"
       },
       {
         "rep": "Christian Brown",
-        "doors": 171,
+        "doors": 193,
         "team": "RVA"
       },
       {
         "rep": "Lucas Morris",
-        "doors": 152,
+        "doors": 167,
+        "team": "DC"
+      },
+      {
+        "rep": "Jason Cresswell",
+        "doors": 148,
         "team": "DC"
       },
       {
@@ -59,7 +59,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 138,
+        "doors": 137,
         "team": "RVA"
       },
       {
@@ -68,33 +68,23 @@ const SNAPSHOTS = {
         "team": "DC"
       },
       {
-        "rep": "Jason Cresswell",
-        "doors": 120,
-        "team": "DC"
-      },
-      {
         "rep": "Travis Kizzar",
-        "doors": 77,
+        "doors": 88,
         "team": "RVA"
       },
       {
         "rep": "Diamond Beverly",
-        "doors": 12,
+        "doors": 39,
         "team": "RVA"
       },
       {
         "rep": "Jack Obert",
-        "doors": 11,
+        "doors": 16,
         "team": "DC"
       },
       {
         "rep": "Andrew Funk",
         "doors": 10,
-        "team": "DC"
-      },
-      {
-        "rep": "Marc Mitchell",
-        "doors": 9,
         "team": "DC"
       },
       {
@@ -108,9 +98,19 @@ const SNAPSHOTS = {
         "team": "DC"
       },
       {
+        "rep": "Marc Mitchell",
+        "doors": 9,
+        "team": "DC"
+      },
+      {
         "rep": "Kyle Higginbotham",
         "doors": 8,
         "team": "Office"
+      },
+      {
+        "rep": "Niyah Cousins",
+        "doors": 6,
+        "team": "RVA"
       },
       {
         "rep": "Brian Chandler",
@@ -123,14 +123,14 @@ const SNAPSHOTS = {
         "team": "Office"
       },
       {
-        "rep": "Quincy Edwards",
-        "doors": 1,
-        "team": "RVA"
-      },
-      {
         "rep": "Mel Sneed",
         "doors": 1,
         "team": "DC"
+      },
+      {
+        "rep": "Quincy Edwards",
+        "doors": 1,
+        "team": "RVA"
       }
     ],
     "allowedReps": [
@@ -159,15 +159,12 @@ const SNAPSHOTS = {
       "konnor gubler",
       "krysta paulson",
       "adam schall",
-      "tyler ladd",
       "diamond beverly",
       "brian chandler",
       "wyatt wise",
       "niyah cousins",
       "quincy edwards",
-      "mel sneed",
-      "shoaib ibrahim",
-      "che anye"
+      "mel sneed"
     ],
     "roster": [
       "Kyle Higginbotham",
@@ -196,15 +193,12 @@ const SNAPSHOTS = {
       "Konnor Gubler",
       "Krysta Paulson",
       "Adam Schall",
-      "Tyler Ladd",
       "Diamond Beverly",
       "Brian Chandler",
       "Wyatt Wise",
       "Niyah Cousins",
       "Quincy Edwards",
-      "Mel Sneed",
-      "Shoaib Ibrahim",
-      "Che Anye"
+      "Mel Sneed"
     ]
   },
   "richmond": {

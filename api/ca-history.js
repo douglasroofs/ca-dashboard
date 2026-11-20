@@ -10,7 +10,7 @@
 
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-19T14:34:06.964Z",
+    "updated": "2026-11-20T14:11:43.632Z",
     "year": 2026,
     "months": [
       0,
@@ -50,7 +50,7 @@ const SNAPSHOTS = {
           0,
           2,
           5,
-          2,
+          3,
           4,
           1,
           1,
@@ -58,7 +58,7 @@ const SNAPSHOTS = {
           1,
           0
         ],
-        "total": 21
+        "total": 22
       },
       {
         "rep": "Steven Arevalo",
