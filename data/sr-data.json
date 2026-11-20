@@ -18605,6 +18605,15 @@
       "date": "2026-11-20",
       "address": "6751–6767 Kennedy Rd, Warrenton, VA",
       "ts": "2026-11-20T20:15:38.563Z"
+    },
+    {
+      "leadId": "84843",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-20",
+      "address": "1194 Brittle Ridge Rd, Warrenton, VA",
+      "ts": "2026-11-20T20:19:30.499Z"
     }
   ]
 }
