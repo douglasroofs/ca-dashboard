@@ -9,17 +9,17 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-20T14:11:52.318Z",
-    "total": 2972,
+    "updated": "2026-11-21T13:37:15.119Z",
+    "total": 3192,
     "reps": [
       {
         "rep": "Krysta Paulson",
-        "doors": 658,
+        "doors": 714,
         "team": "DC"
       },
       {
         "rep": "Konnor Gubler",
-        "doors": 532,
+        "doors": 587,
         "team": "DC"
       },
       {
@@ -28,23 +28,28 @@ const SNAPSHOTS = {
         "team": "DC"
       },
       {
-        "rep": "Adam Schall",
-        "doors": 216,
+        "rep": "Mike Mccarthy",
+        "doors": 223,
         "team": "DC"
       },
       {
-        "rep": "Mike Mccarthy",
-        "doors": 197,
+        "rep": "Adam Schall",
+        "doors": 220,
         "team": "DC"
       },
       {
         "rep": "Christian Brown",
-        "doors": 193,
+        "doors": 197,
         "team": "RVA"
       },
       {
         "rep": "Lucas Morris",
-        "doors": 167,
+        "doors": 175,
+        "team": "DC"
+      },
+      {
+        "rep": "Doug Coffman",
+        "doors": 165,
         "team": "DC"
       },
       {
@@ -53,13 +58,8 @@ const SNAPSHOTS = {
         "team": "DC"
       },
       {
-        "rep": "Doug Coffman",
-        "doors": 138,
-        "team": "DC"
-      },
-      {
         "rep": "Harvey Shoemaker",
-        "doors": 137,
+        "doors": 143,
         "team": "RVA"
       },
       {
@@ -69,7 +69,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 88,
+        "doors": 122,
         "team": "RVA"
       },
       {
