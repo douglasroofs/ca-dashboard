@@ -9,17 +9,17 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-21T13:37:15.119Z",
-    "total": 3192,
+    "updated": "2026-11-22T13:29:42.730Z",
+    "total": 3388,
     "reps": [
       {
         "rep": "Krysta Paulson",
-        "doors": 714,
+        "doors": 752,
         "team": "DC"
       },
       {
         "rep": "Konnor Gubler",
-        "doors": 587,
+        "doors": 593,
         "team": "DC"
       },
       {
@@ -29,7 +29,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Mike Mccarthy",
-        "doors": 223,
+        "doors": 236,
         "team": "DC"
       },
       {
@@ -39,22 +39,22 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Christian Brown",
-        "doors": 197,
+        "doors": 203,
         "team": "RVA"
       },
       {
-        "rep": "Lucas Morris",
-        "doors": 175,
+        "rep": "Doug Coffman",
+        "doors": 183,
         "team": "DC"
       },
       {
-        "rep": "Doug Coffman",
-        "doors": 165,
+        "rep": "Lucas Morris",
+        "doors": 178,
         "team": "DC"
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 148,
+        "doors": 170,
         "team": "DC"
       },
       {
@@ -64,17 +64,17 @@ const SNAPSHOTS = {
       },
       {
         "rep": "David Kerns",
-        "doors": 131,
+        "doors": 132,
         "team": "DC"
       },
       {
-        "rep": "Travis Kizzar",
-        "doors": 122,
+        "rep": "Diamond Beverly",
+        "doors": 127,
         "team": "RVA"
       },
       {
-        "rep": "Diamond Beverly",
-        "doors": 39,
+        "rep": "Travis Kizzar",
+        "doors": 123,
         "team": "RVA"
       },
       {
@@ -88,11 +88,6 @@ const SNAPSHOTS = {
         "team": "DC"
       },
       {
-        "rep": "Wyatt Wise",
-        "doors": 9,
-        "team": "RVA"
-      },
-      {
         "rep": "Kevin Mahan",
         "doors": 9,
         "team": "DC"
@@ -101,6 +96,11 @@ const SNAPSHOTS = {
         "rep": "Marc Mitchell",
         "doors": 9,
         "team": "DC"
+      },
+      {
+        "rep": "Wyatt Wise",
+        "doors": 9,
+        "team": "RVA"
       },
       {
         "rep": "Kyle Higginbotham",
