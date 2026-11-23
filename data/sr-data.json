@@ -19190,6 +19190,15 @@
       "date": "2026-11-23",
       "address": "7821 Mill River Court, Chesterfield, VA",
       "ts": "2026-11-23T20:50:28.163Z"
+    },
+    {
+      "leadId": "85246",
+      "repName": "Christian Brown",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-23",
+      "address": "7814 Mill River Court, Chesterfield, VA",
+      "ts": "2026-11-23T20:51:10.652Z"
     }
   ]
 }
