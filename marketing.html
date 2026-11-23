@@ -184,25 +184,37 @@ function warnHtml(C){
     + C.warn.map(function(w){return '&bull; '+w;}).join('<br>') + '</div></div>';
 }
 
-// lsa / facebook / agency are the DC office's spend - the spend behind this page's
-// Marketing-division appointments - and make up the total. lsaRva is reported beside it
-// and kept out of cost per appointment (see api/marketing.js for why).
+// Every source that spends money gets its own line (2026-11-23). costs.lsaAccounts holds one
+// entry per Google account; DC accounts (NOVA, MD) + Meta + the retainer make up the total that
+// cost per appointment divides by. Accounts marked excluded (RVA) are shown but kept out of it -
+// see api/marketing.js for why.
 function costsFor(from,to){
-  var C=D.costs||{};
-  var lsaBy=(C.lsa&&C.lsa.byMonth)||(D.spend&&D.spend.byMonth);
-  var fbBy=C.facebook&&C.facebook.byMonth;
-  var lsa=spendOf(lsaBy,from,to,C.lsa&&C.lsa.asOf);
-  var fb=spendOf(fbBy,from,to,C.facebook&&C.facebook.asOf);
+  var C=D.costs||{}, rows=[], warn=[], est=0, total=0, rva=0, rvaEst=0;
+  var accts=C.lsaAccounts;
+  if(!accts){ // older API shape: one DC line + one RVA line
+    accts=[{label:'Google LSA - DC',byMonth:(C.lsa&&C.lsa.byMonth)||(D.spend&&D.spend.byMonth),asOf:C.lsa&&C.lsa.asOf,id:''}];
+    if(C.lsaRva) accts.push({label:C.lsaRva.label,byMonth:C.lsaRva.byMonth,asOf:C.lsaRva.asOf,excluded:true,id:'552-749-0839'});
+  }
+  var f=monthKey(from), t=monthKey(to);
+  accts.forEach(function(a){
+    var r=spendOf(a.byMonth,from,to,a.asOf);
+    rows.push({label:a.label, id:a.id, v:r.v, est:r.est, excluded:!!a.excluded,
+      src:'Google Ads billing, net of credited leads'+(a.id?' - '+a.id:'')});
+    if(a.excluded){ rva+=r.v; rvaEst+=r.est; } else { total+=r.v; est+=r.est; }
+    (a.missing||[]).forEach(function(m){ if(m>=f && m<=t && !a.excluded) warn.push(a.label+' has no billing data for '+m+' (the account\'s billing starts March 2026) - cost in this range is understated.'); });
+  });
+  var fb=spendOf(C.facebook&&C.facebook.byMonth,from,to,C.facebook&&C.facebook.asOf);
+  rows.push({label:'Meta ads', v:fb.v, est:fb.est, src:(C.facebook&&C.facebook.live?'live - Meta Marketing API':'Ads Manager, Douglas Roofing Inc (272377932099924)')});
+  total+=fb.v; est+=fb.est;
   var ag=spendOf(C.agency&&C.agency.byMonth,from,to);
-  var rva=spendOf(C.lsaRva&&C.lsaRva.byMonth,from,to,C.lsaRva&&C.lsaRva.asOf);
-  var warn=[].concat(asOfWarn('Google LSA',C.lsa&&C.lsa.asOf,to), asOfWarn('Meta',C.facebook&&C.facebook.asOf,to));
-  if(missingThisMonth(lsaBy,to)) warn.push('No Google LSA spend recorded for '+monthKey(new Date())+' yet.');
-  if(missingThisMonth(fbBy,to)) warn.push('No Meta spend recorded for '+monthKey(new Date())+' yet.');
-  var est=lsa.est+fb.est;
-  return {lsa:lsa.v, facebook:fb.v, agency:ag.v, rva:rva.v, est:est, total:lsa.v+fb.v+ag.v, warn:warn,
-          lsaEst:lsa.est, fbEst:fb.est, rvaEst:rva.est,
-          fbLive:!!(C.facebook&&C.facebook.live), fbNote:(C.facebook&&C.facebook.note)||'',
-          rvaWhy:(C.lsaRva&&C.lsaRva.why)||''};
+  rows.push({label:'Marketing company (Phlash)', v:ag.v, est:0, src:'retainer, prorated by day'});
+  total+=ag.v;
+  var asOfAll=(accts[0]&&accts[0].asOf)||(C.lsa&&C.lsa.asOf);
+  warn=warn.concat(asOfWarn('Google LSA',asOfAll,to), asOfWarn('Meta',C.facebook&&C.facebook.asOf,to));
+  if(missingThisMonth(accts[0]&&accts[0].byMonth,to)) warn.push('No Google LSA spend recorded for '+monthKey(new Date())+' yet.');
+  if(missingThisMonth(C.facebook&&C.facebook.byMonth,to)) warn.push('No Meta spend recorded for '+monthKey(new Date())+' yet.');
+  return {rows:rows, total:total, est:est, rva:rva, rvaEst:rvaEst, warn:warn,
+          fbLive:!!(C.facebook&&C.facebook.live), rvaWhy:(C.lsaRva&&C.lsaRva.why)||''};
 }
 // kept so anything else calling spendFor still works
 function spendFor(from,to){ return costsFor(from,to).total; }
@@ -246,25 +258,23 @@ function draw(){
 
   H.push(calSection(recs,f,t,isCA,isRT,notRan));
 
-  H.push('<section><h2>Marketing cost - DC office <span class="muted" style="font-size:12px;font-weight:400">'+(C.fbLive?'Meta live from the API':'LSA + Meta entered by hand')+'</span></h2>' + warnHtml(C) + '<div class="cards">');
-  H.push('<div class="card hi"><div class="label">Total marketing cost</div><div class="value">'+money(C.total)+'</div><div class="sub">DC: LSA + Meta + retainer'+(C.est>0.5?' (incl. '+money(C.est)+' est.)':'')+'</div></div>');
+  H.push('<section><h2>Marketing cost - DC office <span class="muted" style="font-size:12px;font-weight:400">'+(C.fbLive?'Meta live from the API':'Google + Meta entered by hand')+'</span></h2>' + warnHtml(C) + '<div class="cards">');
+  H.push('<div class="card hi"><div class="label">Total marketing cost</div><div class="value">'+money(C.total)+'</div><div class="sub">DC: Google LSA + Meta + retainer'+(C.est>0.5?' (incl. '+money(C.est)+' est.)':'')+'</div></div>');
   H.push('<div class="card"><div class="label">Cost per appt ran</div><div class="value">'+(T.ran?money(C.total/T.ran):'-')+'</div><div class="sub">'+T.ran+' ran</div></div>');
   H.push('<div class="card"><div class="label">Cost per signed</div><div class="value">'+(signed?money(C.total/signed):'-')+'</div><div class="sub">'+signed+' CA + retail</div></div>');
   H.push('<div class="card"><div class="label">RVA LSA spend</div><div class="value">'+money(C.rva)+'</div><div class="sub">not in cost per appt'+(C.rvaEst>0.5?' (incl. '+money(C.rvaEst)+' est.)':'')+'</div></div>');
-  H.push('<div class="card credit"><div class="label">Pending credit</div><div class="value">'+money((D.spend&&D.spend.pendingCredit)||0)+'</div><div class="sub">disputed LSA leads - unconfirmed</div></div>');
   H.push('</div>');
   H.push('<table style="margin-top:14px"><tr><th>Source</th><th class="num">Cost in range</th><th class="num">Share</th><th>Where it comes from</th></tr>');
   var estTag=function(x){return x>0.5?' - includes '+money(x)+' estimated for days not yet read':'';};
-  [['Google LSA - DC',C.lsa,'manual - Google Ads, accounts 477-447-4205 (NOVA) + 819-103-9280 (MD)'+estTag(C.lsaEst)],
-   ['Meta ads - DC',C.facebook,(C.fbLive?'live - Meta Marketing API':'manual - Ads Manager, Douglas Roofing Inc')+estTag(C.fbEst)],
-   ['Marketing company',C.agency,'Phlash retainer, prorated by day']]
-  .forEach(function(r){
-    H.push('<tr><td>'+esc(r[0])+'</td><td class="num">'+money(r[1])+'</td><td class="num">'+(C.total?Math.round(r[1]/C.total*100)+'%':'-')+'</td><td class="muted">'+esc(r[2])+'</td></tr>');
+  C.rows.filter(function(r){return !r.excluded;}).forEach(function(r){
+    H.push('<tr><td>'+esc(r.label)+'</td><td class="num">'+money(r.v)+'</td><td class="num">'+(C.total?Math.round(r.v/C.total*100)+'%':'-')+'</td><td class="muted">'+esc(r.src+estTag(r.est))+'</td></tr>');
   });
   H.push('<tr><td><b>Total - DC</b></td><td class="num"><b>'+money(C.total)+'</b></td><td class="num">100%</td><td></td></tr>');
-  H.push('<tr class="muted"><td>Google LSA - RVA</td><td class="num">'+money(C.rva)+'</td><td class="num">-</td><td>account 552-749-0839 - kept out of the total and cost per appt: '+esc(C.rvaWhy)+estTag(C.rvaEst)+'</td></tr>');
+  C.rows.filter(function(r){return r.excluded;}).forEach(function(r){
+    H.push('<tr class="muted"><td>'+esc(r.label)+'</td><td class="num">'+money(r.v)+'</td><td class="num">-</td><td>'+esc(r.src+' - kept out of the total and cost per appt: '+C.rvaWhy+estTag(r.est))+'</td></tr>');
+  });
   H.push('</table>');
-  H.push('<div class="note">Costs here are the DC office only, matched to the Leap Marketing-division appointments above. Each hand-entered reading carries the date it runs through; days after that are estimated at the same daily pace until the next reading. The retainer is effective-dated in api/marketing.js - add a dated row when the fee changes.</div>');
+  H.push('<div class="note">Google figures are billed net cost, after Google credits disputed leads - what actually hit the card. Costs here are the DC office only, matched to the Leap Marketing-division appointments above. Each hand-entered reading carries the date it runs through; days after that are estimated at the same daily pace until the next reading. The retainer is effective-dated in api/marketing.js.</div>');
   H.push('</section>');
 
   // BY REP - one column per RESULT REASON, not the CA/Retail rollup.
