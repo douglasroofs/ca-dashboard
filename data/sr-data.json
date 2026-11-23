@@ -19082,6 +19082,15 @@
       "date": "2026-11-23",
       "address": "8108 Buckland Mill Rd, Gainesville, VA",
       "ts": "2026-11-23T20:45:38.519Z"
+    },
+    {
+      "leadId": "85228",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-23",
+      "address": "6005 Pleasant Pond Place, Chesterfield, VA",
+      "ts": "2026-11-23T20:48:26.922Z"
     }
   ]
 }
