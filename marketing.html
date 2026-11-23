@@ -125,46 +125,48 @@ function setMTD(){var n=new Date();document.getElementById('dFrom').value=iso(ne
 // ---- Cost helpers -------------------------------------------------------
 var dayKey=function(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);};
 var monthKey=function(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);};
+var DAY=86400000;
+// Calendar days, inclusive. Counted on UTC day numbers so the DST change (Nov 1, Mar) can't add or drop a day.
+function dayNum(d){return Math.round(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/DAY);}
+function dayCount(s,e){return e<s?0:dayNum(e)-dayNum(s)+1;}
 
-// `partial` names a month whose recorded figure is already spend-TO-DATE rather
-// than a whole month's total - LSA and Facebook are read off a billing console
-// mid-month. Prorating those a SECOND time charges them twice for the same days.
-// A retainer is different - it genuinely accrues by the day - so it passes no
-// `partial` and still prorates.
-//
-// The flag EXPIRES. While its month is still running the denominator is the days
-// elapsed so far, which is right. Once that month CLOSES the figure is simply
-// incomplete, and spreading it over a full month under-reports for ever - a
-// 20-day number wearing a 31-day label. That happened to August 2026: $12,514
-// covering the 1st to the 20th kept being read as the whole month. No arithmetic
-// recovers the missing days, so the figure is used as recorded and the staleness
-// is raised as a WARNING rather than quietly absorbed.
-function spendOf(by,from,to,partial){
-  var total=0; by=by||{};
-  var now=new Date();
+// 2026-11-23: every manual reading carries an asOf date (costs.X.asOf = {month: 'YYYY-MM-DD'}),
+// the last day the recorded figure covers. Days up to asOf are charged at the recorded daily
+// rate. Days AFTER asOf that have already happened have spend we have not recorded yet - they
+// are ESTIMATED at that same daily rate (and the estimate is shown), instead of being silently
+// treated as zero. The old partialMonth flag could not tell Nov 1-10 from Nov 1-23, so a stale
+// reading made month-to-date cost read low. A month with no asOf is a full, final month.
+function spendOf(by,from,to,asOf){
+  var out={v:0,est:0}; by=by||{}; asOf=asOf||{};
+  var now=new Date(), today=new Date(now.getFullYear(),now.getMonth(),now.getDate(),23,59,59);
   Object.keys(by).forEach(function(m){
     var y=+m.slice(0,4),mo=+m.slice(5,7)-1;
-    var mStart=new Date(y,mo,1), mEnd=new Date(y,mo+1,0);
+    var mStart=new Date(y,mo,1), mEnd=new Date(y,mo+1,0,23,59,59);
     var s=new Date(Math.max(mStart,from)), e=new Date(Math.min(mEnd,to));
     if(e<s)return;
-    // floor, not round: the range end carries 23:59:59, so round() charged an
-    // extra day whenever the range stopped mid-month - a one-day range billed two.
-    var daysIn=Math.floor((e-s)/86400000)+1, daysM=mEnd.getDate();
-    if(m===partial && dayKey(to)>=dayKey(now)){
-      // Denominator is days ELAPSED, not the whole month. For a month that has
-      // already closed those are the same, so the recorded figure is taken as-is.
-      var elapsed=new Date(Math.min(mEnd,now)).getDate();
-      total += by[m]*Math.min(1,daysIn/elapsed);
-      return;
-    }
-    total += by[m]*(daysIn/daysM);
+    var a=asOf[m];
+    if(!a){ out.v += by[m]*(dayCount(s,e)/mEnd.getDate()); return; }
+    var aEnd=new Date(+a.slice(0,4),+a.slice(5,7)-1,+a.slice(8,10),23,59,59);
+    var daily=by[m]/aEnd.getDate();
+    out.v += daily*dayCount(s,new Date(Math.min(e,aEnd)));
+    var gs=new Date(Math.max(s,aEnd.getTime()+1000)), ge=new Date(Math.min(e,today));
+    var gap=dayCount(gs,ge);
+    if(gap>0){ out.v += daily*gap; out.est += daily*gap; }
   });
-  return total;
+  return out;
 }
 
-// A partial month that has already closed was never finalised - someone has to
-// paste the real total in. Say so instead of letting it under-report in silence.
-function stalePartial(partial){ return !!partial && partial < monthKey(new Date()); }
+// What a source's asOf map says about the selected range: a closed month that was never
+// finalised, or a current-month reading that is going stale.
+function asOfWarn(label,asOf,to){
+  var w=[], now=new Date(), cur=monthKey(now);
+  Object.keys(asOf||{}).forEach(function(m){
+    var a=asOf[m], aDate=new Date(a+'T12:00:00');
+    if(m<cur) w.push(label+' for '+m+' was recorded only through '+a+' and never finalised - read the full month and update it.');
+    else if(dayKey(to)>a){ var age=Math.floor((now-aDate)/DAY); if(age>=7) w.push(label+' recorded through '+a+' ('+age+' days ago) - the rest of the month is estimated at that pace. Re-read it.'); }
+  });
+  return w;
+}
 
 // The other way a source goes quiet: the current month is absent from the data
 // entirely, so it reads as zero spend rather than as missing data.
@@ -182,23 +184,25 @@ function warnHtml(C){
     + C.warn.map(function(w){return '&bull; '+w;}).join('<br>') + '</div></div>';
 }
 
+// lsa / facebook / agency are the DC office's spend - the spend behind this page's
+// Marketing-division appointments - and make up the total. lsaRva is reported beside it
+// and kept out of cost per appointment (see api/marketing.js for why).
 function costsFor(from,to){
   var C=D.costs||{};
-  // Only the actuals declare a partial month; the retainer deliberately does not.
-  var lsaPart=(C.lsa&&C.lsa.partialMonth)||(D.spend&&D.spend.partialMonth)||null;
-  var fbPart=(C.facebook&&C.facebook.partialMonth)||null;
   var lsaBy=(C.lsa&&C.lsa.byMonth)||(D.spend&&D.spend.byMonth);
   var fbBy=C.facebook&&C.facebook.byMonth;
-  var lsa=spendOf(lsaBy,from,to,lsaPart);
-  var fb=spendOf(fbBy,from,to,fbPart);
+  var lsa=spendOf(lsaBy,from,to,C.lsa&&C.lsa.asOf);
+  var fb=spendOf(fbBy,from,to,C.facebook&&C.facebook.asOf);
   var ag=spendOf(C.agency&&C.agency.byMonth,from,to);
-  var warn=[];
-  if(stalePartial(lsaPart)) warn.push('Google LSA '+lsaPart+' was recorded part-way through the month and never finalised - that month is understated.');
-  if(stalePartial(fbPart)) warn.push('Facebook '+fbPart+' was recorded part-way through the month and never finalised - that month is understated.');
+  var rva=spendOf(C.lsaRva&&C.lsaRva.byMonth,from,to,C.lsaRva&&C.lsaRva.asOf);
+  var warn=[].concat(asOfWarn('Google LSA',C.lsa&&C.lsa.asOf,to), asOfWarn('Meta',C.facebook&&C.facebook.asOf,to));
   if(missingThisMonth(lsaBy,to)) warn.push('No Google LSA spend recorded for '+monthKey(new Date())+' yet.');
-  if(missingThisMonth(fbBy,to)) warn.push('No Facebook spend recorded for '+monthKey(new Date())+' yet.');
-  return {lsa:lsa, facebook:fb, agency:ag, total:lsa+fb+ag, warn:warn,
-          fbLive:!!(C.facebook&&C.facebook.live), fbNote:(C.facebook&&C.facebook.note)||''};
+  if(missingThisMonth(fbBy,to)) warn.push('No Meta spend recorded for '+monthKey(new Date())+' yet.');
+  var est=lsa.est+fb.est;
+  return {lsa:lsa.v, facebook:fb.v, agency:ag.v, rva:rva.v, est:est, total:lsa.v+fb.v+ag.v, warn:warn,
+          lsaEst:lsa.est, fbEst:fb.est, rvaEst:rva.est,
+          fbLive:!!(C.facebook&&C.facebook.live), fbNote:(C.facebook&&C.facebook.note)||'',
+          rvaWhy:(C.lsaRva&&C.lsaRva.why)||''};
 }
 // kept so anything else calling spendFor still works
 function spendFor(from,to){ return costsFor(from,to).total; }
@@ -242,22 +246,25 @@ function draw(){
 
   H.push(calSection(recs,f,t,isCA,isRT,notRan));
 
-  H.push('<section><h2>Marketing cost <span class="muted" style="font-size:12px;font-weight:400">'+(C.fbLive?'Facebook live from Meta':'Facebook not connected yet')+'</span></h2>' + warnHtml(C) + '<div class="cards">');
-  H.push('<div class="card hi"><div class="label">Total marketing cost</div><div class="value">'+money(C.total)+'</div><div class="sub">LSA + Facebook + retainer, in range</div></div>');
+  H.push('<section><h2>Marketing cost - DC office <span class="muted" style="font-size:12px;font-weight:400">'+(C.fbLive?'Meta live from the API':'LSA + Meta entered by hand')+'</span></h2>' + warnHtml(C) + '<div class="cards">');
+  H.push('<div class="card hi"><div class="label">Total marketing cost</div><div class="value">'+money(C.total)+'</div><div class="sub">DC: LSA + Meta + retainer'+(C.est>0.5?' (incl. '+money(C.est)+' est.)':'')+'</div></div>');
   H.push('<div class="card"><div class="label">Cost per appt ran</div><div class="value">'+(T.ran?money(C.total/T.ran):'-')+'</div><div class="sub">'+T.ran+' ran</div></div>');
   H.push('<div class="card"><div class="label">Cost per signed</div><div class="value">'+(signed?money(C.total/signed):'-')+'</div><div class="sub">'+signed+' CA + retail</div></div>');
-  H.push('<div class="card credit"><div class="label">Pending credit</div><div class="value">'+money((D.spend&&D.spend.pendingCredit)||0)+'</div><div class="sub">expected back for disputed leads</div></div>');
+  H.push('<div class="card"><div class="label">RVA LSA spend</div><div class="value">'+money(C.rva)+'</div><div class="sub">not in cost per appt'+(C.rvaEst>0.5?' (incl. '+money(C.rvaEst)+' est.)':'')+'</div></div>');
+  H.push('<div class="card credit"><div class="label">Pending credit</div><div class="value">'+money((D.spend&&D.spend.pendingCredit)||0)+'</div><div class="sub">disputed LSA leads - unconfirmed</div></div>');
   H.push('</div>');
   H.push('<table style="margin-top:14px"><tr><th>Source</th><th class="num">Cost in range</th><th class="num">Share</th><th>Where it comes from</th></tr>');
-  [['Google LSA',C.lsa,'manual - LSA billing console, 2 accounts'],
-   ['Facebook ads',C.facebook,C.fbLive?'live - Meta Marketing API':('not connected - '+(C.fbNote||'add META_ACCESS_TOKEN in Vercel'))],
-   ['Marketing company',C.agency,'retainer schedule, prorated by day']]
+  var estTag=function(x){return x>0.5?' - includes '+money(x)+' estimated for days not yet read':'';};
+  [['Google LSA - DC',C.lsa,'manual - Google Ads, accounts 477-447-4205 (NOVA) + 819-103-9280 (MD)'+estTag(C.lsaEst)],
+   ['Meta ads - DC',C.facebook,(C.fbLive?'live - Meta Marketing API':'manual - Ads Manager, Douglas Roofing Inc')+estTag(C.fbEst)],
+   ['Marketing company',C.agency,'Phlash retainer, prorated by day']]
   .forEach(function(r){
     H.push('<tr><td>'+esc(r[0])+'</td><td class="num">'+money(r[1])+'</td><td class="num">'+(C.total?Math.round(r[1]/C.total*100)+'%':'-')+'</td><td class="muted">'+esc(r[2])+'</td></tr>');
   });
-  H.push('<tr><td><b>Total</b></td><td class="num"><b>'+money(C.total)+'</b></td><td class="num">100%</td><td></td></tr>');
+  H.push('<tr><td><b>Total - DC</b></td><td class="num"><b>'+money(C.total)+'</b></td><td class="num">100%</td><td></td></tr>');
+  H.push('<tr class="muted"><td>Google LSA - RVA</td><td class="num">'+money(C.rva)+'</td><td class="num">-</td><td>account 552-749-0839 - kept out of the total and cost per appt: '+esc(C.rvaWhy)+estTag(C.rvaEst)+'</td></tr>');
   H.push('</table>');
-  H.push('<div class="note">Cost per appointment used to divide by Google LSA alone, so it read low. It now uses every marketing dollar. The retainer is effective-dated in api/marketing.js - when the fee changes, add a dated row rather than editing the current one, so closed months keep the cost they actually had.</div>');
+  H.push('<div class="note">Costs here are the DC office only, matched to the Leap Marketing-division appointments above. Each hand-entered reading carries the date it runs through; days after that are estimated at the same daily pace until the next reading. The retainer is effective-dated in api/marketing.js - add a dated row when the fee changes.</div>');
   H.push('</section>');
 
   // BY REP - one column per RESULT REASON, not the CA/Retail rollup.
