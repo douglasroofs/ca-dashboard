@@ -217,22 +217,27 @@ function agencyByMonth(startISO, endISO) {
 // other: partial results are kept and the failure is reported.
 async function metaSpend(startISO, endISO) {
   const token = process.env.META_ACCESS_TOKEN;
-  const raw = process.env.META_AD_ACCOUNT_ID || '';
+  // Defaults to the one ad account that spends (Douglas Roofing Inc), so only META_ACCESS_TOKEN
+  // has to be set in Vercel. 2356347398190484 has no payment method and has never spent.
+  const raw = process.env.META_AD_ACCOUNT_ID || '272377932099924';
   const accts = raw.split(/[,\s]+/).map((s) => s.trim()).filter(Boolean)
     .map((s) => (/^act_/.test(s) ? s : 'act_' + s));
   if (!token || !accts.length) {
-    return { byMonth: {}, live: false, reason: 'META_ACCESS_TOKEN / META_AD_ACCOUNT_ID not set in Vercel' };
+    return { byMonth: {}, live: false, reason: 'META_ACCESS_TOKEN not set in Vercel' };
   }
-  const ver = process.env.META_API_VERSION || 'v21.0';
+  // v21.0 is removed by Meta on 2027-01-21; v26.0 released 2026-07-29.
+  const ver = process.env.META_API_VERSION || 'v26.0';
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), 9000);
 
+  const todayISO = new Date().toISOString().slice(0, 10);
   async function one(acct) {
     const qs = new URLSearchParams({
       fields: 'spend',
       level: 'account',
       time_increment: 'monthly',
-      time_range: JSON.stringify({ since: startISO, until: endISO }),
+      // The page asks for up to 90 days ahead; Meta only has data through today.
+      time_range: JSON.stringify({ since: startISO, until: endISO < todayISO ? endISO : todayISO }),
       limit: '200',
       access_token: token,
     });
@@ -430,8 +435,12 @@ module.exports = async (req, res) => {
     const records = raw.map(mapRow).filter((r) => r.d).sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : 0));
 
     const meta = await metaP;
-    // Manual entries win over the API for the same month.
-    const fbByMonth = Object.assign({}, meta.byMonth, FACEBOOK.byMonth);
+    // 2026-11-23: once the API is live it WINS for every month it returns (its numbers are Ads
+    // Manager's own); the hand-entered FACEBOOK.byMonth only fills months the API did not return,
+    // and is the whole source while no token is set. Live figures run through today, so the
+    // current month's asOf becomes today instead of the last hand reading.
+    const fbByMonth = meta.live ? Object.assign({}, FACEBOOK.byMonth, meta.byMonth) : Object.assign({}, meta.byMonth, FACEBOOK.byMonth);
+    const fbAsOf = meta.live ? { [iso(now).slice(0, 7)]: iso(now) } : FACEBOOK.asOf;
     // lsa / facebook / agency = DC office, the spend behind the Marketing-division appointments
     // on this page. lsaRva = RVA LSA, reported separately and NOT in cost per appointment.
     const roll = lsaRoll();
@@ -441,7 +450,7 @@ module.exports = async (req, res) => {
     const costs = {
       lsaAccounts,
       lsa: { label: 'Google LSA - DC', byMonth: roll.dc, source: SPEND.source, accounts: ['477-447-4205 NOVA', '819-103-9280 MD'], asOf: SPEND.asOf, partialMonth: SPEND.partialMonth, office: 'dc' },
-      facebook: { label: 'Meta ads', byMonth: fbByMonth, source: meta.live ? 'live - Meta Marketing API' : 'manual - Ads Manager', live: meta.live, partial: !!meta.partial, note: meta.reason, accounts: meta.accounts || FACEBOOK.accounts, overrides: Object.keys(FACEBOOK.byMonth), asOf: FACEBOOK.asOf, partialMonth: FACEBOOK.partialMonth || null, office: 'dc' },
+      facebook: { label: 'Meta ads', byMonth: fbByMonth, source: meta.live ? 'live - Meta Marketing API' : 'manual - Ads Manager', live: meta.live, partial: !!meta.partial, note: meta.reason, accounts: meta.accounts || FACEBOOK.accounts, overrides: meta.live ? [] : Object.keys(FACEBOOK.byMonth), asOf: fbAsOf, partialMonth: meta.live ? iso(now).slice(0, 7) : (FACEBOOK.partialMonth || null), office: 'dc' },
       agency: { label: 'Marketing company', byMonth: agencyByMonth(start, end), source: 'retainer schedule', schedule: AGENCY, current: agencyFor(new Date().toISOString().slice(0, 7)), office: 'dc' },
       lsaRva: { label: 'Google LSA - RVA', byMonth: roll.rva, source: SPEND.source, accounts: ['552-749-0839 RVA'], asOf: SPEND.asOf, office: 'rva', excluded: true,
         why: 'RVA LSA leads are not in the Leap Marketing division, so there are no RVA appointments here to divide this by.' },
