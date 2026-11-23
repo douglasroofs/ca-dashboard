@@ -72,31 +72,61 @@ const MARKETING_DIVISION = 7399;
 // asOf: the last day a month's figure covers. A month without asOf is a full, final month.
 // It replaces partialMonth, which could not say HOW FAR into the month a reading went - so a
 // Nov 1-10 reading was treated as Nov 1-23 and the month-to-date cost read low.
-const LSA_OFFICE = { '477-447-4205': 'dc', '819-103-9280': 'dc', '552-749-0839': 'rva', '168-374-3174': 'dc' };
+// 2026-11-23 (later the same day) - SOURCE CHANGED TO GOOGLE ADS BILLING "NET COST".
+// The figures above came from the MCC Accounts > Performance "Cost" column. That column
+// counts every lead Google charged at the time, including leads later DISPUTED AND CREDITED.
+// Billing > Summary "Net cost" is what was actually charged after those credits, so it is the
+// number that matches the card statement. On 477-447-4205 the gap was large: Aug Cost
+// $17,208.52 vs net $13,241.74, Sep $17,521.37 vs $15,781.82, Oct $7,943.22 vs $7,596.52.
+// That gap is also where the old "pending credit" went - it is already netted in, so it is no
+// longer shown as a separate figure.
+//
+// Read 2026-11-23 from Billing > Summary on each account (marketing@douglasroofs.com):
+//   477-447-4205 "Douglas NOVA [LSA + Search]" - billing history starts March 2026. Its 7 Search
+//     campaigns (incl. "PHLASH - Asphalt Shingle Roofing") are paused and spent $0 Jun 1-Nov 22,
+//     so this account's spend is LSA only.
+//   819-103-9280 "[LSA] Douglas Roofing - MD"
+//   552-749-0839 "[LSA] Douglas Roofing - RVA" - spending all year (paid on a different card,
+//     Visa ..0076). Aug is negative: a credit larger than that month's charges.
+//   168-374-3174 "[LSA] Douglas PA" - $0, not listed.
+// November is month-to-date as of the read (asOf). Re-read early December and drop the asOf.
+const LSA_ACCOUNTS = [
+  { id: '477-447-4205', label: 'Google LSA - NOVA', office: 'dc' },
+  { id: '819-103-9280', label: 'Google LSA - MD', office: 'dc' },
+  { id: '552-749-0839', label: 'Google LSA - RVA', office: 'rva' },
+];
 const SPEND = {
   currency: 'USD',
-  pendingCredit: 3484.78, // disputed-leads credit; status unconfirmed since Sep 2026
-  accounts: ['477-447-4205 NOVA (DC office)', '819-103-9280 MD (DC office)', '552-749-0839 RVA (from Aug 2026)', '168-374-3174 PA ($0)'],
+  source: 'Google Ads Billing > Summary, Net cost (after disputed-lead credits)',
   byAccount: {
-    '2026-06': { dc_total: 21867.14 },
-    '2026-07': { dc_total: 22428.70 },
-    '2026-08': { '477-447-4205': 17208.52, '819-103-9280': 3908.32, '552-749-0839': 876.86 },
-    '2026-09': { '477-447-4205': 17521.37, '819-103-9280': 2769.83, '552-749-0839': 639.72 },
-    '2026-10': { '477-447-4205': 7943.22, '819-103-9280': 3762.10, '552-749-0839': 475.81 },
-    '2026-11': { '477-447-4205': 943.27, '819-103-9280': 166.45, '552-749-0839': 310.59 },
+    '2026-01': { '819-103-9280': 1307.39, '552-749-0839': 299.46 },
+    '2026-02': { '819-103-9280': 1645.18, '552-749-0839': 1161.42 },
+    '2026-03': { '477-447-4205': 14553.73, '819-103-9280': 8364.97, '552-749-0839': 2548.40 },
+    '2026-04': { '477-447-4205': 17426.30, '819-103-9280': 4712.80, '552-749-0839': 188.46 },
+    '2026-05': { '477-447-4205': 12888.64, '819-103-9280': 3701.94, '552-749-0839': 900.48 },
+    '2026-06': { '477-447-4205': 14866.74, '819-103-9280': 3181.83, '552-749-0839': 331.86 },
+    '2026-07': { '477-447-4205': 15494.14, '819-103-9280': 3463.77, '552-749-0839': 2299.39 },
+    '2026-08': { '477-447-4205': 13241.74, '819-103-9280': 3572.74, '552-749-0839': -60.86 },
+    '2026-09': { '477-447-4205': 15781.82, '819-103-9280': 2769.83, '552-749-0839': 639.72 },
+    '2026-10': { '477-447-4205': 7596.52, '819-103-9280': 3762.10, '552-749-0839': 475.81 },
+    '2026-11': { '477-447-4205': 2506.59, '819-103-9280': 712.21, '552-749-0839': 310.59 },
   },
-  asOf: { '2026-11': '2026-11-10' },
+  asOf: { '2026-11': '2026-11-22' },
+  // The NOVA account has no billing before March 2026; Jan/Feb NOVA LSA spend is unknown.
+  missing: { '477-447-4205': ['2026-01', '2026-02'] },
 };
+function acctByMonth(id) {
+  const out = {};
+  Object.keys(SPEND.byAccount).forEach((m) => { const v = SPEND.byAccount[m][id]; if (v !== undefined) out[m] = v; });
+  return out;
+}
 function lsaRoll() {
   const all = {}, dc = {}, rva = {};
-  Object.keys(SPEND.byAccount).forEach((m) => {
-    const row = SPEND.byAccount[m];
-    Object.keys(row).forEach((acct) => {
-      const v = Number(row[acct]) || 0;
-      const off = acct === 'dc_total' ? 'dc' : (LSA_OFFICE[acct] || 'dc');
-      all[m] = Math.round(((all[m] || 0) + v) * 100) / 100;
-      const into = off === 'rva' ? rva : dc;
-      into[m] = Math.round(((into[m] || 0) + v) * 100) / 100;
+  LSA_ACCOUNTS.forEach((a) => {
+    const by = acctByMonth(a.id), into = a.office === 'rva' ? rva : dc;
+    Object.keys(by).forEach((m) => {
+      all[m] = Math.round(((all[m] || 0) + by[m]) * 100) / 100;
+      into[m] = Math.round(((into[m] || 0) + by[m]) * 100) / 100;
     });
   });
   return { all, dc, rva };
@@ -134,8 +164,11 @@ const FACEBOOK = {
   //            CBO Testing Campaign - Holiday Lights $39.51, all others $0.00 = $1,078.46. PARTIAL (asOf below).
   //            Region breakdown: every campaign delivers to DC / MD / VA metro - all Meta spend is DC office.
   //            Second ad account 2356347398190484 has no payment method and has never spent.
-  // Replace July with an exact figure once META_ACCESS_TOKEN is in Vercel.
-  byMonth: { '2026-07': 186, '2026-08': 1102.93, '2026-09': 739.81, '2026-10': 875.58, '2026-11': 1078.46 },
+  //   2026-02..07 (read 2026-11-23, Ads Manager, Jan 1-Jul 31 2026, Month breakdown): Ice Dams Feb $418.42;
+  //            Alfred Duncan - Maryland Mar $983.49, May $981.00, Jun $1,068.91, Jul $1,104.14; every other
+  //            campaign $0.00. July's old $186 was a floor read off Payment activity - replaced.
+  byMonth: { '2026-02': 418.42, '2026-03': 983.49, '2026-05': 981.00, '2026-06': 1068.91, '2026-07': 1104.14,
+    '2026-08': 1102.93, '2026-09': 739.81, '2026-10': 875.58, '2026-11': 1078.46 },
   asOf: { '2026-11': '2026-11-22' }, // same meaning as SPEND.asOf
   office: 'dc',
 };
@@ -402,11 +435,15 @@ module.exports = async (req, res) => {
     // lsa / facebook / agency = DC office, the spend behind the Marketing-division appointments
     // on this page. lsaRva = RVA LSA, reported separately and NOT in cost per appointment.
     const roll = lsaRoll();
+    // One entry per Google account that spends, so the page shows each on its own line.
+    const lsaAccounts = LSA_ACCOUNTS.map((a) => ({ id: a.id, label: a.label, office: a.office, byMonth: acctByMonth(a.id),
+      asOf: SPEND.asOf, missing: (SPEND.missing && SPEND.missing[a.id]) || [], excluded: a.office === 'rva' }));
     const costs = {
-      lsa: { label: 'Google LSA - DC', byMonth: roll.dc, source: 'manual - Google Ads MCC 522-708-1215', accounts: ['477-447-4205 NOVA', '819-103-9280 MD'], pendingCredit: SPEND.pendingCredit, asOf: SPEND.asOf, partialMonth: SPEND.partialMonth, office: 'dc' },
-      facebook: { label: 'Meta ads - DC', byMonth: fbByMonth, source: meta.live ? 'live - Meta Marketing API' : 'manual - Ads Manager', live: meta.live, partial: !!meta.partial, note: meta.reason, accounts: meta.accounts || FACEBOOK.accounts, overrides: Object.keys(FACEBOOK.byMonth), asOf: FACEBOOK.asOf, partialMonth: FACEBOOK.partialMonth || null, office: 'dc' },
+      lsaAccounts,
+      lsa: { label: 'Google LSA - DC', byMonth: roll.dc, source: SPEND.source, accounts: ['477-447-4205 NOVA', '819-103-9280 MD'], asOf: SPEND.asOf, partialMonth: SPEND.partialMonth, office: 'dc' },
+      facebook: { label: 'Meta ads', byMonth: fbByMonth, source: meta.live ? 'live - Meta Marketing API' : 'manual - Ads Manager', live: meta.live, partial: !!meta.partial, note: meta.reason, accounts: meta.accounts || FACEBOOK.accounts, overrides: Object.keys(FACEBOOK.byMonth), asOf: FACEBOOK.asOf, partialMonth: FACEBOOK.partialMonth || null, office: 'dc' },
       agency: { label: 'Marketing company', byMonth: agencyByMonth(start, end), source: 'retainer schedule', schedule: AGENCY, current: agencyFor(new Date().toISOString().slice(0, 7)), office: 'dc' },
-      lsaRva: { label: 'Google LSA - RVA', byMonth: roll.rva, source: 'manual - Google Ads MCC 522-708-1215', accounts: ['552-749-0839 RVA'], asOf: SPEND.asOf, office: 'rva', excluded: true,
+      lsaRva: { label: 'Google LSA - RVA', byMonth: roll.rva, source: SPEND.source, accounts: ['552-749-0839 RVA'], asOf: SPEND.asOf, office: 'rva', excluded: true,
         why: 'RVA LSA leads are not in the Leap Marketing division, so there are no RVA appointments here to divide this by.' },
       lsaByAccount: SPEND.byAccount,
     };
