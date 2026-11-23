@@ -19073,6 +19073,15 @@
       "date": "2026-11-23",
       "address": "7919 Clifton St, Manassas, VA",
       "ts": "2026-11-23T19:22:31.389Z"
+    },
+    {
+      "leadId": "85227",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-11-23",
+      "address": "8108 Buckland Mill Rd, Gainesville, VA",
+      "ts": "2026-11-23T20:45:38.519Z"
     }
   ]
 }
