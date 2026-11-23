@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -19064,6 +19064,15 @@
       "date": "2026-11-22",
       "address": "7921 Shreve Rd, Falls Church, VA",
       "ts": "2026-11-23T18:23:55.772Z"
+    },
+    {
+      "leadId": "85209",
+      "repName": "David Kerns",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-23",
+      "address": "7919 Clifton St, Manassas, VA",
+      "ts": "2026-11-23T19:22:31.389Z"
     }
   ]
 }
