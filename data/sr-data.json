@@ -19037,6 +19037,15 @@
       "date": "2026-11-23",
       "address": "8107 Diane Ln, Richmond, VA",
       "ts": "2026-11-23T17:43:18.353Z"
+    },
+    {
+      "leadId": "85165",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-23",
+      "address": "223 Fulham Cir, Richmond, VA",
+      "ts": "2026-11-23T17:43:20.136Z"
     }
   ]
 }
