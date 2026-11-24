@@ -19361,6 +19361,15 @@
       "date": "2026-11-24",
       "address": "225 Ashbury Hills Dr, Richmond, VA",
       "ts": "2026-11-24T21:25:39.796Z"
+    },
+    {
+      "leadId": "85352",
+      "repName": "Harvey Shoemaker",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-24",
+      "address": "8308 Hawk Nest Dr, Richmond, VA",
+      "ts": "2026-11-24T21:27:47.047Z"
     }
   ]
 }
