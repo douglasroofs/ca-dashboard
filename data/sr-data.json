@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24",
+  "updated": "2026-11-23",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -19343,6 +19343,15 @@
       "date": "2026-11-24",
       "address": "6413 25th St N, Arlington, VA",
       "ts": "2026-11-24T21:14:44.728Z"
+    },
+    {
+      "leadId": "85346",
+      "repName": "Harvey Shoemaker",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-23",
+      "address": "107 Chickahominy Bluffs Rd, Richmond, VA",
+      "ts": "2026-11-24T21:23:45.612Z"
     }
   ]
 }
