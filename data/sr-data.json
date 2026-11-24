@@ -19424,6 +19424,15 @@
       "date": "2026-11-24",
       "address": "499 Clauson Rd, Richmond, VA",
       "ts": "2026-11-24T21:39:51.107Z"
+    },
+    {
+      "leadId": "85372",
+      "repName": "Michael McCarthy",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-24",
+      "address": "6409 27th St N, Arlington, VA",
+      "ts": "2026-11-24T22:00:23.122Z"
     }
   ]
 }
