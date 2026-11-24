@@ -19235,6 +19235,15 @@
       "date": "2026-11-24",
       "address": "10135 Stags Leap Drive, Mechanicsville, VA",
       "ts": "2026-11-24T17:40:09.000Z"
+    },
+    {
+      "leadId": "85302",
+      "repName": "Christian Brown",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-24",
+      "address": "10151 Stags Leap Drive, Mechanicsville, VA",
+      "ts": "2026-11-24T17:40:17.654Z"
     }
   ]
 }
