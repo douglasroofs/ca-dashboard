@@ -19406,6 +19406,15 @@
       "date": "2026-11-24",
       "address": "145 Hawk Nest Ct, Richmond, VA",
       "ts": "2026-11-24T21:36:04.378Z"
+    },
+    {
+      "leadId": "85365",
+      "repName": "Harvey Shoemaker",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-24",
+      "address": "8356 Hawk Nest Dr, Richmond, VA",
+      "ts": "2026-11-24T21:37:50.947Z"
     }
   ]
 }
