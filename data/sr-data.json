@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-23",
+  "updated": "2026-11-24",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -19352,6 +19352,15 @@
       "date": "2026-11-23",
       "address": "107 Chickahominy Bluffs Rd, Richmond, VA",
       "ts": "2026-11-24T21:23:45.612Z"
+    },
+    {
+      "leadId": "85347",
+      "repName": "Harvey Shoemaker",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-24",
+      "address": "225 Ashbury Hills Dr, Richmond, VA",
+      "ts": "2026-11-24T21:25:39.796Z"
     }
   ]
 }
