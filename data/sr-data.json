@@ -19271,6 +19271,15 @@
       "date": "2026-11-24",
       "address": "11217 Bel Aire Ct, Waldorf, MD",
       "ts": "2026-11-24T18:11:40.561Z"
+    },
+    {
+      "leadId": "85153",
+      "repName": "Christian Brown",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-24",
+      "address": "9985 Red Deer Court, Mechanicsville, VA",
+      "ts": "2026-11-24T19:10:58.855Z"
     }
   ]
 }
