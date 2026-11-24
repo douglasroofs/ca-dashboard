@@ -19433,6 +19433,15 @@
       "date": "2026-11-24",
       "address": "6409 27th St N, Arlington, VA",
       "ts": "2026-11-24T22:00:23.122Z"
+    },
+    {
+      "leadId": "85375",
+      "repName": "Michael McCarthy",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-24",
+      "address": "10209 Yellowwood Ln, Springdale, MD",
+      "ts": "2026-11-24T22:36:44.603Z"
     }
   ]
 }
