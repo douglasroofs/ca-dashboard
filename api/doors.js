@@ -9,22 +9,22 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-23T16:13:08.795Z",
-    "total": 3382,
+    "updated": "2026-11-24T16:02:36.728Z",
+    "total": 3558,
     "reps": [
       {
         "rep": "Krysta Paulson",
-        "doors": 752,
+        "doors": 751,
         "team": "DC"
       },
       {
         "rep": "Konnor Gubler",
-        "doors": 593,
+        "doors": 600,
         "team": "DC"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 255,
+        "doors": 270,
         "team": "DC"
       },
       {
@@ -34,12 +34,12 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Adam Schall",
-        "doors": 220,
+        "doors": 233,
         "team": "DC"
       },
       {
         "rep": "Christian Brown",
-        "doors": 206,
+        "doors": 225,
         "team": "RVA"
       },
       {
@@ -48,23 +48,23 @@ const SNAPSHOTS = {
         "team": "DC"
       },
       {
+        "rep": "Jason Cresswell",
+        "doors": 179,
+        "team": "DC"
+      },
+      {
         "rep": "Lucas Morris",
         "doors": 178,
         "team": "DC"
       },
       {
-        "rep": "Jason Cresswell",
-        "doors": 170,
-        "team": "DC"
-      },
-      {
         "rep": "Harvey Shoemaker",
-        "doors": 143,
+        "doors": 148,
         "team": "RVA"
       },
       {
         "rep": "David Kerns",
-        "doors": 132,
+        "doors": 133,
         "team": "DC"
       },
       {
@@ -74,8 +74,13 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 123,
+        "doors": 122,
         "team": "RVA"
+      },
+      {
+        "rep": "Mel Sneed",
+        "doors": 109,
+        "team": "DC"
       },
       {
         "rep": "Jack Obert",
@@ -109,18 +114,13 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Brian Chandler",
-        "doors": 2,
+        "doors": 3,
         "team": "RVA"
       },
       {
         "rep": "Adam Mulvaney",
         "doors": 2,
         "team": "Office"
-      },
-      {
-        "rep": "Mel Sneed",
-        "doors": 1,
-        "team": "DC"
       },
       {
         "rep": "Quincy Edwards",
