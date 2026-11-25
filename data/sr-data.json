@@ -19469,6 +19469,15 @@
       "date": "2026-11-25",
       "address": "42562 Neighborly Ln, Chantilly, VA",
       "ts": "2026-11-25T16:02:34.184Z"
+    },
+    {
+      "leadId": "85379",
+      "repName": "Marc Mitchell",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-25",
+      "address": "14129 Honey Hill Ct, Centreville, VA",
+      "ts": "2026-11-25T17:01:35.060Z"
     }
   ]
 }
