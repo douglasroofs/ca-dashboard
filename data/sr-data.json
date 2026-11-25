@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24",
+  "updated": "2026-11-25",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -19460,6 +19460,15 @@
       "date": "2026-11-24",
       "address": "42967 Golf View Dr, Chantilly, VA",
       "ts": "2026-11-25T13:39:49.328Z"
+    },
+    {
+      "leadId": "85377",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-25",
+      "address": "42562 Neighborly Ln, Chantilly, VA",
+      "ts": "2026-11-25T16:02:34.184Z"
     }
   ]
 }
