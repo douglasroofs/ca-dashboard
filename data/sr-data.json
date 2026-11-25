@@ -19451,6 +19451,15 @@
       "date": "2026-11-24",
       "address": "10209 Yellowwood Ln, Springdale, MD",
       "ts": "2026-11-24T22:39:27.439Z"
+    },
+    {
+      "leadId": "85376",
+      "repName": "Marc Mitchell",
+      "status": "SGCA",
+      "isCA": true,
+      "date": "2026-11-24",
+      "address": "42967 Golf View Dr, Chantilly, VA",
+      "ts": "2026-11-25T13:39:49.328Z"
     }
   ]
 }
