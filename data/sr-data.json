@@ -19496,6 +19496,15 @@
       "date": "2026-11-25",
       "address": "2331 Broad Rock Boulevard, Richmond, VA",
       "ts": "2026-11-25T19:02:54.638Z"
+    },
+    {
+      "leadId": "85389",
+      "repName": "Christian Brown",
+      "status": "GO BACK",
+      "isCA": false,
+      "date": "2026-11-25",
+      "address": "2301 Broad Rock Boulevard, Richmond, VA",
+      "ts": "2026-11-25T19:03:18.211Z"
     }
   ]
 }
