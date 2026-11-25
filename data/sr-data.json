@@ -19478,6 +19478,15 @@
       "date": "2026-11-25",
       "address": "14129 Honey Hill Ct, Centreville, VA",
       "ts": "2026-11-25T17:01:35.060Z"
+    },
+    {
+      "leadId": "85380",
+      "repName": "David Kerns",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-25",
+      "address": "41871 Sprinter Terr, Aldie, VA",
+      "ts": "2026-11-25T18:20:38.144Z"
     }
   ]
 }
