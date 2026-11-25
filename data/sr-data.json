@@ -19505,6 +19505,15 @@
       "date": "2026-11-25",
       "address": "2301 Broad Rock Boulevard, Richmond, VA",
       "ts": "2026-11-25T19:03:18.211Z"
+    },
+    {
+      "leadId": "85375",
+      "repName": "Michael McCarthy",
+      "status": "ICA",
+      "isCA": true,
+      "date": "2026-11-25",
+      "address": "10209 Yellowwood Ln, Springdale, MD",
+      "ts": "2026-11-25T19:45:15.100Z"
     }
   ]
 }
