@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-24T16:02:44.923Z",
+  "updated": "2026-11-25T15:49:40.410Z",
   "customers": {
     "5886795": {
       "first_seen": "2026-09-23",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Ashley Slifka",
       "rep": "Mike Mendez",
       "crew": "Trendy Build (Walter Diaz), A&J remodeling (Santos Siding)",
@@ -13,7 +13,7 @@
     },
     "6477299": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Rita Smith",
       "rep": "Jack Obert",
       "pm": null,
@@ -24,7 +24,7 @@
     },
     "7033328": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Hsieh Lewis",
       "rep": "Kevin Mahan",
       "pm": "Haley Barry",
@@ -35,7 +35,7 @@
     },
     "7761033": {
       "first_seen": "2026-09-21",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Denise Ross",
       "rep": "George Bechara",
       "pm": null,
@@ -46,7 +46,7 @@
     },
     "7857752": {
       "first_seen": "2026-10-26",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Bill Watts",
       "rep": "Isabelle Price",
       "crew": "Trendy Build (Walter Diaz)",
@@ -56,7 +56,7 @@
     },
     "8489136": {
       "first_seen": "2026-10-23",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "BEAUX GONZALES",
       "rep": "Jack Obert",
       "crew": "Trendy Build (Walter Diaz)",
@@ -66,7 +66,7 @@
     },
     "8615931": {
       "first_seen": "2026-10-06",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Charlton Gardiner",
       "rep": "George Bechara",
       "crew": "Trendy Build (Walter Diaz)",
@@ -76,7 +76,7 @@
     },
     "8722109": {
       "first_seen": "2026-09-17",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Ismaheel Ajibola",
       "rep": "Alfred Duncan",
       "crew": "Trendy Build (Walter Diaz)",
@@ -86,7 +86,7 @@
     },
     "8764657": {
       "first_seen": "2026-09-09",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Linda Halim",
       "rep": "Steven Arevalo",
       "pm": "Paul Brost",
@@ -97,7 +97,7 @@
     },
     "8804747": {
       "first_seen": "2026-10-03",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Mike Golliker",
       "rep": "Andrew Prickel",
       "crew": "Pablo Remodeling Services (Fernando Perez), Amilicar",
@@ -105,19 +105,9 @@
       "number": "2607-8804747-01",
       "source": "flag"
     },
-    "8870773": {
-      "first_seen": "2026-11-13",
-      "last_seen": "2026-11-24",
-      "customer": "Nathan Kolasinski",
-      "rep": "Andrew Funk",
-      "crew": "Pablo Remodeling Services (Fernando Perez), A&J remodeling (Santos Siding), Pro Gutters LLC (Erik Cruz)",
-      "company_crew": "Doug Rimel",
-      "number": "2607-8870773-01",
-      "source": "stage"
-    },
     "9068861": {
       "first_seen": "2026-10-12",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Katie Carney",
       "rep": "Adam Mulvaney",
       "crew": "Trendy Build (Walter Diaz)",
@@ -127,7 +117,7 @@
     },
     "9143301": {
       "first_seen": "2026-11-23",
-      "last_seen": "2026-11-24",
+      "last_seen": "2026-11-25",
       "customer": "Sari Diller",
       "rep": "Andrew Prickel",
       "crew": "Pablo Remodeling Services (Fernando Perez)",
@@ -351,6 +341,19 @@
       "source": "flag",
       "resolved": "2026-11-10",
       "days": 27
+    },
+    {
+      "customer_id": "8870773",
+      "first_seen": "2026-11-13",
+      "last_seen": "2026-11-24",
+      "customer": "Nathan Kolasinski",
+      "rep": "Andrew Funk",
+      "crew": "Pablo Remodeling Services (Fernando Perez), A&J remodeling (Santos Siding), Pro Gutters LLC (Erik Cruz)",
+      "company_crew": "Doug Rimel",
+      "number": "2607-8870773-01",
+      "source": "stage",
+      "resolved": "2026-11-25",
+      "days": 12
     }
   ]
 }

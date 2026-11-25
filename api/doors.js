@@ -9,8 +9,8 @@
 // default: serve the office SNAPSHOT instantly. Daily task refreshes the snapshot via ?live=1.
 const SNAPSHOTS = {
   "herndon": {
-    "updated": "2026-11-24T16:02:36.728Z",
-    "total": 3558,
+    "updated": "2026-11-25T15:49:33.678Z",
+    "total": 3657,
     "reps": [
       {
         "rep": "Krysta Paulson",
@@ -19,37 +19,37 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Konnor Gubler",
-        "doors": 600,
+        "doors": 610,
         "team": "DC"
       },
       {
         "rep": "Paolo Castillo",
-        "doors": 270,
-        "team": "DC"
-      },
-      {
-        "rep": "Mike Mccarthy",
-        "doors": 236,
+        "doors": 285,
         "team": "DC"
       },
       {
         "rep": "Adam Schall",
-        "doors": 233,
+        "doors": 252,
+        "team": "DC"
+      },
+      {
+        "rep": "Mike Mccarthy",
+        "doors": 250,
         "team": "DC"
       },
       {
         "rep": "Christian Brown",
-        "doors": 225,
+        "doors": 237,
         "team": "RVA"
       },
       {
         "rep": "Doug Coffman",
-        "doors": 183,
+        "doors": 190,
         "team": "DC"
       },
       {
         "rep": "Jason Cresswell",
-        "doors": 179,
+        "doors": 183,
         "team": "DC"
       },
       {
@@ -59,7 +59,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Harvey Shoemaker",
-        "doors": 148,
+        "doors": 163,
         "team": "RVA"
       },
       {
@@ -74,7 +74,7 @@ const SNAPSHOTS = {
       },
       {
         "rep": "Travis Kizzar",
-        "doors": 122,
+        "doors": 121,
         "team": "RVA"
       },
       {
@@ -93,12 +93,12 @@ const SNAPSHOTS = {
         "team": "DC"
       },
       {
-        "rep": "Kevin Mahan",
-        "doors": 9,
+        "rep": "Marc Mitchell",
+        "doors": 10,
         "team": "DC"
       },
       {
-        "rep": "Marc Mitchell",
+        "rep": "Kevin Mahan",
         "doors": 9,
         "team": "DC"
       },
@@ -113,6 +113,11 @@ const SNAPSHOTS = {
         "team": "RVA"
       },
       {
+        "rep": "Quincy Edwards",
+        "doors": 4,
+        "team": "RVA"
+      },
+      {
         "rep": "Brian Chandler",
         "doors": 3,
         "team": "RVA"
@@ -121,11 +126,6 @@ const SNAPSHOTS = {
         "rep": "Adam Mulvaney",
         "doors": 2,
         "team": "Office"
-      },
-      {
-        "rep": "Quincy Edwards",
-        "doors": 1,
-        "team": "RVA"
       }
     ],
     "allowedReps": [
