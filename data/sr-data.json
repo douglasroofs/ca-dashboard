@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27",
+  "updated": "2026-11-22",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -19523,6 +19523,15 @@
       "date": "2026-11-27",
       "address": "13716 US-50 W, Chantilly, VA",
       "ts": "2026-11-27T17:27:24.678Z"
+    },
+    {
+      "leadId": "85152",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-22",
+      "address": "4501 Jonlow Circle, Richmond, VA",
+      "ts": "2026-11-27T18:02:37.485Z"
     }
   ]
 }
