@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-27",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -19514,6 +19514,15 @@
       "date": "2026-11-25",
       "address": "10209 Yellowwood Ln, Springdale, MD",
       "ts": "2026-11-25T19:45:15.100Z"
+    },
+    {
+      "leadId": "85413",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-11-27",
+      "address": "13716 US-50 W, Chantilly, VA",
+      "ts": "2026-11-27T17:27:24.678Z"
     }
   ]
 }
