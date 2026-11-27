@@ -19541,6 +19541,15 @@
       "date": "2026-11-27",
       "address": "",
       "ts": "2026-11-27T18:14:24.064Z"
+    },
+    {
+      "leadId": "85416",
+      "repName": "Christian Brown",
+      "status": "INSPECTED",
+      "isCA": false,
+      "date": "2026-11-27",
+      "address": "4501 Jonlow Circle, Richmond, VA",
+      "ts": "2026-11-27T18:16:43.388Z"
     }
   ]
 }
