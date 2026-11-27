@@ -19568,6 +19568,15 @@
       "date": "2026-11-27",
       "address": "5430 21st St N, Arlington, VA",
       "ts": "2026-11-27T18:23:43.069Z"
+    },
+    {
+      "leadId": "85418",
+      "repName": "Michael McCarthy",
+      "status": "NOT INTERRESTED",
+      "isCA": false,
+      "date": "2026-11-27",
+      "address": "5430 21st St N, Arlington, VA",
+      "ts": "2026-11-27T19:08:15.881Z"
     }
   ]
 }
