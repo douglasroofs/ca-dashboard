@@ -19694,6 +19694,15 @@
       "date": "2026-11-28",
       "address": "6609 Orland St, Falls Church, VA",
       "ts": "2026-11-28T20:15:16.262Z"
+    },
+    {
+      "leadId": "85485",
+      "repName": "Christian Brown",
+      "status": "APPT. SCHEDULED",
+      "isCA": false,
+      "date": "2026-11-28",
+      "address": "4049 Penzance Place, Williamsburg, VA",
+      "ts": "2026-11-28T20:21:05.412Z"
     }
   ]
 }
