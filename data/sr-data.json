@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27",
+  "updated": "2026-11-28",
   "events": [
     {
       "leadId": "comp-ca-0",
@@ -19577,6 +19577,15 @@
       "date": "2026-11-27",
       "address": "5430 21st St N, Arlington, VA",
       "ts": "2026-11-27T19:08:15.881Z"
+    },
+    {
+      "leadId": "85440",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-28",
+      "address": "8965 Brook Road, McLean, VA",
+      "ts": "2026-11-28T15:48:03.705Z"
     }
   ]
 }
