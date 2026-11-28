@@ -19586,6 +19586,15 @@
       "date": "2026-11-28",
       "address": "8965 Brook Road, McLean, VA",
       "ts": "2026-11-28T15:48:03.705Z"
+    },
+    {
+      "leadId": "85442",
+      "repName": "Christian Brown",
+      "status": "NO ANSWER",
+      "isCA": false,
+      "date": "2026-11-28",
+      "address": "8959 Brook Road, McLean, VA",
+      "ts": "2026-11-28T15:48:05.881Z"
     }
   ]
 }
