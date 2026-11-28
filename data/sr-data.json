@@ -19703,6 +19703,15 @@
       "date": "2026-11-28",
       "address": "4049 Penzance Place, Williamsburg, VA",
       "ts": "2026-11-28T20:21:05.412Z"
+    },
+    {
+      "leadId": "85486",
+      "repName": "Michael McCarthy",
+      "status": "DRIVE-BY",
+      "isCA": false,
+      "date": "2026-11-28",
+      "address": "304 Shadow Walk, Falls Church, VA",
+      "ts": "2026-11-28T20:24:33.435Z"
     }
   ]
 }
